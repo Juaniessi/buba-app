@@ -48,11 +48,11 @@ import {
 } from '../context/carDataBase';
 
 function Main() {
-	const [tipo, setTipo] = useState();
+	const [tipo, setTipo] = useState('Auto');
 	const [grupo, setGrupo] = useState(group[0]); //seteo group[0] para arrancar con la primera del array
 	const [seccion, setSeccion] = useState(sectionSusp[0]); // idem seteo
 	const [descripcion, setDescripcion] = useState(descAlin[0]);
-	const [severidad, setSeveridad] = useState();
+	const [severidad, setSeveridad] = useState('Moderado');
 
 	let section; //esta variable almacena el array de seccion a mapear
 	let description; //esta varibale almacena el array de descripción a mapear
