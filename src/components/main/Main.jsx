@@ -60,7 +60,9 @@ function Main() {
 
 	let listaCompleta = [];
 
-	let armarLista = () => listaCompleta.concat(lista);
+	armarLista = (lista) => {
+		return listaCompleta.concat(lista);
+	};
 
 	switch (grupo) {
 		// el primer case no es necesario
@@ -291,17 +293,17 @@ function Main() {
 						))}
 					</select>
 				</div>
-				<div>valor de tipo:"{tipo}"</div>
+				{/* <div>valor de tipo:"{tipo}"</div>
 				<div>valor de severidad:"{severidad}"</div>
 				<div>valor de grupo: "{grupo}"</div>
 				<div>valor de seccion: "{seccion}"</div>
 				<div>valor de descripcion: "{descripcion}"</div>
-				<div></div>
+				<div></div> */}
 			</form>
 			<div>
 				<button
 					onClick={() =>
-						setlista(armarLista, [grupo + '/' + seccion + '/' + descripcion])
+						setlista(armarLista(`${grupo} ${seccion} ${descripcion}`))
 					}>
 					Enviar
 				</button>
