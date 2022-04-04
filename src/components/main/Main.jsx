@@ -60,8 +60,8 @@ function Main() {
 
 	let listaCompleta = [];
 
-	armarLista = (lista) => {
-		return listaCompleta.concat(lista);
+	let armarLista = (lista) => {
+		return setlista(...listaCompleta, listaCompleta.concat(lista));
 	};
 
 	switch (grupo) {
@@ -301,12 +301,7 @@ function Main() {
 				<div></div> */}
 			</form>
 			<div>
-				<button
-					onClick={() =>
-						setlista(armarLista(`${grupo} ${seccion} ${descripcion}`))
-					}>
-					Enviar
-				</button>
+				<button onClick={(e) => armarLista(e.target.grupo)}>Enviar</button>
 			</div>
 			<div>Lista mágica</div>
 			<div>{listaCompleta}</div>
