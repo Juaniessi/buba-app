@@ -5,3 +5,32 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
+.form-radio {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.tipe-class {
+	flex-direction: row;
+	margin: 1rem;
+}
+.severity-class {
+	flex-direction: row;
+	margin: 1rem;
+}
+
+.group-class {
+	flex-direction: row;
+	margin: 1rem;
+}
+
+.section-class {
+	flex-direction: row;
+	margin: 1rem;
+}
+
+.description-class {
+	flex-direction: row;
+	margin: 1rem;
+}

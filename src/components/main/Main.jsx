@@ -213,114 +213,115 @@ function Main() {
 
 	return (
 		<div>
-			<form>
-				<div className="form-check">
+			<form className="form-radio">
+				<div className="tipe-class">
 					<input
 						type="radio"
-						className="form-check-input"
+						className="tipe-class-input"
 						name="tipo"
 						id="auto"
 						value="auto"
 						onClick={handleTipo}
 						defaultChecked
 					/>
-					<label className="form-check-label" htmlFor="auto">
+					<label className="tipe-class-label" htmlFor="auto">
 						Auto
 					</label>
 					<input
 						type="radio"
-						className="form-check-input"
+						className="tipe-class-input"
 						name="tipo"
 						id="moto"
 						value="moto"
 						onClick={handleTipo}
 					/>
-					<label htmlFor="moto">Moto</label>
+					<label className="tipe-class-label" htmlFor="moto">
+						Moto
+					</label>
 				</div>
 				<div className="severity-class">
 					<input
 						type="radio"
-						className="severity-class"
+						className="severity-class-input"
 						name="severity"
 						id="leve"
 						value="leve"
 						onClick={handleSeveridad}
 					/>
-					<label className="severity-class" htmlFor="leve">
+					<label className="severity-class-label" htmlFor="leve">
 						Leve
 					</label>
 					<input
 						type="radio"
-						className="severity-class"
+						className="severity-class-input"
 						name="severity"
 						id="moderado"
 						value="moderado"
 						onClick={handleSeveridad}
 						defaultChecked
 					/>
-					<label className="severity-class" htmlFor="moderado">
+					<label className="severity-class-label" htmlFor="moderado">
 						Moderado
 					</label>
 					<input
 						type="radio"
-						className="severity-class"
+						className="severity-class-input"
 						name="severity"
 						id="grave"
 						value="grave"
 						onClick={handleSeveridad}
 					/>
-					<label className="severity-class" htmlFor="grave">
+					<label className="severity-class-label" htmlFor="grave">
 						Grave
 					</label>
 				</div>
-				<div className="radio-list">
+				<div className="group-class">
 					{group.map((item, i) => (
-						<div>
-							<label htmlFor={item} key={item}>
-								{item}
-							</label>
+						<label className="group-class-label" htmlFor={item} key={i}>
+							{item}
 							<input
 								type="radio"
+								className="group-class-input"
 								name="group"
 								id={item}
 								value={item}
-								key={i}
 								onClick={(e) => setGrupo(e.target.value)}
 							/>
-						</div>
+						</label>
 					))}
+				</div>
+				<div className="section-class">
 					{section.map((item, i) => (
-						<div>
-							<label htmlFor={item} key={item}>
-								{item}
-							</label>
+						<label className="section-class-label" htmlFor={item} key={i}>
+							{item}
 							<input
 								type="radio"
+								className="section-class-input"
 								name="group"
 								id={item}
 								value={item}
-								key={i}
 								onClick={(e) => setSeccion(e.target.value)}
 							/>
-						</div>
+						</label>
 					))}
+				</div>
+				<div className="description-class">
 					{description.map((item, i) => (
-						<div>
-							<label htmlFor={item} key={item}>
-								{item}
-							</label>
+						<label className="description-class-label" htmlFor={item} key={i}>
+							{item}
 							<input
 								type="radio"
+								className="description-class-input"
 								name="group"
 								id={item}
 								value={item}
-								key={i}
 								onClick={(e) => setDescripcion(e.target.value)}
 							/>
-						</div>
+						</label>
 					))}
+				</div>
 
-					{/* <label htmlFor="group">Grupo</label>
+				{/* <label htmlFor="group">Grupo</label>
 					<select
 						name="group"
 						id="group"
@@ -353,7 +354,7 @@ function Main() {
 							</option>
 						))}
 					</select> */}
-				</div>
+
 				{/* <div>valor de tipo:"{tipo}"</div>
 				<div>valor de severidad:"{severidad}"</div>
 				<div>valor de grupo: "{grupo}"</div>
