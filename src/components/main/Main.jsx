@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState} from 'react';
 
 import {
@@ -48,20 +48,31 @@ import {
 } from '../context/carDataBase';
 
 function Main() {
-	const [tipo, setTipo] = useState('Auto');
+	const [tipo, setTipo] = useState('auto');
+	const handleTipo = (e) => {
+		setTipo(e.target.value);
+	};
+	const [severidad, setSeveridad] = useState('moderado');
+	const handleSeveridad = (e) => {
+		setSeveridad(e.target.value);
+	};
 	const [grupo, setGrupo] = useState(group[0]); //seteo group[0] para arrancar con la primera del array
+
 	const [seccion, setSeccion] = useState(sectionSusp[0]); // idem seteo
 	const [descripcion, setDescripcion] = useState(descAlin[0]);
-	const [severidad, setSeveridad] = useState('Moderado');
-	const [lista, setlista] = useState([]);
+
+	const [lista, setLista] = useState([]);
 
 	let section; //esta variable almacena el array de seccion a mapear
 	let description; //esta varibale almacena el array de descripción a mapear
 
 	let listaCompleta = [];
 
-	let armarLista = (lista) => {
-		return setlista(...listaCompleta, listaCompleta.concat(lista));
+	let armarLista = () => {
+		let itemLista = `${grupo}, ${seccion}, ${descripcion}`;
+		listaCompleta = listaCompleta.concat(itemLista);
+		setLista(listaCompleta);
+		return listaCompleta;
 	};
 
 	switch (grupo) {
@@ -198,113 +209,162 @@ function Main() {
 			description = descAlin;
 	}
 
+	console.log(lista);
+
 	return (
 		<div>
 			<form>
-				<div class="form-check">
+				<div className="form-check">
 					<input
 						type="radio"
-						class="form-check-input"
+						className="form-check-input"
 						name="tipo"
 						id="auto"
 						value="auto"
-						onClick={(e) => setTipo(e.target.value)}
+						onClick={handleTipo}
+						defaultChecked
 					/>
-					<label class="form-check-label" for="auto">
+					<label className="form-check-label" htmlFor="auto">
 						Auto
 					</label>
 					<input
 						type="radio"
-						class="form-check-input"
+						className="form-check-input"
 						name="tipo"
 						id="moto"
 						value="moto"
-						onClick={(e) => setTipo(e.target.value)}
+						onClick={handleTipo}
 					/>
-					<label for="moto">Moto</label>
+					<label htmlFor="moto">Moto</label>
 				</div>
-				<div class="severity-class">
+				<div className="severity-class">
 					<input
 						type="radio"
-						class="severity-class"
+						className="severity-class"
 						name="severity"
 						id="leve"
 						value="leve"
-						onClick={(e) => setSeveridad(e.target.value)}
+						onClick={handleSeveridad}
 					/>
-					<label class="severity-class" for="leve">
+					<label className="severity-class" htmlFor="leve">
 						Leve
 					</label>
 					<input
 						type="radio"
-						class="severity-class"
+						className="severity-class"
 						name="severity"
 						id="moderado"
 						value="moderado"
-						onClick={(e) => setSeveridad(e.target.value)}
+						onClick={handleSeveridad}
+						defaultChecked
 					/>
-					<label class="severity-class" for="moderado">
+					<label className="severity-class" htmlFor="moderado">
 						Moderado
 					</label>
 					<input
 						type="radio"
-						class="severity-class"
+						className="severity-class"
 						name="severity"
 						id="grave"
 						value="grave"
-						onClick={(e) => setSeveridad(e.target.value)}
+						onClick={handleSeveridad}
 					/>
-					<label class="severity-class" for="grave">
+					<label className="severity-class" htmlFor="grave">
 						Grave
 					</label>
 				</div>
-				<div class="drop-downs">
-					<label for="group">Grupo</label>
+				<div className="radio-list">
+					{group.map((item, i) => (
+						<div>
+							<label htmlFor={item} key={item}>
+								{item}
+							</label>
+							<input
+								type="radio"
+								name="group"
+								id={item}
+								value={item}
+								key={i}
+								onClick={(e) => setGrupo(e.target.value)}
+							/>
+						</div>
+					))}
+					{section.map((item, i) => (
+						<div>
+							<label htmlFor={item} key={item}>
+								{item}
+							</label>
+							<input
+								type="radio"
+								name="group"
+								id={item}
+								value={item}
+								key={i}
+								onClick={(e) => setSeccion(e.target.value)}
+							/>
+						</div>
+					))}
+					{description.map((item, i) => (
+						<div>
+							<label htmlFor={item} key={item}>
+								{item}
+							</label>
+							<input
+								type="radio"
+								name="group"
+								id={item}
+								value={item}
+								key={i}
+								onClick={(e) => setDescripcion(e.target.value)}
+							/>
+						</div>
+					))}
+
+					{/* <label htmlFor="group">Grupo</label>
 					<select
 						name="group"
 						id="group"
-						onChange={(e) => setGrupo(e.target.value)}>
+						onClick={(e) => setGrupo(e.target.value)}>
 						{group.map((item, i) => (
 							<option key={i} value={item}>
 								{item}
 							</option>
 						))}
 					</select>
-					<label for="section">Sección</label>
+					<label htmlFor="section">Sección</label>
 					<select
 						name="section"
 						id="section"
-						onChange={(e) => setSeccion(e.target.value)}>
+						onClick={(e) => setSeccion(e.target.value)}>
 						{section.map((item, i) => (
 							<option key={i} value={item}>
 								{item}
 							</option>
 						))}
 					</select>
-					<label for="description">Descripción</label>
+					<label htmlFor="description">Descripción</label>
 					<select
 						name="description"
 						id="description"
-						onChange={(e) => setDescripcion(e.target.value)}>
+						onClick={(e) => setDescripcion(e.target.value)}>
 						{description.map((item, i) => (
 							<option key={i} value={item}>
 								{item}
 							</option>
 						))}
-					</select>
+					</select> */}
 				</div>
 				{/* <div>valor de tipo:"{tipo}"</div>
 				<div>valor de severidad:"{severidad}"</div>
 				<div>valor de grupo: "{grupo}"</div>
 				<div>valor de seccion: "{seccion}"</div>
-				<div>valor de descripcion: "{descripcion}"</div>
-				<div></div> */}
+				<div>valor de descripcion: "{descripcion}"</div> */}
 			</form>
 			<div>
-				<button onClick={(e) => armarLista(e.target.grupo)}>Enviar</button>
+				<button onClick={armarLista}>Enviar</button>
 			</div>
 			<div>Lista mágica</div>
-			<div>{listaCompleta}</div>
+			<div>{lista}</div>
 		</div>
 	);
 }
