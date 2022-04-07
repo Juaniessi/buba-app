@@ -6,31 +6,51 @@
 	box-sizing: border-box;
 }
 
+.variable-btn {
+	display: flex;
+	flex-flow: row nowrap;
+}
 .form-radio {
 	display: flex;
 	flex-flow: column nowrap;
 }
 
-.tipe-class {
-	flex-direction: row;
-	margin: 1rem;
-}
-.severity-class {
-	flex-direction: row;
-	margin: 1rem;
+.btn-package {
+	margin: 0.7rem;
 }
 
-.group-class {
-	flex-direction: row;
-	margin: 1rem;
+.col-class {
+	display: flex;
+	flex-flow: column wrap;
 }
 
-.section-class {
-	flex-direction: row;
-	margin: 1rem;
+.group-c {
+	width: 20%;
 }
 
-.description-class {
-	flex-direction: row;
-	margin: 1rem;
+.section-c {
+	width: 25%;
+}
+
+.description-c {
+	width: 45%;
+}
+
+.btn-inside {
+	margin: 0.1rem;
+}
+
+.rad-c {
+	//cambia el tamaño de los radio
+	border: 0px;
+	width: 1em;
+	height: 1em;
+}
+.div-btn{
+	display:flex;
+	justify-content: center;
+	.send-btn{
+	width: 200px;
+	height: 50px;
+}
 }

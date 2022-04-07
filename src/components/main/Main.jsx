@@ -76,10 +76,6 @@ function Main() {
 	};
 
 	switch (grupo) {
-		// el primer case no es necesario
-		/* case 'Suspención':
-			section = sectionSusp;
-			break; */
 		case 'Frenos':
 			section = sectionBrake;
 			break;
@@ -212,113 +208,120 @@ function Main() {
 	console.log(lista);
 
 	return (
-		<div>
+		<main>
 			<form className="form-radio">
-				<div className="tipe-class">
+				<h2>Tipo de vehículo</h2>
+				<div className="btn-package type-c">
 					<input
 						type="radio"
-						className="tipe-class-input"
-						name="tipo"
+						className="btn-inside rad-c"
+						name="type"
 						id="auto"
 						value="auto"
 						onClick={handleTipo}
 						defaultChecked
 					/>
-					<label className="tipe-class-label" htmlFor="auto">
+					<label className="btn-inside" htmlFor="auto">
 						Auto
 					</label>
 					<input
 						type="radio"
-						className="tipe-class-input"
-						name="tipo"
+						className="btn-inside rad-c"
+						name="type"
 						id="moto"
 						value="moto"
 						onClick={handleTipo}
 					/>
-					<label className="tipe-class-label" htmlFor="moto">
+					<label className="btn-inside" htmlFor="moto">
 						Moto
 					</label>
 				</div>
-				<div className="severity-class">
+				<h2>Severidad</h2>
+				<div className="btn-package severity-c">
 					<input
 						type="radio"
-						className="severity-class-input"
+						className="btn-inside rad-c"
 						name="severity"
 						id="leve"
 						value="leve"
 						onClick={handleSeveridad}
 					/>
-					<label className="severity-class-label" htmlFor="leve">
+					<label className="btn-inside" htmlFor="leve">
 						Leve
 					</label>
 					<input
 						type="radio"
-						className="severity-class-input"
+						className="btn-inside rad-c"
 						name="severity"
 						id="moderado"
 						value="moderado"
 						onClick={handleSeveridad}
 						defaultChecked
 					/>
-					<label className="severity-class-label" htmlFor="moderado">
+					<label className="btn-inside" htmlFor="moderado">
 						Moderado
 					</label>
 					<input
 						type="radio"
-						className="severity-class-input"
+						className="btn-inside rad-c"
 						name="severity"
 						id="grave"
 						value="grave"
 						onClick={handleSeveridad}
 					/>
-					<label className="severity-class-label" htmlFor="grave">
+					<label className="btn-inside" htmlFor="grave">
 						Grave
 					</label>
 				</div>
-				<div className="group-class">
-					{group.map((item, i) => (
-						<label className="group-class-label" htmlFor={item} key={i}>
-							{item}
-							<input
-								type="radio"
-								className="group-class-input"
-								name="group"
-								id={item}
-								value={item}
-								onClick={(e) => setGrupo(e.target.value)}
-							/>
-						</label>
-					))}
-				</div>
-				<div className="section-class">
-					{section.map((item, i) => (
-						<label className="section-class-label" htmlFor={item} key={i}>
-							{item}
-							<input
-								type="radio"
-								className="section-class-input"
-								name="group"
-								id={item}
-								value={item}
-								onClick={(e) => setSeccion(e.target.value)}
-							/>
-						</label>
-					))}
-				</div>
-				<div className="description-class">
-					{description.map((item, i) => (
-						<label className="description-class-label" htmlFor={item} key={i}>
-							{item}
-							<input
-								type="radio"
-								className="description-class-input"
-								name="group"
-								id={item}
-								value={item}
-								onClick={(e) => setDescripcion(e.target.value)}
-							/>
-						</label>
-					))}
+				<div className="variable-btn">
+					<div className="btn-package col-class group-c">
+						<h3>Grupo</h3>
+						{group.map((item, i) => (
+							<label className="btn-inside" htmlFor={item} key={i}>
+								<input
+									type="radio"
+									className="btn-inside rad-c"
+									name="group"
+									id={item}
+									value={item}
+									onClick={(e) => setGrupo(e.target.value)}
+								/>
+								{item}
+							</label>
+						))}
+					</div>
+					<div className="btn-package col-class section-c">
+						<h3>Sección</h3>
+						{section.map((item, i) => (
+							<label className="btn-inside" htmlFor={item} key={i}>
+								<input
+									type="radio"
+									className="btn-inside rad-c"
+									name="section"
+									id={item}
+									value={item}
+									onClick={(e) => setSeccion(e.target.value)}
+								/>
+								{item}
+							</label>
+						))}
+					</div>
+					<div className="btn-package col-class description-c">
+						<h3>Descripción</h3>
+						{description.map((item, i) => (
+							<label className="btn-inside" htmlFor={item} key={i}>
+								<input
+									type="radio"
+									className="btn-inside rad-c"
+									name="description"
+									id={item}
+									value={item}
+									onClick={(e) => setDescripcion(e.target.value)}
+								/>
+								{item}
+							</label>
+						))}
+					</div>
 				</div>
 
 				{/* <label htmlFor="group">Grupo</label>
@@ -361,12 +364,14 @@ function Main() {
 				<div>valor de seccion: "{seccion}"</div>
 				<div>valor de descripcion: "{descripcion}"</div> */}
 			</form>
-			<div>
-				<button onClick={armarLista}>Enviar</button>
+			<div className="div-btn">
+				<button className="send-btn" onClick={armarLista}>
+					Agregar a la lista
+				</button>
 			</div>
 			<div>Lista mágica</div>
 			<div>{lista}</div>
-		</div>
+		</main>
 	);
 }
 

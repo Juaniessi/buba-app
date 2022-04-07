@@ -6,6 +6,16 @@
   box-sizing: border-box;
 }
 
+.variable-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+}
+
 .form-radio {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -16,43 +26,53 @@
           flex-flow: column nowrap;
 }
 
-.tipe-class {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin: 1rem;
+.btn-package {
+  margin: 0.7rem;
 }
 
-.severity-class {
-  -webkit-box-orient: horizontal;
+.col-class {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin: 1rem;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
 }
 
-.group-class {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin: 1rem;
+.group-c {
+  width: 20%;
 }
 
-.section-class {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin: 1rem;
+.section-c {
+  width: 25%;
 }
 
-.description-class {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin: 1rem;
+.description-c {
+  width: 45%;
+}
+
+.btn-inside {
+  margin: 0.1rem;
+}
+
+.rad-c {
+  border: 0px;
+  width: 1em;
+  height: 1em;
+}
+
+.div-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.div-btn .send-btn {
+  width: 200px;
+  height: 50px;
 }
 /*# sourceMappingURL=style.css.map */
