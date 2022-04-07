@@ -57,26 +57,29 @@ function Main() {
 		setSeveridad(e.target.value);
 	};
 	const [grupo, setGrupo] = useState(group[0]);
-
 	const [seccion, setSeccion] = useState(sectionSusp[0]);
 	const [descripcion, setDescripcion] = useState(descAlin[0]);
-
 	const [lista, setLista] = useState([]);
 
 	let section; //esta variable almacena el array de seccion a mapear
 	let description; //esta varibale almacena el array de descripción a mapear
 
-	let listaCompleta = [];
-
 	let armarLista = () => {
-		let itemLista = `${grupo}, ${seccion}, ${descripcion}, ${severidad}`;
-		listaCompleta = listaCompleta.concat(itemLista);
+		let itemLista = {
+			grupo: grupo,
+			seccion: seccion,
+			desc: descripcion,
+			sev: severidad,
+		}; /* 	`${grupo}, ${seccion}, ${descripcion}, ${severidad}` */
+		const listaCompleta = listaCompleta.concat(itemLista);
 		setLista(listaCompleta);
 		setGrupo(group[0]);
 		setSeccion(sectionSusp[0]);
 		setDescripcion(descAlin[0]);
 		return listaCompleta;
 	};
+
+	console.log(lista);
 
 	switch (grupo) {
 		case 'Frenos':
@@ -208,7 +211,9 @@ function Main() {
 			description = descAlin;
 	}
 
-	console.log(lista);
+	/* listaCompleta.map((fila) => {
+		console.log(fila);
+	}); */
 
 	return (
 		<main>
@@ -379,7 +384,6 @@ function Main() {
 				</button>
 			</div>
 			<div>Lista mágica</div>
-			<div>{lista}</div>
 		</main>
 	);
 }

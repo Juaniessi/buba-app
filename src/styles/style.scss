@@ -1,5 +1,10 @@
+@font-face {
+	font-family: 'Roboto';
+	src: local('Roboto'), url(../assets/Roboto-Regular.ttf) format('truetype');
+}
+
 * {
-	font-family: 'Courier New', Courier, monospace;
+	font-family: 'Roboto', 'Courier New', Courier, monospace;
 	margin: 0;
 	padding: 0;
 	-webkit-box-sizing: border-box;
@@ -46,11 +51,11 @@
 	width: 1em;
 	height: 1em;
 }
-.div-btn{
-	display:flex;
+.div-btn {
+	display: flex;
 	justify-content: center;
-	.send-btn{
-	width: 200px;
-	height: 50px;
-}
+	.send-btn {
+		width: 200px;
+		height: 50px;
+	}
 }
