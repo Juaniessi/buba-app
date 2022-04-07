@@ -56,9 +56,9 @@ function Main() {
 	const handleSeveridad = (e) => {
 		setSeveridad(e.target.value);
 	};
-	const [grupo, setGrupo] = useState(group[0]); //seteo group[0] para arrancar con la primera del array
+	const [grupo, setGrupo] = useState(group[0]);
 
-	const [seccion, setSeccion] = useState(sectionSusp[0]); // idem seteo
+	const [seccion, setSeccion] = useState(sectionSusp[0]);
 	const [descripcion, setDescripcion] = useState(descAlin[0]);
 
 	const [lista, setLista] = useState([]);
@@ -69,9 +69,12 @@ function Main() {
 	let listaCompleta = [];
 
 	let armarLista = () => {
-		let itemLista = `${grupo}, ${seccion}, ${descripcion}`;
+		let itemLista = `${grupo}, ${seccion}, ${descripcion}, ${severidad}`;
 		listaCompleta = listaCompleta.concat(itemLista);
 		setLista(listaCompleta);
+		setGrupo(group[0]);
+		setSeccion(sectionSusp[0]);
+		setDescripcion(descAlin[0]);
 		return listaCompleta;
 	};
 
@@ -218,8 +221,8 @@ function Main() {
 						name="type"
 						id="auto"
 						value="auto"
-						onClick={handleTipo}
-						defaultChecked
+						checked={tipo === 'auto'}
+						onChange={handleTipo}
 					/>
 					<label className="btn-inside" htmlFor="auto">
 						Auto
@@ -230,7 +233,8 @@ function Main() {
 						name="type"
 						id="moto"
 						value="moto"
-						onClick={handleTipo}
+						checked={tipo === 'moto'}
+						onChange={handleTipo}
 					/>
 					<label className="btn-inside" htmlFor="moto">
 						Moto
@@ -244,7 +248,8 @@ function Main() {
 						name="severity"
 						id="leve"
 						value="leve"
-						onClick={handleSeveridad}
+						checked={severidad === 'leve'}
+						onChange={handleSeveridad}
 					/>
 					<label className="btn-inside" htmlFor="leve">
 						Leve
@@ -255,8 +260,8 @@ function Main() {
 						name="severity"
 						id="moderado"
 						value="moderado"
-						onClick={handleSeveridad}
-						defaultChecked
+						checked={severidad === 'moderado'}
+						onChange={handleSeveridad}
 					/>
 					<label className="btn-inside" htmlFor="moderado">
 						Moderado
@@ -267,7 +272,8 @@ function Main() {
 						name="severity"
 						id="grave"
 						value="grave"
-						onClick={handleSeveridad}
+						checked={severidad === 'grave'}
+						onChange={handleSeveridad}
 					/>
 					<label className="btn-inside" htmlFor="grave">
 						Grave
@@ -284,7 +290,8 @@ function Main() {
 									name="group"
 									id={item}
 									value={item}
-									onClick={(e) => setGrupo(e.target.value)}
+									checked={grupo === item}
+									onChange={(e) => setGrupo(e.target.value)}
 								/>
 								{item}
 							</label>
@@ -300,7 +307,8 @@ function Main() {
 									name="section"
 									id={item}
 									value={item}
-									onClick={(e) => setSeccion(e.target.value)}
+									checked={seccion === item}
+									onChange={(e) => setSeccion(e.target.value)}
 								/>
 								{item}
 							</label>
@@ -316,7 +324,8 @@ function Main() {
 									name="description"
 									id={item}
 									value={item}
-									onClick={(e) => setDescripcion(e.target.value)}
+									checked={descripcion === item}
+									onChange={(e) => setDescripcion(e.target.value)}
 								/>
 								{item}
 							</label>
