@@ -29,6 +29,7 @@
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
+  min-height: 650px;
 }
 
 .btn-package {
@@ -79,5 +80,24 @@
 .div-btn .send-btn {
   width: 200px;
   height: 50px;
+}
+
+table,
+th,
+td {
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+.lista-final {
+  min-width: 800px;
+}
+
+.orange {
+  border: 2px solid orange;
+}
+
+.yellow {
+  border: 2px solid yellow;
 }
 /*# sourceMappingURL=style.css.map */

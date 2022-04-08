@@ -18,6 +18,7 @@
 .form-radio {
 	display: flex;
 	flex-flow: column nowrap;
+	min-height: 650px;
 }
 
 .btn-package {
@@ -58,4 +59,24 @@
 		width: 200px;
 		height: 50px;
 	}
+}
+
+table,
+th,
+td {
+	border: 2px solid black;
+	border-collapse: collapse;
+}
+
+.lista-final{
+	min-width: 800px;
+
+}
+
+.orange{
+	border:2px solid orange;
+}
+
+.yellow{
+	border:2px solid yellow;
 }

@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {useState} from 'react';
-
+import React, {useState} from 'react';
 import {
 	group,
 	sectionSusp,
@@ -48,11 +46,11 @@ import {
 } from '../context/carDataBase';
 
 function Main() {
-	const [tipo, setTipo] = useState('auto');
+	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (e) => {
 		setTipo(e.target.value);
 	};
-	const [severidad, setSeveridad] = useState('moderado');
+	const [severidad, setSeveridad] = useState('Moderado');
 	const handleSeveridad = (e) => {
 		setSeveridad(e.target.value);
 	};
@@ -63,6 +61,21 @@ function Main() {
 
 	let section; //esta variable almacena el array de seccion a mapear
 	let description; //esta varibale almacena el array de descripción a mapear
+	let severityColour;
+
+	switch (severidad) {
+		case 'Leve':
+			severityColour = 'yellow';
+			break;
+		case 'Moderado':
+			severityColour = 'orange';
+			break;
+		case 'Grave':
+			severityColour = 'black';
+			break;
+		default:
+			severityColour = '';
+	}
 
 	let armarLista = () => {
 		let itemLista = {
@@ -72,6 +85,7 @@ function Main() {
 			sev: severidad,
 		};
 		setLista(lista.concat(itemLista));
+		setSeveridad('Moderado');
 		setGrupo(group[0]);
 		setSeccion(sectionSusp[0]);
 		setDescripcion(descAlin[0]);
@@ -81,12 +95,12 @@ function Main() {
 	function defectList(props, i) {
 		const {grupo, seccion, desc, sev} = props;
 		return (
-			<div className="itemLista" key={i}>
-				<div>{grupo}</div>
-				<div>{seccion}</div>
-				<div>{desc}</div>
-				<div>{sev}</div>
-			</div>
+			<tr className={`itemLista ${severityColour()}`} key={i}>
+				<td>{grupo}</td>
+				{/* <td>{seccion}</td> */}
+				<td>{desc}</td>
+				<td>{sev}</td>
+			</tr>
 		);
 	}
 
@@ -220,10 +234,6 @@ function Main() {
 			description = descAlin;
 	}
 
-	/* listaCompleta.map((fila) => {
-		console.log(fila);
-	}); */
-
 	return (
 		<main>
 			<form className="form-radio">
@@ -233,24 +243,24 @@ function Main() {
 						type="radio"
 						className="btn-inside rad-c"
 						name="type"
-						id="auto"
-						value="auto"
-						checked={tipo === 'auto'}
+						id="Auto"
+						value="Auto"
+						checked={tipo === 'Auto'}
 						onChange={handleTipo}
 					/>
-					<label className="btn-inside" htmlFor="auto">
+					<label className="btn-inside" htmlFor="Auto">
 						Auto
 					</label>
 					<input
 						type="radio"
 						className="btn-inside rad-c"
 						name="type"
-						id="moto"
-						value="moto"
-						checked={tipo === 'moto'}
+						id="Moto"
+						value="Moto"
+						checked={tipo === 'Moto'}
 						onChange={handleTipo}
 					/>
-					<label className="btn-inside" htmlFor="moto">
+					<label className="btn-inside" htmlFor="Moto">
 						Moto
 					</label>
 				</div>
@@ -260,36 +270,36 @@ function Main() {
 						type="radio"
 						className="btn-inside rad-c"
 						name="severity"
-						id="leve"
-						value="leve"
-						checked={severidad === 'leve'}
+						id="Leve"
+						value="Leve"
+						checked={severidad === 'Leve'}
 						onChange={handleSeveridad}
 					/>
-					<label className="btn-inside" htmlFor="leve">
+					<label className="btn-inside" htmlFor="Leve">
 						Leve
 					</label>
 					<input
 						type="radio"
 						className="btn-inside rad-c"
 						name="severity"
-						id="moderado"
-						value="moderado"
-						checked={severidad === 'moderado'}
+						id="Moderado"
+						value="Moderado"
+						checked={severidad === 'Moderado'}
 						onChange={handleSeveridad}
 					/>
-					<label className="btn-inside" htmlFor="moderado">
+					<label className="btn-inside" htmlFor="Moderado">
 						Moderado
 					</label>
 					<input
 						type="radio"
 						className="btn-inside rad-c"
 						name="severity"
-						id="grave"
-						value="grave"
-						checked={severidad === 'grave'}
+						id="Grave"
+						value="Grave"
+						checked={severidad === 'Grave'}
 						onChange={handleSeveridad}
 					/>
-					<label className="btn-inside" htmlFor="grave">
+					<label className="btn-inside" htmlFor="Grave">
 						Grave
 					</label>
 				</div>
@@ -346,12 +356,6 @@ function Main() {
 						))}
 					</div>
 				</div>
-
-				{/* <div>valor de tipo:"{tipo}"</div>
-				<div>valor de severidad:"{severidad}"</div>
-				<div>valor de grupo: "{grupo}"</div>
-				<div>valor de seccion: "{seccion}"</div>
-				<div>valor de descripcion: "{descripcion}"</div> */}
 			</form>
 			<div className="div-btn">
 				<button className="send-btn" onClick={armarLista}>
@@ -359,7 +363,18 @@ function Main() {
 				</button>
 			</div>
 			<div>Lista mágica</div>
-			<div>{lista.map(defectList)}</div>
+			<table className="lista-final">
+				<thead>
+					<tr className="lista-headers">
+						<th>Grupo</th>
+						{/* <th>Sección</th> */}
+						<th>Descripción</th>
+						<th>Severidad</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>{lista.map(defectList)}</tbody>
+			</table>
 		</main>
 	);
 }
