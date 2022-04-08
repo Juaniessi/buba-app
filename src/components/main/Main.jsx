@@ -70,16 +70,25 @@ function Main() {
 			seccion: seccion,
 			desc: descripcion,
 			sev: severidad,
-		}; /* 	`${grupo}, ${seccion}, ${descripcion}, ${severidad}` */
-		const listaCompleta = listaCompleta.concat(itemLista);
-		setLista(listaCompleta);
+		};
+		setLista(lista.concat(itemLista));
 		setGrupo(group[0]);
 		setSeccion(sectionSusp[0]);
 		setDescripcion(descAlin[0]);
-		return listaCompleta;
+		return;
 	};
 
-	console.log(lista);
+	function defectList(props, i) {
+		const {grupo, seccion, desc, sev} = props;
+		return (
+			<div className="itemLista" key={i}>
+				<div>{grupo}</div>
+				<div>{seccion}</div>
+				<div>{desc}</div>
+				<div>{sev}</div>
+			</div>
+		);
+	}
 
 	switch (grupo) {
 		case 'Frenos':
@@ -338,40 +347,6 @@ function Main() {
 					</div>
 				</div>
 
-				{/* <label htmlFor="group">Grupo</label>
-					<select
-						name="group"
-						id="group"
-						onClick={(e) => setGrupo(e.target.value)}>
-						{group.map((item, i) => (
-							<option key={i} value={item}>
-								{item}
-							</option>
-						))}
-					</select>
-					<label htmlFor="section">Sección</label>
-					<select
-						name="section"
-						id="section"
-						onClick={(e) => setSeccion(e.target.value)}>
-						{section.map((item, i) => (
-							<option key={i} value={item}>
-								{item}
-							</option>
-						))}
-					</select>
-					<label htmlFor="description">Descripción</label>
-					<select
-						name="description"
-						id="description"
-						onClick={(e) => setDescripcion(e.target.value)}>
-						{description.map((item, i) => (
-							<option key={i} value={item}>
-								{item}
-							</option>
-						))}
-					</select> */}
-
 				{/* <div>valor de tipo:"{tipo}"</div>
 				<div>valor de severidad:"{severidad}"</div>
 				<div>valor de grupo: "{grupo}"</div>
@@ -384,6 +359,7 @@ function Main() {
 				</button>
 			</div>
 			<div>Lista mágica</div>
+			<div>{lista.map(defectList)}</div>
 		</main>
 	);
 }
