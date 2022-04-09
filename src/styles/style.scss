@@ -10,6 +10,9 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
+main{
+	margin: 10px;
+}
 
 .variable-btn {
 	display: flex;
@@ -69,17 +72,17 @@ td {
 }
 
 .lista-final {
-	min-width: 800px;
+	min-width: 840px;
 }
 
 .orange {
-	background-color:rgba(255, 110, 0, 0.40);
+	background-color: rgba(255, 110, 0, 0.3);
 }
 
 .yellow {
-	background-color:rgba(255, 240, 0, 0.40);
+	background-color: rgba(255, 240, 0, 0.3);
 }
 
-.black{
-	background-color:rgba(0, 0, 0, 0.20);
+.black {
+	background-color: rgba(0, 0, 0, 0.15);
 }
