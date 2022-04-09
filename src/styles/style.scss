@@ -10,7 +10,7 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-main{
+main {
 	margin: 10px;
 }
 
@@ -21,7 +21,7 @@ main{
 .form-radio {
 	display: flex;
 	flex-flow: column nowrap;
-	min-height: 500px;
+	min-height: 480px;
 }
 
 .btn-package {
@@ -34,15 +34,14 @@ main{
 }
 
 .group-c {
-	width: 20%;
+	min-width: 165px;
 }
 
 .section-c {
-	width: 25%;
+	min-width: 205px;
 }
 
 .description-c {
-	width: 45%;
 }
 
 .btn-inside {
@@ -58,6 +57,7 @@ main{
 .div-btn {
 	display: flex;
 	justify-content: center;
+	margin-bottom: 1rem;
 	.send-btn {
 		width: 200px;
 		height: 50px;

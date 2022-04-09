@@ -55,21 +55,48 @@ function Main() {
 		setSeveridad(e.target.value);
 	};
 	const [grupo, setGrupo] = useState(group[0]);
+	const handleGrupo = (e) => {
+		setGrupo(e.target.value);
+		setSeccion('');
+		setDescripcion('');
+	};
 	const [seccion, setSeccion] = useState(sectionSusp[0]);
+	const handleSeccion = (e) => {
+		setSeccion(e.target.value);
+		setDescripcion('');
+	};
 	const [descripcion, setDescripcion] = useState(descAlin[0]);
+	const handleDescripcion = (e) => {
+		setDescripcion(e.target.value);
+	};
 	const [lista, setLista] = useState([]);
 
 	let section; //esta variable almacena el array de seccion a mapear
 	let description; //esta varibale almacena el array de descripción a mapear
-	let severityColour;
+	let severityColour; //esta varaible me da el color de la severidad
 
 	let armarLista = () => {
+		let sevOrd = 2;
+
+		switch (severidad) {
+			case 'Leve':
+				sevOrd = 3;
+				break;
+			case 'Grave':
+				sevOrd = 1;
+				break;
+			default:
+				sevOrd = 2; //este es el caso de moderado, que de paso esta seteado al comienzo
+		}
+
 		let itemLista = {
 			grupo: grupo,
 			seccion: seccion,
 			desc: descripcion,
 			sev: severidad,
+			Ord: sevOrd,
 		};
+
 		setLista(lista.concat(itemLista));
 		setSeveridad('Moderado');
 		setGrupo(group[0]);
@@ -104,6 +131,8 @@ function Main() {
 			</tr>
 		);
 	}
+
+	console.log(lista);
 
 	switch (grupo) {
 		case 'Frenos':
@@ -231,6 +260,9 @@ function Main() {
 		case 'Chasis':
 			description = descCha;
 			break;
+		case '': //esto ahce que no se renderice un listado de botones si cambias la categoría
+			description = [];
+			break;
 		default:
 			description = descAlin;
 	}
@@ -316,7 +348,7 @@ function Main() {
 									id={item}
 									value={item}
 									checked={grupo === item}
-									onChange={(e) => setGrupo(e.target.value)}
+									onChange={handleGrupo}
 								/>
 								{item}
 							</label>
@@ -333,7 +365,7 @@ function Main() {
 									id={item}
 									value={item}
 									checked={seccion === item}
-									onChange={(e) => setSeccion(e.target.value)}
+									onChange={handleSeccion}
 								/>
 								{item}
 							</label>
@@ -363,7 +395,7 @@ function Main() {
 					Agregar a la lista
 				</button>
 			</div>
-			<div>Lista mágica</div>
+			<h2>Listado de defectos</h2>
 			<table className="lista-final">
 				<thead>
 					<tr className="lista-headers">
@@ -374,7 +406,17 @@ function Main() {
 						<th>Eliminar</th>
 					</tr>
 				</thead>
-				<tbody>{lista.map(defectList)}</tbody>
+				<tbody>
+					{lista
+						.sort(function (a, b) {
+							if (a.Ord !== b.Ord) return a.Ord - b.Ord;
+							if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
+							if (a.seccion !== b.seccion)
+								return a.seccion > b.seccion ? 1 : -1;
+							return a.desc > b.desc ? 1 : -1;
+						}) //uso operadores ternarios para devolver números y no comprar longitudes
+						.map(defectList)}
+				</tbody>
 			</table>
 		</main>
 	);

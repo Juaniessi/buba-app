@@ -6,7 +6,7 @@ const group = [
 	'Emisiones',
 	'Sistema Eléctrico',
 	'Inspección Visual',
-	'Inspección de Fosa',
+	'Inspección en Fosa',
 ];
 
 /*SECCIONES*/

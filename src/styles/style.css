@@ -33,7 +33,7 @@ main {
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
-  min-height: 500px;
+  min-height: 480px;
 }
 
 .btn-package {
@@ -51,15 +51,11 @@ main {
 }
 
 .group-c {
-  width: 20%;
+  min-width: 165px;
 }
 
 .section-c {
-  width: 25%;
-}
-
-.description-c {
-  width: 45%;
+  min-width: 205px;
 }
 
 .btn-inside {
@@ -79,6 +75,7 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .div-btn .send-btn {
