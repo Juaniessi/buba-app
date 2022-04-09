@@ -18,7 +18,7 @@
 .form-radio {
 	display: flex;
 	flex-flow: column nowrap;
-	min-height: 650px;
+	min-height: 500px;
 }
 
 .btn-package {
@@ -68,15 +68,18 @@ td {
 	border-collapse: collapse;
 }
 
-.lista-final{
+.lista-final {
 	min-width: 800px;
-
 }
 
-.orange{
-	border:2px solid orange;
+.orange {
+	background-color:rgba(255, 110, 0, 0.40);
 }
 
-.yellow{
-	border:2px solid yellow;
+.yellow {
+	background-color:rgba(255, 240, 0, 0.40);
+}
+
+.black{
+	background-color:rgba(0, 0, 0, 0.20);
 }

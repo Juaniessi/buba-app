@@ -1,7 +1,7 @@
 /*GRUPOS*/
 
 const group = [
-	'Suspención',
+	'Suspensión',
 	'Frenos',
 	'Emisiones',
 	'Sistema Eléctrico',
@@ -60,7 +60,7 @@ const sectionPit = ['Fluidos', 'Escape', 'Chasis'];
 
 /*DESCRIPCIONES*/
 
-/*Suspención */
+/*Suspensión */
 
 const descAlin = ['Tren delantero desalineado', 'Tren trasero desalineado'];
 

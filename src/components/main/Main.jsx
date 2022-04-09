@@ -63,20 +63,6 @@ function Main() {
 	let description; //esta varibale almacena el array de descripción a mapear
 	let severityColour;
 
-	switch (severidad) {
-		case 'Leve':
-			severityColour = 'yellow';
-			break;
-		case 'Moderado':
-			severityColour = 'orange';
-			break;
-		case 'Grave':
-			severityColour = 'black';
-			break;
-		default:
-			severityColour = '';
-	}
-
 	let armarLista = () => {
 		let itemLista = {
 			grupo: grupo,
@@ -94,12 +80,27 @@ function Main() {
 
 	function defectList(props, i) {
 		const {grupo, seccion, desc, sev} = props;
+
+		switch (sev) {
+			case 'Leve':
+				severityColour = 'yellow';
+				break;
+			case 'Moderado':
+				severityColour = 'orange';
+				break;
+			case 'Grave':
+				severityColour = 'black';
+				break;
+			default:
+				severityColour = '';
+		}
+
 		return (
-			<tr className={`itemLista ${severityColour()}`} key={i}>
-				<td>{grupo}</td>
-				{/* <td>{seccion}</td> */}
-				<td>{desc}</td>
-				<td>{sev}</td>
+			<tr className={`itemLista ${severityColour}`} key={i}>
+				<td className={`${severityColour}`}>{grupo}</td>
+				{/* <td className={`${severityColour}`}>{seccion}</td> */}
+				<td className={`${severityColour}`}>{desc}</td>
+				<td className={`${severityColour}`}>{sev}</td>
 			</tr>
 		);
 	}

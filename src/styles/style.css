@@ -29,7 +29,7 @@
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
-  min-height: 650px;
+  min-height: 500px;
 }
 
 .btn-package {
@@ -94,10 +94,14 @@ td {
 }
 
 .orange {
-  border: 2px solid orange;
+  background-color: rgba(255, 110, 0, 0.4);
 }
 
 .yellow {
-  border: 2px solid yellow;
+  background-color: rgba(255, 240, 0, 0.4);
+}
+
+.black {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /*# sourceMappingURL=style.css.map */
