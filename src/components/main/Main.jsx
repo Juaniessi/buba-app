@@ -76,7 +76,7 @@ function Main() {
 	let severityColour; //esta varaible me da el color de la severidad
 
 	let armarLista = () => {
-		let sevOrd = 2;
+		let sevOrd = 2; //variable creada para poder ordenar por severidad
 
 		switch (severidad) {
 			case 'Leve':
@@ -105,10 +105,21 @@ function Main() {
 		return;
 	};
 
+	//funcion que borra un item de la lista
+	function eraseDefect(index) {
+		const nuevaLista = lista.filter((algo, i) => {
+			//"algo" es para decirle al filter que tome lasprops y despues "i" que es el índice
+			return index !== i ? true : false;
+		});
+		setLista(nuevaLista);
+	}
+
 	function defectList(props, i) {
 		const {grupo, seccion, desc, sev} = props;
 
-		switch (sev) {
+		switch (
+			sev //cambia entre las clases de los posibles colores según la severidad
+		) {
 			case 'Leve':
 				severityColour = 'yellow';
 				break;
@@ -128,11 +139,12 @@ function Main() {
 				{/* <td className={`${severityColour}`}>{seccion}</td> */}
 				<td className={`${severityColour}`}>{desc}</td>
 				<td className={`${severityColour}`}>{sev}</td>
+				<td>
+					<button onClick={() => eraseDefect(i)}>Borrar</button>
+				</td>
 			</tr>
 		);
 	}
-
-	console.log(lista);
 
 	switch (grupo) {
 		case 'Frenos':
@@ -399,11 +411,11 @@ function Main() {
 			<table className="lista-final">
 				<thead>
 					<tr className="lista-headers">
-						<th>Grupo</th>
+						<th className="strecht-columns">Grupo</th>
 						{/* <th>Sección</th> */}
 						<th>Descripción</th>
-						<th>Severidad</th>
-						<th>Eliminar</th>
+						<th className="strecht-columns">Severidad</th>
+						<th className="strecht-columns">Quitar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -414,7 +426,7 @@ function Main() {
 							if (a.seccion !== b.seccion)
 								return a.seccion > b.seccion ? 1 : -1;
 							return a.desc > b.desc ? 1 : -1;
-						}) //uso operadores ternarios para devolver números y no comprar longitudes
+						}) //uso operadores ternarios para devolver números y no comprar longitudes de strings
 						.map(defectList)}
 				</tbody>
 			</table>

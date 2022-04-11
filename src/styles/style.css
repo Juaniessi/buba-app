@@ -90,6 +90,12 @@ td {
   border-collapse: collapse;
 }
 
+.strecht-columns {
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+}
+
 .lista-final {
   min-width: 840px;
 }
