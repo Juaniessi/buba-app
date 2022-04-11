@@ -90,10 +90,30 @@ td {
   border-collapse: collapse;
 }
 
-.strecht-columns {
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
+.grupo-col {
+  width: 145px;
+  text-align: center;
+}
+
+.severidad-col {
+  width: 80px;
+  text-align: center;
+}
+
+.quitar-col {
+  width: 60px;
+}
+
+.erase-btn-ctn {
+  text-align: center;
+  background-color: white;
+}
+
+.erase-btn-ctn .erase-btn {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
 }
 
 .lista-final {

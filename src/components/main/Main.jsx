@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import trashCan from '../../assets/trash-can-solid.svg';
+
 import {
 	group,
 	sectionSusp,
@@ -54,18 +56,18 @@ function Main() {
 	const handleSeveridad = (e) => {
 		setSeveridad(e.target.value);
 	};
-	const [grupo, setGrupo] = useState(group[0]);
+	const [grupo, setGrupo] = useState('');
 	const handleGrupo = (e) => {
 		setGrupo(e.target.value);
 		setSeccion('');
 		setDescripcion('');
 	};
-	const [seccion, setSeccion] = useState(sectionSusp[0]);
+	const [seccion, setSeccion] = useState('');
 	const handleSeccion = (e) => {
 		setSeccion(e.target.value);
 		setDescripcion('');
 	};
-	const [descripcion, setDescripcion] = useState(descAlin[0]);
+	const [descripcion, setDescripcion] = useState('');
 	const handleDescripcion = (e) => {
 		setDescripcion(e.target.value);
 	};
@@ -99,9 +101,9 @@ function Main() {
 
 		setLista(lista.concat(itemLista));
 		setSeveridad('Moderado');
-		setGrupo(group[0]);
-		setSeccion(sectionSusp[0]);
-		setDescripcion(descAlin[0]);
+		setGrupo('');
+		setSeccion('');
+		setDescripcion('');
 		return;
 	};
 
@@ -115,6 +117,7 @@ function Main() {
 	}
 
 	function defectList(props, i) {
+		//no estoy usando seccion porque de momento no lo quiero en el render, pero lo dejo por si algún día pinta que aparezca
 		const {grupo, seccion, desc, sev} = props;
 
 		switch (
@@ -135,18 +138,27 @@ function Main() {
 
 		return (
 			<tr className={`itemLista ${severityColour}`} key={i}>
-				<td className={`${severityColour}`}>{grupo}</td>
+				<td className={`grupo-col ${severityColour}`}>{grupo}</td>
 				{/* <td className={`${severityColour}`}>{seccion}</td> */}
 				<td className={`${severityColour}`}>{desc}</td>
-				<td className={`${severityColour}`}>{sev}</td>
-				<td>
-					<button onClick={() => eraseDefect(i)}>Borrar</button>
+				<td className={`severidad-col ${severityColour}`}>{sev}</td>
+				<td className="erase-btn-ctn">
+					<button className="erase-btn" onClick={() => eraseDefect(i)}>
+						<img src={trashCan} alt="Trash-can" />
+					</button>
 				</td>
 			</tr>
 		);
 	}
 
+	let setUnlistedDefect = () => {
+		setDescripcion();
+	};
+
 	switch (grupo) {
+		case 'Suspensión':
+			section = sectionSusp;
+			break;
 		case 'Frenos':
 			section = sectionBrake;
 			break;
@@ -159,14 +171,17 @@ function Main() {
 		case 'Inspección Visual':
 			section = sectionVis;
 			break;
-		case 'Inspección de Fosa':
+		case 'Inspección en Fosa':
 			section = sectionPit;
 			break;
 		default:
-			section = sectionSusp;
+			section = [];
 	}
 
 	switch (seccion) {
+		case 'Alineación':
+			description = descAlin;
+			break;
 		case 'Extremos de dirección':
 			description = descExtDir;
 			break;
@@ -272,11 +287,8 @@ function Main() {
 		case 'Chasis':
 			description = descCha;
 			break;
-		case '': //esto ahce que no se renderice un listado de botones si cambias la categoría
-			description = [];
-			break;
 		default:
-			description = descAlin;
+			description = [];
 	}
 
 	return (
@@ -411,11 +423,11 @@ function Main() {
 			<table className="lista-final">
 				<thead>
 					<tr className="lista-headers">
-						<th className="strecht-columns">Grupo</th>
+						<th className="grupo-col">Grupo</th>
 						{/* <th>Sección</th> */}
 						<th>Descripción</th>
-						<th className="strecht-columns">Severidad</th>
-						<th className="strecht-columns">Quitar</th>
+						<th className="severidad-col">Severidad</th>
+						<th className="quitar-col">Quitar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -430,6 +442,29 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
+			<form>
+				<h3>Defecto no listado</h3>
+				<p>
+					Recuerde antes de enviar la descripción seleccionar tanto la{' '}
+					<b>"Severidad"</b> como el <b>"Grupo"</b> correspondientes. Dejando{' '}
+					<b>
+						<i>"Sección"</i>
+					</b>{' '}
+					y{' '}
+					<b>
+						<i>"Descipción"</i>
+					</b>{' '}
+					sin selección.
+				</p>
+				<label htmlFor="special-defect">Describa el defecto aquí:</label>
+				<textarea
+					name="special-defect"
+					id="special-defect"
+					value=""
+					cols="50"
+					rows="3"></textarea>
+				<input type="submit" value="special-defect" />
+			</form>
 		</main>
 	);
 }
