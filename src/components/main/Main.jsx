@@ -71,6 +71,8 @@ function Main() {
 	const handleDescripcion = (e) => {
 		setDescripcion(e.target.value);
 	};
+	const [unlistedDef, setUnlistedDef] = useState('');
+
 	const [lista, setLista] = useState([]);
 
 	let section; //esta variable almacena el array de seccion a mapear
@@ -94,16 +96,27 @@ function Main() {
 		let itemLista = {
 			grupo: grupo,
 			seccion: seccion,
-			desc: descripcion,
+			desc: seccion === 'otro' ? unlistedDef : descripcion,
 			sev: severidad,
 			Ord: sevOrd,
 		};
 
-		setLista(lista.concat(itemLista));
-		setSeveridad('Moderado');
-		setGrupo('');
-		setSeccion('');
-		setDescripcion('');
+		if (
+			severidad !== '' &&
+			grupo !== '' &&
+			seccion !== '' &&
+			(unlistedDef !== '' || descripcion !== '')
+		) {
+			setLista(lista.concat(itemLista));
+			setSeveridad('Moderado');
+			setGrupo('');
+			setSeccion('');
+			setDescripcion('');
+			setUnlistedDef('');
+		} else {
+			alert('Todos los campos deben estar completos');
+		}
+
 		return;
 	};
 
@@ -150,10 +163,6 @@ function Main() {
 			</tr>
 		);
 	}
-
-	let setUnlistedDefect = () => {
-		setDescripcion();
-	};
 
 	switch (grupo) {
 		case 'Suspensión':
@@ -290,7 +299,7 @@ function Main() {
 		default:
 			description = [];
 	}
-
+	console.log(seccion);
 	return (
 		<main>
 			<form className="form-radio">
@@ -302,7 +311,7 @@ function Main() {
 						name="type"
 						id="Auto"
 						value="Auto"
-						checked={tipo === 'Auto'}
+						checked={tipo === 'Auto'} //determina que visualmente se vea checked
 						onChange={handleTipo}
 					/>
 					<label className="btn-inside" htmlFor="Auto">
@@ -394,6 +403,20 @@ function Main() {
 								{item}
 							</label>
 						))}
+						{grupo.length > 0 && ( //esta primera línea hace que se renderice solo si encuentra algo en el array de grupo
+							<label className="btn-inside" htmlFor="otro">
+								<input
+									type="radio"
+									name="section"
+									id="otro"
+									value="otro"
+									checked={seccion === 'otro'}
+									className="btn-inside rad-c"
+									onChange={handleSeccion}
+								/>
+								<b>Otros</b>
+							</label>
+						)}
 					</div>
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
@@ -406,12 +429,27 @@ function Main() {
 									id={item}
 									value={item}
 									checked={descripcion === item}
-									onChange={(e) => setDescripcion(e.target.value)}
+									onChange={handleDescripcion}
 								/>
 								{item}
 							</label>
 						))}
 					</div>
+				</div>
+				<h3 className="unlisted-defect"> Defecto no listado</h3>
+				<div className="unlisted-ctn">
+					<label htmlFor="unlisted-defect" className="unlisted-defect">
+						Seleccióne grupo al que pertenece la falla, luego el seleccione el
+						botón de "Otros", finalmente escriba el defecto:
+					</label>
+					<textarea
+						name="unlisted-defect"
+						id="unlisted-defect"
+						className="unlisted-defect"
+						value={unlistedDef}
+						cols="50"
+						rows="3"
+						onChange={(e) => setUnlistedDef(e.target.value)}></textarea>
 				</div>
 			</form>
 			<div className="div-btn">
@@ -442,29 +480,6 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
-			<form>
-				<h3>Defecto no listado</h3>
-				<p>
-					Recuerde antes de enviar la descripción seleccionar tanto la{' '}
-					<b>"Severidad"</b> como el <b>"Grupo"</b> correspondientes. Dejando{' '}
-					<b>
-						<i>"Sección"</i>
-					</b>{' '}
-					y{' '}
-					<b>
-						<i>"Descipción"</i>
-					</b>{' '}
-					sin selección.
-				</p>
-				<label htmlFor="special-defect">Describa el defecto aquí:</label>
-				<textarea
-					name="special-defect"
-					id="special-defect"
-					value=""
-					cols="50"
-					rows="3"></textarea>
-				<input type="submit" value="special-defect" />
-			</form>
 		</main>
 	);
 }

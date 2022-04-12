@@ -9,11 +9,21 @@
 	padding: 0;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+	font-size: 0.9rem;
 }
 main {
 	margin: 10px;
 }
-
+h1 {
+	font-size: 2rem;
+	margin: 1rem 0 0.5rem 1rem;
+}
+h2 {
+	font-size: 1.4rem;
+}
+h3 {
+	font-size: 1.1rem;
+}
 .variable-btn {
 	display: flex;
 	flex-flow: row nowrap;
@@ -21,7 +31,7 @@ main {
 .form-radio {
 	display: flex;
 	flex-flow: column nowrap;
-	min-height: 480px;
+	min-height: 540px;
 }
 
 .btn-package {
@@ -54,6 +64,17 @@ main {
 	width: 1em;
 	height: 1em;
 }
+
+.unlisted-ctn {
+	display:flex;
+	flex-flow: column nowrap;
+}
+
+.unlisted-defect {
+		margin: 0.2rem;
+		width: 400px;
+	}
+
 .div-btn {
 	display: flex;
 	justify-content: center;
