@@ -727,50 +727,51 @@ const autosArrays = {
 					label: 'Fuelle de maza delantera derecha en mal estado.',
 				},
 				{
-					value: '',
+					value: 'fuelleMazaTraIzq',
 					label: 'Fuelle de maza trasera izquierda en mal estado.',
 				},
 				{
-					value: '',
+					value: 'fuelleMazaTraDer',
 					label: 'Fuelle de maza trasera derecha en mal estado.',
 				},
 				{
-					value: '',
+					value: 'fuelleTransDelIzq',
 					label: 'Fuelle de transmisión delantero izquierdo en mal estado.',
 				},
 				{
-					value: '',
+					value: 'fuelleTransDelDer',
 					label: 'Fuelle de transmisión delantero derecho en mal estado.',
 				},
 				{
-					value: '',
+					value: 'fuelleTransTraIzq',
 					label: 'Fuelle de transmisión trasero izquierdo en mal estado.',
 				},
 				{
-					value: '',
+					value: 'fuelleTransTraDer',
 					label: 'Fuelle de transmisión trasero derecho en mal estado.',
 				},
 			],
 
 			parrillas: [
 				{
-					value: '',
+					value: 'bujeSusDelIzq',
 					label:
 						'Buje parrilla de suspensión delantera izquierda en mal estado. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'bujeSusDelDer',
 					label:
 						'Buje parrilla de suspensión delantera derecha en mal estado. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'bujeSusTraIzq',
 					label:
-						'Buje de parrilla de suspensión trasera izquierda en mal estado.',
+						'Buje de parrilla de suspensión trasera izquierda en mal estado.Reemplazar y alinear.',
 				},
 				{
-					value: '',
-					label: 'Buje parrilla de suspensión trasera derecha en mal estado.',
+					value: 'bujeSusTraDer',
+					label:
+						'Buje parrilla de suspensión trasera derecha en mal estado.Reemplazar y alinear.',
 				},
 				{
 					value: 'brazoPit',
@@ -785,113 +786,111 @@ const autosArrays = {
 						'Bajo rendimiento de amortiguación (amortiguador delantero izquierdo defectuoso).',
 				},
 				{
-					value: '',
+					value: 'bajoRendAmortDelDer',
 					label:
 						'Bajo rendimiento de amortiguación (amortiguador delantero derecho defectuoso).',
 				},
 				{
-					value: '',
+					value: 'bajoRendAmortTraIzq',
 					label:
 						'Bajo rendimiento de amortiguación (amortiguador trasero izquierdo defectuoso).',
 				},
 				{
-					value: '',
+					value: 'bajoRendAmortTraDer',
 					label:
 						'Bajo rendimiento de amortiguación (amortiguador trasero derecho defectuoso).',
 				},
 				{
-					value: '',
+					value: 'perdAmortDelIzq',
 					label: 'Pérdida de fluido en amortiguador delantero izquierdo.',
 				},
 				{
-					value: '',
+					value: 'perdAmortDelDer',
 					label: 'Pérdida de fluido en amortiguador delantero derecho.',
 				},
 				{
-					value: '',
+					value: 'perdAmortTraIzq',
 					label: 'Pérdida de fluido en amortiguador trasero izquierdo.',
 				},
 				{
-					value: '',
+					value: 'perdAmortTraDer',
 					label: 'Pérdida de fluido en amortiguador trasero derecho.',
 				},
 				{
-					value: '',
+					value: 'fijAmortDelIzq',
 					label: 'Fijación de amortiguador delantero izquierdo con holgura.',
 				},
 				{
-					value: '',
+					value: 'fijAmortDelDer',
 					label: 'Fijación de amortiguador delantero derecho con holgura.',
 				},
 				{
-					value: '',
+					value: 'fijAmortTraIzq',
 					label: 'Fijación de amortiguador trasero izquierdo con holgura.',
 				},
 				{
-					value: '',
+					value: 'fijAmortTraDer',
 					label: 'Fijación de amortiguador trasero derecho con holgura.',
 				},
 			],
-
 			cazoletas: [
 				{
-					value: 'CazDelIzq',
+					value: 'cazDelIzq',
 					label:
 						'Cazoleta delantera izquierda con holgura. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'cazDelDer',
 					label:
 						'Cazoleta delantera derecha con holgura. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'cazTraIzq',
 					label:
 						'Cazoleta trasera izquierda con holgura. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'cazTraDer',
 					label: 'Cazoleta trasera derecha con holgura. Reemplazar y alinear.',
 				},
 			],
-
 			suspCPF: [
 				{
-					value: '',
+					value: 'rodDelIzq',
 					label: 'Rodamientos defectuosos rueda delantera izquierda.',
 				},
 				{
-					value: '',
+					value: 'rodDelDer',
 					label: 'Rodamientos defectuosos rueda delantera derecha.',
 				},
 				{
-					value: '',
+					value: 'rodTraIzq',
 					label: 'Rodamientos defectuosos rueda trasera izquierda.',
 				},
 				{
-					value: '',
+					value: 'rodTraDer',
 					label: 'Rodamientos defectuosos rueda trasera derecha.',
 				},
 				{
-					value: '',
+					value: 'barEstDel',
 					label: 'Barra estabilizadora delantera con defectos.',
 				},
 				{
-					value: '',
+					value: 'barEstTra',
 					label: 'Barra estabilizadora trasera con defectos.',
 				},
 				{
-					value: '',
+					value: 'barDirIzq',
 					label:
 						'Barra de dirección con holgura rueda izquierda. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'barDirDer',
 					label:
 						'Barra de dirección con holgura rueda derecha. Reemplazar y alinear.',
 				},
 				{
-					value: '',
+					value: 'puenteTra',
 					label: 'Puente trasero en mal estado.',
 				},
 			],
@@ -900,47 +899,46 @@ const autosArrays = {
 		frenos: {
 			rendDeFrenado: [
 				{
-					value: '',
+					value: 'bajRendDel',
 					label: 'Bajo rendimiento de frenado en eje delantero.',
 				},
 				{
-					value: '',
+					value: 'bajRendTra',
 					label: 'Bajo rendimiento de frenado en eje trasero.',
 				},
 				{
-					value: '',
+					value: 'bajRendFrm',
 					label: 'Bajo rendimiento freno de mano.',
 				},
 			],
-
 			difDeFrenado: [
 				{
-					value: '',
+					value: 'difFreDelRi',
 					label:
 						'Diferencia de frenado eje delantero (frena menos rueda izquierda).',
 				},
 				{
-					value: '',
+					value: 'difFreDelRd',
 					label:
 						'Diferencia de frenado eje delantero (frena menos rueda derecha).',
 				},
 				{
-					value: '',
+					value: 'difFreTraRi',
 					label:
 						'Diferencia de frenado eje trasero (frena menos rueda izquierda).',
 				},
 				{
-					value: '',
+					value: 'difFreTraRd',
 					label:
 						'Diferencia de frenado eje trasero (frena menos rueda derecha).',
 				},
 				{
-					value: '',
+					value: 'difFreFdmRi',
 					label:
 						'Diferencia de frenado freno de mano (frena menos rueda izquierda).',
 				},
 				{
-					value: '',
+					value: 'difFreFdmRd',
 					label:
 						'Diferencia de frenado freno de mano (frena menos rueda derecha).',
 				},
@@ -948,22 +946,22 @@ const autosArrays = {
 
 			ruedaFrenada: [
 				{
-					value: '',
+					value: 'rueFreDelIzq',
 					label:
 						'Rueda frenada, sin accionamiento de frenos (freno delantero izquierdo defectuoso).',
 				},
 				{
-					value: '',
+					value: 'rueFreDelDer',
 					label:
 						'Rueda frenada, sin accionamiento de frenos (freno delantero derecho defectuoso).',
 				},
 				{
-					value: '',
+					value: 'rueFreTraIzq',
 					label:
 						'Rueda frenada, sin accionamiento de frenos (freno trasero izquierdo defectuoso).',
 				},
 				{
-					value: '',
+					value: 'rueFreTraDer',
 					label:
 						'Rueda frenada, sin accionamiento de frenos (freno trasero derecho defectuoso).',
 				},
@@ -971,62 +969,62 @@ const autosArrays = {
 
 			ovalAlab: [
 				{
-					value: '',
+					value: 'disFreDelIzqAlab',
 					label: 'Disco de freno delantero izquierdo alabeado.',
 				},
 				{
-					value: '',
+					value: 'disFreDelDerAlab',
 					label: 'Disco de freno delantero derecho alabeado.',
 				},
 				{
-					value: '',
+					value: 'disFreTraIzqAlab',
 					label: 'Disco de freno trasero izquierdo alabeado.',
 				},
 				{
-					value: '',
+					value: 'disFreTraDerAlab',
 					label: 'Disco de freno trasero derecho alabeado.',
 				},
 				{
-					value: '',
+					value: 'ovaCampFreDelIzq',
 					label: 'Ovalidad en campana de freno delantera izquierda.',
 				},
 				{
-					value: '',
+					value: 'ovaCampFreDelDer',
 					label: 'Ovalidad en campana de freno delantera derecha.',
 				},
 				{
-					value: '',
+					value: 'ovaCampFreTraIzq',
 					label: 'Ovalidad en campana de freno trasera izquierda.',
 				},
 				{
-					value: '',
+					value: 'ovaCampFreTraDer',
 					label: 'Ovalidad en campana de freno trasera derecha.',
 				},
 			],
 
 			frenoCPF: [
 				{
-					value: '',
+					value: 'cirHidDelFre',
 					label:
 						'Circuito hidráulico delantero de sistema de frenado con defectos.',
 				},
 				{
-					value: '',
+					value: 'cirHidTraFre',
 					label:
 						'Circuito hidráulico trasero de sistema de frenado con defectos.',
 				},
 				{
-					value: '',
+					value: 'freDelFueMin',
 					label:
 						'Frenos delanteros no cumplen con la fuerza mínima requerida (1 kN).',
 				},
 				{
-					value: '',
+					value: 'freTraFueMin',
 					label:
 						'Frenos traseros no cumplen con la fuerza mínima requerida (1 kN).',
 				},
 				{
-					value: '',
+					value: 'freManFueMin',
 					label:
 						'Freno de mano no cumple con la fuerza mínima requerida (1 kN).',
 				},
@@ -1036,24 +1034,24 @@ const autosArrays = {
 		emisiones: {
 			gases: [
 				{
-					value: '',
+					value: 'altoNivO2',
 					label:
 						'Emisión de gases supera los límites permitidos (alto nivel de monóxido de carbono).',
 				},
 				{
-					value: '',
+					value: 'altoNivHco',
 					label:
 						'Emisión de gases supera los límites permitidos (alto nivel de hidrocarburos).',
 				},
 				{
-					value: '',
+					value: 'altoNivOpa',
 					label: 'Alto nivel de opacidad en emisiones.',
 				},
 			],
 
 			ruido: [
 				{
-					value: '',
+					value: 'altoNivConSon',
 					label:
 						'Alto nivel de contaminación sonora (superior a 84 decibeles).',
 				},
@@ -1063,491 +1061,471 @@ const autosArrays = {
 		sistElectrico: {
 			lucesDel: [
 				{
-					value: '',
+					value: 'luzGirDelIzq',
 					label: 'Luz de giro delantera izquierda no destella correctamente.',
 				},
 				{
-					value: '',
+					value: 'luzGirDelDer',
 					label: 'Luz de giro delantera derecha no  destella correctamente.',
 				},
 				{
-					value: '',
+					value: 'luzPosDelIzq',
 					label: 'Luz de posición delantera izquierda no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzPosDelDer',
 					label: 'Luz de posición delantera derecha no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzBajIzq',
 					label: 'Luz baja izquierda no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzBajDer',
 					label: 'Luz baja derecha no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzAltDelIzq',
 					label: 'Luz alta delantera izquierda no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzAltDelDer',
 					label: 'Luz alta delantera derecha no enciende.',
 				},
 				{
-					value: '',
-					label: 'Luces de balizas no destellan correctamente.',
+					value: 'luzBalizasDel',
+					label: 'Luces de balizas delanteras no destellan correctamente.',
 				},
 				{
-					value: '',
+					value: 'luzBajSinPatron',
 					label: 'Luz baja no describe patrón reglamentario.',
 				},
 				{
-					value: '',
+					value: 'luzAltSinPatron',
 					label: 'Luz alta no describe patrón reglamentario.',
 				},
 				{
-					value: '',
+					value: 'bajIntIluDelIzq',
 					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
 				},
 				{
-					value: '',
+					value: 'bajIntIluDelDer',
 					label: 'Baja intensidad de iluminación en luz delantera derecha.',
 				},
 			],
-
 			lucesTra: [
 				{
-					value: '',
+					value: 'luzFreTraIzqNoRes',
 					label:
 						'Luz de freno trasera izquierda no responde al accionamiento del pedal.',
 				},
 				{
-					value: '',
+					value: 'luzFreTraDerNoRes',
 					label:
 						'Luz de freno trasera derecha no responde al accionamiento del pedal.',
 				},
 				{
-					value: '',
+					value: 'luzFreTraCenNoRes',
 					label:
 						'Luz de freno trasera central no responde al accionamiento del pedal.',
 				},
 				{
-					value: '',
+					value: 'luzRev',
 					label: 'Luz de reversa no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzPat',
 					label: 'Luz de patente no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzPosTraIzq',
 					label: 'Luz de posición trasera izquierda no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzPosTraDer',
 					label: 'Luz de posición trasera derecha no enciende.',
 				},
 				{
-					value: '',
+					value: 'luzGirTraIzq',
 					label: 'Luz de giro trasera izquierda no destella correctamente.',
 				},
 				{
-					value: '',
+					value: 'luzGirTraDer',
 					label: 'Luz de giro trasera derecha no destella correctamente.',
 				},
 				{
-					value: '',
-					label: 'Luces de balizas no destellan correctamente.',
+					value: 'luzBalizasTra',
+					label: 'Luces de balizas traseras no destellan correctamente.',
 				},
 				{
-					value: '',
+					value: 'bajIntIluTraIzq',
 					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
 				},
 				{
-					value: '',
+					value: 'bajIntIluTraDer',
 					label: 'Baja intensidad de iluminación en luz trasera derecha.',
 				},
 			],
-
 			bocina: [
 				{
-					value: '',
+					value: 'bocina',
 					label: 'Bocina no funciona.',
 				},
 			],
-
 			instrumental: [
 				{
-					value: '',
+					value: 'luzTesAbsEnc',
 					label: 'Luz testigo de ABS encendido.',
 				},
 				{
-					value: '',
+					value: 'luzTesFalEleEnc',
 					label: 'Luz testigo de FALLA ELÉCTRICA encendido.',
 				},
 				{
-					value: '',
+					value: 'luzTesPreAceEnc',
 					label: 'Luz testigo de falta de PRESIÓN DE ACEITE encendido.',
 				},
 				{
-					value: '',
+					value: 'luzTesSisFreEnc',
 					label: 'Luz testigo de falla en el sistema de FRENO encendida.',
 				},
 				{
-					value: '',
+					value: 'luzTesBatEnc',
 					label: 'Luz testigo de BATERÍA encendido.',
 				},
 				{
-					value: '',
+					value: 'luzTesAltTempEnc',
 					label: 'Luz testigo de ALTA TEMPERATURA encendido.',
 				},
 				{
-					value: '',
+					value: 'InsNoFunCor',
 					label: 'Instrumental no funciona correctamente.',
 				},
 			],
-
 			limpiaPararabrisas: [
 				{
-					value: '',
+					value: 'limpiaparabrisas',
 					label: 'No funciona sistema de limpiaparabrisas.',
 				},
 			],
 		},
-
 		/* Inspección Visual */
 		inspVisual: {
 			kit: [
 				{
-					value: '',
+					value: 'kitSeguridad',
 					label: 'Kit de seguridad de incompleto.',
 				},
 			],
-
 			patente: [
 				{
-					value: '',
+					value: 'patDelRot',
 					label: 'Patente delantera no legible y/o rota.',
 				},
 				{
-					value: '',
+					value: 'patTraRot',
 					label: 'Patente trasera no legible y/o rota.',
 				},
 				{
-					value: '',
+					value: 'falPatDel',
 					label: 'Falta patente delantera.',
 				},
 				{
-					value: '',
+					value: 'falPatTra',
 					label: 'Falta patente trasera.',
 				},
 			],
-
 			cintDeSeg: [
 				{
-					value: '',
+					value: 'cinDelIzqDef',
 					label:
 						'Cinturón de seguridad delantero izquierdo defectuoso o faltante.',
 				},
 				{
-					value: '',
+					value: 'cinDelDerDef',
 					label:
 						'Cinturón de seguridad delantero derecho defectuoso o faltante.',
 				},
 				{
-					value: '',
+					value: 'cinTraIzqDef',
 					label:
 						'Cinturón de seguridad trasero izquierdo defectuoso o faltante.',
 				},
 				{
-					value: '',
+					value: 'cinTraDerDef',
 					label: 'Cinturón de seguridad trasero derecho defectuoso o faltante.',
 				},
 				{
-					value: '',
+					value: 'cinTraCenDef',
 					label: 'Cinturón de seguridad trasero central defectuoso o faltante.',
 				},
 			],
-
 			equipamiento: [
 				{
-					value: '',
+					value: 'taponCombustible',
 					label: 'Tapón de combustible no reglamentario.',
 				},
 				{
-					value: '',
+					value: 'bateria',
 					label: 'Batería sin sujeción.',
 				},
 			],
-
 			vidrios: [
 				{
-					value: '',
+					value: 'parRot',
 					label: 'Parabrisas roto.',
 				},
 				{
-					value: '',
+					value: 'polVenDel',
 					label:
 						'Polarizado en ventanas delanteras impiden ver al conductor y/o acompañante.',
 				},
 				{
-					value: '',
+					value: 'obsPar',
 					label:
 						'Obstrucción de visión en parabrisas por elementos adheridos al mismo.',
 				},
 				{
-					value: '',
+					value: 'apeVenDelIzqDef',
 					label:
 						'Sistema  apertura de ventanilla delantera izquierda defectuoso.',
 				},
 				{
-					value: '',
+					value: 'apeVenDelDerDef',
 					label: 'Sistema apertura de ventanilla delantera derecha defectuoso.',
 				},
 				{
-					value: '',
+					value: 'apeVenTraIzqDef',
 					label: 'Sistema apertura de ventanilla trasera izquierda defectuoso.',
 				},
 				{
-					value: '',
+					value: 'apeVenTraDerDef',
 					label: 'Sistema apertura de ventanilla trasera derecha defectuoso.',
 				},
 			],
-
 			paraGolpes: [
 				{
-					value: '',
+					value: 'ancParDelIzqMal',
 					label: 'Anclaje paragolpes delantero izquierdo en mal estado.',
 				},
 				{
-					value: '',
+					value: 'ancParDelDerMal',
 					label: 'Anclaje paragolpes delantero derecho en mal estado.',
 				},
 				{
-					value: '',
+					value: 'ancParTraIzqMal',
 					label: 'Anclaje paragolpes trasero izquierdo en mal estado.',
 				},
 				{
-					value: '',
+					value: 'ancParTraDerMal',
 					label: 'Anclaje paragolpes trasero derecho en mal estado.',
 				},
 				{
-					value: '',
+					value: 'parDelRot',
 					label: 'Paragolpes delantero roto por golpe o descolgado.',
 				},
 				{
-					value: '',
+					value: 'parTraRot',
 					label: 'Paragolpes trasero roto por golpe o descolgado.',
 				},
 				{
-					value: '',
+					value: 'parDelNoReg',
 					label: 'Paragolpes delantero no reglamentario.',
 				},
 				{
-					value: '',
+					value: 'parTraNoReg',
 					label: 'Paragolpes trasero no reglamentario.',
 				},
 			],
-
 			espejos: [
 				{
-					value: '',
+					value: 'espExtIzqNoFun',
 					label: 'Espejo exterior izquierdo no funcional.',
 				},
 				{
-					value: '',
+					value: 'espExtDelNoFun',
 					label: 'Espejo exterior delantero no funcional.',
 				},
 				{
-					value: '',
+					value: 'espIntCenNoFun',
 					label: 'Espejo interior central no funcional.',
 				},
 			],
-
 			opticas: [
 				{
-					value: '',
+					value: 'optDelIzqMal',
 					label: 'Óptica delantera izquierda en mal estado.',
 				},
 				{
-					value: '',
+					value: 'optDelDerMal',
 					label: 'Óptica delantera derecha en mal estado.',
 				},
 				{
-					value: '',
+					value: 'optTraIzqMal',
 					label: 'Óptica trasera izquierda en mal estado.',
 				},
 				{
-					value: '',
+					value: 'optTraDerMal',
 					label: 'Óptica trasera derecha en mal estado.',
 				},
 				{
-					value: '',
+					value: 'optDelIzqOpa',
 					label: 'Óptica delantera izquierda opaca.',
 				},
 				{
-					value: '',
+					value: 'optDelDerOpa',
 					label: 'Óptica delantera derecha opaca.',
 				},
 			],
-
 			ruedas: [
 				{
-					value: '',
+					value: 'neuDelIzqMal',
 					label: 'Neumático delantero izquierdo en mal estado.',
 				},
 				{
-					value: '',
+					value: 'neuDelDerMal',
 					label: 'Neumático delantero derecho en mal estado.',
 				},
 				{
-					value: '',
+					value: 'neuTraIzqMal',
 					label: 'Neumático trasero izquierdo en mal estado.',
 				},
 				{
-					value: '',
+					value: 'neuTraDerMal',
 					label: 'Neumático trasero derecho en mal estado.',
 				},
 				{
-					value: '',
+					value: 'llaDelIzqDef',
 					label: 'Llanta delantera izquierda deformada.',
 				},
 				{
-					value: '',
+					value: 'llaDelDerDef',
 					label: 'Llanta delantera derecha deformada.',
 				},
 				{
-					value: '',
+					value: 'llaTraIzqDef',
 					label: 'Llanta trasera izquierda deformada.',
 				},
 				{
-					value: '',
+					value: 'llaTraDerDef',
 					label: 'Llanta trasera derecha deformada.',
 				},
 				{
-					value: '',
+					value: 'sinRueAux',
 					label: 'Falta rueda de auxilio.',
 				},
 				{
-					value: '',
+					value: 'rueAuxMal',
 					label: 'Rueda de auxilio en mal estado.',
 				},
 				{
-					value: '',
+					value: 'sopRueAuxDef',
 					label: 'Soporte rueda de auxilio con defectos.',
 				},
 				{
-					value: '',
+					value: 'falPerRueDelIzq',
 					label: 'Falta perno/tuerca de fijación en rueda delantera izquierda.',
 				},
 				{
-					value: '',
+					value: 'falPerRueDelDer',
 					label: 'Falta perno/tuerca de fijación en rueda delantera derecha.',
 				},
 				{
-					value: '',
+					value: 'falPerRueTraIzq',
 					label: 'Falta perno/tuerca de fijación en rueda trasera izquierda.',
 				},
 				{
-					value: '',
+					value: 'falPerRueTraDer',
 					label: 'Falta perno/tuerca de fijación en rueda trasera derecha.',
 				},
 			],
-
 			altura: [
 				{
-					value: '',
+					value: 'alturaAum',
 					label: 'Altura del vehiculo aumentada',
 				},
 				{
-					value: '',
+					value: 'alturaDis',
 					label: 'Altura del vehiculo disminuida',
 				},
 			],
-
 			protPasiva: [
 				{
-					value: '',
+					value: 'sinTabique',
 					label: 'Sin tabique divisor.',
 				},
 			],
-
 			airBag: [
 				{
-					value: '',
+					value: 'airDet',
 					label: 'Airbag detonado.',
 				},
 			],
-
 			carroceria: [
 				{
-					value: '',
+					value: 'adiNoRegCar',
 					label: 'Aditamento no reglamentario en la carrocería ',
 				},
 				{
-					value: '',
+					value: 'adiFueLinPar',
 					label:
 						'Aditamento en el vehículo fuera de la línea de los paragolpes.',
 				},
 			],
 		},
-
 		/* Inspección de Fosa */
 		inspFosa: {
 			fluidos: [
 				{
-					value: '',
+					value: 'perAceMot',
 					label: 'Pérdida de aceite de motor.',
 				},
 				{
-					value: '',
+					value: 'perAceTra',
 					label: 'Pérdida de aceite de transmisión.',
 				},
 				{
-					value: '',
+					value: 'perFluHid',
 					label: 'Pérdida de fluido hidráulico.',
 				},
 				{
-					value: '',
+					value: 'perLiqFre',
 					label: 'Pérdida de líquido de freno.',
 				},
 				{
-					value: '',
+					value: 'perLiqRef',
 					label: 'Pérdida de líquido refrigerante.',
 				},
 				{
-					value: '',
+					value: 'perCombustible',
 					label: 'Pérdida de combustible.',
 				},
 				{
-					value: '',
+					value: 'perAciBat',
 					label: 'Pérdida de ácido en la batería.',
 				},
 			],
-
 			sistEscape: [
 				{
-					value: '',
+					value: 'sisEscDef',
 					label: 'Sistema de escape con defectos.',
 				},
 				{
-					value: '',
+					value: 'sisEscRot',
 					label: 'Sistema de escape con roturas o faltantes en sus soportes.',
 				},
 			],
-
 			chasis: [
 				{
-					value: '',
+					value: 'chasisCor',
 					label: 'Chasis en mal estado por corrosión.',
 				},
 				{
-					value: '',
+					value: 'chasisRaj',
 					label: 'Chasis rajado.',
 				},
 				{
-					value: '',
+					value: 'chasisDef',
 					label: 'Chasis deformado.',
 				},
 			],
