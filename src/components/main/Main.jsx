@@ -1,51 +1,7 @@
 import React, {useState} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
-
-import {
-	group,
-	sectionSusp,
-	sectionBrake,
-	sectionEmi,
-	sectionElect,
-	sectionVis,
-	sectionPit,
-	descAlin,
-	descExtDir,
-	descRotulas,
-	descFuelles,
-	descParrillas,
-	descAmortiguadores,
-	descCazoletas,
-	descSuspCPF,
-	descBrakeRen,
-	descBrakeDif,
-	descBrakeRuedaFren,
-	descBrakeOval,
-	descBrakeCPF,
-	descGas,
-	descRuido,
-	descLuzDel,
-	descLuzTra,
-	descBocina,
-	descInstrumental,
-	descLimpiaPar,
-	descKit,
-	descPatente,
-	descCint,
-	descEquip,
-	descVidrios,
-	descParaGol,
-	descEspejos,
-	descOpticas,
-	descRuedas,
-	descAltura,
-	descProtPas,
-	descAir,
-	descCarroceria,
-	descFlu,
-	descEscape,
-	descCha,
-} from '../context/carDataBase';
+import {autoArray} from '../context/carDataBase';
+import {motoArray} from '../context/motoDataBase';
 
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
@@ -72,25 +28,28 @@ function Main() {
 		setDescripcion(e.target.value);
 	};
 	const [unlistedDef, setUnlistedDef] = useState('');
-
 	const [lista, setLista] = useState([]);
 
-	let section; //esta variable almacena el array de seccion a mapear
-	let description; //esta varibale almacena el array de descripción a mapear
+	const tipoArray = tipo === "Auto" ? autoArray : motoArray;
+	let section = grupo !== '' ? tipoArray.seccion[grupo] : []; //esta variable almacena el array de seccion a mapear
+	let description =
+		seccion !== '' && grupo !== ''
+			? tipoArray.descripciones[grupo][seccion] || []
+			: []; //esta varibale almacena el array de descripción a mapear
 	let severityColour; //esta varaible me da el color de la severidad
 
 	let armarLista = () => {
-		let sevOrd = 2; //variable creada para poder ordenar por severidad
+		let sevOrder = 2; //variable creada para poder ordenar por severidad
 
 		switch (severidad) {
 			case 'Leve':
-				sevOrd = 3;
+				sevOrder = 3;
 				break;
 			case 'Grave':
-				sevOrd = 1;
+				sevOrder = 1;
 				break;
 			default:
-				sevOrd = 2; //este es el caso de moderado, que de paso esta seteado al comienzo
+				sevOrder = 2; //este es el caso de moderado, que de paso esta seteado al comienzo
 		}
 
 		let itemLista = {
@@ -98,7 +57,7 @@ function Main() {
 			seccion: seccion,
 			desc: seccion === 'otro' ? unlistedDef : descripcion,
 			sev: severidad,
-			Ord: sevOrd,
+			Ord: sevOrder,
 		};
 
 		if (
@@ -164,142 +123,6 @@ function Main() {
 		);
 	}
 
-	switch (grupo) {
-		case 'Suspensión':
-			section = sectionSusp;
-			break;
-		case 'Frenos':
-			section = sectionBrake;
-			break;
-		case 'Emisiones':
-			section = sectionEmi;
-			break;
-		case 'Sistema Eléctrico':
-			section = sectionElect;
-			break;
-		case 'Inspección Visual':
-			section = sectionVis;
-			break;
-		case 'Inspección en Fosa':
-			section = sectionPit;
-			break;
-		default:
-			section = [];
-	}
-
-	switch (seccion) {
-		case 'Alineación':
-			description = descAlin;
-			break;
-		case 'Extremos de dirección':
-			description = descExtDir;
-			break;
-		case 'Rótulas':
-			description = descRotulas;
-			break;
-		case 'Fuelles':
-			description = descFuelles;
-			break;
-		case 'Parrillas':
-			description = descParrillas;
-			break;
-		case 'Amortiguadores':
-			description = descAmortiguadores;
-			break;
-		case 'Cazoletas':
-			description = descCazoletas;
-			break;
-		case 'Casos poco frecuentes':
-			description = descSuspCPF;
-			break;
-		case 'Rendimiento de frenado':
-			description = descBrakeRen;
-			break;
-		case 'Diferencia de frenado':
-			description = descBrakeDif;
-			break;
-		case 'Rueda frenada':
-			description = descBrakeRuedaFren;
-			break;
-		case 'Ovalidad o Alabeo':
-			description = descBrakeOval;
-			break;
-		case 'Casos poco frecuentes':
-			description = descBrakeCPF;
-			break;
-		case 'Gases':
-			description = descGas;
-			break;
-		case 'Ruido':
-			description = descRuido;
-			break;
-		case 'Luces traseras':
-			description = descLuzTra;
-			break;
-		case 'Luces delanteras':
-			description = descLuzDel;
-			break;
-		case 'Bocina':
-			description = descBocina;
-			break;
-		case 'Instrumental':
-			description = descInstrumental;
-			break;
-		case 'Limpia Parabrisas':
-			description = descLimpiaPar;
-			break;
-		case 'Kit de seguridad':
-			description = descKit;
-			break;
-		case 'Patentes':
-			description = descPatente;
-			break;
-		case 'Cinturones de seguridad':
-			description = descCint;
-			break;
-		case 'Equipamiento':
-			description = descEquip;
-			break;
-		case 'Vidrios':
-			description = descVidrios;
-			break;
-		case 'Paragolpes':
-			description = descParaGol;
-			break;
-		case 'Espejos':
-			description = descEspejos;
-			break;
-		case 'Ópticas':
-			description = descOpticas;
-			break;
-		case 'Ruedas':
-			description = descRuedas;
-			break;
-		case 'Altura':
-			description = descAltura;
-			break;
-		case 'Protección pasiva':
-			description = descProtPas;
-			break;
-		case 'Air bag':
-			description = descAir;
-			break;
-		case 'Carrocería':
-			description = descCarroceria;
-			break;
-		case 'Fluidos':
-			description = descFlu;
-			break;
-		case 'Escape':
-			description = descEscape;
-			break;
-		case 'Chasis':
-			description = descCha;
-			break;
-		default:
-			description = [];
-	}
-	console.log(seccion);
 	return (
 		<main>
 			<form className="form-radio">
@@ -372,35 +195,35 @@ function Main() {
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{group.map((item, i) => (
-							<label className="btn-inside" htmlFor={item} key={i}>
+						{autoArray.grupo.map((item, i) => (
+							<label className="btn-inside" htmlFor={item.value} key={i}>
 								<input
 									type="radio"
 									className="btn-inside rad-c"
 									name="group"
-									id={item}
-									value={item}
-									checked={grupo === item}
+									id={item.value}
+									value={item.value}
+									checked={grupo === item.value}
 									onChange={handleGrupo}
 								/>
-								{item}
+								{item.label}
 							</label>
 						))}
 					</div>
 					<div className="btn-package col-class section-c">
 						<h3>Sección</h3>
 						{section.map((item, i) => (
-							<label className="btn-inside" htmlFor={item} key={i}>
+							<label className="btn-inside" htmlFor={item.value} key={i}>
 								<input
 									type="radio"
 									className="btn-inside rad-c"
 									name="section"
-									id={item}
-									value={item}
-									checked={seccion === item}
+									id={item.value}
+									value={item.value}
+									checked={seccion === item.value}
 									onChange={handleSeccion}
 								/>
-								{item}
+								{item.label}
 							</label>
 						))}
 						{grupo.length > 0 && ( //esta primera línea hace que se renderice solo si encuentra algo en el array de grupo
@@ -421,17 +244,17 @@ function Main() {
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
 						{description.map((item, i) => (
-							<label className="btn-inside" htmlFor={item} key={i}>
+							<label className="btn-inside" htmlFor={item.value} key={i}>
 								<input
 									type="radio"
 									className="btn-inside rad-c"
 									name="description"
-									id={item}
-									value={item}
-									checked={descripcion === item}
+									id={item.value}
+									value={item.value}
+									checked={descripcion === item.value}
 									onChange={handleDescripcion}
 								/>
-								{item}
+								{item.label}
 							</label>
 						))}
 					</div>

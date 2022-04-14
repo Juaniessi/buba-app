@@ -1,4 +1,4 @@
-const autosArrays = {
+const motoArray = {
 	grupo: [
 		{
 			value: 'suspension',
@@ -565,3 +565,4 @@ const autosArrays = {
 		},
 	},
 };
+export {motoArray};
