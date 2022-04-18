@@ -29,8 +29,8 @@ function Main() {
 	};
 	const [unlistedDef, setUnlistedDef] = useState('');
 	const [lista, setLista] = useState([]);
-
-	const tipoArray = tipo === "Auto" ? autoArray : motoArray;
+	console.log(tipo);
+	let tipoArray = tipo === 'Auto' ? autoArray : motoArray;
 	let section = grupo !== '' ? tipoArray.seccion[grupo] : []; //esta variable almacena el array de seccion a mapear
 	let description =
 		seccion !== '' && grupo !== ''
@@ -131,7 +131,7 @@ function Main() {
 					<input
 						type="radio"
 						className="btn-inside rad-c"
-						name="type"
+						name="tipo"
 						id="Auto"
 						value="Auto"
 						checked={tipo === 'Auto'} //determina que visualmente se vea checked
@@ -143,7 +143,7 @@ function Main() {
 					<input
 						type="radio"
 						className="btn-inside rad-c"
-						name="type"
+						name="tipo"
 						id="Moto"
 						value="Moto"
 						checked={tipo === 'Moto'}
@@ -195,7 +195,7 @@ function Main() {
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{autoArray.grupo.map((item, i) => (
+						{tipoArray.grupo.map((item, i) => (
 							<label className="btn-inside" htmlFor={item.value} key={i}>
 								<input
 									type="radio"
