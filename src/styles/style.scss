@@ -66,14 +66,14 @@ h3 {
 }
 
 .unlisted-ctn {
-	display:flex;
+	display: flex;
 	flex-flow: column nowrap;
 }
 
 .unlisted-defect {
-		margin: 0.2rem;
-		width: 400px;
-	}
+	margin: 0.2rem;
+	width: 400px;
+}
 
 .div-btn {
 	display: flex;
@@ -128,4 +128,8 @@ td {
 
 .black {
 	background-color: rgba(0, 0, 0, 0.15);
+}
+
+.descripcion-col {
+	padding-left: 5px;
 }

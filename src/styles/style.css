@@ -160,4 +160,8 @@ td {
 .black {
   background-color: rgba(0, 0, 0, 0.15);
 }
+
+.descripcion-col {
+  padding-left: 5px;
+}
 /*# sourceMappingURL=style.css.map */

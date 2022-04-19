@@ -6,12 +6,12 @@ import {motoArray} from '../context/motoDataBase';
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (e) => {
-		setSeveridad('Moderado');
-		setTipo(e.target.value);
-		setGrupo({value: '', label: ''});
-		setSeccion({value: '', label: ''});
-		setDescripcion({value: '', label: ''});
-		setLista([]);
+			setSeveridad('Moderado');
+			setTipo(e.target.value);
+			setGrupo({value: '', label: ''});
+			setSeccion({value: '', label: ''});
+			setDescripcion({value: '', label: ''});
+			setLista([]);
 	};
 	const [severidad, setSeveridad] = useState('Moderado');
 	const handleSeveridad = (e) => {
@@ -117,7 +117,7 @@ function Main() {
 			<tr className={`itemLista ${severityColour}`} key={i}>
 				<td className={`grupo-col ${severityColour}`}>{grupo}</td>
 				{/* <td className={`${severityColour}`}>{seccion}</td> */}
-				<td className={`${severityColour}`}>{desc}</td>
+				<td className={`descripcion-col ${severityColour}`}>{desc}</td>
 				<td className={`severidad-col ${severityColour}`}>{sev}</td>
 				<td className="erase-btn-ctn">
 					<button className="erase-btn" onClick={() => eraseDefect(i)}>
@@ -306,7 +306,7 @@ function Main() {
 					<tr className="lista-headers">
 						<th className="grupo-col">Grupo</th>
 						{/* <th>Sección</th> */}
-						<th>Descripción</th>
+						<th className="descripcion-col">Descripción</th>
 						<th className="severidad-col">Severidad</th>
 						<th className="quitar-col">Quitar</th>
 					</tr>
