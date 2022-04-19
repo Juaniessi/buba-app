@@ -6,7 +6,12 @@ import {motoArray} from '../context/motoDataBase';
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (e) => {
+		setSeveridad('Moderado');
 		setTipo(e.target.value);
+		setGrupo({value: '', label: ''});
+		setSeccion({value: '', label: ''});
+		setDescripcion({value: '', label: ''});
+		setLista([]);
 	};
 	const [severidad, setSeveridad] = useState('Moderado');
 	const handleSeveridad = (e) => {
