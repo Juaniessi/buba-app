@@ -55,7 +55,7 @@ function Main() {
 		let itemLista = {
 			grupo: grupo.label,
 			seccion: seccion.label,
-			desc: seccion === 'otro' ? unlistedDef : descripcion.label,
+			desc: seccion.value === 'otro' ? unlistedDef : descripcion.label,
 			sev: severidad,
 			Ord: sevOrder,
 		};
@@ -195,38 +195,48 @@ function Main() {
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{tipoArray.grupo.map((item, i) => (
-							<label className="btn-inside" htmlFor={item.value} key={i}>
-								<input
-									type="radio"
-									className="btn-inside rad-c"
-									name="group"
-									id={item.value}
-									value={item.value}
-									checked={grupo.value === item.value}
-									onChange={() => handleGrupo(item)}
-								/>
-								{item.label}
-							</label>
-						))}
+						{tipoArray.grupo
+							.sort(function (a, b) {
+								if (a.label !== b.label);
+								return a.label > b.label ? 1 : -1;
+							})
+							.map((item, i) => (
+								<label className="btn-inside" htmlFor={item.value} key={i}>
+									<input
+										type="radio"
+										className="btn-inside rad-c"
+										name="group"
+										id={item.value}
+										value={item.value}
+										checked={grupo.value === item.value}
+										onChange={() => handleGrupo(item)}
+									/>
+									{item.label}
+								</label>
+							))}
 					</div>
 					<div className="btn-package col-class section-c">
 						<h3>Sección</h3>
-						{section.map((item, i) => (
-							<label className="btn-inside" htmlFor={item.value} key={i}>
-								<input
-									type="radio"
-									className="btn-inside rad-c"
-									name="section"
-									id={item.value}
-									value={item.value}
-									checked={seccion.value === item.value}
-									onChange={() => handleSeccion(item)}
-								/>
-								{item.label}
-							</label>
-						))}
-						{grupo.length > 0 && ( //esta primera línea hace que se renderice solo si encuentra algo en el array de grupo
+						{section
+							.sort(function (a, b) {
+								if (a.label !== b.label);
+								return a.label > b.label ? 1 : -1;
+							})
+							.map((item, i) => (
+								<label className="btn-inside" htmlFor={item.value} key={i}>
+									<input
+										type="radio"
+										className="btn-inside rad-c"
+										name="section"
+										id={item.value}
+										value={item.value}
+										checked={seccion.value === item.value}
+										onChange={() => handleSeccion(item)}
+									/>
+									{item.label}
+								</label>
+							))}
+						{grupo.value.length > 0 && ( //esta primera línea hace que se renderice solo si encuentra algo en el array de grupo
 							<label className="btn-inside" htmlFor="otro">
 								<input
 									type="radio"
@@ -243,27 +253,32 @@ function Main() {
 					</div>
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
-						{description.map((item, i) => (
-							<label className="btn-inside" htmlFor={item.value} key={i}>
-								<input
-									type="radio"
-									className="btn-inside rad-c"
-									name="description"
-									id={item.value}
-									value={item.value}
-									checked={descripcion.value === item.value}
-									onChange={() => handleDescripcion(item)}
-								/>
-								{item.label}
-							</label>
-						))}
+						{description
+							.sort(function (a, b) {
+								if (a.label !== b.label);
+								return a.label > b.label ? 1 : -1;
+							})
+							.map((item, i) => (
+								<label className="btn-inside" htmlFor={item.value} key={i}>
+									<input
+										type="radio"
+										className="btn-inside rad-c"
+										name="description"
+										id={item.value}
+										value={item.value}
+										checked={descripcion.value === item.value}
+										onChange={() => handleDescripcion(item)}
+									/>
+									{item.label}
+								</label>
+							))}
 					</div>
 				</div>
 				<h3 className="unlisted-defect"> Defecto no listado</h3>
 				<div className="unlisted-ctn">
 					<label htmlFor="unlisted-defect" className="unlisted-defect">
-						Seleccióne grupo al que pertenece la falla, luego el seleccione el
-						botón de "Otros", finalmente escriba el defecto:
+						Seleccióne grupo al que pertenece la falla, luego el seleccione la
+						opción "Otros" y finalmente escriba el defecto:
 					</label>
 					<textarea
 						name="unlisted-defect"
