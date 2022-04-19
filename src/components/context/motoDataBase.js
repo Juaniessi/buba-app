@@ -13,11 +13,11 @@ const motoArray = {
 			label: 'Emisiones',
 		},
 		{
-			value: 'sistemaElectrico',
+			value: 'sistElectrico',
 			label: 'Sistema Eléctrico',
 		},
 		{
-			value: 'inspeccionVisual',
+			value: 'inspVisual',
 			label: 'Inspección Visual',
 		},
 	],
@@ -32,14 +32,10 @@ const motoArray = {
 				label: 'Casos poco frecuentes',
 			},
 		],
-		freno: [
+		frenos: [
 			{
 				value: 'rendDeFrenado',
 				label: 'Rendimiento de frenado',
-			},
-			{
-				value: 'difDeFrenado',
-				label: 'Diferencia de frenado',
 			},
 			{
 				value: 'ruedaFrenada',
@@ -81,10 +77,6 @@ const motoArray = {
 				value: 'instrumental',
 				label: 'Instrumental',
 			},
-			{
-				value: 'limpiaParabrisas',
-				label: 'Limpia Parabrisas',
-			},
 		],
 		inspVisual: [
 			{
@@ -122,6 +114,10 @@ const motoArray = {
 			{
 				value: 'ruedas',
 				label: 'Ruedas',
+			},
+			{
+				value: 'cadena',
+				label: 'Cadena',
 			},
 			{
 				value: 'altura',
@@ -442,7 +438,7 @@ const motoArray = {
 					label: 'Cubre óptica roto por golpe.',
 				},
 			],
-			patente: [
+			patentes: [
 				{
 					value: 'patTraRota',
 					label: 'Patente trasera no legible y/o rota.',
@@ -512,7 +508,7 @@ const motoArray = {
 					label: 'Altura del vehiculo disminuida',
 				},
 			],
-			cadenas: [
+			cadena: [
 				{
 					value: 'faltaLub',
 					label: 'Falta de lubricación.',
@@ -526,7 +522,7 @@ const motoArray = {
 					label: 'Cadena Suelta.',
 				},
 			],
-			fluidos: [
+			perdFluidos: [
 				{
 					value: 'perdAceMot',
 					label: 'Pérdida de aceite de motor.',

@@ -12,29 +12,29 @@ function Main() {
 	const handleSeveridad = (e) => {
 		setSeveridad(e.target.value);
 	};
-	const [grupo, setGrupo] = useState('');
-	const handleGrupo = (e) => {
-		setGrupo(e.target.value);
-		setSeccion('');
-		setDescripcion('');
+	const [grupo, setGrupo] = useState({value: '', label: ''});
+	const handleGrupo = (item) => {
+		setGrupo(item);
+		setSeccion({value: '', label: ''});
+		setDescripcion({value: '', label: ''});
 	};
-	const [seccion, setSeccion] = useState('');
-	const handleSeccion = (e) => {
-		setSeccion(e.target.value);
-		setDescripcion('');
+	const [seccion, setSeccion] = useState({value: '', label: ''});
+	const handleSeccion = (item) => {
+		setSeccion(item);
+		setDescripcion({value: '', label: ''});
 	};
-	const [descripcion, setDescripcion] = useState('');
-	const handleDescripcion = (e) => {
-		setDescripcion(e.target.value);
+	const [descripcion, setDescripcion] = useState({value: '', label: ''});
+	const handleDescripcion = (item) => {
+		setDescripcion(item);
 	};
 	const [unlistedDef, setUnlistedDef] = useState('');
 	const [lista, setLista] = useState([]);
-	console.log(tipo);
-	let tipoArray = tipo === 'Auto' ? autoArray : motoArray;
-	let section = grupo !== '' ? tipoArray.seccion[grupo] : []; //esta variable almacena el array de seccion a mapear
+
+	let tipoArray = tipo === 'Auto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
+	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : []; //esta variable almacena el array de seccion a mapear
 	let description =
-		seccion !== '' && grupo !== ''
-			? tipoArray.descripciones[grupo][seccion] || []
+		seccion.value !== '' && grupo.value !== ''
+			? tipoArray.descripciones[grupo.value][seccion.value] || []
 			: []; //esta varibale almacena el array de descripción a mapear
 	let severityColour; //esta varaible me da el color de la severidad
 
@@ -53,24 +53,24 @@ function Main() {
 		}
 
 		let itemLista = {
-			grupo: grupo,
-			seccion: seccion,
-			desc: seccion === 'otro' ? unlistedDef : descripcion,
+			grupo: grupo.label,
+			seccion: seccion.label,
+			desc: seccion === 'otro' ? unlistedDef : descripcion.label,
 			sev: severidad,
 			Ord: sevOrder,
 		};
 
 		if (
 			severidad !== '' &&
-			grupo !== '' &&
-			seccion !== '' &&
-			(unlistedDef !== '' || descripcion !== '')
+			grupo.value !== '' &&
+			seccion.value !== '' &&
+			(unlistedDef !== '' || descripcion.value !== '')
 		) {
 			setLista(lista.concat(itemLista));
 			setSeveridad('Moderado');
-			setGrupo('');
-			setSeccion('');
-			setDescripcion('');
+			setGrupo({value: '', label: ''});
+			setSeccion({value: '', label: ''});
+			setDescripcion({value: '', label: ''});
 			setUnlistedDef('');
 		} else {
 			alert('Todos los campos deben estar completos');
@@ -203,8 +203,8 @@ function Main() {
 									name="group"
 									id={item.value}
 									value={item.value}
-									checked={grupo === item.value}
-									onChange={handleGrupo}
+									checked={grupo.value === item.value}
+									onChange={() => handleGrupo(item)}
 								/>
 								{item.label}
 							</label>
@@ -220,8 +220,8 @@ function Main() {
 									name="section"
 									id={item.value}
 									value={item.value}
-									checked={seccion === item.value}
-									onChange={handleSeccion}
+									checked={seccion.value === item.value}
+									onChange={() => handleSeccion(item)}
 								/>
 								{item.label}
 							</label>
@@ -233,9 +233,9 @@ function Main() {
 									name="section"
 									id="otro"
 									value="otro"
-									checked={seccion === 'otro'}
+									checked={seccion.value === 'otro'}
 									className="btn-inside rad-c"
-									onChange={handleSeccion}
+									onChange={() => handleSeccion({value: 'otro', label: 'Otro'})}
 								/>
 								<b>Otros</b>
 							</label>
@@ -251,8 +251,8 @@ function Main() {
 									name="description"
 									id={item.value}
 									value={item.value}
-									checked={descripcion === item.value}
-									onChange={handleDescripcion}
+									checked={descripcion.value === item.value}
+									onChange={() => handleDescripcion(item)}
 								/>
 								{item.label}
 							</label>
