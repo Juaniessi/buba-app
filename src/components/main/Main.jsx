@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
-import informeAuto from '../../assets/informe-img/informe-con-peso.jpg';
+import informeAuto from '../../assets/informe-img/informe-con-peso.svg';
 import {autoArray} from '../context/carDataBase';
 import {motoArray} from '../context/motoDataBase';
 
@@ -324,7 +324,13 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
-			<img src={informeAuto} alt="informe" />
+			<img className='informe' src={informeAuto} alt="informe" />
+			<div class="container">
+				<label for="file-input" id="file-input-label">
+					Choose Text File
+				</label>
+				<input type="file" id="file-input" accept="text/plain" />
+			</div>
 		</main>
 	);
 }

@@ -115,7 +115,7 @@ h3 {
 table,
 th,
 td {
-  border: 2px solid black;
+  border: 1px solid black;
   border-collapse: collapse;
 }
 
@@ -146,7 +146,7 @@ td {
 }
 
 .lista-final {
-  min-width: 840px;
+  min-width: 570px;
 }
 
 .orange {
@@ -163,5 +163,10 @@ td {
 
 .descripcion-col {
   padding-left: 5px;
+}
+
+.informe {
+  border: solid black 1px;
+  width: 600px;
 }
 /*# sourceMappingURL=style.css.map */
