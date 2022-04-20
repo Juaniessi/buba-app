@@ -1,7 +1,7 @@
 document.querySelector("#file-input").addEventListener("change", function () {
   // files that user has chosen
   let all_files = this.files;
-  if (all_files.length == 0) {
+  if (all_files.length === 0) {
     alert("Error : No file selected");
     return;
   }
@@ -11,7 +11,7 @@ document.querySelector("#file-input").addEventListener("change", function () {
 
   // files types allowed
   let allowed_types = ["text/plain"];
-  if (allowed_types.indexOf(file.type) == -1) {
+  if (allowed_types.indexOf(file.type) === -1) {
     alert("Error : Incorrect file type");
     return;
   }
@@ -51,7 +51,7 @@ document.querySelector("#file-input").addEventListener("change", function () {
 
   // file read progress
   reader.addEventListener("progress", function (e) {
-    if (e.lengthComputable == true) {
+    if (e.lengthComputable === true) {
       document.querySelector("#file-progress-percent").innerHTML = Math.floor(
         (e.loaded / e.total) * 100
       );

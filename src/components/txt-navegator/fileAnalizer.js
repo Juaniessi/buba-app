@@ -57,36 +57,9 @@ import {
 } from "./constantCollections.js";
 import {
   SEMICOLON,
-  EMPTY,
   EMPTY_SPACE,
   NEW_LINE,
   TABS,
-  HEADER,
-  ALINEACION,
-  SUSPENSION_EJE_DELANTERO,
-  SUSPENSION_EJE_TRASERO,
-  OPACIMETRO,
-  ANALIZADOR_DE_GASES,
-  FRENOS_EJE_1,
-  FRENOS_EJE_2,
-  FRENOS_EJE_3,
-  FRENOS_EJE_4,
-  FRENOS_EJE_5,
-  FRENOS_EJE_6,
-  FRENO_DE_MANO_EJE_1,
-  FRENO_DE_MANO_EJE_2,
-  FRENO_DE_MANO_EJE_3,
-  FRENO_DE_MANO_EJE_4,
-  FRENO_DE_MANO_EJE_5,
-  FRENO_DE_MANO_EJE_6,
-  SONOMETRO,
-  LUXOMETRO,
-  INSPECCION_VISUAL,
-  INSPECCION_DH,
-  FRENOS,
-  VALORES_CALIBRADOS,
-  LINEA_DE_PRUEBA,
-  ESTADISTICA_DE_PUESTOS,
   intHeader,
   intAlineacion,
   intSuspencionEjeDelantero,
@@ -132,6 +105,8 @@ let singleFileData = [];
  */
 let mapSingleFile = new Map();
 
+let valorJson = new Map();
+
 // Handle multiple fileuploads
 document.getElementById("file-input").addEventListener(
   "change",
@@ -158,7 +133,12 @@ document.getElementById("file-input").addEventListener(
     });
 
     setTimeout(function () {
-      document.getElementById("singleFileButton").click();
+      // document.getElementById("singleFileButton").click();
+      valorJson = proccesFileGetJson(true) ;
+      document.querySelector("#jsonContainer").innerHTML = valorJson;
+      document.querySelector("#jsonContainer").style.display = "block";
+      //console.log(valorJson) ;
+
     }, 20);
   },
   false
@@ -170,7 +150,7 @@ document.getElementById("file-input").addEventListener(
 document.getElementById("singleFileButton").addEventListener(
   "click",
   function (ev) {
-    let fileData = returnSetOfDataSF();
+    returnSetOfDataSF();
     let transformedMap = populateStructure();
     let text = transformMapToJson(true);
   
@@ -183,13 +163,13 @@ document.getElementById("singleFileButton").addEventListener(
 );
 
 /**
- * Calls the funcitions that will process any files stored in singleFileData
+ * Calls the functions that will process any files stored in singleFileData
  * @returns retrieves the json object
  */
-export function proccesFileGetJson() {
-  let fileData = returnSetOfDataSF();
-  let transformedMap = populateStructure();
-  let text = transformMapToJson();
+export function proccesFileGetJson(stringify) {
+  returnSetOfDataSF();
+  populateStructure();
+  let text = transformMapToJson(stringify);
 
   return text;
 }
@@ -226,6 +206,8 @@ function returnSetOfDataSF() {
   // Abort if there were no files selected
   if (!singleFileData.length) return;
 
+  //console.log(singleFileData) ; //aca se ve la mugre a limpiar
+
   let sanitizedFileData = cleanCategories(singleFileData[0]);
 
   // split by newline separator
@@ -256,7 +238,7 @@ function createMap(item, index, arr) {
  * @returns a string of text clean from categories.
  */
 function cleanCategories(data) {
-  let result = data != undefined ? data : "";
+  let result = data !== undefined ? data : "";
 
   for (let i = 0; i < categories.length; i++) {
     let replaceCategories = categories[i] + "\r\n";
@@ -280,7 +262,7 @@ function cleanElementsOfArray(data) {
   // Abort if there were no files selected
   if (!data.length) return;
 
-  let result = data != undefined ? data : [];
+  let result = data !== undefined ? data : [];
 
   for (let i = 0; i < data.length; i++) {
     result[i] = result[i].replaceAll(EMPTY_SPACE, "");
@@ -302,7 +284,7 @@ function cleanElementsOfArray(data) {
  * @returns  A new array with no empty spaces
  */
 function cleanArrayOfEmpty(dirtyOne) {
-  let newArray = new Array();
+  let newArray = [];
   for (let i = 0; i < dirtyOne.length; i++) {
     if (dirtyOne[i]) {
       newArray.push(dirtyOne[i]);
@@ -426,6 +408,7 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
   mapFrenoDeManoEje_5(key, value, collectionOfMaps[intFrenoDeManoEje_5]);
   mapFrenoDeManoEje_6(key, value, collectionOfMaps[intFrenoDeManoEje_6]);
   mapSonometro(key, value, collectionOfMaps[intSonometro]);
+  mapLuxometro(key, value, collectionOfMaps[intLuxometro]);
   mapInspeccionVisual(key, value, collectionOfMaps[intInspeccionVisual]);
   mapInspeccionDH(key, value, collectionOfMaps[intInspeccionDH]);
   mapFrenos(key, value, collectionOfMaps[intFrenos]);
@@ -445,7 +428,7 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
  */
 function mapHeader(key, value, mappedObj) {
   for (let i = 0; i < headerKeys.length; i++) {
-    if (key == headerKeys[i]) {
+    if (key === headerKeys[i]) {
       mappedObj.set(headerMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -462,7 +445,7 @@ function mapHeader(key, value, mappedObj) {
  */
 function mapAlineacion(key, value, mappedObj) {
   for (let i = 0; i < alineacionKeys.length; i++) {
-    if (key == alineacionKeys[i]) {
+    if (key === alineacionKeys[i]) {
       mappedObj.set(alineacionMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -480,7 +463,7 @@ function mapAlineacion(key, value, mappedObj) {
  */
 function mapSuspencionEjeDelantero(key, value, mappedSuspencionEjeDelantero) {
   for (let i = 0; i < suspencionEjeDelanteroKeys.length; i++) {
-    if (key == suspencionEjeDelanteroKeys[i]) {
+    if (key === suspencionEjeDelanteroKeys[i]) {
       mappedSuspencionEjeDelantero.set(
         suspencionEjeDelanteroMap.get(key),
         mapSingleFile.get(key)
@@ -501,7 +484,7 @@ function mapSuspencionEjeDelantero(key, value, mappedSuspencionEjeDelantero) {
  */
 function mapSuspencionEjeTrasero(key, value, mappedObj) {
   for (let i = 0; i < suspencionEjeTraseroKeys.length; i++) {
-    if (key == suspencionEjeTraseroKeys[i]) {
+    if (key === suspencionEjeTraseroKeys[i]) {
       mappedObj.set(suspencionEjeTraseroMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -519,7 +502,7 @@ function mapSuspencionEjeTrasero(key, value, mappedObj) {
  */
 function mapOpacimetro(key, value, mappedObj) {
   for (let i = 0; i < opacimetroKeys.length; i++) {
-    if (key == opacimetroKeys[i]) {
+    if (key === opacimetroKeys[i]) {
       mappedObj.set(opacimetroMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -537,7 +520,7 @@ function mapOpacimetro(key, value, mappedObj) {
  */
 function mapAnalizadorDeGases(key, value, mappedObj) {
   for (let i = 0; i < analizadorDeGasesKeys.length; i++) {
-    if (key == analizadorDeGasesKeys[i]) {
+    if (key === analizadorDeGasesKeys[i]) {
       mappedObj.set(analizadorDeGasesMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -555,7 +538,7 @@ function mapAnalizadorDeGases(key, value, mappedObj) {
  */
 function mapFrenosEje_1(key, value, mappedObj) {
   for (let i = 0; i < frenosEje_1Keys.length; i++) {
-    if (key == frenosEje_1Keys[i]) {
+    if (key === frenosEje_1Keys[i]) {
       mappedObj.set(frenosEje_1Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -573,7 +556,7 @@ function mapFrenosEje_1(key, value, mappedObj) {
  */
 function mapFrenosEje_2(key, value, mappedObj) {
   for (let i = 0; i < frenosEje_2Keys.length; i++) {
-    if (key == frenosEje_2Keys[i]) {
+    if (key === frenosEje_2Keys[i]) {
       mappedObj.set(frenosEje_2Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -591,7 +574,7 @@ function mapFrenosEje_2(key, value, mappedObj) {
  */
 function mapFrenosEje_3(key, value, mappedObj) {
   for (let i = 0; i < frenosEje_3Keys.length; i++) {
-    if (key == frenosEje_3Keys[i]) {
+    if (key === frenosEje_3Keys[i]) {
       mappedObj.set(frenosEje_3Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -609,7 +592,7 @@ function mapFrenosEje_3(key, value, mappedObj) {
  */
 function mapFrenosEje_4(key, value, mappedObj) {
   for (let i = 0; i < frenosEje_4Keys.length; i++) {
-    if (key == frenosEje_4Keys[i]) {
+    if (key === frenosEje_4Keys[i]) {
       mappedObj.set(frenosEje_4Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -627,7 +610,7 @@ function mapFrenosEje_4(key, value, mappedObj) {
  */
 function mapFrenosEje_5(key, value, mappedObj) {
   for (let i = 0; i < frenosEje_5Keys.length; i++) {
-    if (key == frenosEje_5Keys[i]) {
+    if (key === frenosEje_5Keys[i]) {
       mappedObj.set(frenosEje_5Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -645,7 +628,7 @@ function mapFrenosEje_5(key, value, mappedObj) {
  */
 function mapFrenosEje_6(key, value, mappedObj) {
   for (let i = 0; i < frenosEje_6Keys.length; i++) {
-    if (key == frenosEje_6Keys[i]) {
+    if (key === frenosEje_6Keys[i]) {
       mappedObj.set(frenosEje_6Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -663,7 +646,7 @@ function mapFrenosEje_6(key, value, mappedObj) {
  */
 function mapFrenoDeManoEje_1(key, value, mappedObj) {
   for (let i = 0; i < frenoDeManoEje_1Keys.length; i++) {
-    if (key == frenoDeManoEje_1Keys[i]) {
+    if (key === frenoDeManoEje_1Keys[i]) {
       mappedObj.set(frenoDeManoEje_1Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -681,7 +664,7 @@ function mapFrenoDeManoEje_1(key, value, mappedObj) {
  */
 function mapFrenoDeManoEje_2(key, value, mappedObj) {
   for (let i = 0; i < frenoDeManoEje_2Keys.length; i++) {
-    if (key == frenoDeManoEje_2Keys[i]) {
+    if (key === frenoDeManoEje_2Keys[i]) {
       mappedObj.set(frenoDeManoEje_2Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -699,7 +682,7 @@ function mapFrenoDeManoEje_2(key, value, mappedObj) {
  */
 function mapFrenoDeManoEje_3(key, value, mappedObj) {
   for (let i = 0; i < frenoDeManoEje_3Keys.length; i++) {
-    if (key == frenoDeManoEje_3Keys[i]) {
+    if (key === frenoDeManoEje_3Keys[i]) {
       mappedObj.set(frenoDeManoEje_3Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -717,7 +700,7 @@ function mapFrenoDeManoEje_3(key, value, mappedObj) {
  */
 function mapFrenoDeManoEje_4(key, value, mappedObj) {
   for (let i = 0; i < frenoDeManoEje_4Keys.length; i++) {
-    if (key == frenoDeManoEje_4Keys[i]) {
+    if (key === frenoDeManoEje_4Keys[i]) {
       mappedObj.set(frenoDeManoEje_4Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -735,7 +718,7 @@ function mapFrenoDeManoEje_4(key, value, mappedObj) {
  */
 function mapFrenoDeManoEje_5(key, value, mappedObj) {
   for (let i = 0; i < frenoDeManoEje_5Keys.length; i++) {
-    if (key == frenoDeManoEje_5Keys[i]) {
+    if (key === frenoDeManoEje_5Keys[i]) {
       mappedObj.set(frenoDeManoEje_5Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -753,7 +736,7 @@ function mapFrenoDeManoEje_5(key, value, mappedObj) {
  */
 function mapFrenoDeManoEje_6(key, value, mappedObj) {
   for (let i = 0; i < frenoDeManoEje_6Keys.length; i++) {
-    if (key == frenoDeManoEje_6Keys[i]) {
+    if (key === frenoDeManoEje_6Keys[i]) {
       mappedObj.set(frenoDeManoEje_6Map.get(key), mapSingleFile.get(key));
     }
   }
@@ -771,7 +754,7 @@ function mapFrenoDeManoEje_6(key, value, mappedObj) {
  */
 function mapSonometro(key, value, mappedObj) {
   for (let i = 0; i < sonometroKeys.length; i++) {
-    if (key == sonometroKeys[i]) {
+    if (key === sonometroKeys[i]) {
       mappedObj.set(sonometroMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -789,7 +772,7 @@ function mapSonometro(key, value, mappedObj) {
  */
 function mapLuxometro(key, value, mappedObj) {
   for (let i = 0; i < luxometroKeys.length; i++) {
-    if (key == luxometroKeys[i]) {
+    if (key === luxometroKeys[i]) {
       mappedObj.set(luxometroMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -807,7 +790,7 @@ function mapLuxometro(key, value, mappedObj) {
  */
 function mapInspeccionVisual(key, value, mappedObj) {
   for (let i = 0; i < inspeccionVisualKeys.length; i++) {
-    if (key == inspeccionVisualKeys[i]) {
+    if (key === inspeccionVisualKeys[i]) {
       mappedObj.set(inspeccionVisualMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -825,7 +808,7 @@ function mapInspeccionVisual(key, value, mappedObj) {
  */
 function mapInspeccionDH(key, value, mappedObj) {
   for (let i = 0; i < inspeccionDHKeys.length; i++) {
-    if (key == inspeccionDHKeys[i]) {
+    if (key === inspeccionDHKeys[i]) {
       mappedObj.set(inspeccionDHMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -843,7 +826,7 @@ function mapInspeccionDH(key, value, mappedObj) {
  */
 function mapFrenos(key, value, mappedObj) {
   for (let i = 0; i < frenosKeys.length; i++) {
-    if (key == frenosKeys[i]) {
+    if (key === frenosKeys[i]) {
       mappedObj.set(frenosMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -861,7 +844,7 @@ function mapFrenos(key, value, mappedObj) {
  */
 function mapValoresCalibrados(key, value, mappedObj) {
   for (let i = 0; i < valoresCalibradosKeys.length; i++) {
-    if (key == valoresCalibradosKeys[i]) {
+    if (key === valoresCalibradosKeys[i]) {
       mappedObj.set(valoresCalibradosMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -879,7 +862,7 @@ function mapValoresCalibrados(key, value, mappedObj) {
  */
 function mapLineaDePrueba(key, value, mappedObj) {
   for (let i = 0; i < lineaDePruebaKeys.length; i++) {
-    if (key == lineaDePruebaKeys[i]) {
+    if (key === lineaDePruebaKeys[i]) {
       mappedObj.set(lineaDePruebaMap.get(key), mapSingleFile.get(key));
     }
   }
@@ -897,7 +880,7 @@ function mapLineaDePrueba(key, value, mappedObj) {
  */
 function mapEstadísticaDePuestos(key, value, mappedObj) {
   for (let i = 0; i < estadisticaDePuestosKeys.length; i++) {
-    if (key == estadisticaDePuestosKeys[i]) {
+    if (key === estadisticaDePuestosKeys[i]) {
       mappedObj.set(estadisticaDePuestosMap.get(key), mapSingleFile.get(key));
     }
   }
