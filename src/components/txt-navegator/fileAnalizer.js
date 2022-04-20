@@ -220,6 +220,7 @@ function returnSetOfDataSF() {
   mapSingleFile = new Map();
 
   secondDivision.forEach(createMap);
+  //console.log(mapSingleFile);
   //console.log("Termine ^_^ mapSingleFile" + mapSingleFile);
 
   return mapSingleFile;
@@ -910,7 +911,7 @@ function transformMapToJson(Stringify) {
 
   jsonString = JSON.stringify(obj); // just the minimized json
   
-  if(Stringify){
+  if(Stringify === true){
     jsonString = JSON.stringify(obj, null, TABS); // Stringify with tabs  
   }
 
