@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<link href="./styles.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+<div class="container">
+	<label for="file-input" id="file-input-label">Choose Text File</label>
+	<input type="file" id="file-input" accept="text/plain" multiple="multiple"/>
+	<div id="file-progress-container"><span id="file-progress-percent"></span>% read</div>
+	<div id="contents"></div>
+</div>
+
+<div class="container">
+	<label for="singleFileButton" id="file-button-label">Proccess File</label>
+	<button class="button-input" type="button" id="singleFileButton" accept="text/plain"></button>
+	<pre><code id="jsonContainer"></code></pre>
+</div>
+
+<!-- File Loader -->
+<script type="text/javascript" src="fileLoader.js"> </script>
+<!-- File Analizer -->
+<script type="module" src="fileAnalizer.js"> </script>
+<!-- PDF Builder  -->
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+
+
+</body>
+</html>

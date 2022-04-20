@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
+import informeAuto from '../../assets/informe-img/informe-con-peso.jpg';
 import {autoArray} from '../context/carDataBase';
 import {motoArray} from '../context/motoDataBase';
 
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (e) => {
-			setSeveridad('Moderado');
-			setTipo(e.target.value);
-			setGrupo({value: '', label: ''});
-			setSeccion({value: '', label: ''});
-			setDescripcion({value: '', label: ''});
-			setLista([]);
+		setSeveridad('Moderado');
+		setTipo(e.target.value);
+		setGrupo({value: '', label: ''});
+		setSeccion({value: '', label: ''});
+		setDescripcion({value: '', label: ''});
+		setLista([]);
 	};
 	const [severidad, setSeveridad] = useState('Moderado');
 	const handleSeveridad = (e) => {
@@ -323,6 +324,7 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
+			<img src={informeAuto} alt="informe" />
 		</main>
 	);
 }

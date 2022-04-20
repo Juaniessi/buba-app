@@ -1,0 +1,56 @@
+body {
+	margin: 0;
+	background-color: #de8787;
+}
+
+.container {
+	text-align: center;
+	margin: 40px auto;
+}
+
+#file-input-label, #file-button-label {
+	width: 200px;
+	cursor: pointer;
+	background-color: #336699;
+	color: white;
+	padding: 10px;
+	display: block;
+	margin: 0 auto;
+}
+
+#file-input, .button-input {
+	display: none;
+}
+
+
+
+#file-progress-container {
+	display: none;
+	margin: 15px 0 0 0;
+}
+
+#contents {
+	margin: 15px 0 0 0;
+	display: none;
+	text-align: left;
+	background-color: rgba(0,0,0,0.1);
+	padding: 10px;
+	font-size: 13px;
+	max-height: 300px;
+	overflow: auto;
+}
+
+#jsonContainer {
+	margin: 15px 0 0 0;
+	display: none;
+	text-align: left;
+	background-color: rgba(0,0,0,0.1);
+	padding: 10px;
+	font-size: 13px;
+	max-height: auto;
+	overflow: auto;
+}
+
+pre{
+	background-color: #6c9bca ;
+}
