@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
 import informeAuto from '../../assets/informe-img/informe-con-peso.svg';
+import fileAnalizer from "../txt-navegator/fileAnalizer.js";
 import {autoArray} from '../context/carDataBase';
 import {motoArray} from '../context/motoDataBase';
 
