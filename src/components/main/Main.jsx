@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
 import informeAuto from '../../assets/informe-img/informe-con-peso.svg';
-import fileAnalizer from "../txt-navegator/fileAnalizer.js";
+import {procesTxt} from '../txt-navegator/fileAnalizer.js';
 import {autoArray} from '../context/carDataBase';
 import {motoArray} from '../context/motoDataBase';
 
@@ -325,12 +325,17 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
-			<img className='informe' src={informeAuto} alt="informe" />
-			<div class="container">
-				<label for="file-input" id="file-input-label">
+			<img className="informe" src={informeAuto} alt="informe" />
+			<div className="container">
+				<label htmlFor="file-input" id="file-input-label">
 					Choose Text File
 				</label>
-				<input type="file" id="file-input" accept="text/plain" />
+				<input
+					type="file"
+					id="file-input"
+					accept="text/plain"
+					onChange={() => procesTxt()}
+				/>
 			</div>
 		</main>
 	);

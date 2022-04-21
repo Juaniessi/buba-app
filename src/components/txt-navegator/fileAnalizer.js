@@ -108,45 +108,45 @@ let mapSingleFile = new Map();
 let valorJson = new Map();
 
 // Handle multiple fileuploads
-document.getElementById('file-input').addEventListener(
-	'change',
-	function (ev) {
-		let files = ev.currentTarget.files;
-		let readers = [];
+/* document.getElementById('file-input').addEventListener(
+	'change', */
+function procesTxt(ev) {
+	let files = ev.currentTarget.files;
+	let readers = [];
 
-		// Abort if there were no files selected
-		if (!files.length) return;
+	// Abort if there were no files selected
+	if (!files.length) return;
 
-		// Store promises in array
-		for (let i = 0; i < files.length; i++) {
-			readers.push(readFileAsText(files[i]));
-		}
+	// Store promises in array
+	for (let i = 0; i < files.length; i++) {
+		readers.push(readFileAsText(files[i]));
+	}
 
-		singleFileData = [];
+	singleFileData = [];
 
-		// Trigger Promises
-		Promise.all(readers).then((values) => {
-			// Values will be an array that contains an item
-			// with the text of every selected file
-			// ["File1 Content", "File2 Content" ... "FileN Content"]
-			singleFileData.push(values.toString());
-		});
+	// Trigger Promises
+	Promise.all(readers).then((values) => {
+		// Values will be an array that contains an item
+		// with the text of every selected file
+		// ["File1 Content", "File2 Content" ... "FileN Content"]
+		singleFileData.push(values.toString());
+	});
 
-		setTimeout(function () {
-			// document.getElementById("singleFileButton").click();
-			valorJson = proccesFileGetJson(true);
-			document.querySelector('#jsonContainer').innerHTML = valorJson;
-			document.querySelector('#jsonContainer').style.display = 'block';
-			//console.log(valorJson) ;
-		}, 20);
-	},
-	false
-);
+	setTimeout(function () {
+		// document.getElementById("singleFileButton").click();
+		let valorJson = proccesFileGetJson(true);
+		document.querySelector('#jsonContainer').innerHTML = valorJson;
+		document.querySelector('#jsonContainer').style.display = 'block';
+		//console.log(valorJson) ;
+	}, 20);
+}
+/* 	false
+); */
 
 /**
  * Button to parse data from file into json and print in text
  */
-document.getElementById('singleFileButton').addEventListener(
+/* document.getElementById('singleFileButton').addEventListener(
 	'click',
 	function (ev) {
 		returnSetOfDataSF();
@@ -159,7 +159,7 @@ document.getElementById('singleFileButton').addEventListener(
 		}
 	},
 	false
-);
+); */
 
 /**
  * Calls the functions that will process any files stored in singleFileData
@@ -916,3 +916,5 @@ function transformMapToJson(Stringify) {
 
 	return jsonString;
 }
+
+export {procesTxt};
