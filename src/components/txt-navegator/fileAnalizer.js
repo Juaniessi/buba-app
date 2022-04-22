@@ -104,7 +104,11 @@ let singleFileData = [];
  */
 let mapSingleFile = new Map();
 
-let valorJson = new Map();
+/**
+ *  Global Variable
+ *  Will hold data from the txt file as Json object
+ */
+let valorJson ;
 
 // Handle multiple fileuploads
 /* document.getElementById('file-input').addEventListener(
@@ -136,8 +140,8 @@ function procesTxt(ev) {
 		valorJson = proccesFileGetJson(true);
 		document.querySelector('#jsonContainer').innerHTML = valorJson;
 		document.querySelector('#jsonContainer').style.display = 'block';
-		console.log(valorJson) ;
 
+		console.log(valorJson) ;
 		return valorJson ;
 	}, 20);
 }
