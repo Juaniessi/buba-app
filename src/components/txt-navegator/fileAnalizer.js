@@ -912,9 +912,9 @@ function transformMapToJson(Stringify) {
 
 /**
  * Transforms the structureMap into a object
- * And returns it as a JSON
+ * And returns it.
  *
- * @returns Jsonified global variable structureMap.
+ * @returns objectified global variable structureMap.
  */
  function transformMapToObject() {
 
