@@ -104,9 +104,9 @@ let mapSingleFile = new Map();
 
 /**
  *  Global Variable scopped to this file only
- *  Will hold data from the txt file as Json object
+ *  Will hold data from the txt file as object
  */
-let valorObject ;
+let fileAsObject ;
 
 // Handle multiple fileuploads
 /* document.getElementById('file-input').addEventListener(
@@ -136,12 +136,12 @@ function procesTxt(ev) {
 	setTimeout(function () {
 
 		let valorjson = proccesFileGetJson(true);
-		valorObject = proccesFileGetObject();
+		fileAsObject = proccesFileGetObject();
 		document.querySelector('#jsonContainer').innerHTML = valorjson;
 		document.querySelector('#jsonContainer').style.display = 'block';
 
-		window.valorObject = valorObject ;
-		return valorObject ;
+		window.fileAsObject = fileAsObject ;
+		return fileAsObject ;
 	}, 20);
 }
 
