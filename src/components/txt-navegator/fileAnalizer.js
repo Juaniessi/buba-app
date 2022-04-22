@@ -106,7 +106,7 @@ let mapSingleFile = new Map();
  *  Global Variable scopped to this file only
  *  Will hold data from the txt file as object
  */
-let fileAsObject ;
+let fileAsObject;
 
 // Handle multiple fileuploads
 /* document.getElementById('file-input').addEventListener(
@@ -134,17 +134,15 @@ function procesTxt(ev) {
 	});
 
 	setTimeout(function () {
-
 		let valorjson = proccesFileGetJson(true);
 		fileAsObject = proccesFileGetObject();
 		document.querySelector('#jsonContainer').innerHTML = valorjson;
 		document.querySelector('#jsonContainer').style.display = 'block';
 
-		window.fileAsObject = fileAsObject ;
-		return fileAsObject ;
-	}, 20);
+		window.fileAsObject = fileAsObject;
+		return fileAsObject;
+	}, 50);
 }
-
 
 /**
  * Calls the functions that will process any files stored in singleFileData
@@ -160,7 +158,7 @@ export function proccesFileGetJson(stringify) {
  * Calls the functions that will process any files stored in singleFileData
  * @returns retrieves the object
  */
- export function proccesFileGetObject() {
+export function proccesFileGetObject() {
 	returnSetOfDataSF();
 	populateStructure();
 	return transformMapToObject();
@@ -916,8 +914,7 @@ function transformMapToJson(Stringify) {
  *
  * @returns objectified global variable structureMap.
  */
- function transformMapToObject() {
-
+function transformMapToObject() {
 	/** Transform main Map into object */
 	let obj = Object.fromEntries(structureMap);
 
