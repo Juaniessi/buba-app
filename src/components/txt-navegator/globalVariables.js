@@ -56,17 +56,6 @@ import {
 	estadisticaDePuestosMap,
 } from './constantCollections.js';
 
-/**
- * File used to store global variables, should the exist probably not, but they do, so deal with it
- *
- * TODO --> https://stackoverflow.com/questions/44415229/how-can-i-store-my-data-in-a-global-variable
- * --> https://trackjs.com/blog/how-to-wrap-javascript-functions/
- * --> https://stackoverflow.com/questions/5258829/wrapping-a-function-in-javascript-jquery
- *
- *      //let singleFileData = [];
- *      //let mapSingleFile = new Map();
- *
- */
 
 /**
  *  Global Variable stores the map with the excel representation of data

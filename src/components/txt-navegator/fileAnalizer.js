@@ -87,28 +87,26 @@ import {
 	intEstadisticaDePuesto,
 } from './constantVariables.js';
 import {structureMap} from './globalVariables.js';
-// This didnt work as planned i have to wrap global variables into a function. More info appended to globalVariables.js
-// import {singleFileData,mapSingleFile} from "./globalVariables.js";
 
 /**
- *   Global Variable
+ *   Global Variable scopped to this file only
  *   Is used to store the value of the read file.
  *   While it's cleaned trimed parsed and deconstructed
  */
 let singleFileData = [];
 
 /**
- *  Global Variable
+ *  Global Variable scopped to this file only
  *  Will hold data from the txt file
  *  already parsed, cleaned and deconstructed.
  */
 let mapSingleFile = new Map();
 
 /**
- *  Global Variable
+ *  Global Variable scopped to this file only
  *  Will hold data from the txt file as Json object
  */
-let valorJson ;
+let valorObject ;
 
 // Handle multiple fileuploads
 /* document.getElementById('file-input').addEventListener(
@@ -137,12 +135,13 @@ function procesTxt(ev) {
 
 	setTimeout(function () {
 
-		valorJson = proccesFileGetJson(true);
-		document.querySelector('#jsonContainer').innerHTML = valorJson;
+		let valorjson = proccesFileGetJson(true);
+		valorObject = proccesFileGetObject();
+		document.querySelector('#jsonContainer').innerHTML = valorjson;
 		document.querySelector('#jsonContainer').style.display = 'block';
 
-		console.log(valorJson) ;
-		return valorJson ;
+		window.valorObject = valorObject ;
+		return valorObject ;
 	}, 20);
 }
 
@@ -154,9 +153,17 @@ function procesTxt(ev) {
 export function proccesFileGetJson(stringify) {
 	returnSetOfDataSF();
 	populateStructure();
-	let text = transformMapToJson(stringify);
+	return transformMapToJson(stringify);
+}
 
-	return text;
+/**
+ * Calls the functions that will process any files stored in singleFileData
+ * @returns retrieves the object
+ */
+ export function proccesFileGetObject() {
+	returnSetOfDataSF();
+	populateStructure();
+	return transformMapToObject();
 }
 
 /**
@@ -901,6 +908,29 @@ function transformMapToJson(Stringify) {
 	}
 
 	return jsonString;
+}
+
+/**
+ * Transforms the structureMap into a object
+ * And returns it as a JSON
+ *
+ * @returns Jsonified global variable structureMap.
+ */
+ function transformMapToObject() {
+
+	/** Transform main Map into object */
+	let obj = Object.fromEntries(structureMap);
+
+	/** Transform submap into object and set it to obj */
+	for (let i = 0; i < collectionOfVariables.length; i++) {
+		let internalObj = Object.fromEntries(
+			structureMap.get(collectionOfVariables[i])
+		);
+		let varToSearch = collectionOfVariables[i];
+		obj[varToSearch] = internalObj;
+	}
+
+	return obj;
 }
 
 export {procesTxt};
