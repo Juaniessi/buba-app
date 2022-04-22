@@ -1,5 +1,4 @@
 import {
-	structureFinalMap,
 	categories,
 	headerMap,
 	alineacionMap,
@@ -133,33 +132,16 @@ function procesTxt(ev) {
 	});
 
 	setTimeout(function () {
-		// document.getElementById("singleFileButton").click();
-		let valorJson = proccesFileGetJson(true);
+
+		valorJson = proccesFileGetJson(true);
 		document.querySelector('#jsonContainer').innerHTML = valorJson;
 		document.querySelector('#jsonContainer').style.display = 'block';
-		//console.log(valorJson) ;
+		console.log(valorJson) ;
+
+		return valorJson ;
 	}, 20);
 }
-/* 	false
-); */
 
-/**
- * Button to parse data from file into json and print in text
- */
-/* document.getElementById('singleFileButton').addEventListener(
-	'click',
-	function (ev) {
-		returnSetOfDataSF();
-		let transformedMap = populateStructure();
-		let text = transformMapToJson(true);
-
-		if (transformedMap !== structureFinalMap) {
-			document.querySelector('#jsonContainer').innerHTML = text;
-			document.querySelector('#jsonContainer').style.display = 'block';
-		}
-	},
-	false
-); */
 
 /**
  * Calls the functions that will process any files stored in singleFileData

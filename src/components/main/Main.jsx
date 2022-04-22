@@ -334,8 +334,11 @@ function Main() {
 					type="file"
 					id="file-input"
 					accept="text/plain"
-					onChange={() => procesTxt()}
+					onChange={(ev) => procesTxt(ev)}
 				/>
+			</div>
+			<div className="container">
+				<pre><code id="jsonContainer"></code></pre>
 			</div>
 		</main>
 	);
