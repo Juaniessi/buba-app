@@ -1450,35 +1450,35 @@ export const N70001 = '70001';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70010 = '70010';
+export const N70002 = '70002';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70011 = '70011';
+export const N70003 = '70003';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70012 = '70012';
+export const N70004 = '70004';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70013 = '70013';
+export const N70005 = '70005';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70014 = '70014';
+export const N70006 = '70006';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70015 = '70015';
+export const N70007 = '70007';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70016 = '70016';
+export const N70008 = '70008';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70017 = '70017';
+export const N70009 = '70009';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
