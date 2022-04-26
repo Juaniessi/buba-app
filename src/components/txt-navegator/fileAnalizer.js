@@ -111,7 +111,7 @@ let fileAsObject;
 // Handle multiple fileuploads
 /* document.getElementById('file-input').addEventListener(
 	'change', */
-function procesTxt(ev) {
+export function procesTxt(ev) {
 	let files = ev.currentTarget.files;
 	let readers = [];
 
@@ -140,6 +140,7 @@ function procesTxt(ev) {
 		document.querySelector('#jsonContainer').style.display = 'block';
 
 		window.fileAsObject = fileAsObject;
+		window.fileAsMap = structureMap;
 		return fileAsObject;
 	}, 50);
 }
@@ -930,4 +931,3 @@ function transformMapToObject() {
 	return obj;
 }
 
-export {procesTxt};
