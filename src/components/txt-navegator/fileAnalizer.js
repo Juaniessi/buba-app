@@ -930,4 +930,3 @@ function transformMapToObject() {
 
 	return obj;
 }
-

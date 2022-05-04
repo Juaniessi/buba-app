@@ -166,7 +166,8 @@ td {
 }
 
 .informe {
+  margin: 10px 0;
   border: solid black 1px;
-  width: 720px;
+  width: 600px;
 }
 /*# sourceMappingURL=style.css.map */

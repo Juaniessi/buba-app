@@ -37,6 +37,14 @@ function Main() {
 	const [unlistedDef, setUnlistedDef] = useState('');
 	const [lista, setLista] = useState([]);
 
+	const [txtRender, setTxtRender] = useState('');
+	const handleTxtRender = (e) => {
+		procesTxt(e);
+		setTimeout(function () {
+			setTxtRender(window.fileAsObject);
+		}, 60);
+	};
+
 	let tipoArray = tipo === 'Auto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
 	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : []; //esta variable almacena el array de seccion a mapear
 	let description =
@@ -129,6 +137,17 @@ function Main() {
 			</tr>
 		);
 	}
+
+	//fecha de emisión y vencimiento
+	let fecha = new Date();
+
+	function addDays(date, days) {
+		const result = new Date(date);
+		result.setDate(result.getDate() + days);
+		return result;
+	}
+
+	let fechaVen = addDays(fecha, 60);
 
 	return (
 		<main>
@@ -334,12 +353,63 @@ function Main() {
 					type="file"
 					id="file-input"
 					accept="text/plain"
-					onChange={(ev) => procesTxt(ev)}
+					onChange={handleTxtRender}
 				/>
 			</div>
 			<div className="container">
-				<pre><code id="jsonContainer"></code></pre>
+				<pre>
+					<code id="jsonContainer"></code>
+				</pre>
 			</div>
+			{txtRender === '' ? (
+				''
+			) : (
+				<article className="txtRender">
+					<div className="date">
+						<p>
+							{fecha.getDate() +
+								'/' +
+								(fecha.getMonth() + 1) +
+								'/' +
+								fecha.getFullYear()}
+						</p>
+						<p>
+							{fechaVen.getDate() +
+								'/' +
+								(fechaVen.getMonth() + 1) +
+								'/' +
+								fechaVen.getFullYear()}
+						</p>
+					</div>
+					<div className="headerInfo">
+						<p>{window.fileAsObject.header.patente}</p>
+						<p>{window.fileAsObject.header.marcaDelVehiculo}</p>
+						<p>{window.fileAsObject.header.modelo}</p>
+						<p>{window.fileAsObject.header.kilometros}</p>
+					</div>
+					<div className="alineacion">
+						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje1}</p>
+						<p></p>
+						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje2}</p>
+						<p></p>
+					</div>
+					<div className="peso">
+						<p>
+							{Math.round(
+								Number(
+									window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo.replace(
+										',',
+										'.'
+									)
+								) * 100
+							) / 100}
+						</p>
+						<p>{window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho}</p>
+						<p>{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}</p>
+						<p>{window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}</p>
+					</div>
+				</article>
+			)}
 		</main>
 	);
 }
