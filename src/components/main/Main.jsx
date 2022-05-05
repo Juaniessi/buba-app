@@ -97,14 +97,16 @@ function Main() {
 	//funcion que borra un item de la lista
 	function eraseDefect(index) {
 		const nuevaLista = lista.filter((algo, i) => {
-			//"algo" es para decirle al filter que tome lasprops y despues "i" que es el índice
+			/* "algo" es para decirle al filter que tome las props
+			 y despues "i" que es el índice */
 			return index !== i ? true : false;
 		});
 		setLista(nuevaLista);
 	}
 
 	function defectList(props, i) {
-		//no estoy usando seccion porque de momento no lo quiero en el render, pero lo dejo por si algún día pinta que aparezca
+		/* no estoy usando seccion porque de momento no lo quiero en el render, 
+		pero lo dejo por si algún día pinta que aparezca */
 		const {grupo, seccion, desc, sev} = props;
 
 		switch (
@@ -148,6 +150,15 @@ function Main() {
 	}
 
 	let fechaVen = addDays(fecha, 60);
+
+	/* convierte strings en números, le pasas el string como primer parámetro y
+	la cantidad de cifras significativas, como segundo parámetro. */
+	function numConverter(strNum, n) {
+		let numReady =
+			Math.round(Number(strNum.replace(',', '.')) * Math.pow(10, n)) /
+			Math.pow(10, n);
+		return numReady;
+	}
 
 	return (
 		<main>
@@ -388,25 +399,119 @@ function Main() {
 						<p>{window.fileAsObject.header.kilometros}</p>
 					</div>
 					<div className="alineacion">
-						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje1}</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.alineacion.resultadoAlineacionEje1,
+								2
+							)}
+						</p>
 						<p></p>
-						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje2}</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.alineacion.resultadoAlineacionEje2,
+								2
+							)}
+						</p>
 						<p></p>
 					</div>
 					<div className="peso">
 						<p>
-							{Math.round(
-								Number(
-									window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo.replace(
-										',',
-										'.'
-									)
-								) * 100
-							) / 100}
+							{numConverter(
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo,
+								2
+							)}
 						</p>
-						<p>{window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho}</p>
-						<p>{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}</p>
-						<p>{window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho,
+								2
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo,
+								2
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho,
+								2
+							)}
+						</p>
+					</div>
+					<div className="suspension">
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeDelantero
+									.rendimientoDelanteroIzquierdo,
+								2
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeDelantero
+									.rendimientoDelanteroDerecho,
+								2
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeTrasero
+									.rendimientoTraseroIzquierdo,
+								2
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.suspensionEjeTrasero
+									.rendimientoTraseroDerecho,
+								2
+							)}
+						</p>
+					</div>
+					<div className="frenos">
+						<div className="rendimiento">
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2.rendimientoDelEje,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1.rendimientoDelEje,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje,
+									2
+								)}
+							</p>
+						</div>
+						<div className="diferencia">
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1.diferenciaFzaFrenadoLadoALado,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2.diferenciaFzaFrenadoLadoALado,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenoDeManoEje_2
+										.diferenciaFzaFrenadoLadoALado,
+									2
+								)}
+							</p>
+						</div>
 					</div>
 				</article>
 			)}
