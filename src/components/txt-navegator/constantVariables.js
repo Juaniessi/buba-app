@@ -387,6 +387,14 @@ export const rendimientoDelanteroDerecho = 'rendimientoDelanteroDerecho';
  */
 export const rendimientoDelanteroIzquierdo = 'rendimientoDelanteroIzquierdo';
 /**
+ * Normalization of name rendimientoTraseroDerecho for the key in the final JSON structure.
+ */
+ export const rendimientoTraseroDerecho = 'rendimientoTraseroDerecho';
+ /**
+  * Normalization of name rendimientoTraseroIzquierdo for the key in the final JSON structure.
+  */
+ export const rendimientoTraseroIzquierdo = 'rendimientoTraseroIzquierdo';
+/**
  * Normalization of name amplitudMaximaLadoDerecho for the key in the final JSON structure.
  */
 export const amplitudMaximaLadoDerecho = 'amplitudMaximaLadoDerecho';

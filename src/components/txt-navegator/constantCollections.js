@@ -63,6 +63,8 @@ import {
 	resultadoAlineacionEje6,
 	rendimientoDelanteroDerecho,
 	rendimientoDelanteroIzquierdo,
+	rendimientoTraseroDerecho,
+	rendimientoTraseroIzquierdo,
 	amplitudMaximaLadoDerecho,
 	amplitudMaximaLadoIzquierdo,
 	pesoLadoDerecho,
@@ -1085,8 +1087,8 @@ export const suspencionEjeDelanteroMap = new Map([
  * All keys and values from the suspencionEjeTrasero category in the excel file.
  */
 export const suspencionEjeTraseroMap = new Map([
-	[N31100, rendimientoDelanteroDerecho],
-	[N31101, rendimientoDelanteroIzquierdo],
+	[N31100, rendimientoTraseroDerecho],
+	[N31101, rendimientoTraseroIzquierdo],
 	[N31110, amplitudMaximaLadoDerecho],
 	[N31111, amplitudMaximaLadoIzquierdo],
 	[N31120, pesoLadoDerecho],
