@@ -153,10 +153,17 @@ function Main() {
 
 	/* convierte strings en números, le pasas el string como primer parámetro y
 	la cantidad de cifras significativas, como segundo parámetro. */
+
 	function numConverter(strNum, n) {
 		let numReady =
 			Math.round(Number(strNum.replace(',', '.')) * Math.pow(10, n)) /
 			Math.pow(10, n);
+		return numReady;
+	}
+
+	function numConverter2(strNum) {
+		let numReady =
+		parseFloat(strNum.toFixed(2))
 		return numReady;
 	}
 
@@ -355,10 +362,10 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
-			<img className="informe" src={informeAuto} alt="informe" />
+
 			<div className="container">
 				<label htmlFor="file-input" id="file-input-label">
-					Choose Text File
+					Seleccione archivo a procesar
 				</label>
 				<input
 					type="file"
@@ -367,6 +374,7 @@ function Main() {
 					onChange={handleTxtRender}
 				/>
 			</div>
+			<img className="informe" src={informeAuto} alt="informe" />
 			<div className="container">
 				<pre>
 					<code id="jsonContainer"></code>
@@ -512,7 +520,110 @@ function Main() {
 								)}
 							</p>
 						</div>
+						<div className="fuerzaDeFrenado">
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenoDeManoEje_2
+										.fuerzaDeFrenadoLadoIzquierdo,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenoDeManoEje_2
+										.fuerzaDeFrenadoLadoDerecho,
+									2
+								)}
+							</p>
+						</div>
+						<div className="resistenciaRodadura">
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1
+										.resistenciaALaRodaduraLadoIzquierdo,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1
+										.resistenciaALaRodaduraLadoDerecho,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2
+										.resistenciaALaRodaduraLadoIzquierdo,
+									2
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2
+										.resistenciaALaRodaduraLadoDerecho,
+									2
+								)}
+							</p>
+						</div>
+						<div className="ovalidad">
+							{/* multiplico x100 porque el dato que traigo no trae ese detalle. */}
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
+									3
+								) * 100}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_1.ovalidadLadoDerecho,
+									3
+								) * 100}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
+									3
+								) * 100}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.frenosEje_2.ovalidadLadoDerecho,
+									3
+								) * 100}
+							</p>
+						</div>
 					</div>
+					<p>
+								{numConverter2(
+									"1.2",
+									3
+								) /0.4}
+							</p>
 				</article>
 			)}
 		</main>
