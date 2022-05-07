@@ -154,16 +154,24 @@ function Main() {
 	/* convierte strings en números, le pasas el string como primer parámetro y
 	la cantidad de cifras significativas, como segundo parámetro. */
 
-	function numConverter(strNum, n) {
+	/* No la borro porque fue un logro investigar y crearla. Así me queda. */
+
+	/* function numConverter(strNum, n) {
 		let numReady =
 			Math.round(Number(strNum.replace(',', '.')) * Math.pow(10, n)) /
 			Math.pow(10, n);
 		return numReady;
+	} */
+
+	function numConverter(strNum, n) {
+		let numReady = parseFloat(strNum.replace(',', '.')).toFixed(n);
+		return numReady;
 	}
 
-	function numConverter2(strNum) {
-		let numReady =
-		parseFloat(strNum.toFixed(2))
+	/* Esta sirve para los números que no vienen calculados en % directamente */
+
+	function numConverter2(strNum, n) {
+		let numReady = (parseFloat(strNum.replace(',', '.')) * 100).toFixed(n);
 		return numReady;
 	}
 
@@ -593,37 +601,32 @@ function Main() {
 						<div className="ovalidad">
 							{/* multiplico x100 porque el dato que traigo no trae ese detalle. */}
 							<p>
-								{numConverter(
+								{numConverter2(
 									window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
-									3
-								) * 100}
+									2
+								)}
 							</p>
 							<p>
-								{numConverter(
+								{numConverter2(
 									window.fileAsObject.frenosEje_1.ovalidadLadoDerecho,
-									3
-								) * 100}
+									2
+								)}
 							</p>
 							<p>
-								{numConverter(
+								{numConverter2(
 									window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
-									3
-								) * 100}
+									2
+								)}
 							</p>
 							<p>
-								{numConverter(
+								{numConverter2(
 									window.fileAsObject.frenosEje_2.ovalidadLadoDerecho,
-									3
-								) * 100}
+									2
+								)}
 							</p>
 						</div>
 					</div>
-					<p>
-								{numConverter2(
-									"1.2",
-									3
-								) /0.4}
-							</p>
+					<div className='luxometro'></div>
 				</article>
 			)}
 		</main>
