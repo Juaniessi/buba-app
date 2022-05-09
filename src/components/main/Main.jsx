@@ -43,6 +43,12 @@ function Main() {
 		setTimeout(function () {
 			setTxtRender(window.fileAsObject);
 		}, 60);
+		setTimeout(function () {
+			objectReplacer();
+		}, 90);
+		setTimeout(function () {
+			console.log(window.fileAsObject);
+		}, 120);
 	};
 
 	let tipoArray = tipo === 'Auto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
@@ -164,15 +170,24 @@ function Main() {
 	} */
 
 	function numConverter(strNum, n) {
-		let numReady = parseFloat(strNum.replace(',', '.')).toFixed(n);
+		let numReady = Number(parseFloat(strNum.replace(',', '.')).toFixed(n));
 		return numReady;
 	}
 
 	/* Esta sirve para los números que no vienen calculados en % directamente */
 
 	function numConverter2(strNum, n) {
-		let numReady = (parseFloat(strNum.replace(',', '.')) * 100).toFixed(n);
+		let numReady = Number((parseFloat(strNum.replace(',', '.')) * 100).toFixed(n));
 		return numReady;
+	}
+
+	/* funciones para evaluar valores extraidos de txt */
+
+	function objectReplacer() {
+		window.fileAsObject.alineacion.resultadoAlineacionEje1 = numConverter(
+			window.fileAsObject.alineacion.resultadoAlineacionEje1,
+			2
+		);
 	}
 
 	return (
@@ -366,7 +381,7 @@ function Main() {
 							if (a.seccion !== b.seccion)
 								return a.seccion > b.seccion ? 1 : -1;
 							return a.desc > b.desc ? 1 : -1;
-						}) //uso operadores ternarios para devolver números y no comprar longitudes de strings
+						}) //uso operadores ternarios para devolver números y no comparar longitudes de strings
 						.map(defectList)}
 				</tbody>
 			</table>
@@ -383,6 +398,7 @@ function Main() {
 				/>
 			</div>
 			<img className="informe" src={informeAuto} alt="informe" />
+			{/* muestra lo que queda en el obejeto despues de analziar el txt  */}
 			<div className="container">
 				<pre>
 					<code id="jsonContainer"></code>
@@ -415,12 +431,7 @@ function Main() {
 						<p>{window.fileAsObject.header.kilometros}</p>
 					</div>
 					<div className="alineacion">
-						<p>
-							{numConverter(
-								window.fileAsObject.alineacion.resultadoAlineacionEje1,
-								2
-							)}
-						</p>
+						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje1}</p>
 						<p></p>
 						<p>
 							{numConverter(
@@ -626,7 +637,109 @@ function Main() {
 							</p>
 						</div>
 					</div>
-					<div className='luxometro'></div>
+					<div className="luxometro">
+						<div className="intesidad">
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.intensidadBajaIzquierda,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.intensidadBajaDerecha,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.intensidadAltaIzquierda,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.intensidadAltaDerecha,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.intensidadAuxiliarIzquierda,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.intensidadAuxiliarDerecha,
+									1
+								)}
+							</p>
+						</div>
+						<div className="alineacionLux">
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro
+										.alineacionFaroIzquierdoHorizontal,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.alineacionFaroDerechoHorizontal,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical,
+									1
+								)}
+							</p>
+							<p>
+								{numConverter(
+									window.fileAsObject.luxometro.alineacionFaroDerechoVertical,
+									1
+								)}
+							</p>
+						</div>
+					</div>
+					<div className="decibelimetro">
+						<p>
+							{numConverter(window.fileAsObject.sonometro.valorDeMedicion, 1)}
+						</p>
+					</div>
+					<div className="gases">
+						<p>
+							{numConverter(
+								window.fileAsObject.analizadorDeGases
+									.resultadoMonoxidoDeCarbonoCO,
+								1
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.analizadorDeGases
+									.resultadoPartesPorMillonHC,
+								1
+							)}
+						</p>
+						<p>
+							{numConverter(
+								window.fileAsObject.analizadorDeGases
+									.resultadoPartesPorMillonNox,
+								1
+							)}
+						</p>
+					</div>
+					<div className="opacimetro">
+						<p>
+							{numConverter(
+								window.fileAsObject.opacimetro.resultadoMedicionOpacidad,
+								1
+							)}
+						</p>
+					</div>
 				</article>
 			)}
 		</main>
