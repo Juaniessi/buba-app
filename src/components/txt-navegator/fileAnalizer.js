@@ -1109,8 +1109,8 @@ function fixPercentajesInObj(obj)  {
 	obj.frenoDeManoEje_6.ovalidadLadoDerecho = numberToPercentage(frenoMano6_Ovalidad1,TWO_INT)  ;
 	obj.frenoDeManoEje_6.ovalidadLadoDerecho = numberToPercentage(frenoMano6_Ovalidad2,TWO_INT)  ;
 
-
-	
+	let año = obj.header.añoDeFabricacion ;
+	obj.header.añoDeFabricacion = stringToNumberNotFixed(año) ;
 
 
 	}
