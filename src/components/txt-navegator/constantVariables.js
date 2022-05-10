@@ -1731,3 +1731,8 @@ export const N80039 = '80039';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N80040 = '80040';
+
+/**
+ * Amount of decimal values used to round a number
+ */
+export const TWO_INT = 2 ;

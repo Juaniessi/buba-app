@@ -56,6 +56,7 @@ import {
 } from './constantCollections.js';
 import {
 	SEMICOLON,
+	EMPTY,
 	EMPTY_SPACE,
 	NEW_LINE,
 	TABS,
@@ -85,6 +86,7 @@ import {
 	intValoresCalibrados,
 	intLineaDePrueba,
 	intEstadisticaDePuesto,
+	TWO_INT,
 } from './constantVariables.js';
 import {structureMap} from './globalVariables.js';
 
@@ -438,7 +440,10 @@ function mapHeader(key, value, mappedObj) {
 function mapAlineacion(key, value, mappedObj) {
 	for (let i = 0; i < alineacionKeys.length; i++) {
 		if (key === alineacionKeys[i]) {
-			mappedObj.set(alineacionMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(alineacionMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -456,9 +461,11 @@ function mapAlineacion(key, value, mappedObj) {
 function mapSuspencionEjeDelantero(key, value, mappedSuspencionEjeDelantero) {
 	for (let i = 0; i < suspencionEjeDelanteroKeys.length; i++) {
 		if (key === suspencionEjeDelanteroKeys[i]) {
-			mappedSuspencionEjeDelantero.set(
-				suspencionEjeDelanteroMap.get(key),
-				mapSingleFile.get(key)
+
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,1)
+
+			mappedSuspencionEjeDelantero.set(suspencionEjeDelanteroMap.get(key),convertedToNum
+			
 			);
 		}
 	}
@@ -477,7 +484,10 @@ function mapSuspencionEjeDelantero(key, value, mappedSuspencionEjeDelantero) {
 function mapSuspencionEjeTrasero(key, value, mappedObj) {
 	for (let i = 0; i < suspencionEjeTraseroKeys.length; i++) {
 		if (key === suspencionEjeTraseroKeys[i]) {
-			mappedObj.set(suspencionEjeTraseroMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,1)
+			
+			mappedObj.set(suspencionEjeTraseroMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -495,7 +505,10 @@ function mapSuspencionEjeTrasero(key, value, mappedObj) {
 function mapOpacimetro(key, value, mappedObj) {
 	for (let i = 0; i < opacimetroKeys.length; i++) {
 		if (key === opacimetroKeys[i]) {
-			mappedObj.set(opacimetroMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(opacimetroMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -513,7 +526,10 @@ function mapOpacimetro(key, value, mappedObj) {
 function mapAnalizadorDeGases(key, value, mappedObj) {
 	for (let i = 0; i < analizadorDeGasesKeys.length; i++) {
 		if (key === analizadorDeGasesKeys[i]) {
-			mappedObj.set(analizadorDeGasesMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(analizadorDeGasesMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -531,7 +547,11 @@ function mapAnalizadorDeGases(key, value, mappedObj) {
 function mapFrenosEje_1(key, value, mappedObj) {
 	for (let i = 0; i < frenosEje_1Keys.length; i++) {
 		if (key === frenosEje_1Keys[i]) {
-			mappedObj.set(frenosEje_1Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenosEje_1Map.get(key), convertedToNum);
+			
 		}
 	}
 	return mappedObj;
@@ -549,7 +569,10 @@ function mapFrenosEje_1(key, value, mappedObj) {
 function mapFrenosEje_2(key, value, mappedObj) {
 	for (let i = 0; i < frenosEje_2Keys.length; i++) {
 		if (key === frenosEje_2Keys[i]) {
-			mappedObj.set(frenosEje_2Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenosEje_2Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -567,7 +590,10 @@ function mapFrenosEje_2(key, value, mappedObj) {
 function mapFrenosEje_3(key, value, mappedObj) {
 	for (let i = 0; i < frenosEje_3Keys.length; i++) {
 		if (key === frenosEje_3Keys[i]) {
-			mappedObj.set(frenosEje_3Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenosEje_3Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -585,7 +611,10 @@ function mapFrenosEje_3(key, value, mappedObj) {
 function mapFrenosEje_4(key, value, mappedObj) {
 	for (let i = 0; i < frenosEje_4Keys.length; i++) {
 		if (key === frenosEje_4Keys[i]) {
-			mappedObj.set(frenosEje_4Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenosEje_4Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -603,7 +632,10 @@ function mapFrenosEje_4(key, value, mappedObj) {
 function mapFrenosEje_5(key, value, mappedObj) {
 	for (let i = 0; i < frenosEje_5Keys.length; i++) {
 		if (key === frenosEje_5Keys[i]) {
-			mappedObj.set(frenosEje_5Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenosEje_5Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -621,7 +653,10 @@ function mapFrenosEje_5(key, value, mappedObj) {
 function mapFrenosEje_6(key, value, mappedObj) {
 	for (let i = 0; i < frenosEje_6Keys.length; i++) {
 		if (key === frenosEje_6Keys[i]) {
-			mappedObj.set(frenosEje_6Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenosEje_6Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -639,7 +674,10 @@ function mapFrenosEje_6(key, value, mappedObj) {
 function mapFrenoDeManoEje_1(key, value, mappedObj) {
 	for (let i = 0; i < frenoDeManoEje_1Keys.length; i++) {
 		if (key === frenoDeManoEje_1Keys[i]) {
-			mappedObj.set(frenoDeManoEje_1Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenoDeManoEje_1Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -657,7 +695,10 @@ function mapFrenoDeManoEje_1(key, value, mappedObj) {
 function mapFrenoDeManoEje_2(key, value, mappedObj) {
 	for (let i = 0; i < frenoDeManoEje_2Keys.length; i++) {
 		if (key === frenoDeManoEje_2Keys[i]) {
-			mappedObj.set(frenoDeManoEje_2Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenoDeManoEje_2Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -675,7 +716,10 @@ function mapFrenoDeManoEje_2(key, value, mappedObj) {
 function mapFrenoDeManoEje_3(key, value, mappedObj) {
 	for (let i = 0; i < frenoDeManoEje_3Keys.length; i++) {
 		if (key === frenoDeManoEje_3Keys[i]) {
-			mappedObj.set(frenoDeManoEje_3Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenoDeManoEje_3Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -693,7 +737,10 @@ function mapFrenoDeManoEje_3(key, value, mappedObj) {
 function mapFrenoDeManoEje_4(key, value, mappedObj) {
 	for (let i = 0; i < frenoDeManoEje_4Keys.length; i++) {
 		if (key === frenoDeManoEje_4Keys[i]) {
-			mappedObj.set(frenoDeManoEje_4Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenoDeManoEje_4Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -711,7 +758,10 @@ function mapFrenoDeManoEje_4(key, value, mappedObj) {
 function mapFrenoDeManoEje_5(key, value, mappedObj) {
 	for (let i = 0; i < frenoDeManoEje_5Keys.length; i++) {
 		if (key === frenoDeManoEje_5Keys[i]) {
-			mappedObj.set(frenoDeManoEje_5Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenoDeManoEje_5Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -729,7 +779,10 @@ function mapFrenoDeManoEje_5(key, value, mappedObj) {
 function mapFrenoDeManoEje_6(key, value, mappedObj) {
 	for (let i = 0; i < frenoDeManoEje_6Keys.length; i++) {
 		if (key === frenoDeManoEje_6Keys[i]) {
-			mappedObj.set(frenoDeManoEje_6Map.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(frenoDeManoEje_6Map.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -747,7 +800,10 @@ function mapFrenoDeManoEje_6(key, value, mappedObj) {
 function mapSonometro(key, value, mappedObj) {
 	for (let i = 0; i < sonometroKeys.length; i++) {
 		if (key === sonometroKeys[i]) {
-			mappedObj.set(sonometroMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(sonometroMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -765,7 +821,10 @@ function mapSonometro(key, value, mappedObj) {
 function mapLuxometro(key, value, mappedObj) {
 	for (let i = 0; i < luxometroKeys.length; i++) {
 		if (key === luxometroKeys[i]) {
-			mappedObj.set(luxometroMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumber(mapSingleFile.get(key) ,2)
+			
+			mappedObj.set(luxometroMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -837,7 +896,10 @@ function mapFrenos(key, value, mappedObj) {
 function mapValoresCalibrados(key, value, mappedObj) {
 	for (let i = 0; i < valoresCalibradosKeys.length; i++) {
 		if (key === valoresCalibradosKeys[i]) {
-			mappedObj.set(valoresCalibradosMap.get(key), mapSingleFile.get(key));
+			
+			let convertedToNum = stringToNumberNotFixed(mapSingleFile.get(key))
+			
+			mappedObj.set(valoresCalibradosMap.get(key), convertedToNum);
 		}
 	}
 	return mappedObj;
@@ -928,5 +990,127 @@ function transformMapToObject() {
 		obj[varToSearch] = internalObj;
 	}
 
+	fixPercentajesInObj(obj)
+	console.log(obj) ; 
+
 	return obj;
 }
+
+/**
+ * Transforms a String into a number.
+ * 
+ * @param {*} number Number to be transformed.
+ * @returns the string transformed into number without rounding. 
+ */
+ function stringToNumberNotFixed(number) {
+	let numReady = Number(parseFloat(number.replace(',', '.')));
+	return numReady;
+}
+
+/**
+ * Transform a string into a number rounded to a fixed amount of decimal values.
+ * 
+ * @param {*} number Number to be transformed
+ * @param {*} decimalValues Amount of decimal values to round
+ * @returns the string transformed into number with rounding. 
+ */
+function stringToNumber(number, decimalValues) {
+	let numReady = Number(parseFloat(number.replace(',', '.')).toFixed(decimalValues));
+	return numReady;
+}
+
+
+/**
+ * Transforms a number into a percentual value 
+ * Removes the NaN values with EMPTY
+ * 
+ * @param {*} number Number to be transformed
+ * @param {*} decimalValues Amount of decimal values to round
+ * @returns the number as a percentage
+ */
+function numberToPercentage(number, decimalValues) {
+	let numReady = Number((number * 100).toFixed(decimalValues));
+
+	if (isNaN(parseFloat(numReady))) {
+		numReady = EMPTY ;
+	}
+
+	return numReady;
+}
+
+/**
+ * Special transformation into percentages to specific values of each map in the transformed obj
+ * 
+ * @param {*} obj the structureMap transformed into obj
+ */
+function fixPercentajesInObj(obj)  {
+
+	let freno1Ovalidad1 = obj.frenosEje_1.ovalidadLadoDerecho ;
+	let freno1Ovalidad2 = obj.frenosEje_1.ovalidadLadoIzquierdo ;
+	obj.frenosEje_1.ovalidadLadoDerecho = numberToPercentage(freno1Ovalidad1,TWO_INT)  ;
+	obj.frenosEje_1.ovalidadLadoDerecho = numberToPercentage(freno1Ovalidad2,TWO_INT)  ;
+
+	let freno2Ovalidad1 = obj.frenosEje_2.ovalidadLadoDerecho ;
+	let freno2Ovalidad2 = obj.frenosEje_2.ovalidadLadoIzquierdo ;
+	obj.frenosEje_2.ovalidadLadoDerecho = numberToPercentage(freno2Ovalidad1,TWO_INT)  ;
+	obj.frenosEje_2.ovalidadLadoDerecho = numberToPercentage(freno2Ovalidad2,TWO_INT)  ;
+
+	let freno3Ovalidad1 = obj.frenosEje_3.ovalidadLadoDerecho ;
+	let freno3Ovalidad2 = obj.frenosEje_3.ovalidadLadoIzquierdo ;
+	obj.frenosEje_3.ovalidadLadoDerecho = numberToPercentage(freno3Ovalidad1,TWO_INT)  ;
+	obj.frenosEje_3.ovalidadLadoDerecho = numberToPercentage(freno3Ovalidad2,TWO_INT)  ;
+
+	let freno4Ovalidad1 = obj.frenosEje_4.ovalidadLadoDerecho ;
+	let freno4Ovalidad2 = obj.frenosEje_4.ovalidadLadoIzquierdo ;
+	obj.frenosEje_4.ovalidadLadoDerecho = numberToPercentage(freno4Ovalidad1,TWO_INT)  ;
+	obj.frenosEje_4.ovalidadLadoDerecho = numberToPercentage(freno4Ovalidad2,TWO_INT)  ;
+
+	let freno5Ovalidad1 = obj.frenosEje_5.ovalidadLadoDerecho ;
+	let freno5Ovalidad2 = obj.frenosEje_5.ovalidadLadoIzquierdo ;
+	obj.frenosEje_5.ovalidadLadoDerecho = numberToPercentage(freno5Ovalidad1,TWO_INT)  ;
+	obj.frenosEje_5.ovalidadLadoDerecho = numberToPercentage(freno5Ovalidad2,TWO_INT)  ;
+
+	let freno6Ovalidad1 = obj.frenosEje_6.ovalidadLadoDerecho ;
+	let freno6Ovalidad2 = obj.frenosEje_6.ovalidadLadoIzquierdo ;
+	obj.frenosEje_6.ovalidadLadoDerecho = numberToPercentage(freno6Ovalidad1,TWO_INT)  ;
+	obj.frenosEje_6.ovalidadLadoDerecho = numberToPercentage(freno6Ovalidad2,TWO_INT)  ;
+
+	let frenoMano1_Ovalidad1 = obj.frenoDeManoEje_1.ovalidadLadoDerecho ;
+	let frenoMano1_Ovalidad2 = obj.frenoDeManoEje_1.ovalidadLadoIzquierdo ;
+	obj.frenoDeManoEje_1.ovalidadLadoDerecho = numberToPercentage(frenoMano1_Ovalidad1,TWO_INT)  ;
+	obj.frenoDeManoEje_1.ovalidadLadoDerecho = numberToPercentage(frenoMano1_Ovalidad2,TWO_INT)  ;
+
+	let frenoMano2_Ovalidad1 = obj.frenoDeManoEje_2.ovalidadLadoDerecho ;
+	let frenoMano2_Ovalidad2 = obj.frenoDeManoEje_2.ovalidadLadoIzquierdo ;
+	obj.frenoDeManoEje_2.ovalidadLadoDerecho = numberToPercentage(frenoMano2_Ovalidad1,TWO_INT)  ;
+	obj.frenoDeManoEje_2.ovalidadLadoDerecho = numberToPercentage(frenoMano2_Ovalidad2,TWO_INT)  ;
+
+
+	let frenoMano3_Ovalidad1 = obj.frenoDeManoEje_3.ovalidadLadoDerecho ;
+	let frenoMano3_Ovalidad2 = obj.frenoDeManoEje_3.ovalidadLadoIzquierdo ;
+	obj.frenoDeManoEje_3.ovalidadLadoDerecho = numberToPercentage(frenoMano3_Ovalidad1,TWO_INT)  ;
+	obj.frenoDeManoEje_3.ovalidadLadoDerecho = numberToPercentage(frenoMano3_Ovalidad2,TWO_INT)  ;
+
+
+	let frenoMano4_Ovalidad1 = obj.frenoDeManoEje_4.ovalidadLadoDerecho ;
+	let frenoMano4_Ovalidad2 = obj.frenoDeManoEje_4.ovalidadLadoIzquierdo ;
+	obj.frenoDeManoEje_4.ovalidadLadoDerecho = numberToPercentage(frenoMano4_Ovalidad1,TWO_INT)  ;
+	obj.frenoDeManoEje_4.ovalidadLadoDerecho = numberToPercentage(frenoMano4_Ovalidad2,TWO_INT)  ;
+
+
+	let frenoMano5_Ovalidad1 = obj.frenoDeManoEje_5.ovalidadLadoDerecho ;
+	let frenoMano5_Ovalidad2 = obj.frenoDeManoEje_5.ovalidadLadoIzquierdo ;
+	obj.frenoDeManoEje_5.ovalidadLadoDerecho = numberToPercentage(frenoMano5_Ovalidad1,TWO_INT)  ;
+	obj.frenoDeManoEje_5.ovalidadLadoDerecho = numberToPercentage(frenoMano5_Ovalidad2,TWO_INT)  ;
+
+
+	let frenoMano6_Ovalidad1 = obj.frenoDeManoEje_6.ovalidadLadoDerecho ;
+	let frenoMano6_Ovalidad2 = obj.frenoDeManoEje_6.ovalidadLadoIzquierdo ;
+	obj.frenoDeManoEje_6.ovalidadLadoDerecho = numberToPercentage(frenoMano6_Ovalidad1,TWO_INT)  ;
+	obj.frenoDeManoEje_6.ovalidadLadoDerecho = numberToPercentage(frenoMano6_Ovalidad2,TWO_INT)  ;
+
+
+	
+
+
+	}
