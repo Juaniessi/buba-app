@@ -154,7 +154,10 @@ function Main() {
 
 	let fechaVen = addDays(fecha, 60);
 
-	/* funciones evaluadoras de condición */
+	/**  function to evaluate if alineation is ok, the same function is used for most evaluations
+	 * @param {*} alineation prop from object: fileAsObject
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 */
 
 	function alineationEvaluator(alineation) {
 		let severityEvaluation = '';
@@ -365,9 +368,83 @@ function Main() {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	function nioseEvaluator(db) {
+	function opacitiEvaluator(opaciti) {
 		let severityEvaluation = '';
 		let severityLetter = '';
+		if (opaciti > 2) {
+			severityEvaluation = 'severe';
+			severityLetter = 'G';
+		} else if (opaciti > 0.25) {
+			severityEvaluation = 'moderate';
+			severityLetter = 'M';
+		} else if (opaciti > 0.2) {
+			severityEvaluation = 'minor';
+			severityLetter = 'L';
+		} else {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
+	}
+
+	function yearRectificatordb() {
+		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
+		let caseNumber;
+
+		if (
+			anoFabrication < 1920 ||
+			anoFabrication > 2200 ||
+			anoFabrication === ''
+		) {
+			anoFabrication = 2000;
+		}
+		if (anoFabrication <= 1997) {
+			caseNumber = 1;
+		} else {
+			caseNumber = 2;
+		}
+		return caseNumber;
+	}
+
+	function nioseEvaluator(db, caseNumber, tipo) {
+		let severityEvaluation = '';
+		let severityLetter = '';
+		switch (caseNumber) {
+			case 1:
+				if (db > 120) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (db > 88) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (db > 80) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+			case 2:
+				if (db > 120) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (db > 83) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (db > 80) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+		}
 		if (db > 120) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
@@ -384,31 +461,153 @@ function Main() {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	function HCEvaluator(ppm, anoFabrication) {
+	/**
+	 *Function to be called to rectify a bad year input
+	 * @returns {*} the case number to be applied to the HC or CO evaluators
+	 */
+	function yearRectificatorGas() {
+		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
+		let caseNumber;
+
+		if (
+			anoFabrication < 1920 ||
+			anoFabrication > 2200 ||
+			anoFabrication === ''
+		) {
+			anoFabrication = 2000;
+		}
+		if (anoFabrication <= 1991) {
+			caseNumber = 1;
+		} else if (anoFabrication <= 1994) {
+			caseNumber = 2;
+		} else if (anoFabrication > 1994) {
+			caseNumber = 3;
+		}
+		return caseNumber;
+	}
+
+	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations
+	 * @param {*} ppm prop from object: fileAsObject
+	 * @param {*} caseNumber value extracted from yearRectificatorGas
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 */
+
+	function HCEvaluator(ppm, caseNumber) {
 		let severityEvaluation = '';
 		let severityLetter = '';
-		let switchingAno = "";
 
-		if (anoFabrication){};
-
-		switch (anoFabrication){
+		switch (caseNumber) {
 			case 1:
-				if (ppm > 120) {
+				if (ppm > 2500) {
 					severityEvaluation = 'severe';
 					severityLetter = 'G';
-				} else if (ppm > 84) {
+				} else if (ppm > 900) {
 					severityEvaluation = 'moderate';
 					severityLetter = 'M';
-				} else if (ppm > 80) {
+				} else if (ppm > 600) {
 					severityEvaluation = 'minor';
 					severityLetter = 'L';
 				} else {
 					severityEvaluation = '';
 					severityLetter = 'A';
 				}
-				return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+			case 2:
+				if (ppm > 2500) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (ppm > 600) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (ppm > 400) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+			case 3:
+				if (ppm > 2500) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (ppm > 400) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (ppm > 300) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
 		}
-		
+	}
+
+	function COEvaluator(CO, caseNumber) {
+		let severityEvaluation = '';
+		let severityLetter = '';
+
+		switch (caseNumber) {
+			case 1:
+				if (CO > 10) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (CO > 4.5) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (CO > 3.5) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+			case 2:
+				if (CO > 10) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (CO > 3) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (CO > 2) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+			case 3:
+				if (CO > 10) {
+					severityEvaluation = 'severe';
+					severityLetter = 'G';
+				} else if (CO > 2.5) {
+					severityEvaluation = 'moderate';
+					severityLetter = 'M';
+				} else if (CO > 2) {
+					severityEvaluation = 'minor';
+					severityLetter = 'L';
+				} else {
+					severityEvaluation = '';
+					severityLetter = 'A';
+				}
+				return (
+					<span className={`${severityEvaluation}`}>{severityLetter}</span>
+				);
+		}
 	}
 
 	return (
@@ -994,32 +1193,60 @@ function Main() {
 						</p>
 					</div>
 					<div className="gases">
-						<p>
-							{
-								window.fileAsObject.analizadorDeGases
-									.resultadoMonoxidoDeCarbonoCO
-							}
-						</p>
-
-						<p>
-							{window.fileAsObject.analizadorDeGases.resultadoPartesPorMillonHC}
-						</p>
-						<p>
-							{HCEvaluator(
-								window.fileAsObject.analizadorDeGases
-									.resultadoPartesPorMillonHC,
-									window.fileAsObject.header.aÑoDeFabricacion
-							)}
-						</p>
-						<p>
-							{
-								window.fileAsObject.analizadorDeGases
-									.resultadoPartesPorMillonNox
-							}
-						</p>
+						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1 ? (
+							<>
+								<p>
+									{
+										window.fileAsObject.analizadorDeGases
+											.resultadoMonoxidoDeCarbonoCO
+									}
+								</p>
+								<p>
+									{COEvaluator(
+										window.fileAsObject.analizadorDeGases
+											.resultadoMonoxidoDeCarbonoCO,
+										yearRectificatorGas()
+									)}
+								</p>
+								<p>
+									{
+										window.fileAsObject.analizadorDeGases
+											.resultadoPartesPorMillonHC
+									}
+								</p>
+								<p>
+									{HCEvaluator(
+										window.fileAsObject.analizadorDeGases
+											.resultadoPartesPorMillonHC,
+										yearRectificatorGas()
+									)}
+								</p>
+								<p>
+									{
+										window.fileAsObject.analizadorDeGases
+											.resultadoPartesPorMillonNox
+									}
+								</p>
+							</>
+						) : (
+							<p></p>
+						)}
 					</div>
 					<div className="opacimetro">
-						<p>{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}</p>
+						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1 ? (
+							<p></p>
+						) : (
+							<>
+								<p>
+									{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
+								</p>
+								<p>
+									{opacitiEvaluator(
+										window.fileAsObject.opacimetro.resultadoMedicionOpacidad
+									)}
+								</p>
+							</>
+						)}
 					</div>
 				</article>
 			)}
