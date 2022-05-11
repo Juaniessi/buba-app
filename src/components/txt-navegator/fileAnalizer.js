@@ -1000,10 +1000,15 @@ function transformMapToObject() {
  * Transforms a String into a number.
  * 
  * @param {*} number Number to be transformed.
- * @returns the string transformed into number without rounding. 
+ * @returns the string transformed into number without rounding or Empty if Nan.
  */
  function stringToNumberNotFixed(number) {
 	let numReady = Number(parseFloat(number.replace(',', '.')));
+
+	if (isNaN(parseFloat(numReady))) {
+		numReady = EMPTY ;
+	}
+	
 	return numReady;
 }
 
@@ -1012,10 +1017,15 @@ function transformMapToObject() {
  * 
  * @param {*} number Number to be transformed
  * @param {*} decimalValues Amount of decimal values to round
- * @returns the string transformed into number with rounding. 
+ * @returns the string transformed into number with rounding or Empty if Nan.
  */
 function stringToNumber(number, decimalValues) {
 	let numReady = Number(parseFloat(number.replace(',', '.')).toFixed(decimalValues));
+
+	if (isNaN(parseFloat(numReady))) {
+		numReady = EMPTY ;
+	}
+
 	return numReady;
 }
 
