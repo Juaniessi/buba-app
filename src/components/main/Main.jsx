@@ -409,56 +409,82 @@ function Main() {
 	function nioseEvaluator(db, caseNumber, tipo) {
 		let severityEvaluation = '';
 		let severityLetter = '';
-		switch (caseNumber) {
-			case 1:
-				if (db > 120) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (db > 88) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (db > 80) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
-			case 2:
-				if (db > 120) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (db > 83) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (db > 80) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+
+		if (tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Moto') {
+			switch (caseNumber) {
+				case 1:
+					if (db > 120) {
+						severityEvaluation = 'severe';
+						severityLetter = 'G';
+					} else if (db > 88) {
+						severityEvaluation = 'moderate';
+						severityLetter = 'M';
+					} else if (db > 80) {
+						severityEvaluation = 'minor';
+						severityLetter = 'L';
+					} else {
+						severityEvaluation = '';
+						severityLetter = 'A';
+					}
+					return (
+						<span className={`${severityEvaluation}`}>{severityLetter}</span>
+					);
+				case 2:
+					if (db > 120) {
+						severityEvaluation = 'severe';
+						severityLetter = 'G';
+					} else if (db > 83) {
+						severityEvaluation = 'moderate';
+						severityLetter = 'M';
+					} else if (db > 80) {
+						severityEvaluation = 'minor';
+						severityLetter = 'L';
+					} else {
+						severityEvaluation = '';
+						severityLetter = 'A';
+					}
+					return (
+						<span className={`${severityEvaluation}`}>{severityLetter}</span>
+					);
+			}
+		} else if (tipo === 'Camion') {
+			switch (caseNumber) {
+				case 1:
+					if (db > 110) {
+						severityEvaluation = 'severe';
+						severityLetter = 'G';
+					} else if (db > 95) {
+						severityEvaluation = 'moderate';
+						severityLetter = 'M';
+					} else if (db > 85) {
+						severityEvaluation = 'minor';
+						severityLetter = 'L';
+					} else {
+						severityEvaluation = '';
+						severityLetter = 'A';
+					}
+					return (
+						<span className={`${severityEvaluation}`}>{severityLetter}</span>
+					);
+				case 2:
+					if (db > 110) {
+						severityEvaluation = 'severe';
+						severityLetter = 'G';
+					} else if (db > 87) {
+						severityEvaluation = 'moderate';
+						severityLetter = 'M';
+					} else if (db > 84) {
+						severityEvaluation = 'minor';
+						severityLetter = 'L';
+					} else {
+						severityEvaluation = '';
+						severityLetter = 'A';
+					}
+					return (
+						<span className={`${severityEvaluation}`}>{severityLetter}</span>
+					);
+			}
 		}
-		if (db > 120) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (db > 84) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (db > 80) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
 	/**
@@ -624,8 +650,32 @@ function Main() {
 						checked={tipo === 'Auto'} //determina que visualmente se vea checked
 						onChange={handleTipo}
 					/>
-					<label className="btn-inside" htmlFor="Auto">
+					<label className="btn-inside" htmlFor="Camioneta">
 						Auto
+					</label>
+					<input
+						type="radio"
+						className="btn-inside rad-c"
+						name="tipo"
+						id="Camioneta"
+						value="Camioneta"
+						checked={tipo === 'Camioneta'} //determina que visualmente se vea checked
+						onChange={handleTipo}
+					/>
+					<label className="btn-inside" htmlFor="Camioneta">
+						Camioneta
+					</label>
+					<input
+						type="radio"
+						className="btn-inside rad-c"
+						name="tipo"
+						id="Camion"
+						value="Camion"
+						checked={tipo === 'Camion'} //determina que visualmente se vea checked
+						onChange={handleTipo}
+					/>
+					<label className="btn-inside" htmlFor="Camion">
+						Camión / Minibus
 					</label>
 					<input
 						type="radio"
@@ -805,8 +855,7 @@ function Main() {
 						.map(defectList)}
 				</tbody>
 			</table>
-
-			<div className="container">
+			<div className="btn-input-txt">
 				<label htmlFor="file-input" id="file-input-label">
 					Seleccione archivo a procesar
 				</label>
@@ -819,24 +868,24 @@ function Main() {
 			</div>
 			<img className="informe" src={informeAuto} alt="informe" />
 			{/* muestra lo que queda en el obejeto despues de analziar el txt  */}
-			<div className="container">
+			{/* <div className="container">
 				<pre>
 					<code id="jsonContainer"></code>
 				</pre>
-			</div>
+			</div> */}
 			{txtRender === '' ? (
 				''
 			) : (
 				<article className="txtRender">
 					<div className="date">
-						<p>
+						<p className='startDate'>
 							{fecha.getDate() +
 								'/' +
 								(fecha.getMonth() + 1) +
 								'/' +
 								fecha.getFullYear()}
 						</p>
-						<p>
+						<p className='endDate'>
 							{fechaVen.getDate() +
 								'/' +
 								(fechaVen.getMonth() + 1) +
@@ -1189,7 +1238,11 @@ function Main() {
 					<div className="decibelimetro">
 						<p>{window.fileAsObject.sonometro.valorDeMedicion}</p>
 						<p>
-							{nioseEvaluator(window.fileAsObject.sonometro.valorDeMedicion)}
+							{nioseEvaluator(
+								window.fileAsObject.sonometro.valorDeMedicion,
+								yearRectificatordb(),
+								tipo
+							)}
 						</p>
 					</div>
 					<div className="gases">

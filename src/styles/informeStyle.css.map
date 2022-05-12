@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CAAC;EACR,MAAM,EAAE,MAAM;EACd,MAAM,EAAE,eAAe;EACvB,KAAK,EAAE,KAAK;EACZ,OAAO,EAAE,EAAE;CACX",
+    "sources": [
+        "informeStyle.scss"
+    ],
+    "names": [],
+    "file": "informeStyle.css"
+}
