@@ -428,4 +428,17 @@
   top: 357px;
   left: 551px;
 }
+
+.finalReport .severe {
+  color: white;
+  background-color: black;
+}
+
+.finalReport .moderate {
+  background-color: orange;
+}
+
+.finalReport .minor {
+  background-color: yellow;
+}
 /*# sourceMappingURL=informeStyle.css.map */

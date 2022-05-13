@@ -369,4 +369,15 @@
 			}
 		}
 	}
+
+	.severe {
+		color: white;
+		background-color: black;
+	}
+	.moderate {
+		background-color: orange;
+	}
+	.minor {
+		background-color: yellow;
+	}
 }
