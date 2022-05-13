@@ -388,4 +388,44 @@
   top: 294px;
   left: 551px;
 }
+
+.finalReport .lux-meter .alineationLux .left-hor {
+  top: 340px;
+  left: 470px;
+}
+
+.finalReport .lux-meter .alineationLux .right-hor {
+  top: 340px;
+  left: 523px;
+}
+
+.finalReport .lux-meter .alineationLux .left-vert {
+  top: 357px;
+  left: 470px;
+}
+
+.finalReport .lux-meter .alineationLux .right-vert {
+  top: 357px;
+  left: 523px;
+}
+
+.finalReport .lux-meter .alineationLux .left-hor-eval {
+  top: 340px;
+  left: 499px;
+}
+
+.finalReport .lux-meter .alineationLux .right-hor-eval {
+  top: 340px;
+  left: 551px;
+}
+
+.finalReport .lux-meter .alineationLux .left-vert-eval {
+  top: 357px;
+  left: 499px;
+}
+
+.finalReport .lux-meter .alineationLux .right-vert-eval {
+  top: 357px;
+  left: 551px;
+}
 /*# sourceMappingURL=informeStyle.css.map */

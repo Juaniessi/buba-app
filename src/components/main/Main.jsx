@@ -1243,47 +1243,47 @@ function Main() {
 									)}
 								</p>
 							</div>
-							<div className="alineacionLux">
-								<p>
+							<div className="alineationLux">
+								<p className="left-hor">
 									{
 										window.fileAsObject.luxometro
 											.alineacionFaroIzquierdoHorizontal
 									}
 								</p>
-								<p>
+								<p className="left-hor-eval">
 									{LuxAngleEvaluator(
 										window.fileAsObject.luxometro
 											.alineacionFaroIzquierdoHorizontal
 									)}
 								</p>
-								<p>
+								<p className="right-hor">
 									{
 										window.fileAsObject.luxometro
 											.alineacionFaroDerechoHorizontal
 									}
 								</p>
-								<p>
+								<p className="right-hor-eval">
 									{LuxAngleEvaluator(
 										window.fileAsObject.luxometro
 											.alineacionFaroDerechoHorizontal
 									)}
 								</p>
-								<p>
+								<p className="left-vert">
 									{
 										window.fileAsObject.luxometro
 											.alineacionFaroIzquierdoVertical
 									}
 								</p>
-								<p>
+								<p className="left-vert-eval">
 									{LuxAngleEvaluator(
 										window.fileAsObject.luxometro
 											.alineacionFaroIzquierdoVertical
 									)}
 								</p>
-								<p>
+								<p className="right-vert">
 									{window.fileAsObject.luxometro.alineacionFaroDerechoVertical}
 								</p>
-								<p>
+								<p className="right-vert-eval">
 									{LuxAngleEvaluator(
 										window.fileAsObject.luxometro.alineacionFaroDerechoVertical
 									)}
