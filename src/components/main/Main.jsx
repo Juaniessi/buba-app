@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
-import informeAuto from '../../assets/informe-img/informe-con-peso.svg';
+import informeAuto from '../../assets/informe-img/informe-auto.svg';
 import {procesTxt} from '../txt-navegator/fileAnalizer.js';
 import {autoArray} from '../context/carDataBase';
 import {motoArray} from '../context/motoDataBase';
@@ -48,7 +48,7 @@ function Main() {
 		}, 120); */
 	};
 
-	let tipoArray = tipo === 'Auto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
+	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
 	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : []; //esta variable almacena el array de seccion a mapear
 	let description =
 		seccion.value !== '' && grupo.value !== ''
@@ -187,7 +187,7 @@ function Main() {
 		} else if (suspRend <= 40) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-		} else if (suspRend <= 50) {
+		} else if (suspRend <= 60) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
 		} else {
@@ -197,7 +197,7 @@ function Main() {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	function brakeRendEvaluator(brakeRend) {
+	function brakePerfEvaluator(brakeRend) {
 		let severityEvaluation = '';
 		let severityLetter = '';
 		if (brakeRend <= 10) {
@@ -216,7 +216,7 @@ function Main() {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	function handBrakeRendEvaluator(brakeRend) {
+	function handBrakePerfEvaluator(brakeRend) {
 		let severityEvaluation = '';
 		let severityLetter = '';
 		if (brakeRend <= 0) {
@@ -866,443 +866,501 @@ function Main() {
 					onChange={handleTxtRender}
 				/>
 			</div>
-			<img className="informe" src={informeAuto} alt="informe" />
-			{/* muestra lo que queda en el obejeto despues de analziar el txt  */}
-			{/* <div className="container">
+			<section className="finalReport">
+				<img className="report-img" src={informeAuto} alt="report-img" />
+				{/* muestra lo que queda en el obejeto despues de analziar el txt  */}
+				{/* <div className="container">
 				<pre>
 					<code id="jsonContainer"></code>
 				</pre>
 			</div> */}
-			{txtRender === '' ? (
-				''
-			) : (
-				<article className="txtRender">
-					<div className="date">
-						<p className='startDate'>
-							{fecha.getDate() +
-								'/' +
-								(fecha.getMonth() + 1) +
-								'/' +
-								fecha.getFullYear()}
-						</p>
-						<p className='endDate'>
-							{fechaVen.getDate() +
-								'/' +
-								(fechaVen.getMonth() + 1) +
-								'/' +
-								fechaVen.getFullYear()}
-						</p>
-					</div>
-					<div className="headerInfo">
-						<p>{window.fileAsObject.header.patente}</p>
-						<p>{window.fileAsObject.header.marcaDelVehiculo}</p>
-						<p>{window.fileAsObject.header.modelo}</p>
-						<p>{window.fileAsObject.header.kilometros}</p>
-					</div>
-					<div className="alineacion">
-						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje1}</p>
-						<p>
-							{alineationEvaluator(
-								window.fileAsObject.alineacion.resultadoAlineacionEje1
-							)}
-						</p>
-						<p>{window.fileAsObject.alineacion.resultadoAlineacionEje2}</p>
-						<p>
-							{alineationEvaluator(
-								window.fileAsObject.alineacion.resultadoAlineacionEje2
-							)}
-						</p>
-					</div>
-					<div className="peso">
-						<p>
-							{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo}
-						</p>
-						<p>{window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho}</p>
-						<p>{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}</p>
-						<p>{window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}</p>
-					</div>
-					<div className="suspension">
-						<p>
-							{
-								window.fileAsObject.suspensionEjeDelantero
-									.rendimientoDelanteroIzquierdo
-							}
-						</p>
-						<p>
-							{suspEvaluator(
-								window.fileAsObject.suspensionEjeDelantero
-									.rendimientoDelanteroIzquierdo
-							)}
-						</p>
-						<p>
-							{
-								window.fileAsObject.suspensionEjeDelantero
-									.rendimientoDelanteroDerecho
-							}
-						</p>
-						<p>
-							{suspEvaluator(
-								window.fileAsObject.suspensionEjeDelantero
-									.rendimientoDelanteroDerecho
-							)}
-						</p>
-						<p>
-							{
-								window.fileAsObject.suspensionEjeTrasero
-									.rendimientoTraseroIzquierdo
-							}
-						</p>
-						<p>
-							{suspEvaluator(
-								window.fileAsObject.suspensionEjeDelantero
-									.rendimientoTraseroDerecho
-							)}
-						</p>
-						<p>
-							{
-								window.fileAsObject.suspensionEjeTrasero
-									.rendimientoTraseroDerecho
-							}
-						</p>
-						<p>
-							{suspEvaluator(
-								window.fileAsObject.suspensionEjeDelantero
-									.rendimientoDelanteroIzquierdo
-							)}
-						</p>
-					</div>
-					<div className="frenos">
-						<div className="rendimiento">
-							<p>{window.fileAsObject.frenosEje_1.rendimientoDelEje}</p>
-							<p>
-								{brakeRendEvaluator(
-									window.fileAsObject.frenosEje_1.rendimientoDelEje
+				{txtRender === '' ? (
+					''
+				) : (
+					<article className="txtRender">
+						<div className="date">
+							<p className="start-date">
+								{fecha.getDate() +
+									'/' +
+									(fecha.getMonth() + 1) +
+									'/' +
+									fecha.getFullYear()}
+							</p>
+							<p className="end-date">
+								{fechaVen.getDate() +
+									'/' +
+									(fechaVen.getMonth() + 1) +
+									'/' +
+									fechaVen.getFullYear()}
+							</p>
+						</div>
+						<div className="header-info">
+							<p className="plate">{window.fileAsObject.header.patente}</p>
+							<p className="brand">
+								{window.fileAsObject.header.marcaDelVehiculo}
+							</p>
+							<p className="model">{window.fileAsObject.header.modelo}</p>
+							<p className="mileage">{window.fileAsObject.header.kilometros}</p>
+						</div>
+						<div className="alineation">
+							<p className="front-al">
+								{window.fileAsObject.alineacion.resultadoAlineacionEje1}
+							</p>
+							<p className="front-al-eval">
+								{alineationEvaluator(
+									window.fileAsObject.alineacion.resultadoAlineacionEje1
 								)}
 							</p>
-							<p>{window.fileAsObject.frenosEje_2.rendimientoDelEje}</p>
-							<p>
-								{brakeRendEvaluator(
-									window.fileAsObject.frenosEje_2.rendimientoDelEje
-								)}
+							<p className="rear-al">
+								{window.fileAsObject.alineacion.resultadoAlineacionEje2}
 							</p>
-							<p>{window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje}</p>
-							<p>
-								{handBrakeRendEvaluator(
-									window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje
+							<p className="rear-al-eval">
+								{alineationEvaluator(
+									window.fileAsObject.alineacion.resultadoAlineacionEje2
 								)}
 							</p>
 						</div>
-						<div className="diferencia">
-							<p>
-								{window.fileAsObject.frenosEje_1.diferenciaFzaFrenadoLadoALado}
+						<div className="weight">
+							<p className="front-left">
+								{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo}
 							</p>
-							<p>
-								{brakeDifferenceEvaluator(
-									window.fileAsObject.frenosEje_1.diferenciaFzaFrenadoLadoALado
-								)}
+							<p className="front-right">
+								{window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho}
 							</p>
-							<p>
-								{window.fileAsObject.frenosEje_2.diferenciaFzaFrenadoLadoALado}
+							<p className="rear-left">
+								{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}
 							</p>
-							<p>
-								{brakeDifferenceEvaluator(
-									window.fileAsObject.frenosEje_2.diferenciaFzaFrenadoLadoALado
-								)}
+							<p className="rear-right">
+								{window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}
 							</p>
-							<p>
+						</div>
+						<div className="suspention">
+							<p className="front-left">
 								{
-									window.fileAsObject.frenoDeManoEje_2
-										.diferenciaFzaFrenadoLadoALado
+									window.fileAsObject.suspensionEjeDelantero
+										.rendimientoDelanteroIzquierdo
 								}
 							</p>
-							<p>
-								{brakeDifferenceEvaluator(
-									window.fileAsObject.frenoDeManoEje_2
-										.diferenciaFzaFrenadoLadoALado
+							<p className="front-left-eval">
+								{suspEvaluator(
+									window.fileAsObject.suspensionEjeDelantero
+										.rendimientoDelanteroIzquierdo
+								)}
+							</p>
+							<p className="front-right">
+								{
+									window.fileAsObject.suspensionEjeDelantero
+										.rendimientoDelanteroDerecho
+								}
+							</p>
+							<p className="front-right-eval">
+								{suspEvaluator(
+									window.fileAsObject.suspensionEjeDelantero
+										.rendimientoDelanteroDerecho
+								)}
+							</p>
+							<p className="rear-left">
+								{
+									window.fileAsObject.suspensionEjeTrasero
+										.rendimientoTraseroIzquierdo
+								}
+							</p>
+							<p className="rear-left-eval">
+								{suspEvaluator(
+									window.fileAsObject.suspensionEjeDelantero
+										.rendimientoTraseroIzquierdo
+								)}
+							</p>
+							<p className="rear-right">
+								{
+									window.fileAsObject.suspensionEjeTrasero
+										.rendimientoTraseroDerecho
+								}
+							</p>
+							<p className="rear-right-eval">
+								{suspEvaluator(
+									window.fileAsObject.suspensionEjeDelantero
+										.rendimientoTraseroDerecho
 								)}
 							</p>
 						</div>
-						<div className="fuerzaDeFrenado">
-							<p>
-								{window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo}
-							</p>
-							<p>
-								{brakeStrenghtEvaluator(
-									window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo
-								)}
-							</p>
-							<p>
-								{window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho}
-							</p>
-							<p>
-								{brakeStrenghtEvaluator(
-									window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho
-								)}
-							</p>
-							<p>
-								{window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo}
-							</p>
-							<p>
-								{brakeStrenghtEvaluator(
-									window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo
-								)}
-							</p>
-							<p>
-								{window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho}
-							</p>
-							<p>
-								{brakeStrenghtEvaluator(
-									window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho
-								)}
-							</p>
-							<p>
-								{
-									window.fileAsObject.frenoDeManoEje_2
-										.fuerzaDeFrenadoLadoIzquierdo
-								}
-							</p>
-							<p>
-								{brakeStrenghtEvaluator(
-									window.fileAsObject.frenoDeManoEje_2
-										.fuerzaDeFrenadoLadoIzquierdo
-								)}
-							</p>
-							<p>
-								{
-									window.fileAsObject.frenoDeManoEje_2
-										.fuerzaDeFrenadoLadoDerecho
-								}
-							</p>
-							<p>
-								{brakeStrenghtEvaluator(
-									window.fileAsObject.frenoDeManoEje_2
-										.fuerzaDeFrenadoLadoIzquierdo
-								)}
-							</p>
+						<div className="brake">
+							<div className="performance">
+								<p className="front">
+									{window.fileAsObject.frenosEje_1.rendimientoDelEje}
+								</p>
+								<p className="front-eval">
+									{brakePerfEvaluator(
+										window.fileAsObject.frenosEje_1.rendimientoDelEje
+									)}
+								</p>
+								<p className="rear">
+									{window.fileAsObject.frenosEje_2.rendimientoDelEje}
+								</p>
+								<p className="rear-eval">
+									{brakePerfEvaluator(
+										window.fileAsObject.frenosEje_2.rendimientoDelEje
+									)}
+								</p>
+								<p className="hand">
+									{window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje}
+								</p>
+								<p className="hand-eval">
+									{handBrakePerfEvaluator(
+										window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje
+									)}
+								</p>
+							</div>
+							<div className="difference">
+								<p className="front">
+									{
+										window.fileAsObject.frenosEje_1
+											.diferenciaFzaFrenadoLadoALado
+									}
+								</p>
+								<p className="front-eval">
+									{brakeDifferenceEvaluator(
+										window.fileAsObject.frenosEje_1
+											.diferenciaFzaFrenadoLadoALado
+									)}
+								</p>
+								<p className="rear">
+									{
+										window.fileAsObject.frenosEje_2
+											.diferenciaFzaFrenadoLadoALado
+									}
+								</p>
+								<p className="rear-eval">
+									{brakeDifferenceEvaluator(
+										window.fileAsObject.frenosEje_2
+											.diferenciaFzaFrenadoLadoALado
+									)}
+								</p>
+								<p className="hand">
+									{
+										window.fileAsObject.frenoDeManoEje_2
+											.diferenciaFzaFrenadoLadoALado
+									}
+								</p>
+								<p className="hand-eval">
+									{brakeDifferenceEvaluator(
+										window.fileAsObject.frenoDeManoEje_2
+											.diferenciaFzaFrenadoLadoALado
+									)}
+								</p>
+							</div>
+							<div className="strength">
+								<p className="front-left">
+									{window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo}
+								</p>
+								<p className="front-left-eval">
+									{brakeStrenghtEvaluator(
+										window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo
+									)}
+								</p>
+								<p className="front-right">
+									{window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho}
+								</p>
+								<p className="front-right-eval">
+									{brakeStrenghtEvaluator(
+										window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho
+									)}
+								</p>
+								<p className="rear-left">
+									{window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo}
+								</p>
+								<p className="rear-left-eval">
+									{brakeStrenghtEvaluator(
+										window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo
+									)}
+								</p>
+								<p className="rear-right">
+									{window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho}
+								</p>
+								<p className="rear-right-eval">
+									{brakeStrenghtEvaluator(
+										window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho
+									)}
+								</p>
+								<p className="hand-left">
+									{
+										window.fileAsObject.frenoDeManoEje_2
+											.fuerzaDeFrenadoLadoIzquierdo
+									}
+								</p>
+								<p className="hand-left-eval">
+									{brakeStrenghtEvaluator(
+										window.fileAsObject.frenoDeManoEje_2
+											.fuerzaDeFrenadoLadoIzquierdo
+									)}
+								</p>
+								<p className="hand-right">
+									{
+										window.fileAsObject.frenoDeManoEje_2
+											.fuerzaDeFrenadoLadoDerecho
+									}
+								</p>
+								<p className="hand-right-eval">
+									{brakeStrenghtEvaluator(
+										window.fileAsObject.frenoDeManoEje_2
+											.fuerzaDeFrenadoLadoIzquierdo
+									)}
+								</p>
+							</div>
+							<div className="resistance-rod">
+								<p className="front-left">
+									{
+										window.fileAsObject.frenosEje_1
+											.resistenciaALaRodaduraLadoIzquierdo
+									}
+								</p>
+								<p className="front-left-eval">
+									{brakeResistEvaluator(
+										window.fileAsObject.frenosEje_1
+											.resistenciaALaRodaduraLadoIzquierdo
+									)}
+								</p>
+								<p className="front-right">
+									{
+										window.fileAsObject.frenosEje_1
+											.resistenciaALaRodaduraLadoDerecho
+									}
+								</p>
+								<p className="front-right-eval">
+									{brakeResistEvaluator(
+										window.fileAsObject.frenosEje_1
+											.resistenciaALaRodaduraLadoDerecho
+									)}
+								</p>
+								<p className="rear-left">
+									{
+										window.fileAsObject.frenosEje_2
+											.resistenciaALaRodaduraLadoIzquierdo
+									}
+								</p>
+								<p className="rear-left-eval">
+									{brakeResistEvaluator(
+										window.fileAsObject.frenosEje_2
+											.resistenciaALaRodaduraLadoIzquierdo
+									)}
+								</p>
+								<p className="rear-right">
+									{
+										window.fileAsObject.frenosEje_2
+											.resistenciaALaRodaduraLadoDerecho
+									}
+								</p>
+								<p className="rear-right-eval">
+									{brakeResistEvaluator(
+										window.fileAsObject.frenosEje_2
+											.resistenciaALaRodaduraLadoDerecho
+									)}
+								</p>
+							</div>
+							<div className="ovality">
+								<p className="front-left">
+									{window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo}
+								</p>
+								<p className="front-left-eval">
+									{brakeOvalEvaluator(
+										window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo
+									)}
+								</p>
+								<p className="front-right">
+									{window.fileAsObject.frenosEje_1.ovalidadLadoDerecho}
+								</p>
+								<p className="front-right-eval">
+									{brakeOvalEvaluator(
+										window.fileAsObject.frenosEje_1.ovalidadLadoDerecho
+									)}
+								</p>
+								<p className="rear-left">
+									{window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo}
+								</p>
+								<p className="rear-left-eval">
+									{brakeOvalEvaluator(
+										window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo
+									)}
+								</p>
+								<p className="rear-right">
+									{window.fileAsObject.frenosEje_2.ovalidadLadoDerecho}
+								</p>
+								<p className="rear-right-eval">
+									{brakeOvalEvaluator(
+										window.fileAsObject.frenosEje_2.ovalidadLadoDerecho
+									)}
+								</p>
+							</div>
 						</div>
-						<div className="resistenciaRodadura">
-							<p>
-								{
-									window.fileAsObject.frenosEje_1
-										.resistenciaALaRodaduraLadoIzquierdo
-								}
-							</p>
-							<p>
-								{brakeResistEvaluator(
-									window.fileAsObject.frenosEje_1
-										.resistenciaALaRodaduraLadoIzquierdo
-								)}
-							</p>
-							<p>
-								{
-									window.fileAsObject.frenosEje_1
-										.resistenciaALaRodaduraLadoDerecho
-								}
-							</p>
-							<p>
-								{brakeResistEvaluator(
-									window.fileAsObject.frenosEje_1
-										.resistenciaALaRodaduraLadoDerecho
-								)}
-							</p>
-							<p>
-								{
-									window.fileAsObject.frenosEje_2
-										.resistenciaALaRodaduraLadoIzquierdo
-								}
-							</p>
-							<p>
-								{brakeResistEvaluator(
-									window.fileAsObject.frenosEje_2
-										.resistenciaALaRodaduraLadoIzquierdo
-								)}
-							</p>
-							<p>
-								{
-									window.fileAsObject.frenosEje_2
-										.resistenciaALaRodaduraLadoDerecho
-								}
-							</p>
-							<p>
-								{brakeResistEvaluator(
-									window.fileAsObject.frenosEje_2
-										.resistenciaALaRodaduraLadoDerecho
-								)}
-							</p>
-						</div>
-						<div className="ovalidad">
-							<p>{window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo}</p>
-							<p>
-								{brakeOvalEvaluator(
-									window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo
-								)}
-							</p>
-							<p>{window.fileAsObject.frenosEje_1.ovalidadLadoDerecho}</p>
-							<p>
-								{brakeOvalEvaluator(
-									window.fileAsObject.frenosEje_1.ovalidadLadoDerecho
-								)}
-							</p>
-							<p>{window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo}</p>
-							<p>
-								{brakeOvalEvaluator(
-									window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo
-								)}
-							</p>
-							<p>{window.fileAsObject.frenosEje_2.ovalidadLadoDerecho}</p>
-							<p>
-								{brakeOvalEvaluator(
-									window.fileAsObject.frenosEje_2.ovalidadLadoDerecho
-								)}
-							</p>
-						</div>
-					</div>
-					<div className="luxometro">
-						<div className="intesidad">
-							<p>{window.fileAsObject.luxometro.intensidadBajaIzquierda}</p>
-							<p>
-								{LuxLowIntEvaluator(
-									window.fileAsObject.luxometro.intensidadBajaIzquierda
-								)}
-							</p>
-							<p>{window.fileAsObject.luxometro.intensidadBajaDerecha}</p>
-							<p>
-								{LuxLowIntEvaluator(
-									window.fileAsObject.luxometro.intensidadBajaDerecha
-								)}
-							</p>
-							<p>{window.fileAsObject.luxometro.intensidadAltaIzquierda}</p>
-							<p>
-								{LuxHighIntEvaluator(
-									window.fileAsObject.luxometro.intensidadBajaIzquierda
-								)}
-							</p>
-							<p>{window.fileAsObject.luxometro.intensidadAltaDerecha}</p>
-							<p>
-								{LuxHighIntEvaluator(
-									window.fileAsObject.luxometro.intensidadBajaIzquierda
-								)}
-							</p>
-							<p>{window.fileAsObject.luxometro.intensidadAuxiliarIzquierda}</p>
-							<p>
-								{LuxLowIntEvaluator(
-									window.fileAsObject.luxometro.intensidadBajaIzquierda
-								)}
-							</p>
-							<p>{window.fileAsObject.luxometro.intensidadAuxiliarDerecha}</p>
-							<p>
-								{LuxLowIntEvaluator(
-									window.fileAsObject.luxometro.intensidadBajaDerecha
-								)}
-							</p>
-						</div>
-						<div className="alineacionLux">
-							<p>
-								{
-									window.fileAsObject.luxometro
-										.alineacionFaroIzquierdoHorizontal
-								}
-							</p>
-							<p>
-								{LuxAngleEvaluator(
-									window.fileAsObject.luxometro
-										.alineacionFaroIzquierdoHorizontal
-								)}
-							</p>
-							<p>
-								{window.fileAsObject.luxometro.alineacionFaroDerechoHorizontal}
-							</p>
-							<p>
-								{LuxAngleEvaluator(
-									window.fileAsObject.luxometro.alineacionFaroDerechoHorizontal
-								)}
-							</p>
-							<p>
-								{window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical}
-							</p>
-							<p>
-								{LuxAngleEvaluator(
-									window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical
-								)}
-							</p>
-							<p>
-								{window.fileAsObject.luxometro.alineacionFaroDerechoVertical}
-							</p>
-							<p>
-								{LuxAngleEvaluator(
-									window.fileAsObject.luxometro.alineacionFaroDerechoVertical
-								)}
-							</p>
-						</div>
-					</div>
-					<div className="decibelimetro">
-						<p>{window.fileAsObject.sonometro.valorDeMedicion}</p>
-						<p>
-							{nioseEvaluator(
-								window.fileAsObject.sonometro.valorDeMedicion,
-								yearRectificatordb(),
-								tipo
-							)}
-						</p>
-					</div>
-					<div className="gases">
-						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1 ? (
-							<>
+						<div className="lux-meter">
+							<div className="intensity">
+								<p className="left-low">
+									{window.fileAsObject.luxometro.intensidadBajaIzquierda}
+								</p>
+								<p className="left-low-eval">
+									{LuxLowIntEvaluator(
+										window.fileAsObject.luxometro.intensidadBajaIzquierda
+									)}
+								</p>
+								<p className="right-low">
+									{window.fileAsObject.luxometro.intensidadBajaDerecha}
+								</p>
+								<p className="right-low-eval">
+									{LuxLowIntEvaluator(
+										window.fileAsObject.luxometro.intensidadBajaDerecha
+									)}
+								</p>
+								<p className="left-high">
+									{window.fileAsObject.luxometro.intensidadAltaIzquierda}
+								</p>
+								<p className="left-high-eval">
+									{LuxHighIntEvaluator(
+										window.fileAsObject.luxometro.intensidadBajaIzquierda
+									)}
+								</p>
+								<p className="right-high">
+									{window.fileAsObject.luxometro.intensidadAltaDerecha}
+								</p>
+								<p className="right-high-eval">
+									{LuxHighIntEvaluator(
+										window.fileAsObject.luxometro.intensidadBajaIzquierda
+									)}
+								</p>
+								<p className="left-aux">
+									{window.fileAsObject.luxometro.intensidadAuxiliarIzquierda}
+								</p>
+								<p className="left-aux-eval">
+									{LuxLowIntEvaluator(
+										window.fileAsObject.luxometro.intensidadBajaIzquierda
+									)}
+								</p>
+								<p className="right-aux">
+									{window.fileAsObject.luxometro.intensidadAuxiliarDerecha}
+								</p>
+								<p className="right-aux-eval">
+									{LuxLowIntEvaluator(
+										window.fileAsObject.luxometro.intensidadBajaDerecha
+									)}
+								</p>
+							</div>
+							<div className="alineacionLux">
 								<p>
 									{
-										window.fileAsObject.analizadorDeGases
-											.resultadoMonoxidoDeCarbonoCO
+										window.fileAsObject.luxometro
+											.alineacionFaroIzquierdoHorizontal
 									}
 								</p>
 								<p>
-									{COEvaluator(
-										window.fileAsObject.analizadorDeGases
-											.resultadoMonoxidoDeCarbonoCO,
-										yearRectificatorGas()
+									{LuxAngleEvaluator(
+										window.fileAsObject.luxometro
+											.alineacionFaroIzquierdoHorizontal
 									)}
 								</p>
 								<p>
 									{
-										window.fileAsObject.analizadorDeGases
-											.resultadoPartesPorMillonHC
+										window.fileAsObject.luxometro
+											.alineacionFaroDerechoHorizontal
 									}
 								</p>
 								<p>
-									{HCEvaluator(
-										window.fileAsObject.analizadorDeGases
-											.resultadoPartesPorMillonHC,
-										yearRectificatorGas()
+									{LuxAngleEvaluator(
+										window.fileAsObject.luxometro
+											.alineacionFaroDerechoHorizontal
 									)}
 								</p>
 								<p>
 									{
-										window.fileAsObject.analizadorDeGases
-											.resultadoPartesPorMillonNox
+										window.fileAsObject.luxometro
+											.alineacionFaroIzquierdoVertical
 									}
 								</p>
-							</>
-						) : (
-							<p></p>
-						)}
-					</div>
-					<div className="opacimetro">
-						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1 ? (
-							<p></p>
-						) : (
-							<>
 								<p>
-									{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
-								</p>
-								<p>
-									{opacitiEvaluator(
-										window.fileAsObject.opacimetro.resultadoMedicionOpacidad
+									{LuxAngleEvaluator(
+										window.fileAsObject.luxometro
+											.alineacionFaroIzquierdoVertical
 									)}
 								</p>
-							</>
-						)}
-					</div>
-				</article>
-			)}
+								<p>
+									{window.fileAsObject.luxometro.alineacionFaroDerechoVertical}
+								</p>
+								<p>
+									{LuxAngleEvaluator(
+										window.fileAsObject.luxometro.alineacionFaroDerechoVertical
+									)}
+								</p>
+							</div>
+						</div>
+						<div className="decibelimetro">
+							<p>{window.fileAsObject.sonometro.valorDeMedicion}</p>
+							<p>
+								{nioseEvaluator(
+									window.fileAsObject.sonometro.valorDeMedicion,
+									yearRectificatordb(),
+									tipo
+								)}
+							</p>
+						</div>
+						<div className="gases">
+							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
+							-1 ? (
+								<>
+									<p>
+										{
+											window.fileAsObject.analizadorDeGases
+												.resultadoMonoxidoDeCarbonoCO
+										}
+									</p>
+									<p>
+										{COEvaluator(
+											window.fileAsObject.analizadorDeGases
+												.resultadoMonoxidoDeCarbonoCO,
+											yearRectificatorGas()
+										)}
+									</p>
+									<p>
+										{
+											window.fileAsObject.analizadorDeGases
+												.resultadoPartesPorMillonHC
+										}
+									</p>
+									<p>
+										{HCEvaluator(
+											window.fileAsObject.analizadorDeGases
+												.resultadoPartesPorMillonHC,
+											yearRectificatorGas()
+										)}
+									</p>
+									<p>
+										{
+											window.fileAsObject.analizadorDeGases
+												.resultadoPartesPorMillonNox
+										}
+									</p>
+								</>
+							) : (
+								<p></p>
+							)}
+						</div>
+						<div className="opacimetro">
+							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
+							-1 ? (
+								<p></p>
+							) : (
+								<>
+									<p>
+										{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
+									</p>
+									<p>
+										{opacitiEvaluator(
+											window.fileAsObject.opacimetro.resultadoMedicionOpacidad
+										)}
+									</p>
+								</>
+							)}
+						</div>
+					</article>
+				)}
+			</section>
 		</main>
 	);
 }

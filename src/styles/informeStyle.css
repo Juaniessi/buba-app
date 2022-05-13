@@ -1,7 +1,391 @@
-.informe {
+.finalReport {
+  position: relative;
+}
+
+.finalReport .report-img {
   margin: 10px 0;
   border: solid black 1px;
   width: 600px;
   z-index: -1;
+}
+
+.finalReport p,
+.finalReport span {
+  position: absolute;
+  font-size: 0.7rem;
+}
+
+.finalReport .date {
+  color: white;
+}
+
+.finalReport .date .start-date {
+  top: 48px;
+  left: 190px;
+}
+
+.finalReport .date .end-date {
+  top: 48px;
+  left: 342px;
+}
+
+.finalReport .header-info .plate {
+  top: 122px;
+  left: 55px;
+}
+
+.finalReport .header-info .brand {
+  top: 122px;
+  left: 145px;
+}
+
+.finalReport .header-info .model {
+  top: 122px;
+  left: 275px;
+}
+
+.finalReport .header-info .mileage {
+  top: 122px;
+  left: 378px;
+}
+
+.finalReport .alineation .front-al {
+  top: 195px;
+  left: 282px;
+}
+
+.finalReport .alineation .front-al-eval {
+  top: 195px;
+  left: 326px;
+}
+
+.finalReport .alineation .rear-al {
+  top: 558px;
+  left: 282px;
+}
+
+.finalReport .alineation .rear-al-eval {
+  top: 558px;
+  left: 320px;
+}
+
+.finalReport .weight .front-left {
+  top: 246px;
+  left: 158px;
+}
+
+.finalReport .weight .front-right {
+  top: 246px;
+  left: 326px;
+}
+
+.finalReport .weight .rear-left {
+  top: 377px;
+  left: 158px;
+}
+
+.finalReport .weight .rear-right {
+  top: 377px;
+  left: 326px;
+}
+
+.finalReport .suspention .front-left {
+  top: 264px;
+  left: 158px;
+}
+
+.finalReport .suspention .front-right {
+  top: 264px;
+  left: 326px;
+}
+
+.finalReport .suspention .rear-left {
+  top: 395px;
+  left: 158px;
+}
+
+.finalReport .suspention .rear-right {
+  top: 395px;
+  left: 326px;
+}
+
+.finalReport .suspention .front-left-eval {
+  top: 264px;
+  left: 141px;
+}
+
+.finalReport .suspention .front-right-eval {
+  top: 264px;
+  left: 359px;
+}
+
+.finalReport .suspention .rear-left-eval {
+  top: 395px;
+  left: 141px;
+}
+
+.finalReport .suspention .rear-right-eval {
+  top: 395px;
+  left: 359px;
+}
+
+.finalReport .brake .performance .front {
+  top: 290px;
+  left: 158px;
+}
+
+.finalReport .brake .performance .rear {
+  top: 421px;
+  left: 158px;
+}
+
+.finalReport .brake .performance .hand {
+  top: 503px;
+  left: 158px;
+}
+
+.finalReport .brake .performance .front-eval {
+  top: 290px;
+  left: 141px;
+}
+
+.finalReport .brake .performance .rear-eval {
+  top: 421px;
+  left: 141px;
+}
+
+.finalReport .brake .performance .hand-eval {
+  top: 503px;
+  left: 141px;
+}
+
+.finalReport .brake .difference .front {
+  top: 305px;
+  left: 158px;
+}
+
+.finalReport .brake .difference .rear {
+  top: 435px;
+  left: 158px;
+}
+
+.finalReport .brake .difference .hand {
+  top: 518px;
+  left: 158px;
+}
+
+.finalReport .brake .difference .front-eval {
+  top: 305px;
+  left: 141px;
+}
+
+.finalReport .brake .difference .rear-eval {
+  top: 435px;
+  left: 141px;
+}
+
+.finalReport .brake .difference .hand-eval {
+  top: 518px;
+  left: 141px;
+}
+
+.finalReport .brake .strength .front-left {
+  top: 319px;
+  left: 158px;
+}
+
+.finalReport .brake .strength .front-right {
+  top: 319px;
+  left: 326px;
+}
+
+.finalReport .brake .strength .rear-left {
+  top: 449px;
+  left: 158px;
+}
+
+.finalReport .brake .strength .rear-right {
+  top: 449px;
+  left: 326px;
+}
+
+.finalReport .brake .strength .front-left-eval {
+  top: 319px;
+  left: 141px;
+}
+
+.finalReport .brake .strength .front-right-eval {
+  top: 319px;
+  left: 359px;
+}
+
+.finalReport .brake .strength .rear-left-eval {
+  top: 449px;
+  left: 141px;
+}
+
+.finalReport .brake .strength .rear-right-eval {
+  top: 449px;
+  left: 359px;
+}
+
+.finalReport .brake .strength .hand-left {
+  top: 533px;
+  left: 158px;
+}
+
+.finalReport .brake .strength .hand-right {
+  top: 533px;
+  left: 326px;
+}
+
+.finalReport .brake .strength .hand-left-eval {
+  top: 533px;
+  left: 141px;
+}
+
+.finalReport .brake .strength .hand-right-eval {
+  top: 533px;
+  left: 359px;
+}
+
+.finalReport .brake .resistance-rod .front-left {
+  top: 333px;
+  left: 158px;
+}
+
+.finalReport .brake .resistance-rod .front-right {
+  top: 333px;
+  left: 326px;
+}
+
+.finalReport .brake .resistance-rod .rear-left {
+  top: 463px;
+  left: 158px;
+}
+
+.finalReport .brake .resistance-rod .rear-right {
+  top: 463px;
+  left: 326px;
+}
+
+.finalReport .brake .resistance-rod .front-left-eval {
+  top: 333px;
+  left: 141px;
+}
+
+.finalReport .brake .resistance-rod .front-right-eval {
+  top: 333px;
+  left: 359px;
+}
+
+.finalReport .brake .resistance-rod .rear-left-eval {
+  top: 463px;
+  left: 141px;
+}
+
+.finalReport .brake .resistance-rod .rear-right-eval {
+  top: 463px;
+  left: 359px;
+}
+
+.finalReport .brake .ovality .front-left {
+  top: 347px;
+  left: 158px;
+}
+
+.finalReport .brake .ovality .front-right {
+  top: 347px;
+  left: 326px;
+}
+
+.finalReport .brake .ovality .rear-left {
+  top: 477px;
+  left: 158px;
+}
+
+.finalReport .brake .ovality .rear-right {
+  top: 477px;
+  left: 326px;
+}
+
+.finalReport .brake .ovality .front-left-eval {
+  top: 347px;
+  left: 141px;
+}
+
+.finalReport .brake .ovality .front-right-eval {
+  top: 347px;
+  left: 359px;
+}
+
+.finalReport .brake .ovality .rear-left-eval {
+  top: 477px;
+  left: 141px;
+}
+
+.finalReport .brake .ovality .rear-right-eval {
+  top: 477px;
+  left: 359px;
+}
+
+.finalReport .lux-meter .intensity .left-low {
+  top: 262px;
+  left: 470px;
+}
+
+.finalReport .lux-meter .intensity .right-low {
+  top: 262px;
+  left: 523px;
+}
+
+.finalReport .lux-meter .intensity .left-high {
+  top: 278px;
+  left: 470px;
+}
+
+.finalReport .lux-meter .intensity .right-high {
+  top: 278px;
+  left: 523px;
+}
+
+.finalReport .lux-meter .intensity .left-aux {
+  top: 294px;
+  left: 470px;
+}
+
+.finalReport .lux-meter .intensity .right-aux {
+  top: 294px;
+  left: 523px;
+}
+
+.finalReport .lux-meter .intensity .left-low-eval {
+  top: 262px;
+  left: 499px;
+}
+
+.finalReport .lux-meter .intensity .right-low-eval {
+  top: 262px;
+  left: 551px;
+}
+
+.finalReport .lux-meter .intensity .left-high-eval {
+  top: 278px;
+  left: 499px;
+}
+
+.finalReport .lux-meter .intensity .right-high-eval {
+  top: 278px;
+  left: 551px;
+}
+
+.finalReport .lux-meter .intensity .left-aux-eval {
+  top: 294px;
+  left: 499px;
+}
+
+.finalReport .lux-meter .intensity .right-aux-eval {
+  top: 294px;
+  left: 551px;
 }
 /*# sourceMappingURL=informeStyle.css.map */
