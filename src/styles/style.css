@@ -147,6 +147,9 @@ td {
 
 .lista-final {
   min-width: 570px;
+  position: absolute;
+  top: 575px;
+  left: 15px;
 }
 
 .orange {

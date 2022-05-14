@@ -7,12 +7,22 @@
 		z-index: -1;
 	}
 
-	p,
-	span {
+	p {
 		position: absolute;
 		font-size: 0.7rem;
 	}
+	span {
+		position: absolute;
+		font-size: 0.7rem;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		width: 12px;
+		height: 12px;
+		border: 0.5px black solid;
+	}
 	.date {
+		width: auto;
 		color: white;
 		.start-date {
 			top: 48px;
@@ -79,11 +89,11 @@
 	}
 	.suspention {
 		.front-left {
-			top: 264px;
+			top: 263px;
 			left: 158px;
 		}
 		.front-right {
-			top: 264px;
+			top: 263px;
 			left: 326px;
 		}
 		.rear-left {
@@ -95,11 +105,11 @@
 			left: 326px;
 		}
 		.front-left-eval {
-			top: 264px;
+			top: 263px;
 			left: 141px;
 		}
 		.front-right-eval {
-			top: 264px;
+			top: 263px;
 			left: 359px;
 		}
 		.rear-left-eval {
@@ -367,6 +377,52 @@
 				top: 357px;
 				left: 551px;
 			}
+		}
+	}
+	.decibel-meter {
+		.sound-int {
+			top: 407px;
+			left: 497px;
+		}
+		.sound-int-eval {
+			top: 407px;
+			left: 527px;
+		}
+	}
+	.gases {
+		.CO {
+			top: 460px;
+			left: 497px;
+		}
+		.CO-eval {
+			top: 460px;
+			left: 527px;
+		}
+		.HCC {
+			top: 476px;
+			left: 497px;
+		}
+		.HCC-eval {
+			top: 476px;
+			left: 527px;
+		}
+		.Nox {
+			top: 493px;
+			left: 497px;
+		}
+		.Nox-eval {
+			top: 493px;
+			left: 527px;
+		}
+	}
+	.opacimeter {
+		.opacity {
+			top: 534px;
+			left: 497px;
+		}
+		.opacity-eval {
+			top: 534px;
+			left: 527px;
 		}
 	}
 

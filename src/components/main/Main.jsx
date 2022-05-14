@@ -55,6 +55,13 @@ function Main() {
 			? tipoArray.descripciones[grupo.value][seccion.value] || []
 			: []; //esta varibale almacena el array de descripción a mapear
 	let severityColour; //esta varaible me da el color de la severidad
+	let imgSelector; // this varaible sets te img to show
+
+	function reportImgselector(tipo) {
+		if (tipo === 'Auto') {
+			imgSelector = informeAuto;
+		}
+	}
 
 	let armarLista = () => {
 		let sevOrder = 2; //variable creada para poder ordenar por severidad
@@ -144,7 +151,7 @@ function Main() {
 	}
 
 	//fecha de emisión y vencimiento
-	let fecha = new Date();
+	let fecha = window.fileAsObject === undefined ? "" : window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
 
 	function addDays(date, days) {
 		const result = new Date(date);
@@ -386,7 +393,10 @@ function Main() {
 		}
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
-
+	/**
+	 *Function to be called to rectify a bad year input
+	 * @returns {*} the case number to be applied to the noiseEvaluator evaluators
+	 */
 	function yearRectificatordb() {
 		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
 		let caseNumber;
@@ -405,8 +415,13 @@ function Main() {
 		}
 		return caseNumber;
 	}
-
-	function nioseEvaluator(db, caseNumber, tipo) {
+	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations.
+	 * @param {*} db prop from object: fileAsObject.
+	 * @param {*} caseNumber value extracted from yearRectificatorGas.
+	 * @param {*} tipo uses the state variable to understand wich vehicle is being evaluated.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 */
+	function noiseEvaluator(db, caseNumber, tipo) {
 		let severityEvaluation = '';
 		let severityLetter = '';
 
@@ -832,29 +847,7 @@ function Main() {
 					Agregar a la lista
 				</button>
 			</div>
-			<h2>Listado de defectos</h2>
-			<table className="lista-final">
-				<thead>
-					<tr className="lista-headers">
-						<th className="grupo-col">Grupo</th>
-						{/* <th>Sección</th> */}
-						<th className="descripcion-col">Descripción</th>
-						<th className="severidad-col">Severidad</th>
-						<th className="quitar-col">Quitar</th>
-					</tr>
-				</thead>
-				<tbody>
-					{lista
-						.sort(function (a, b) {
-							if (a.Ord !== b.Ord) return a.Ord - b.Ord;
-							if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
-							if (a.seccion !== b.seccion)
-								return a.seccion > b.seccion ? 1 : -1;
-							return a.desc > b.desc ? 1 : -1;
-						}) //uso operadores ternarios para devolver números y no comparar longitudes de strings
-						.map(defectList)}
-				</tbody>
-			</table>
+
 			<div className="btn-input-txt">
 				<label htmlFor="file-input" id="file-input-label">
 					Seleccione archivo a procesar
@@ -1290,10 +1283,12 @@ function Main() {
 								</p>
 							</div>
 						</div>
-						<div className="decibelimetro">
-							<p>{window.fileAsObject.sonometro.valorDeMedicion}</p>
-							<p>
-								{nioseEvaluator(
+						<div className="decibel-meter">
+							<p className="sound-int">
+								{window.fileAsObject.sonometro.valorDeMedicion}
+							</p>
+							<p className="sound-int-eval">
+								{noiseEvaluator(
 									window.fileAsObject.sonometro.valorDeMedicion,
 									yearRectificatordb(),
 									tipo
@@ -1304,53 +1299,57 @@ function Main() {
 							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
 							-1 ? (
 								<>
-									<p>
+									<p className="CO">
 										{
 											window.fileAsObject.analizadorDeGases
 												.resultadoMonoxidoDeCarbonoCO
 										}
 									</p>
-									<p>
+									<p className="CO-eval">
 										{COEvaluator(
 											window.fileAsObject.analizadorDeGases
 												.resultadoMonoxidoDeCarbonoCO,
 											yearRectificatorGas()
 										)}
 									</p>
-									<p>
+									<p className="HCC">
 										{
 											window.fileAsObject.analizadorDeGases
 												.resultadoPartesPorMillonHC
 										}
 									</p>
-									<p>
+									<p className="HCC-eval">
 										{HCEvaluator(
 											window.fileAsObject.analizadorDeGases
 												.resultadoPartesPorMillonHC,
 											yearRectificatorGas()
 										)}
 									</p>
-									<p>
+									<p className="Nox">
 										{
 											window.fileAsObject.analizadorDeGases
 												.resultadoPartesPorMillonNox
 										}
 									</p>
+									<p className="Nox-eval">S</p>
 								</>
 							) : (
 								<p></p>
 							)}
 						</div>
-						<div className="opacimetro">
+						<div className="opacimeter">
 							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
 							-1 ? (
-								<p></p>
+								<>
+									<p className="opacity"></p>
+									<p className="opacity-eval"></p>
+								</>
 							) : (
 								<>
-									<p>
+									<p className="opacity">
 										{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
 									</p>
-									<p>
+									<p className="opacity-eval">
 										{opacitiEvaluator(
 											window.fileAsObject.opacimetro.resultadoMedicionOpacidad
 										)}
@@ -1360,6 +1359,28 @@ function Main() {
 						</div>
 					</article>
 				)}
+				<table className="lista-final">
+					<thead>
+						<tr className="lista-headers">
+							<th className="grupo-col">Grupo</th>
+							{/* <th>Sección</th> */}
+							<th className="descripcion-col">Descripción</th>
+							<th className="severidad-col">Severidad</th>
+							<th className="quitar-col">Quitar</th>
+						</tr>
+					</thead>
+					<tbody>
+						{lista
+							.sort(function (a, b) {
+								if (a.Ord !== b.Ord) return a.Ord - b.Ord;
+								if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
+								if (a.seccion !== b.seccion)
+									return a.seccion > b.seccion ? 1 : -1;
+								return a.desc > b.desc ? 1 : -1;
+							}) //uso operadores ternarios para devolver números y no comparar longitudes de strings
+							.map(defectList)}
+					</tbody>
+				</table>
 			</section>
 		</main>
 	);

@@ -9,13 +9,30 @@
   z-index: -1;
 }
 
-.finalReport p,
-.finalReport span {
+.finalReport p {
   position: absolute;
   font-size: 0.7rem;
 }
 
+.finalReport span {
+  position: absolute;
+  font-size: 0.7rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 12px;
+  height: 12px;
+  border: 0.5px black solid;
+}
+
 .finalReport .date {
+  width: auto;
   color: white;
 }
 
@@ -90,12 +107,12 @@
 }
 
 .finalReport .suspention .front-left {
-  top: 264px;
+  top: 263px;
   left: 158px;
 }
 
 .finalReport .suspention .front-right {
-  top: 264px;
+  top: 263px;
   left: 326px;
 }
 
@@ -110,12 +127,12 @@
 }
 
 .finalReport .suspention .front-left-eval {
-  top: 264px;
+  top: 263px;
   left: 141px;
 }
 
 .finalReport .suspention .front-right-eval {
-  top: 264px;
+  top: 263px;
   left: 359px;
 }
 
@@ -427,6 +444,56 @@
 .finalReport .lux-meter .alineationLux .right-vert-eval {
   top: 357px;
   left: 551px;
+}
+
+.finalReport .decibel-meter .sound-int {
+  top: 407px;
+  left: 497px;
+}
+
+.finalReport .decibel-meter .sound-int-eval {
+  top: 407px;
+  left: 527px;
+}
+
+.finalReport .gases .CO {
+  top: 460px;
+  left: 497px;
+}
+
+.finalReport .gases .CO-eval {
+  top: 460px;
+  left: 527px;
+}
+
+.finalReport .gases .HCC {
+  top: 476px;
+  left: 497px;
+}
+
+.finalReport .gases .HCC-eval {
+  top: 476px;
+  left: 527px;
+}
+
+.finalReport .gases .Nox {
+  top: 493px;
+  left: 497px;
+}
+
+.finalReport .gases .Nox-eval {
+  top: 493px;
+  left: 527px;
+}
+
+.finalReport .opacimeter .opacity {
+  top: 534px;
+  left: 497px;
+}
+
+.finalReport .opacimeter .opacity-eval {
+  top: 534px;
+  left: 527px;
 }
 
 .finalReport .severe {
