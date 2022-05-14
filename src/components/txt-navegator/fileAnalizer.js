@@ -1185,7 +1185,7 @@ function fixStringsToDates(obj){
 	obj.estadísticaDePuestos.fechaDeSalidaDelPuesto1 = getDatesFromString(dateOut1)
 
 	let dateIn2 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2 ;
-	obj.estadísticaDePuestos.fechaDeIngresoAlPuesto1 = getDatesFromString(dateIn2)
+	obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2 = getDatesFromString(dateIn2)
 
 	let dateOut2 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2 ;
 	obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2 = getDatesFromString(dateOut2)
