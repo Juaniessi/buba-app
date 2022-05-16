@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import trashCan from '../../assets/trash-can-solid.svg';
 import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
@@ -43,14 +43,17 @@ function Main() {
 
 	const [txtRender, setTxtRender] = useState('');
 	const handleTxtRender = (e) => {
+		
 		procesTxt(e);
 		setTimeout(function () {
 			setTxtRender(window.fileAsObject);
 		}, 60);
-		/* setTimeout(function () {
-			console.log(window.fileAsObject);
-		}, 120); */
+		setTimeout(function () {
+			loadFileRef.current.value = null;
+		}, 90);
 	};
+
+	const loadFileRef = useRef(null);
 
 	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
 	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : []; //esta variable almacena el array de seccion a mapear
@@ -76,7 +79,8 @@ function Main() {
 		return imgSelector;
 	}
 
-	let armarLista = () => {
+	let armarLista = (e) => {
+		e.preventDefault(); // va con esto para que el submit no borre todo, porque esta dentro de la etiqueta form
 		let sevOrder = 2; //variable creada para poder ordenar por severidad
 
 		switch (severidad) {
@@ -149,21 +153,25 @@ function Main() {
 		}
 
 		return (
-			<tr className={`itemLista ${severityColour}`} key={i}>
+			<tr className={`item-lista`} key={i}>
 				<td className={`grupo-col ${severityColour}`}>{grupo}</td>
 				{/* <td className={`${severityColour}`}>{seccion}</td> */}
 				<td className={`descripcion-col ${severityColour}`}>{desc}</td>
 				<td className={`severidad-col ${severityColour}`}>{sev}</td>
+				<td className="phantom-col"></td>
 				<td className="erase-btn-ctn">
 					<button className="erase-btn" onClick={() => eraseDefect(i)}>
-						<img src={trashCan} alt="Trash-can" />
+						<img className="trash-can" src={trashCan} alt="Trash-can" />
 					</button>
 				</td>
 			</tr>
 		);
 	}
 
-	//fecha de emisión y vencimiento
+	/**  function to evaluate if alineation is ok, the same function is used for most evaluations
+	 * @param {*} fecha from object: fileAsObject, starts undefined so must check to that
+	 * @returns the date of expiration
+	 */
 	let fecha =
 		window.fileAsObject === undefined
 			? ''
@@ -722,13 +730,12 @@ function Main() {
 					</label>
 				</div>
 			</form>
-			
-
 			<div className="btn-input-txt">
 				<label htmlFor="file-input" id="file-input-label">
 					Seleccione archivo a procesar
 				</label>
 				<input
+					ref={loadFileRef}					
 					type="file"
 					id="file-input"
 					accept="text/plain"
@@ -1211,7 +1218,7 @@ function Main() {
 												.resultadoPartesPorMillonNox
 										}
 									</p>
-									<p className="Nox-eval">S</p>
+									<p className="Nox-eval"></p>
 								</>
 							) : (
 								<p></p>
@@ -1246,6 +1253,7 @@ function Main() {
 							{/* <th>Sección</th> */}
 							<th className="descripcion-col">Descripción</th>
 							<th className="severidad-col">Severidad</th>
+							<th className="phantom-col"></th>
 							<th className="quitar-col">Quitar</th>
 						</tr>
 					</thead>
@@ -1400,10 +1408,10 @@ function Main() {
 						onChange={(e) => setUnlistedDef(e.target.value)}></textarea>
 				</div>
 				<div className="div-btn">
-				<button className="send-btn" onClick={armarLista}>
-					Agregar a la lista
-				</button>
-			</div>
+					<button className="send-btn" onClick={armarLista}>
+						Agregar a la lista
+					</button>
+				</div>
 			</form>
 		</main>
 	);

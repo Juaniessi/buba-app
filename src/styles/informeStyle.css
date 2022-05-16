@@ -11,12 +11,12 @@
 
 .finalReport p {
   position: absolute;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 
 .finalReport span {
   position: absolute;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -29,6 +29,7 @@
   width: 12px;
   height: 12px;
   border: 0.5px black solid;
+  border-radius: 2.5px;
 }
 
 .finalReport .date {
@@ -497,15 +498,14 @@
 }
 
 .finalReport .severe {
-  color: white;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .finalReport .moderate {
-  background-color: orange;
+  background-color: rgba(255, 100, 0, 0.5);
 }
 
 .finalReport .minor {
-  background-color: yellow;
+  background-color: rgba(255, 240, 0, 0.5);
 }
 /*# sourceMappingURL=informeStyle.css.map */

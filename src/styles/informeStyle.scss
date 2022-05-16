@@ -3,23 +3,25 @@
 	.report-img {
 		margin: 10px 0;
 		border: solid black 1px;
+		
 		width: 600px;
 		z-index: -1;
 	}
 
 	p {
 		position: absolute;
-		font-size: 0.7rem;
+		font-size: 0.6rem;
 	}
 	span {
 		position: absolute;
-		font-size: 0.7rem;
+		font-size: 0.6rem;
 		justify-content: center;
 		align-items: center;
 		display: flex;
 		width: 12px;
 		height: 12px;
 		border: 0.5px black solid;
+		border-radius: 2.5px;
 	}
 	.date {
 		width: auto;
@@ -427,13 +429,12 @@
 	}
 
 	.severe {
-		color: white;
-		background-color: black;
+		background-color: rgba(0, 0, 0, 0.3);
 	}
 	.moderate {
-		background-color: orange;
+		background-color: rgba(255, 100, 0, 0.5);
 	}
 	.minor {
-		background-color: yellow;
+		background-color: rgba(255, 240, 0, 0.5);
 	}
 }
