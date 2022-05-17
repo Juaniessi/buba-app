@@ -30,7 +30,6 @@ function Report(props) {
 		handleTxtRender,
 	} = props;
 
-	
 	let imgSelector; // this varaible sets te img to show
 
 	function reportImgselector(tipo) {
@@ -130,7 +129,7 @@ function Report(props) {
 	function handBrakePerfEvaluator(brakeRend) {
 		let severityEvaluation = '';
 		let severityLetter = '';
-		if (brakeRend <= 0) {
+		if (brakeRend <= 1) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
 		} else if (brakeRend <= 14.4) {
@@ -671,7 +670,7 @@ function Report(props) {
 								</p>
 								<p className="rear-left-eval">
 									{suspEvaluator(
-										window.fileAsObject.suspensionEjeDelantero
+										window.fileAsObject.suspensionEjeTrasero
 											.rendimientoTraseroIzquierdo
 									)}
 								</p>
@@ -683,7 +682,7 @@ function Report(props) {
 								</p>
 								<p className="rear-right-eval">
 									{suspEvaluator(
-										window.fileAsObject.suspensionEjeDelantero
+										window.fileAsObject.suspensionEjeTrasero
 											.rendimientoTraseroDerecho
 									)}
 								</p>

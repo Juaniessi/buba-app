@@ -1,6 +1,6 @@
 import React from 'react';
-import {autoArray} from '../context/carDataBase';
-import {motoArray} from '../context/motoDataBase';
+import {autoArray} from '../dataArrays/carDataBase';
+import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 
 function DefectList(props) {

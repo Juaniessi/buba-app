@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 import Report from './Report';
 import {procesTxt} from '../txt-navegator/fileAnalizer.js';
+import {radioGeneratorArray} from "../dataArrays/radioBtnDB";
 
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
@@ -48,11 +49,29 @@ function Main() {
 
 	const loadFileRef = useRef(null);
 
+	
+
 	return (
 		<main>
+			
 			<form className="form-radio">
 				<h2>Tipo de vehículo</h2>
+				
 				<div className="btn-package type-c">
+			{/* 	{radioGeneratorArray.type.map((item, i) => (
+				<label className="btn-inside" htmlFor={item.value} key={i}>
+					<input
+						type="radio"
+						className="btn-inside rad-c"
+						name="tipo"
+						id={item.value}
+						value={item.value}
+						checked={tipo.value === {item}} //determina que visualmente se vea checked
+						onChange={()=>handleTipo(item)}
+					/>
+					{item.label}
+				</label>
+			))} */}
 					<input
 						type="radio"
 						className="btn-inside rad-c"
@@ -62,7 +81,7 @@ function Main() {
 						checked={tipo === 'Auto'} //determina que visualmente se vea checked
 						onChange={handleTipo}
 					/>
-					<label className="btn-inside" htmlFor="Camioneta">
+					<label className="btn-inside" htmlFor="Auto">
 						Auto
 					</label>
 					<input
