@@ -4,6 +4,7 @@ import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import DefectList from './DefectList';
+import {minorOrEqual} from '../dataArrays/evaluationFunctions';
 
 function Report(props) {
 	const {
@@ -30,35 +31,6 @@ function Report(props) {
 		txtRender,
 		handleTxtRender,
 	} = props;
-
-
-	const minorOrEqArray = new Map([
-		['susp', [10, 40, 60]],
-		['brakePerf', [10, 40, 50]],
-		['handBrakePerf', [1, 14.4, 17]],
-		['brakeStrenght', [0.1, 0.3, 0.99]],
-	]);
-
-	function minorOrEqual(txtProp, paramSelector) {
-		let params = minorOrEqArray.get(paramSelector);
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (txtProp <= params[0]) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (txtProp <= params[1]) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (txtProp <= params[2]) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
 
 	/**  selecs between the posible vehicles to evaluate
 	 * @param {*} tipo taken from the variable of state
@@ -384,7 +356,7 @@ function Report(props) {
 					return (
 						<span className={`${severityEvaluation}`}>{severityLetter}</span>
 					);
-				default:	
+				default:
 			}
 		} else if (tipo === 'Camion') {
 			switch (caseNumber) {
@@ -585,7 +557,7 @@ function Report(props) {
 			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
 
 	/**
-	 * 
+	 *
 	 * @param {*} date Date in wich the vehicle was entered in the system.
 	 * @param {*} validationPeriod Number of days to be added to the date. It represents the time in wich this report will cease to be valid.
 	 * @returns The date value plus the validation period to form a dueDate.
@@ -608,7 +580,7 @@ function Report(props) {
 		} else if (moderateFlag.current > 0) {
 			dueDate = addDays(startDate, 60);
 		} else {
-			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1))  ; 
+			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
 		}
 		return dueDate;
 	}
@@ -740,24 +712,27 @@ function Report(props) {
 										{window.fileAsObject.frenosEje_1.rendimientoDelEje}
 									</p>
 									<p className="front-eval">
-										{brakePerfEvaluator(
-											window.fileAsObject.frenosEje_1.rendimientoDelEje
+										{minorOrEqual(
+											window.fileAsObject.frenosEje_1.rendimientoDelEje,
+											'brakePerf'
 										)}
 									</p>
 									<p className="rear">
 										{window.fileAsObject.frenosEje_2.rendimientoDelEje}
 									</p>
 									<p className="rear-eval">
-										{brakePerfEvaluator(
-											window.fileAsObject.frenosEje_2.rendimientoDelEje
+										{minorOrEqual(
+											window.fileAsObject.frenosEje_2.rendimientoDelEje,
+											'brakePerf'
 										)}
 									</p>
 									<p className="hand">
 										{window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje}
 									</p>
 									<p className="hand-eval">
-										{handBrakePerfEvaluator(
-											window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje
+										{minorOrEqual(
+											window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje,
+											'handBrakePerf'
 										)}
 									</p>
 								</div>
@@ -807,17 +782,17 @@ function Report(props) {
 										}
 									</p>
 									<p className="front-left-eval">
-										{brakeStrenghtEvaluator(
+										{minorOrEqual(
 											window.fileAsObject.frenosEje_1
-												.fuerzaDeFrenadoLadoIzquierdo
+												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
 										)}
 									</p>
 									<p className="front-right">
 										{window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho}
 									</p>
 									<p className="front-right-eval">
-										{brakeStrenghtEvaluator(
-											window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho
+										{minorOrEqual(
+											window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho, "brakeStrenght"
 										)}
 									</p>
 									<p className="rear-left">
@@ -827,17 +802,17 @@ function Report(props) {
 										}
 									</p>
 									<p className="rear-left-eval">
-										{brakeStrenghtEvaluator(
+										{minorOrEqual(
 											window.fileAsObject.frenosEje_2
-												.fuerzaDeFrenadoLadoIzquierdo
+												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
 										)}
 									</p>
 									<p className="rear-right">
 										{window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho}
 									</p>
 									<p className="rear-right-eval">
-										{brakeStrenghtEvaluator(
-											window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho
+										{minorOrEqual(
+											window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho, "brakeStrenght"
 										)}
 									</p>
 									<p className="hand-left">
@@ -847,9 +822,9 @@ function Report(props) {
 										}
 									</p>
 									<p className="hand-left-eval">
-										{brakeStrenghtEvaluator(
+										{minorOrEqual(
 											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo
+												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
 										)}
 									</p>
 									<p className="hand-right">
@@ -859,9 +834,9 @@ function Report(props) {
 										}
 									</p>
 									<p className="hand-right-eval">
-										{brakeStrenghtEvaluator(
+										{minorOrEqual(
 											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo
+												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
 										)}
 									</p>
 								</div>
