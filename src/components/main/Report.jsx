@@ -384,6 +384,7 @@ function Report(props) {
 					return (
 						<span className={`${severityEvaluation}`}>{severityLetter}</span>
 					);
+				default:	
 			}
 		} else if (tipo === 'Camion') {
 			switch (caseNumber) {
@@ -421,6 +422,7 @@ function Report(props) {
 					return (
 						<span className={`${severityEvaluation}`}>{severityLetter}</span>
 					);
+				default:
 			}
 		}
 	}
@@ -513,6 +515,7 @@ function Report(props) {
 				return (
 					<span className={`${severityEvaluation}`}>{severityLetter}</span>
 				);
+			default:
 		}
 	}
 
@@ -572,28 +575,31 @@ function Report(props) {
 				return (
 					<span className={`${severityEvaluation}`}>{severityLetter}</span>
 				);
+			default:
 		}
 	}
-
-	/**  function addDays, takes the date from the txt and adds 60 straight days
-	 * @param {*} startDate from object: fileAsObject, starts undefined so must check to that
-	 * @param {*} date start of validity
-	 * @param {*} validity number of days of validity
-	 * @param {*} dueDate self explanatory
-	 * @returns the date of expiration
-	 */
 
 	let startDate =
 		window.fileAsObject === undefined
 			? ''
 			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
 
-	function addDays(date, validity) {
+	/**
+	 * 
+	 * @param {*} date Date in wich the vehicle was entered in the system.
+	 * @param {*} validationPeriod Number of days to be added to the date. It represents the time in wich this report will cease to be valid.
+	 * @returns The date value plus the validation period to form a dueDate.
+	 */
+	function addDays(date, validationPeriod) {
 		const result = new Date(date);
-		result.setDate(result.getDate() + validity);
+		result.setDate(result.getDate() + validationPeriod);
 		return result;
 	}
 
+	/**
+	 * Calculates the due date for this report.
+	 * @returns The calculated due date.
+	 */
 	function dueDateCalculator() {
 		let dueDate = new Date(startDate.getTime());
 
