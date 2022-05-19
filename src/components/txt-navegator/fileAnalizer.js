@@ -136,10 +136,8 @@ export function procesTxt(ev) {
   });
 
   setTimeout(function () {
-    let valorjson = proccesFileGetJson(true);
+    proccesFileGetJson(true);
     fileAsObject = proccesFileGetObject();
-    /* document.querySelector('#jsonContainer').innerHTML = valorjson;
-		document.querySelector('#jsonContainer').style.display = 'block'; */
 
     window.fileAsObject = fileAsObject;
     window.fileAsMap = structureMap;
