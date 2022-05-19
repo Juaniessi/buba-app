@@ -80,63 +80,6 @@ function Report(props) {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	function suspEvaluator(suspRend) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (suspRend <= 10) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (suspRend <= 40) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (suspRend <= 60) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function brakePerfEvaluator(brakeRend) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (brakeRend <= 10) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (brakeRend <= 40) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (brakeRend <= 50) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function handBrakePerfEvaluator(brakeRend) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (brakeRend <= 1) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (brakeRend <= 14.4) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (brakeRend <= 17) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
 	function brakeDifferenceEvaluator(brakeDif) {
 		let severityEvaluation = '';
 		let severityLetter = '';
@@ -147,25 +90,6 @@ function Report(props) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
 		} else if (brakeDif >= 12) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function brakeStrenghtEvaluator(brakeStrenght) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (brakeStrenght <= 0.1) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (brakeStrenght <= 0.3) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (brakeStrenght <= 0.99) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
 		} else {
