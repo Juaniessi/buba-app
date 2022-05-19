@@ -598,7 +598,7 @@ function Report(props) {
 	}
 
 	function dueDateCalculator() {
-		let dueDate;
+		let dueDate = new Date(startDate.getTime());
 
 		if (severeFlag.current > 0) {
 			dueDate = addDays(startDate, 0);
@@ -607,7 +607,7 @@ function Report(props) {
 			dueDate = addDays(startDate, 60);
 			return dueDate;
 		} else {
-			dueDate = addDays(startDate, 365);
+			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1))  ; 
 			return dueDate;
 		}
 	}
