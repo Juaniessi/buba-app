@@ -1,15 +1,16 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import DefectList from './DefectList';
-//import minorOrEqual from '../dataArrays/evaluationFunctions' ;
 
 function Report(props) {
 	const {
 		tipo,
 		loadFileRef,
+		severeFlag,
+		moderateFlag,
 		severidad,
 		setSeveridad,
 		handleSeveridad,
@@ -30,11 +31,8 @@ function Report(props) {
 		handleTxtRender,
 	} = props;
 
-	const severeFlag = useRef(0);
 
-	const moderateFlag = useRef(0);
-
-	const minorOrEqArray =   new Map([
+	const minorOrEqArray = new Map([
 		['susp', [10, 40, 60]],
 		['brakePerf', [10, 40, 50]],
 		['handBrakePerf', [1, 14.4, 17]],
@@ -42,7 +40,7 @@ function Report(props) {
 	]);
 
 	function minorOrEqual(txtProp, paramSelector) {
-		let params = minorOrEqArray.get(paramSelector) ;
+		let params = minorOrEqArray.get(paramSelector);
 		let severityEvaluation = '';
 		let severityLetter = '';
 		if (txtProp <= params[0]) {
@@ -58,7 +56,7 @@ function Report(props) {
 			severityEvaluation = '';
 			severityLetter = 'A';
 		}
-	
+
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
@@ -452,7 +450,6 @@ function Report(props) {
 			caseNumber = 3;
 			return caseNumber;
 		}
-		
 	}
 
 	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations
@@ -602,14 +599,12 @@ function Report(props) {
 
 		if (severeFlag.current > 0) {
 			dueDate = addDays(startDate, 0);
-			return dueDate;
 		} else if (moderateFlag.current > 0) {
 			dueDate = addDays(startDate, 60);
-			return dueDate;
 		} else {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1))  ; 
-			return dueDate;
 		}
+		return dueDate;
 	}
 
 	return (
@@ -687,9 +682,10 @@ function Report(props) {
 									}
 								</p>
 								<p className="front-left-eval">
-									{suspEvaluator(
+									{minorOrEqual(
 										window.fileAsObject.suspensionEjeDelantero
-											.rendimientoDelanteroIzquierdo
+											.rendimientoDelanteroIzquierdo,
+										'susp'
 									)}
 								</p>
 								<p className="front-right">
@@ -699,9 +695,10 @@ function Report(props) {
 									}
 								</p>
 								<p className="front-right-eval">
-									{suspEvaluator(
+									{minorOrEqual(
 										window.fileAsObject.suspensionEjeDelantero
-											.rendimientoDelanteroDerecho
+											.rendimientoDelanteroDerechos,
+										'susp'
 									)}
 								</p>
 								<p className="rear-left">
@@ -711,17 +708,11 @@ function Report(props) {
 									}
 								</p>
 								<p className="rear-left-eval">
-									{
-									
-									// suspEvaluator(
-									// 	window.fileAsObject.suspensionEjeTrasero
-									// 		.rendimientoTraseroIzquierdo
-									// )
-
-									minorOrEqual( window.fileAsObject.suspensionEjeTrasero
-										.rendimientoTraseroIzquierdo ,'susp') 
-									
-									}
+									{minorOrEqual(
+										window.fileAsObject.suspensionEjeTrasero
+											.rendimientoTraseroIzquierdo,
+										'susp'
+									)}
 								</p>
 								<p className="rear-right">
 									{
@@ -730,9 +721,10 @@ function Report(props) {
 									}
 								</p>
 								<p className="rear-right-eval">
-									{suspEvaluator(
+									{minorOrEqual(
 										window.fileAsObject.suspensionEjeTrasero
-											.rendimientoTraseroDerecho
+											.rendimientoTraseroDerecho,
+										'susp'
 									)}
 								</p>
 							</div>
@@ -1171,7 +1163,3 @@ function Report(props) {
 	);
 }
 export default Report;
-
-
-
-

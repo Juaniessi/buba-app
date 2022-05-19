@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import Report from './Report';
 import {procesTxt} from '../txt-navegator/fileAnalizer.js';
-import {radioGeneratorArray} from "../dataArrays/radioBtnDB";
+import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
 
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
@@ -44,21 +44,22 @@ function Main() {
 		}, 60);
 		setTimeout(function () {
 			loadFileRef.current.value = null;
+			severeFlag.current = 0;
+			moderateFlag.current = 0;
 		}, 90);
 	};
 
 	const loadFileRef = useRef(null);
-
-	
+	const severeFlag = useRef(0);
+	const moderateFlag = useRef(0);
 
 	return (
 		<main>
-			
 			<form className="form-radio">
 				<h2>Tipo de vehículo</h2>
-				
+
 				<div className="btn-package type-c">
-			{/* 	{radioGeneratorArray.type.map((item, i) => (
+					{/* 	{radioGeneratorArray.type.map((item, i) => (
 				<label className="btn-inside" htmlFor={item.value} key={i}>
 					<input
 						type="radio"
@@ -126,6 +127,8 @@ function Main() {
 				<Report
 					tipo={tipo}
 					loadFileRef={loadFileRef}
+					severeFlag={severeFlag}
+					moderateFlag={moderateFlag}
 					severidad={severidad}
 					setSeveridad={setSeveridad}
 					handleSeveridad={handleSeveridad}
