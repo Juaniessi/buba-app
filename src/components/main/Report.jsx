@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
-
 import DefectList from './DefectList';
 
 function Report(props) {
@@ -30,6 +29,15 @@ function Report(props) {
 		handleTxtRender,
 	} = props;
 
+	const severeFlag = useRef(0);
+
+	const moderateFlag = useRef(0);
+
+	/**  selecs between the posible vehicles to evaluate
+	 * @param {*} tipo taken from the variable of state
+	 * @param {*} imgSelector variable to store the img to display
+	 * @returns the img to display
+	 */
 	let imgSelector; // this varaible sets te img to show
 
 	function reportImgselector(tipo) {
@@ -48,23 +56,6 @@ function Report(props) {
 	}
 
 	/**  function to evaluate if alineation is ok, the same function is used for most evaluations
-	 * @param {*} fecha from object: fileAsObject, starts undefined so must check to that
-	 * @returns the date of expiration
-	 */
-	let fecha =
-		window.fileAsObject === undefined
-			? ''
-			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
-
-	function addDays(date, days) {
-		const result = new Date(date);
-		result.setDate(result.getDate() + days);
-		return result;
-	}
-
-	let fechaVen = addDays(fecha, 60);
-
-	/**  function to evaluate if alineation is ok, the same function is used for most evaluations
 	 * @param {*} alineation prop from object: fileAsObject
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>
 	 */
@@ -75,9 +66,11 @@ function Report(props) {
 		if (alineation <= -10 || alineation >= 10) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
+			severeFlag.current++;
 		} else if (alineation <= -5 || alineation >= 5) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
+			moderateFlag.current++;
 		} else if (alineation <= -3 || alineation >= 3) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -422,12 +415,15 @@ function Report(props) {
 		}
 		if (anoFabrication <= 1991) {
 			caseNumber = 1;
+			return caseNumber;
 		} else if (anoFabrication <= 1994) {
 			caseNumber = 2;
+			return caseNumber;
 		} else if (anoFabrication > 1994) {
 			caseNumber = 3;
+			return caseNumber;
 		}
-		return caseNumber;
+		
 	}
 
 	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations
@@ -439,7 +435,6 @@ function Report(props) {
 	function HCEvaluator(ppm, caseNumber) {
 		let severityEvaluation = '';
 		let severityLetter = '';
-
 		switch (caseNumber) {
 			case 1:
 				if (ppm >= 2500) {
@@ -554,6 +549,40 @@ function Report(props) {
 		}
 	}
 
+	/**  function addDays, takes the date from the txt and adds 60 straight days
+	 * @param {*} startDate from object: fileAsObject, starts undefined so must check to that
+	 * @param {*} date start of validity
+	 * @param {*} validity number of days of validity
+	 * @param {*} dueDate self explanatory
+	 * @returns the date of expiration
+	 */
+
+	let startDate =
+		window.fileAsObject === undefined
+			? ''
+			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
+
+	function addDays(date, validity) {
+		const result = new Date(date);
+		result.setDate(result.getDate() + validity);
+		return result;
+	}
+
+	function dueDateCalculator() {
+		let dueDate;
+
+		if (severeFlag.current > 0) {
+			dueDate = addDays(startDate, 0);
+			return dueDate;
+		} else if (moderateFlag.current > 0) {
+			dueDate = addDays(startDate, 60);
+			return dueDate;
+		} else {
+			dueDate = addDays(startDate, 365);
+			return dueDate;
+		}
+	}
+
 	return (
 		<>
 			<div className="btn-input-txt">
@@ -579,22 +608,6 @@ function Report(props) {
 						''
 					) : (
 						<article className="txtRender">
-							<div className="date">
-								<p className="start-date">
-									{fecha.getDate() +
-										'/' +
-										(fecha.getMonth() + 1) +
-										'/' +
-										fecha.getFullYear()}
-								</p>
-								<p className="end-date">
-									{fechaVen.getDate() +
-										'/' +
-										(fechaVen.getMonth() + 1) +
-										'/' +
-										fechaVen.getFullYear()}
-								</p>
-							</div>
 							<div className="header-info">
 								<p className="plate">{window.fileAsObject.header.patente}</p>
 								<p className="brand">
@@ -1078,6 +1091,22 @@ function Report(props) {
 										</p>
 									</>
 								)}
+							</div>
+							<div className="date">
+								<p className="start-date">
+									{startDate.getDate() +
+										'/' +
+										(startDate.getMonth() + 1) +
+										'/' +
+										startDate.getFullYear()}
+								</p>
+								<p className="end-date">
+									{dueDateCalculator().getDate() +
+										'/' +
+										(dueDateCalculator().getMonth() + 1) +
+										'/' +
+										dueDateCalculator().getFullYear()}
+								</p>
 							</div>
 						</article>
 					)}
