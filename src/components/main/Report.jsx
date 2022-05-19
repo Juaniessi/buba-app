@@ -103,25 +103,25 @@ function Report(props) {
 		return caseNumber;
 	}
 	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations.
-	 * @param {*} db prop from object: fileAsObject.
+	 * @param {*} txtProp prop from object: fileAsObject.
 	 * @param {*} caseNumber value extracted from yearRectificatorGas.
 	 * @param {*} tipo uses the state variable to understand wich vehicle is being evaluated.
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>
 	 */
-	function noiseEvaluator(db, caseNumber, tipo) {
+	function noiseEvaluator(txtProp, caseNumber, tipo) {
 		let severityEvaluation = '';
 		let severityLetter = '';
 
 		if (tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Moto') {
 			switch (caseNumber) {
 				case 1:
-					if (db >= 120) {
+					if (txtProp >= 120) {
 						severityEvaluation = 'severe';
 						severityLetter = 'G';
-					} else if (db >= 88.1) {
+					} else if (txtProp >= 88.1) {
 						severityEvaluation = 'moderate';
 						severityLetter = 'M';
-					} else if (db >= 80) {
+					} else if (txtProp >= 80) {
 						severityEvaluation = 'minor';
 						severityLetter = 'L';
 					} else {
@@ -132,13 +132,13 @@ function Report(props) {
 						<span className={`${severityEvaluation}`}>{severityLetter}</span>
 					);
 				case 2:
-					if (db >= 120) {
+					if (txtProp >= 120) {
 						severityEvaluation = 'severe';
 						severityLetter = 'G';
-					} else if (db >= 83.1) {
+					} else if (txtProp >= 83.1) {
 						severityEvaluation = 'moderate';
 						severityLetter = 'M';
-					} else if (db >= 80) {
+					} else if (txtProp >= 80) {
 						severityEvaluation = 'minor';
 						severityLetter = 'L';
 					} else {
@@ -153,13 +153,13 @@ function Report(props) {
 		} else if (tipo === 'Camion') {
 			switch (caseNumber) {
 				case 1:
-					if (db >= 110) {
+					if (txtProp >= 110) {
 						severityEvaluation = 'severe';
 						severityLetter = 'G';
-					} else if (db >= 95.1) {
+					} else if (txtProp >= 95.1) {
 						severityEvaluation = 'moderate';
 						severityLetter = 'M';
-					} else if (db >= 85) {
+					} else if (txtProp >= 85) {
 						severityEvaluation = 'minor';
 						severityLetter = 'L';
 					} else {
@@ -170,13 +170,13 @@ function Report(props) {
 						<span className={`${severityEvaluation}`}>{severityLetter}</span>
 					);
 				case 2:
-					if (db > 110) {
+					if (txtProp > 110) {
 						severityEvaluation = 'severe';
 						severityLetter = 'G';
-					} else if (db > 87) {
+					} else if (txtProp > 87) {
 						severityEvaluation = 'moderate';
 						severityLetter = 'M';
-					} else if (db > 84) {
+					} else if (txtProp > 84) {
 						severityEvaluation = 'minor';
 						severityLetter = 'L';
 					} else {
