@@ -4,7 +4,7 @@ import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import DefectList from './DefectList';
-import {minorOrEqual} from '../dataArrays/evaluationFunctions';
+import {majorOrEqual, minorOrEqual} from '../dataArrays/evaluationFunctions';
 
 function Report(props) {
 	const {
@@ -80,138 +80,6 @@ function Report(props) {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	function brakeDifferenceEvaluator(brakeDif) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (brakeDif >= 50) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (brakeDif >= 15) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (brakeDif >= 12) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function brakeResistEvaluator(brakeResist) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (brakeResist >= 2) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (brakeResist >= 1) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (brakeResist >= 0.5) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function brakeOvalEvaluator(brakeOval) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (brakeOval >= 80) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (brakeOval >= 30) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (brakeOval >= 16) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function LuxLowIntEvaluator(luxInt) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (luxInt >= 200) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (luxInt >= 27) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (luxInt >= 26) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function LuxHighIntEvaluator(luxInt) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (luxInt >= 200) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (luxInt >= 150) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (luxInt >= 65) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function LuxAngleEvaluator(luxInt) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (luxInt >= 15) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (luxInt >= 7) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (luxInt >= 5) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	function opacitiEvaluator(opaciti) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (opaciti >= 2) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (opaciti >= 0.25) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (opaciti >= 0.2) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
 	/**
 	 *Function to be called to rectify a bad year input
 	 * @returns {*} the case number to be applied to the noiseEvaluator evaluators
@@ -668,9 +536,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="front-eval">
-										{brakeDifferenceEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenosEje_1
-												.diferenciaFzaFrenadoLadoALado
+												.diferenciaFzaFrenadoLadoALado,
+											'brakeDif'
 										)}
 									</p>
 									<p className="rear">
@@ -680,9 +549,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="rear-eval">
-										{brakeDifferenceEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenosEje_2
-												.diferenciaFzaFrenadoLadoALado
+												.diferenciaFzaFrenadoLadoALado,
+											'brakeDif'
 										)}
 									</p>
 									<p className="hand">
@@ -692,9 +562,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="hand-eval">
-										{brakeDifferenceEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenoDeManoEje_2
-												.diferenciaFzaFrenadoLadoALado
+												.diferenciaFzaFrenadoLadoALado,
+											'brakeDif'
 										)}
 									</p>
 								</div>
@@ -708,7 +579,8 @@ function Report(props) {
 									<p className="front-left-eval">
 										{minorOrEqual(
 											window.fileAsObject.frenosEje_1
-												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
+												.fuerzaDeFrenadoLadoIzquierdo,
+											'brakeStrenght'
 										)}
 									</p>
 									<p className="front-right">
@@ -716,7 +588,9 @@ function Report(props) {
 									</p>
 									<p className="front-right-eval">
 										{minorOrEqual(
-											window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho, "brakeStrenght"
+											window.fileAsObject.frenosEje_1
+												.fuerzaDeFrenadoLadoDerecho,
+											'brakeStrenght'
 										)}
 									</p>
 									<p className="rear-left">
@@ -728,7 +602,8 @@ function Report(props) {
 									<p className="rear-left-eval">
 										{minorOrEqual(
 											window.fileAsObject.frenosEje_2
-												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
+												.fuerzaDeFrenadoLadoIzquierdo,
+											'brakeStrenght'
 										)}
 									</p>
 									<p className="rear-right">
@@ -736,7 +611,9 @@ function Report(props) {
 									</p>
 									<p className="rear-right-eval">
 										{minorOrEqual(
-											window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho, "brakeStrenght"
+											window.fileAsObject.frenosEje_2
+												.fuerzaDeFrenadoLadoDerecho,
+											'brakeStrenght'
 										)}
 									</p>
 									<p className="hand-left">
@@ -748,7 +625,8 @@ function Report(props) {
 									<p className="hand-left-eval">
 										{minorOrEqual(
 											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
+												.fuerzaDeFrenadoLadoIzquierdo,
+											'brakeStrenght'
 										)}
 									</p>
 									<p className="hand-right">
@@ -760,7 +638,8 @@ function Report(props) {
 									<p className="hand-right-eval">
 										{minorOrEqual(
 											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo, "brakeStrenght"
+												.fuerzaDeFrenadoLadoIzquierdo,
+											'brakeStrenght'
 										)}
 									</p>
 								</div>
@@ -772,9 +651,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="front-left-eval">
-										{brakeResistEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenosEje_1
-												.resistenciaALaRodaduraLadoIzquierdo
+												.resistenciaALaRodaduraLadoIzquierdo,
+											'brakeResist'
 										)}
 									</p>
 									<p className="front-right">
@@ -784,9 +664,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="front-right-eval">
-										{brakeResistEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenosEje_1
-												.resistenciaALaRodaduraLadoDerecho
+												.resistenciaALaRodaduraLadoDerecho,
+											'brakeResist'
 										)}
 									</p>
 									<p className="rear-left">
@@ -796,9 +677,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="rear-left-eval">
-										{brakeResistEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenosEje_2
-												.resistenciaALaRodaduraLadoIzquierdo
+												.resistenciaALaRodaduraLadoIzquierdo,
+											'brakeResist'
 										)}
 									</p>
 									<p className="rear-right">
@@ -808,9 +690,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="rear-right-eval">
-										{brakeResistEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.frenosEje_2
-												.resistenciaALaRodaduraLadoDerecho
+												.resistenciaALaRodaduraLadoDerecho,
+											'brakeResist'
 										)}
 									</p>
 								</div>
@@ -819,32 +702,36 @@ function Report(props) {
 										{window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo}
 									</p>
 									<p className="front-left-eval">
-										{brakeOvalEvaluator(
-											window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo
+										{majorOrEqual(
+											window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
+											'brakeOval'
 										)}
 									</p>
 									<p className="front-right">
 										{window.fileAsObject.frenosEje_1.ovalidadLadoDerecho}
 									</p>
 									<p className="front-right-eval">
-										{brakeOvalEvaluator(
-											window.fileAsObject.frenosEje_1.ovalidadLadoDerecho
+										{majorOrEqual(
+											window.fileAsObject.frenosEje_1.ovalidadLadoDerecho,
+											'brakeOval'
 										)}
 									</p>
 									<p className="rear-left">
 										{window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo}
 									</p>
 									<p className="rear-left-eval">
-										{brakeOvalEvaluator(
-											window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo
+										{majorOrEqual(
+											window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
+											'brakeOval'
 										)}
 									</p>
 									<p className="rear-right">
 										{window.fileAsObject.frenosEje_2.ovalidadLadoDerecho}
 									</p>
 									<p className="rear-right-eval">
-										{brakeOvalEvaluator(
-											window.fileAsObject.frenosEje_2.ovalidadLadoDerecho
+										{majorOrEqual(
+											window.fileAsObject.frenosEje_2.ovalidadLadoDerecho,
+											'brakeOval'
 										)}
 									</p>
 								</div>
@@ -855,48 +742,54 @@ function Report(props) {
 										{window.fileAsObject.luxometro.intensidadBajaIzquierda}
 									</p>
 									<p className="left-low-eval">
-										{LuxLowIntEvaluator(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda
+										{majorOrEqual(
+											window.fileAsObject.luxometro.intensidadBajaIzquierda,
+											'luxLow'
 										)}
 									</p>
 									<p className="right-low">
 										{window.fileAsObject.luxometro.intensidadBajaDerecha}
 									</p>
 									<p className="right-low-eval">
-										{LuxLowIntEvaluator(
-											window.fileAsObject.luxometro.intensidadBajaDerecha
+										{majorOrEqual(
+											window.fileAsObject.luxometro.intensidadBajaDerecha,
+											'luxLow'
 										)}
 									</p>
 									<p className="left-high">
 										{window.fileAsObject.luxometro.intensidadAltaIzquierda}
 									</p>
 									<p className="left-high-eval">
-										{LuxHighIntEvaluator(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda
+										{majorOrEqual(
+											window.fileAsObject.luxometro.intensidadBajaIzquierda,
+											'luxHigh'
 										)}
 									</p>
 									<p className="right-high">
 										{window.fileAsObject.luxometro.intensidadAltaDerecha}
 									</p>
 									<p className="right-high-eval">
-										{LuxHighIntEvaluator(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda
+										{majorOrEqual(
+											window.fileAsObject.luxometro.intensidadBajaIzquierda,
+											'luxHigh'
 										)}
 									</p>
 									<p className="left-aux">
 										{window.fileAsObject.luxometro.intensidadAuxiliarIzquierda}
 									</p>
 									<p className="left-aux-eval">
-										{LuxLowIntEvaluator(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda
+										{majorOrEqual(
+											window.fileAsObject.luxometro.intensidadBajaIzquierda,
+											'luxLow'
 										)}
 									</p>
 									<p className="right-aux">
 										{window.fileAsObject.luxometro.intensidadAuxiliarDerecha}
 									</p>
 									<p className="right-aux-eval">
-										{LuxLowIntEvaluator(
-											window.fileAsObject.luxometro.intensidadBajaDerecha
+										{majorOrEqual(
+											window.fileAsObject.luxometro.intensidadBajaDerecha,
+											'luxLow'
 										)}
 									</p>
 								</div>
@@ -908,9 +801,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="left-hor-eval">
-										{LuxAngleEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoHorizontal
+												.alineacionFaroIzquierdoHorizontal,
+											'luxAng'
 										)}
 									</p>
 									<p className="right-hor">
@@ -920,9 +814,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="right-hor-eval">
-										{LuxAngleEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.luxometro
-												.alineacionFaroDerechoHorizontal
+												.alineacionFaroDerechoHorizontal,
+											'luxAng'
 										)}
 									</p>
 									<p className="left-vert">
@@ -932,9 +827,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="left-vert-eval">
-										{LuxAngleEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoVertical
+												.alineacionFaroIzquierdoVertical,
+											'luxAng'
 										)}
 									</p>
 									<p className="right-vert">
@@ -944,9 +840,10 @@ function Report(props) {
 										}
 									</p>
 									<p className="right-vert-eval">
-										{LuxAngleEvaluator(
+										{majorOrEqual(
 											window.fileAsObject.luxometro
-												.alineacionFaroDerechoVertical
+												.alineacionFaroDerechoVertical,
+											'luxAng'
 										)}
 									</p>
 								</div>
@@ -1018,8 +915,10 @@ function Report(props) {
 											{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
 										</p>
 										<p className="opacity-eval">
-											{opacitiEvaluator(
-												window.fileAsObject.opacimetro.resultadoMedicionOpacidad
+											{majorOrEqual(
+												window.fileAsObject.opacimetro
+													.resultadoMedicionOpacidad,
+												'opacity'
 											)}
 										</p>
 									</>
