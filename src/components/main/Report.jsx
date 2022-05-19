@@ -4,6 +4,7 @@ import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import DefectList from './DefectList';
+//import minorOrEqual from '../dataArrays/evaluationFunctions' ;
 
 function Report(props) {
 	const {
@@ -32,6 +33,34 @@ function Report(props) {
 	const severeFlag = useRef(0);
 
 	const moderateFlag = useRef(0);
+
+	const minorOrEqArray =   new Map([
+		['susp', [10, 40, 60]],
+		['brakePerf', [10, 40, 50]],
+		['handBrakePerf', [1, 14.4, 17]],
+		['brakeStrenght', [0.1, 0.3, 0.99]],
+	]);
+
+	function minorOrEqual(txtProp, paramSelector) {
+		let params = minorOrEqArray.get(paramSelector) ;
+		let severityEvaluation = '';
+		let severityLetter = '';
+		if (txtProp <= params[0]) {
+			severityEvaluation = 'severe';
+			severityLetter = 'G';
+		} else if (txtProp <= params[1]) {
+			severityEvaluation = 'moderate';
+			severityLetter = 'M';
+		} else if (txtProp <= params[2]) {
+			severityEvaluation = 'minor';
+			severityLetter = 'L';
+		} else {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+	
+		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
+	}
 
 	/**  selecs between the posible vehicles to evaluate
 	 * @param {*} tipo taken from the variable of state
@@ -682,10 +711,17 @@ function Report(props) {
 									}
 								</p>
 								<p className="rear-left-eval">
-									{suspEvaluator(
-										window.fileAsObject.suspensionEjeTrasero
-											.rendimientoTraseroIzquierdo
-									)}
+									{
+									
+									// suspEvaluator(
+									// 	window.fileAsObject.suspensionEjeTrasero
+									// 		.rendimientoTraseroIzquierdo
+									// )
+
+									minorOrEqual( window.fileAsObject.suspensionEjeTrasero
+										.rendimientoTraseroIzquierdo ,'susp') 
+									
+									}
 								</p>
 								<p className="rear-right">
 									{
@@ -1135,3 +1171,7 @@ function Report(props) {
 	);
 }
 export default Report;
+
+
+
+

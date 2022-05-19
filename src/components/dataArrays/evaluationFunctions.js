@@ -1,12 +1,12 @@
-minorOrEqArray = [
+let minorOrEqArray =   new Map([
 	['susp', 10, 40, 60],
 	['brakePerf', 10, 40, 50],
 	['handBrakePerf', 1, 14.4, 17],
 	['brakeStrenght', 0.1, 0.3, 0.99],
-];
+]);
 
-function minorOrEqual(txtProp, paramSelector) {
-	params = minorOrEqArray.map();
+export function minorOrEqual(txtProp, paramSelector) {
+	let params = minorOrEqArray.get(paramSelector) ;
 	let severityEvaluation = '';
 	let severityLetter = '';
 	if (txtProp <= params[1]) {
@@ -25,3 +25,5 @@ function minorOrEqual(txtProp, paramSelector) {
 
 	return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 }
+
+// export {minorOrEqual} ;
