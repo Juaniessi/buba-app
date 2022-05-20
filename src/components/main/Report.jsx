@@ -3,9 +3,8 @@ import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
-import minibusReport from "../../assets/informe-img/informe-minibus.svg";
+import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
-import {majorOrEqual, minorOrEqual} from '../dataArrays/evaluationFunctions';
 
 function Report(props) {
 	const {
@@ -32,6 +31,87 @@ function Report(props) {
 		txtRender,
 		handleTxtRender,
 	} = props;
+
+	const minorOrEqArray = new Map([
+		['susp', [10, 40, 60]],
+		['brakePerf', [10, 40, 50]],
+		['handBrakePerf', [1, 14.4, 17]],
+		['brakeStrenght', [0.1, 0.3, 0.99]],
+	]);
+
+	const majorOrEqArray = new Map([
+		['brakeDif', [50, 15, 12]],
+		['brakeResist', [2, 1, 0.5]],
+		['brakeOval', [80, 30, 16]],
+		['luxLow', [200, 27, 26]],
+		['luxHigh', [200, 150, 65]],
+		['luxAng', [15, 7, 5]],
+		['opacity', [2, 0.25, 0.2]],
+		['HC<=1991', [2500, 900, 600]],
+		['HC<=1994', [2500, 600, 400]],
+		['HC>1994', [2500, 400, 300]],
+		['CO<=1991', [10, 4.5, 3.5]],
+		['CO<=1994', [10, 3, 2]],
+		['CO>1994', [10, 2.5, 2]],
+		['noiseAutoMotoViejo', [100, 88.1, 80]],
+		['noiseAutoMotoNuevo', [100, 83.1, 80]],
+		['noiseCamionViejo', [100, 95.1, 85]],
+		['noiseCamionNuevo', [100, 87, 84]],
+	]);
+	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
+	 * @param {*} txtProp prop from object: fileAsObject.
+	 * @param {*} paramSelector value extracted from minorOrEqArray.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 */
+	function minorOrEqual(txtProp, paramSelector) {
+		let params = minorOrEqArray.get(paramSelector);
+		let severityEvaluation = '';
+		let severityLetter = '';
+		if (txtProp <= params[0]) {
+			severityEvaluation = 'severe';
+			severityLetter = 'G';
+			severeFlag.current++;
+		} else if (txtProp <= params[1]) {
+			severityEvaluation = 'moderate';
+			severityLetter = 'M';
+			moderateFlag.current++;
+		} else if (txtProp <= params[2]) {
+			severityEvaluation = 'minor';
+			severityLetter = 'L';
+		} else {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+
+		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
+	}
+	/**  function to evaluate txt properties when the comparisson is >=. It also handles the severity flags.
+	 * @param {*} txtProp prop from object: fileAsObject.
+	 * @param {*} paramSelector value extracted from majorOrEqArray.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 */
+	function majorOrEqual(txtProp, paramSelector) {
+		let params = majorOrEqArray.get(paramSelector);
+		let severityEvaluation = '';
+		let severityLetter = '';
+		if (txtProp >= params[0]) {
+			severityEvaluation = 'severe';
+			severityLetter = 'G';
+			severeFlag.current++;
+		} else if (txtProp >= params[1]) {
+			severityEvaluation = 'moderate';
+			severityLetter = 'M';
+			moderateFlag.current++;
+		} else if (txtProp >= params[2]) {
+			severityEvaluation = 'minor';
+			severityLetter = 'L';
+		} else {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+
+		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
+	}
 
 	/**  selecs between the posible vehicles to evaluate
 	 * @param {*} tipo taken from the variable of state
@@ -635,7 +715,7 @@ function Report(props) {
 										)}
 									</p>
 								</div>
-								<div className="alineationLux">									
+								<div className="alineationLux">
 									<p className="left-vert">
 										{
 											window.fileAsObject.luxometro
