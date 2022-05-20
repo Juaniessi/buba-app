@@ -3,6 +3,7 @@ import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
+import minibusReport from "../../assets/informe-img/informe-minibus.svg";
 import DefectList from './DefectList';
 import {majorOrEqual, minorOrEqual} from '../dataArrays/evaluationFunctions';
 
@@ -81,7 +82,7 @@ function Report(props) {
 	}
 
 	/**
-	 *Function to be called to rectify a bad year input
+	 *Function that rectifies a bad year input and delivers a case scenario.
 	 * @returns {*} the case number to be applied to the noiseEvaluator evaluators
 	 */
 	function yearRectificatordb() {
@@ -102,90 +103,26 @@ function Report(props) {
 		}
 		return caseNumber;
 	}
-	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations.
+	/**  function to evaluate if HC txtProp are ok, the same function is used for most evaluations.
 	 * @param {*} txtProp prop from object: fileAsObject.
 	 * @param {*} caseNumber value extracted from yearRectificatorGas.
 	 * @param {*} tipo uses the state variable to understand wich vehicle is being evaluated.
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>
 	 */
 	function noiseEvaluator(txtProp, caseNumber, tipo) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-
 		if (tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Moto') {
 			switch (caseNumber) {
 				case 1:
-					if (txtProp >= 120) {
-						severityEvaluation = 'severe';
-						severityLetter = 'G';
-					} else if (txtProp >= 88.1) {
-						severityEvaluation = 'moderate';
-						severityLetter = 'M';
-					} else if (txtProp >= 80) {
-						severityEvaluation = 'minor';
-						severityLetter = 'L';
-					} else {
-						severityEvaluation = '';
-						severityLetter = 'A';
-					}
-					return (
-						<span className={`${severityEvaluation}`}>{severityLetter}</span>
-					);
+					return majorOrEqual(txtProp, 'noiseAutoMotoViejo');
 				case 2:
-					if (txtProp >= 120) {
-						severityEvaluation = 'severe';
-						severityLetter = 'G';
-					} else if (txtProp >= 83.1) {
-						severityEvaluation = 'moderate';
-						severityLetter = 'M';
-					} else if (txtProp >= 80) {
-						severityEvaluation = 'minor';
-						severityLetter = 'L';
-					} else {
-						severityEvaluation = '';
-						severityLetter = 'A';
-					}
-					return (
-						<span className={`${severityEvaluation}`}>{severityLetter}</span>
-					);
-				default:
+					return majorOrEqual(txtProp, 'noiseAutoMotoNuevo');
 			}
 		} else if (tipo === 'Camion') {
 			switch (caseNumber) {
 				case 1:
-					if (txtProp >= 110) {
-						severityEvaluation = 'severe';
-						severityLetter = 'G';
-					} else if (txtProp >= 95.1) {
-						severityEvaluation = 'moderate';
-						severityLetter = 'M';
-					} else if (txtProp >= 85) {
-						severityEvaluation = 'minor';
-						severityLetter = 'L';
-					} else {
-						severityEvaluation = '';
-						severityLetter = 'A';
-					}
-					return (
-						<span className={`${severityEvaluation}`}>{severityLetter}</span>
-					);
+					return majorOrEqual(txtProp, 'noiseCamionViejo');
 				case 2:
-					if (txtProp > 110) {
-						severityEvaluation = 'severe';
-						severityLetter = 'G';
-					} else if (txtProp > 87) {
-						severityEvaluation = 'moderate';
-						severityLetter = 'M';
-					} else if (txtProp > 84) {
-						severityEvaluation = 'minor';
-						severityLetter = 'L';
-					} else {
-						severityEvaluation = '';
-						severityLetter = 'A';
-					}
-					return (
-						<span className={`${severityEvaluation}`}>{severityLetter}</span>
-					);
+					return majorOrEqual(txtProp, 'noiseCamionNuevo');
 				default:
 			}
 		}
@@ -219,126 +156,31 @@ function Report(props) {
 	}
 
 	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations
-	 * @param {*} ppm prop from object: fileAsObject
+	 * @param {*} txtProp prop from object: fileAsObject
 	 * @param {*} caseNumber value extracted from yearRectificatorGas
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>
 	 */
 
-	function HCEvaluator(ppm, caseNumber) {
-		let severityEvaluation = '';
-		let severityLetter = '';
+	function HCEvaluator(txtProp, caseNumber) {
 		switch (caseNumber) {
 			case 1:
-				if (ppm >= 2500) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (ppm >= 900) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (ppm >= 600) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+				return majorOrEqual(txtProp, 'HC<=1991');
 			case 2:
-				if (ppm >= 2500) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (ppm >= 600) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (ppm >= 400) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+				return majorOrEqual(txtProp, 'HC<=1994');
 			case 3:
-				if (ppm >= 2500) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (ppm >= 400) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (ppm >= 300) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+				return majorOrEqual(txtProp, 'HC>1994');
 			default:
 		}
 	}
 
-	function COEvaluator(CO, caseNumber) {
-		let severityEvaluation = '';
-		let severityLetter = '';
-
+	function COEvaluator(txtProp, caseNumber) {
 		switch (caseNumber) {
 			case 1:
-				if (CO >= 10) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (CO >= 4.5) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (CO >= 3.5) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+				return majorOrEqual(txtProp, 'CO<=1991');
 			case 2:
-				if (CO >= 10) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (CO >= 3) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (CO >= 2) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+				return majorOrEqual(txtProp, 'CO<=1994');
 			case 3:
-				if (CO >= 10) {
-					severityEvaluation = 'severe';
-					severityLetter = 'G';
-				} else if (CO >= 2.5) {
-					severityEvaluation = 'moderate';
-					severityLetter = 'M';
-				} else if (CO >= 2) {
-					severityEvaluation = 'minor';
-					severityLetter = 'L';
-				} else {
-					severityEvaluation = '';
-					severityLetter = 'A';
-				}
-				return (
-					<span className={`${severityEvaluation}`}>{severityLetter}</span>
-				);
+				return majorOrEqual(txtProp, 'CO>1994');
 			default:
 		}
 	}
@@ -793,33 +635,7 @@ function Report(props) {
 										)}
 									</p>
 								</div>
-								<div className="alineationLux">
-									<p className="left-hor">
-										{
-											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoHorizontal
-										}
-									</p>
-									<p className="left-hor-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoHorizontal,
-											'luxAng'
-										)}
-									</p>
-									<p className="right-hor">
-										{
-											window.fileAsObject.luxometro
-												.alineacionFaroDerechoHorizontal
-										}
-									</p>
-									<p className="right-hor-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro
-												.alineacionFaroDerechoHorizontal,
-											'luxAng'
-										)}
-									</p>
+								<div className="alineationLux">									
 									<p className="left-vert">
 										{
 											window.fileAsObject.luxometro
@@ -843,6 +659,32 @@ function Report(props) {
 										{majorOrEqual(
 											window.fileAsObject.luxometro
 												.alineacionFaroDerechoVertical,
+											'luxAng'
+										)}
+									</p>
+									<p className="left-hor">
+										{
+											window.fileAsObject.luxometro
+												.alineacionFaroIzquierdoHorizontal
+										}
+									</p>
+									<p className="left-hor-eval">
+										{majorOrEqual(
+											window.fileAsObject.luxometro
+												.alineacionFaroIzquierdoHorizontal,
+											'luxAng'
+										)}
+									</p>
+									<p className="right-hor">
+										{
+											window.fileAsObject.luxometro
+												.alineacionFaroDerechoHorizontal
+										}
+									</p>
+									<p className="right-hor-eval">
+										{majorOrEqual(
+											window.fileAsObject.luxometro
+												.alineacionFaroDerechoHorizontal,
 											'luxAng'
 										)}
 									</p>

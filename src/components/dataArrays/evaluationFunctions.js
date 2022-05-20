@@ -19,10 +19,10 @@ const majorOrEqArray = new Map([
 	['CO<=1991', [10, 4.5, 3.5]],
 	['CO<=1994', [10, 3, 2]],
 	['CO>1994', [10, 2.5, 2]],
-	['noiseAutoMoto1', [100, 88.1, 80]],
-	['noiseAutoMoto2', [100, 83.1, 80]],
-	['noiseCamion1', [100, 95.1, 85]],
-	['noiseCamion2', [100, 87, 84]],
+	['noiseAutoMotoViejo', [100, 88.1, 80]],
+	['noiseAutoMotoNuevo', [100, 83.1, 80]],
+	['noiseCamionViejo', [100, 95.1, 85]],
+	['noiseCamionNuevo', [100, 87, 84]],
 ]);
 
 export function minorOrEqual(txtProp, paramSelector) {

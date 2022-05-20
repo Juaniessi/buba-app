@@ -107,25 +107,25 @@ td {
 		height: 16px;
 	}
 	.grupo-col {
-		width: 95px;
+		min-width: 95px;
 		text-align: center;
 	}
 	.descripcion-col {
 		padding-left: 3px;
-		width: 407px;
+		min-width: 407px;
 	}
 	.severidad-col {
-		width: 60px;
+		min-width: 60px;
 		text-align: center;
 	}
 }
 .phantom-col {
-	width: 30px;
+	min-width: 30px;
 	background-color: transparent;
 	border: 1px solid transparent;
 }
 .quitar-col {
-	width: 40px;
+	min-width: 40px;
 	border: 1px solid transparent;
 }
 .erase-btn-ctn {
