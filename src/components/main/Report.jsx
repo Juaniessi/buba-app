@@ -5,6 +5,7 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
+import {autoReportArray} from "../dataArrays/reportArrays";
 
 function Report(props) {
 	const {
@@ -303,7 +304,7 @@ function Report(props) {
 		<>
 			<div className="btn-input-txt">
 				<label htmlFor="file-input" id="file-input-label">
-					Seleccione archivo a procesar
+					Seleccione archivo a procesar:
 				</label>
 				<input
 					ref={loadFileRef}
@@ -335,6 +336,14 @@ function Report(props) {
 								</p>
 							</div>
 							<div className="alineation">
+								{/* {autoReportArray.alineation.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{alineationEvaluator(item.ruta)}
+										</p>
+									</div>
+								))} */}
 								<p className="front-al">
 									{window.fileAsObject.alineacion.resultadoAlineacionEje1}
 								</p>
@@ -353,6 +362,11 @@ function Report(props) {
 								</p>
 							</div>
 							<div className="weight">
+								{/* {autoReportArray.weight.map((item, i) => (
+									<p className={item.class} key={i}>
+										{item.ruta}
+									</p>
+								))} */}
 								<p className="front-left">
 									{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo}
 								</p>
@@ -367,6 +381,14 @@ function Report(props) {
 								</p>
 							</div>
 							<div className="suspention">
+							{/* {autoReportArray.suspention.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{minorOrEqual(item.ruta, "susp")}
+										</p>
+									</div>
+								))} */}
 								<p className="front-left">
 									{
 										window.fileAsObject.suspensionEjeDelantero

@@ -2,6 +2,7 @@ import React, {useState, useRef} from 'react';
 import Report from './Report';
 import {procesTxt} from '../txt-navegator/fileAnalizer.js';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
+import { autoReportArray, autoReportArrayFiller } from '../dataArrays/reportArrays';
 
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
@@ -37,6 +38,10 @@ function Main() {
 	const [lista, setLista] = useState([]);
 
 	const [txtRender, setTxtRender] = useState('');
+	/**  handles all the proces that must ocurr when the txt is read.
+	 * @param {*} e the txt file.
+	 * @function autoReportArrayFiller called to fill the object in order to read ir latter.
+	 */
 	const handleTxtRender = (e) => {
 		procesTxt(e);
 		setTimeout(function () {
