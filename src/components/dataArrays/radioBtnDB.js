@@ -1,24 +1,38 @@
 const radioGeneratorArray = {
 	type: [
 		{
-			value: 'auto',
+			value: 'Auto',
 			label: 'Auto',
 		},
 		{
-			value: 'camioneta',
+			value: 'Camioneta',
 			label: 'Camioneta',
 		},
 		{
-			value: 'camion',
+			value: 'Camion',
 			label: 'Camión',
 		},
 		{
-			value: 'minibus',
+			value: 'Minibus',
 			label: 'Minibus',
 		},
 		{
-			value: 'moto',
+			value: 'Moto',
 			label: 'Moto',
+		},
+	],
+	severity: [
+		{
+			value: 'Leve',
+			label: 'Leve',
+		},
+		{
+			value: 'Moderado',
+			label: 'Moderado',
+		},
+		{
+			value: 'Grave',
+			label: 'Grave',
 		},
 	],
 };

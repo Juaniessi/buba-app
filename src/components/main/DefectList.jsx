@@ -2,6 +2,7 @@ import React from 'react';
 import {autoArray} from '../dataArrays/carDataBase';
 import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
+import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
 
 function DefectList(props) {
 	const {
@@ -23,7 +24,6 @@ function DefectList(props) {
 		lista,
 		setLista,
 	} = props;
-	
 
 	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
 	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : []; //esta variable almacena el array de seccion a mapear
@@ -52,18 +52,18 @@ function DefectList(props) {
 			grupo: grupo.label,
 			seccion: seccion.label,
 			desc: seccion.value === 'otro' ? unlistedDef : descripcion.label,
-			sev: severidad,
+			sev: severidad.value,
 			Ord: sevOrder,
 		};
 
 		if (
-			severidad !== '' &&
+			severidad.value !== '' &&
 			grupo.value !== '' &&
 			seccion.value !== '' &&
 			(unlistedDef !== '' || descripcion.value !== '')
 		) {
 			setLista(lista.concat(itemLista));
-			setSeveridad('Moderado');
+			setSeveridad({value: 'Moderado', label: 'Moderado'});
 			setGrupo({value: '', label: ''});
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
@@ -150,42 +150,20 @@ function DefectList(props) {
 			<form className="formRadio-ext">
 				<h2>Severidad</h2>
 				<div className="btn-package severity-c">
-					<input
-						type="radio"
-						className="btn-inside rad-c"
-						name="severity"
-						id="Leve"
-						value="Leve"
-						checked={severidad === 'Leve'}
-						onChange={handleSeveridad}
-					/>
-					<label className="btn-inside" htmlFor="Leve">
-						Leve
-					</label>
-					<input
-						type="radio"
-						className="btn-inside rad-c"
-						name="severity"
-						id="Moderado"
-						value="Moderado"
-						checked={severidad === 'Moderado'}
-						onChange={handleSeveridad}
-					/>
-					<label className="btn-inside" htmlFor="Moderado">
-						Moderado
-					</label>
-					<input
-						type="radio"
-						className="btn-inside rad-c"
-						name="severity"
-						id="Grave"
-						value="Grave"
-						checked={severidad === 'Grave'}
-						onChange={handleSeveridad}
-					/>
-					<label className="btn-inside" htmlFor="Grave">
-						Grave
-					</label>
+					{radioGeneratorArray.severity.map((item, i) => (
+						<label className="btn-inside" htmlFor={item.value} key={i}>
+							<input
+								type="radio"
+								className="btn-inside rad-c"
+								name="severity"
+								id={item.value}
+								value={item.value}
+								checked={severidad.value === item.value} //determina que visualmente se vea checked
+								onChange={() => handleSeveridad(item)}
+							/>
+							{item.label}
+						</label>
+					))}
 				</div>
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">

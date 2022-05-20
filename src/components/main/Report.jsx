@@ -32,6 +32,29 @@ function Report(props) {
 		handleTxtRender,
 	} = props;
 
+	let imgSelector; // this varaible sets te img to show
+	/**  selecs between the posible vehicles to evaluate
+	 * @param {*} tipo taken from the variable of state
+	 * @param {*} imgSelector variable to store the img to display
+	 * @returns the img to display
+	 */
+	function reportImgselector(tipo) {
+		if (tipo === 'Auto') {
+			imgSelector = carReport;
+		} else if (tipo === 'Camioneta') {
+			imgSelector = pickupReport;
+		} else if (tipo === 'Camion') {
+			imgSelector = truckReport;
+		} else if (tipo === 'Moto') {
+			imgSelector = motoReport;
+		} else if (tipo === 'Minibus') {
+			imgSelector = minibusReport;
+		} else {
+			imgSelector = carReport;
+		}
+		return imgSelector;
+	}
+
 	const minorOrEqArray = new Map([
 		['susp', [10, 40, 60]],
 		['brakePerf', [10, 40, 50]],
@@ -113,28 +136,6 @@ function Report(props) {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	/**  selecs between the posible vehicles to evaluate
-	 * @param {*} tipo taken from the variable of state
-	 * @param {*} imgSelector variable to store the img to display
-	 * @returns the img to display
-	 */
-	let imgSelector; // this varaible sets te img to show
-
-	function reportImgselector(tipo) {
-		if (tipo === 'Auto') {
-			imgSelector = carReport;
-		} else if (tipo === 'Camioneta') {
-			imgSelector = pickupReport;
-		} else if (tipo === 'Camion') {
-			imgSelector = truckReport;
-		} else if (tipo === 'Moto') {
-			imgSelector = motoReport;
-		} else {
-			imgSelector = carReport;
-		}
-		return imgSelector;
-	}
-
 	/**  function to evaluate if alineation is ok, the same function is used for most evaluations
 	 * @param {*} alineation prop from object: fileAsObject
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>
@@ -163,7 +164,7 @@ function Report(props) {
 
 	/**
 	 *Function that rectifies a bad year input and delivers a case scenario.
-	 * @returns {*} the case number to be applied to the noiseEvaluator evaluators
+	 * @returns {*} the case number to be applied to the noiseEvaluator.
 	 */
 	function yearRectificatordb() {
 		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
@@ -183,7 +184,7 @@ function Report(props) {
 		}
 		return caseNumber;
 	}
-	/**  function to evaluate if HC txtProp are ok, the same function is used for most evaluations.
+	/**  function to evaluate noise levels.
 	 * @param {*} txtProp prop from object: fileAsObject.
 	 * @param {*} caseNumber value extracted from yearRectificatorGas.
 	 * @param {*} tipo uses the state variable to understand wich vehicle is being evaluated.
@@ -209,7 +210,7 @@ function Report(props) {
 	}
 
 	/**
-	 *Function to be called to rectify a bad year input
+	 *Function that rectifies a bad year input and swithces between case of use.
 	 * @returns {*} the case number to be applied to the HC or CO evaluators
 	 */
 	function yearRectificatorGas() {
@@ -235,12 +236,11 @@ function Report(props) {
 		}
 	}
 
-	/**  function to evaluate if HC ppm are ok, the same function is used for most evaluations
+	/**  function to evaluate if HC ppm are ok, the same function is used for CO.
 	 * @param {*} txtProp prop from object: fileAsObject
 	 * @param {*} caseNumber value extracted from yearRectificatorGas
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>
 	 */
-
 	function HCEvaluator(txtProp, caseNumber) {
 		switch (caseNumber) {
 			case 1:
