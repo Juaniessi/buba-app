@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import Report from './Report';
 import {procesTxt} from '../txt-navegator/fileAnalizer.js';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
-import { autoReportArray, autoReportArrayFiller } from '../dataArrays/reportArrays';
+import {autoReportArrayFiller} from '../dataArrays/reportArrays';
 
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
@@ -15,7 +15,10 @@ function Main() {
 		setLista([]);
 		setTxtRender('');
 	};
-	const [severidad, setSeveridad] = useState({value: 'Moderado', label: 'Moderado'});
+	const [severidad, setSeveridad] = useState({
+		value: 'Moderado',
+		label: 'Moderado',
+	});
 	const handleSeveridad = (item) => {
 		setSeveridad(item);
 	};
@@ -48,11 +51,14 @@ function Main() {
 			setTxtRender(window.fileAsObject);
 		}, 60);
 		setTimeout(function () {
+			setAutoReportArray(autoReportArrayFiller());
 			loadFileRef.current.value = null;
 			severeFlag.current = 0;
 			moderateFlag.current = 0;
 		}, 90);
 	};
+	/*autoReportArray stores the object that needs to be read in order to create the Report */
+	const [autoReportArray, setAutoReportArray] = useState('');
 
 	const loadFileRef = useRef(null);
 	const severeFlag = useRef(0);
@@ -103,6 +109,7 @@ function Main() {
 					setLista={setLista}
 					txtRender={txtRender}
 					handleTxtRender={handleTxtRender}
+					autoReportArray={autoReportArray}
 				/>
 			</section>
 		</main>

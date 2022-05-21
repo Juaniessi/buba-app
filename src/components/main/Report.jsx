@@ -5,7 +5,7 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
-import {autoReportArray} from "../dataArrays/reportArrays";
+import {autoReportArray} from '../dataArrays/reportArrays';
 
 function Report(props) {
 	const {
@@ -31,6 +31,7 @@ function Report(props) {
 		setLista,
 		txtRender,
 		handleTxtRender,
+		autoReportArray,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -321,30 +322,35 @@ function Report(props) {
 						src={reportImgselector(tipo)}
 						alt="report-img"
 					/>
-					{txtRender === '' ? (
+					{(txtRender && autoReportArray) === '' ? (
 						''
 					) : (
 						<article className="txtRender">
 							<div className="header-info">
-								<p className="plate">{window.fileAsObject.header.patente}</p>
+								{autoReportArray.headerInfo.map((item, i) => (
+									<p className={item.class} key={i}>
+										{item.ruta}
+									</p>
+								))}
+								{/* <p className="plate">{window.fileAsObject.header.patente}</p>
 								<p className="brand">
 									{window.fileAsObject.header.marcaDelVehiculo}
 								</p>
 								<p className="model">{window.fileAsObject.header.modelo}</p>
 								<p className="mileage">
 									{window.fileAsObject.header.kilometros}
-								</p>
+								</p> */}
 							</div>
 							<div className="alineation">
-								{/* {autoReportArray.alineation.map((item, i) => (
+								{autoReportArray.alineation.map((item, i) => (
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
 											{alineationEvaluator(item.ruta)}
 										</p>
 									</div>
-								))} */}
-								<p className="front-al">
+								))}
+								{/* <p className="front-al">
 									{window.fileAsObject.alineacion.resultadoAlineacionEje1}
 								</p>
 								<p className="front-al-eval">
@@ -359,15 +365,15 @@ function Report(props) {
 									{alineationEvaluator(
 										window.fileAsObject.alineacion.resultadoAlineacionEje2
 									)}
-								</p>
+								</p> */}
 							</div>
 							<div className="weight">
-								{/* {autoReportArray.weight.map((item, i) => (
+								{autoReportArray.weight.map((item, i) => (
 									<p className={item.class} key={i}>
 										{item.ruta}
 									</p>
-								))} */}
-								<p className="front-left">
+								))}
+								{/* <p className="front-left">
 									{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo}
 								</p>
 								<p className="front-right">
@@ -378,18 +384,18 @@ function Report(props) {
 								</p>
 								<p className="rear-right">
 									{window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}
-								</p>
+								</p> */}
 							</div>
 							<div className="suspention">
-							{/* {autoReportArray.suspention.map((item, i) => (
+								{autoReportArray.suspention.map((item, i) => (
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorOrEqual(item.ruta, "susp")}
+											{minorOrEqual(item.ruta, 'susp')}
 										</p>
 									</div>
-								))} */}
-								<p className="front-left">
+								))}
+								{/* <p className="front-left">
 									{
 										window.fileAsObject.suspensionEjeDelantero
 											.rendimientoDelanteroIzquierdo
@@ -440,11 +446,27 @@ function Report(props) {
 											.rendimientoTraseroDerecho,
 										'susp'
 									)}
-								</p>
+								</p> */}
 							</div>
 							<div className="brake">
 								<div className="performance">
-									<p className="front">
+									{autoReportArray.brakePerf.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{minorOrEqual(item.ruta, 'brakePerf')}
+											</p>
+										</div>
+									))}
+									{autoReportArray.handBrakePerf.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{minorOrEqual(item.ruta, 'handBrakePerf')}
+											</p>
+										</div>
+									))}
+									{/* <p className="front">
 										{window.fileAsObject.frenosEje_1.rendimientoDelEje}
 									</p>
 									<p className="front-eval">
@@ -470,10 +492,18 @@ function Report(props) {
 											window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje,
 											'handBrakePerf'
 										)}
-									</p>
+									</p> */}
 								</div>
 								<div className="difference">
-									<p className="front">
+									{autoReportArray.brakeDif.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeDif')}
+											</p>
+										</div>
+									))}
+									{/* <p className="front">
 										{
 											window.fileAsObject.frenosEje_1
 												.diferenciaFzaFrenadoLadoALado
@@ -511,10 +541,18 @@ function Report(props) {
 												.diferenciaFzaFrenadoLadoALado,
 											'brakeDif'
 										)}
-									</p>
+									</p> */}
 								</div>
 								<div className="strength">
-									<p className="front-left">
+									{autoReportArray.brakeStrenght.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{minorOrEqual(item.ruta, 'brakeStrenght')}
+											</p>
+										</div>
+									))}
+									{/* <p className="front-left">
 										{
 											window.fileAsObject.frenosEje_1
 												.fuerzaDeFrenadoLadoIzquierdo
@@ -585,10 +623,18 @@ function Report(props) {
 												.fuerzaDeFrenadoLadoIzquierdo,
 											'brakeStrenght'
 										)}
-									</p>
+									</p> */}
 								</div>
 								<div className="resistance-rod">
-									<p className="front-left">
+									{autoReportArray.brakeResist.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeResist')}
+											</p>
+										</div>
+									))}
+									{/* <p className="front-left">
 										{
 											window.fileAsObject.frenosEje_1
 												.resistenciaALaRodaduraLadoIzquierdo
@@ -639,10 +685,18 @@ function Report(props) {
 												.resistenciaALaRodaduraLadoDerecho,
 											'brakeResist'
 										)}
-									</p>
+									</p> */}
 								</div>
 								<div className="ovality">
-									<p className="front-left">
+									{autoReportArray.brakeOval.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeOval')}
+											</p>
+										</div>
+									))}
+									{/* <p className="front-left">
 										{window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo}
 									</p>
 									<p className="front-left-eval">
@@ -677,12 +731,28 @@ function Report(props) {
 											window.fileAsObject.frenosEje_2.ovalidadLadoDerecho,
 											'brakeOval'
 										)}
-									</p>
+									</p> */}
 								</div>
 							</div>
 							<div className="lux-meter">
 								<div className="intensity">
-									<p className="left-low">
+									{autoReportArray.luxLow.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'luxLow')}
+											</p>
+										</div>
+									))}
+									{autoReportArray.luxHigh.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'luxHigh')}
+											</p>
+										</div>
+									))}
+									{/* <p className="left-low">
 										{window.fileAsObject.luxometro.intensidadBajaIzquierda}
 									</p>
 									<p className="left-low-eval">
@@ -723,7 +793,7 @@ function Report(props) {
 									</p>
 									<p className="left-aux-eval">
 										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda,
+											window.fileAsObject.luxometro.intensidadAuxiliarIzquierda,
 											'luxLow'
 										)}
 									</p>
@@ -735,9 +805,17 @@ function Report(props) {
 											window.fileAsObject.luxometro.intensidadBajaDerecha,
 											'luxLow'
 										)}
-									</p>
+									</p> */}
 								</div>
 								<div className="alineationLux">
+								{autoReportArray.brakeDif.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{majorOrEqual(item.ruta, 'brakeDif')}
+										</p>
+									</div>
+								))}
 									<p className="left-vert">
 										{
 											window.fileAsObject.luxometro
