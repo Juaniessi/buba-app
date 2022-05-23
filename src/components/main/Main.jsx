@@ -41,7 +41,7 @@ function Main() {
 	const [lista, setLista] = useState([]);
 
 	const [txtRender, setTxtRender] = useState('');
-	/**  handles all the proces that must ocurr when the txt is read.
+	/**  handles all the process that must ocurr when the txt is read.
 	 * @param {*} e the txt file.
 	 * @function autoReportArrayFiller called to fill the object in order to read ir latter.
 	 */

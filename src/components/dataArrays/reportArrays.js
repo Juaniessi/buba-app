@@ -229,7 +229,7 @@ function autoReportArrayFiller() {
 					classEval: 'right-high-eval',
 				},
 			],
-			luxAlineation: [
+			luxAng: [
 				{
 					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical,
 					class: 'left-vert',
@@ -258,7 +258,7 @@ function autoReportArrayFiller() {
 					classEval: 'sound-int-eval',
 				},
 			],
-			CO: [
+			carbonMonoxide: [
 				{
 					ruta: window.fileAsObject.analizadorDeGases
 						.resultadoMonoxidoDeCarbonoCO,
@@ -266,7 +266,7 @@ function autoReportArrayFiller() {
 					classEval: 'CO-eval',
 				},
 			],
-			HCC: [
+			hydroCarbon: [
 				{
 					ruta: window.fileAsObject.analizadorDeGases
 						.resultadoPartesPorMillonHC,
@@ -274,7 +274,7 @@ function autoReportArrayFiller() {
 					classEval: 'HCC-eval',
 				},
 			],
-			Nox: [
+			nitrogenOxides: [
 				{
 					ruta: window.fileAsObject.analizadorDeGases
 						.resultadoPartesPorMillonNox,
@@ -284,7 +284,7 @@ function autoReportArrayFiller() {
 			],
 			opacity: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases.resultadoMedicionOpacidad,
+					ruta: window.fileAsObject.opacimetro.resultadoMedicionOpacidad,
 					class: 'opacity',
 					classEval: 'opacity-eval',
 				},

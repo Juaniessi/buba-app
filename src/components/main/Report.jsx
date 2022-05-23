@@ -35,10 +35,10 @@ function Report(props) {
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
-	/**  selecs between the posible vehicles to evaluate
-	 * @param {*} tipo taken from the variable of state
-	 * @param {*} imgSelector variable to store the img to display
-	 * @returns the img to display
+	/**  selecs between the posible vehicles to evaluate.
+	 * @param {*} tipo taken from the variable of state.
+	 * @param {*} imgSelector variable to store the img to display.
+	 * @returns the img to display.
 	 */
 	function reportImgselector(tipo) {
 		if (tipo === 'Auto') {
@@ -85,8 +85,8 @@ function Report(props) {
 	]);
 	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
 	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} paramSelector value extracted from minorOrEqArray.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 * @param {*} paramSelector value extracted from minorOrEqArray via get() method from maps.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 	function minorOrEqual(txtProp, paramSelector) {
 		let params = minorOrEqArray.get(paramSelector);
@@ -112,8 +112,8 @@ function Report(props) {
 	}
 	/**  function to evaluate txt properties when the comparisson is >=. It also handles the severity flags.
 	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} paramSelector value extracted from majorOrEqArray.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 	function majorOrEqual(txtProp, paramSelector) {
 		let params = majorOrEqArray.get(paramSelector);
@@ -138,9 +138,9 @@ function Report(props) {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	/**  function to evaluate if alineation is ok, the same function is used for most evaluations
-	 * @param {*} alineation prop from object: fileAsObject
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	/**  function to evaluate if alineation is ok, the same function is used for most evaluations.
+	 * @param {*} alineation prop from object: fileAsObject.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 
 	function alineationEvaluator(alineation) {
@@ -186,11 +186,14 @@ function Report(props) {
 		}
 		return caseNumber;
 	}
+
 	/**  function to evaluate noise levels.
+	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
+	 * bacause you need two more parameters to compare.
 	 * @param {*} txtProp prop from object: fileAsObject.
 	 * @param {*} caseNumber value extracted from yearRectificatorGas.
 	 * @param {*} tipo uses the state variable to understand wich vehicle is being evaluated.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 	function noiseEvaluator(txtProp, caseNumber, tipo) {
 		if (tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Moto') {
@@ -213,7 +216,7 @@ function Report(props) {
 
 	/**
 	 *Function that rectifies a bad year input and swithces between case of use.
-	 * @returns {*} the case number to be applied to the HC or CO evaluators
+	 * @returns {*} the case number to be applied to the HC or CO evaluators.
 	 */
 	function yearRectificatorGas() {
 		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
@@ -239,9 +242,11 @@ function Report(props) {
 	}
 
 	/**  function to evaluate if HC ppm are ok, the same function is used for CO.
-	 * @param {*} txtProp prop from object: fileAsObject
-	 * @param {*} caseNumber value extracted from yearRectificatorGas
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>
+	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
+	 * bacause you need another more parameter to compare.
+	 * @param {*} txtProp prop from object: fileAsObject.
+	 * @param {*} caseNumber value extracted from yearRectificatorGas.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 	function HCEvaluator(txtProp, caseNumber) {
 		switch (caseNumber) {
@@ -808,15 +813,15 @@ function Report(props) {
 									</p> */}
 								</div>
 								<div className="alineationLux">
-								{autoReportArray.brakeDif.map((item, i) => (
-									<div key={i}>
-										<p className={item.class}>{item.ruta}</p>
-										<p className={item.classEval}>
-											{majorOrEqual(item.ruta, 'brakeDif')}
-										</p>
-									</div>
-								))}
-									<p className="left-vert">
+									{autoReportArray.luxAng.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'luxAng')}
+											</p>
+										</div>
+									))}
+									{/* <p className="left-vert">
 										{
 											window.fileAsObject.luxometro
 												.alineacionFaroIzquierdoVertical
@@ -867,11 +872,19 @@ function Report(props) {
 												.alineacionFaroDerechoHorizontal,
 											'luxAng'
 										)}
-									</p>
+									</p> */}
 								</div>
 							</div>
 							<div className="decibel-meter">
-								<p className="sound-int">
+								{autoReportArray.soundInt.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{noiseEvaluator(item.ruta, yearRectificatordb(), tipo)}
+										</p>
+									</div>
+								))}
+								{/* <p className="sound-int">
 									{window.fileAsObject.sonometro.valorDeMedicion}
 								</p>
 								<p className="sound-int-eval">
@@ -880,13 +893,21 @@ function Report(props) {
 										yearRectificatordb(),
 										tipo
 									)}
-								</p>
+								</p> */}
 							</div>
 							<div className="gases">
 								{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
 								-1 ? (
 									<>
-										<p className="CO">
+										{autoReportArray.carbonMonoxide.map((item, i) => (
+											<div key={i}>
+												<p className={item.class}>{item.ruta}</p>
+												<p className={item.classEval}>
+													{COEvaluator(item.ruta, yearRectificatorGas())}
+												</p>
+											</div>
+										))}
+										{/* <p className="CO">
 											{
 												window.fileAsObject.analizadorDeGases
 													.resultadoMonoxidoDeCarbonoCO
@@ -898,8 +919,16 @@ function Report(props) {
 													.resultadoMonoxidoDeCarbonoCO,
 												yearRectificatorGas()
 											)}
-										</p>
-										<p className="HCC">
+										</p> */}
+										{autoReportArray.hydroCarbon.map((item, i) => (
+											<div key={i}>
+												<p className={item.class}>{item.ruta}</p>
+												<p className={item.classEval}>
+													{HCEvaluator(item.ruta, yearRectificatorGas())}
+												</p>
+											</div>
+										))}
+										{/* <p className="HCC">
 											{
 												window.fileAsObject.analizadorDeGases
 													.resultadoPartesPorMillonHC
@@ -911,14 +940,20 @@ function Report(props) {
 													.resultadoPartesPorMillonHC,
 												yearRectificatorGas()
 											)}
-										</p>
-										<p className="Nox">
+										</p> */}
+										{autoReportArray.nitrogenOxides.map((item, i) => (
+											<div key={i}>
+												<p className={item.class}>{item.ruta}</p>
+												<p className={item.classEval}>{item.ruta}</p>
+											</div>
+										))}
+										{/* <p className="Nox">
 											{
 												window.fileAsObject.analizadorDeGases
 													.resultadoPartesPorMillonNox
 											}
 										</p>
-										<p className="Nox-eval"></p>
+										<p className="Nox-eval"></p> */}
 									</>
 								) : (
 									<p></p>
@@ -928,12 +963,19 @@ function Report(props) {
 								{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
 								-1 ? (
 									<>
-										<p className="opacity"></p>
-										<p className="opacity-eval"></p>
+										<p></p>
 									</>
 								) : (
 									<>
-										<p className="opacity">
+										{autoReportArray.opacity.map((item, i) => (
+											<div key={i}>
+												<p className={item.class}>{item.ruta}</p>
+												<p className={item.classEval}>
+													{majorOrEqual(item.ruta, 'opacity')}
+												</p>
+											</div>
+										))}
+										{/* <p className="opacity">
 											{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
 										</p>
 										<p className="opacity-eval">
@@ -942,7 +984,7 @@ function Report(props) {
 													.resultadoMedicionOpacidad,
 												'opacity'
 											)}
-										</p>
+										</p> */}
 									</>
 								)}
 							</div>
