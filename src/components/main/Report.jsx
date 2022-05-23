@@ -272,6 +272,12 @@ function Report(props) {
 		}
 	}
 
+	/**
+	 * @params {*} startDate given the case that "fechaDeSalidaDelPuesto2" does not exist,
+	 * like in the txt of Motocicles, fechaDeSalidaDelPuesto2 = fechaDeSalidaDelPuesto1
+	 * and fechaDeIngresoAlPuesto2 = fechaDeIngresoAlPuesto1,
+	 * this is all solved in the "fileAnalizer".
+	 */
 	let startDate =
 		window.fileAsObject === undefined
 			? ''
