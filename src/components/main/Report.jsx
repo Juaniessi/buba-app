@@ -5,7 +5,7 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
-import {autoReportArray} from '../dataArrays/reportArrays';
+import {reportArray} from '../dataArrays/reportArrays';
 
 function Report(props) {
 	const {
@@ -31,7 +31,7 @@ function Report(props) {
 		setLista,
 		txtRender,
 		handleTxtRender,
-		autoReportArray,
+		reportArray,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -327,19 +327,19 @@ function Report(props) {
 						src={reportImgselector(tipo)}
 						alt="report-img"
 					/>
-					{(txtRender && autoReportArray) === '' ? (
+					{reportArray === '' ? (
 						''
-					) : (
+					) : tipo !== 'Moto' ? (
 						<article className="txtRender">
 							<div className="header-info">
-								{autoReportArray.headerInfo.map((item, i) => (
+								{reportArray.headerInfo.map((item, i) => (
 									<p className={item.class} key={i}>
 										{item.ruta}
 									</p>
 								))}
 							</div>
 							<div className="alineation">
-								{autoReportArray.alineation.map((item, i) => (
+								{reportArray.alineation.map((item, i) => (
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
@@ -349,14 +349,14 @@ function Report(props) {
 								))}
 							</div>
 							<div className="weight">
-								{autoReportArray.weight.map((item, i) => (
+								{reportArray.weight.map((item, i) => (
 									<p className={item.class} key={i}>
 										{item.ruta}
 									</p>
 								))}
 							</div>
 							<div className="suspention">
-								{autoReportArray.suspention.map((item, i) => (
+								{reportArray.suspention.map((item, i) => (
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
@@ -367,7 +367,7 @@ function Report(props) {
 							</div>
 							<div className="brake">
 								<div className="performance">
-									{autoReportArray.brakePerf.map((item, i) => (
+									{reportArray.brakePerf.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -375,7 +375,7 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{autoReportArray.handBrakePerf.map((item, i) => (
+									{reportArray.handBrakePerf.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -385,7 +385,7 @@ function Report(props) {
 									))}
 								</div>
 								<div className="difference">
-									{autoReportArray.brakeDif.map((item, i) => (
+									{reportArray.brakeDif.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -395,7 +395,7 @@ function Report(props) {
 									))}
 								</div>
 								<div className="strength">
-									{autoReportArray.brakeStrenght.map((item, i) => (
+									{reportArray.brakeStrenght.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -405,7 +405,7 @@ function Report(props) {
 									))}
 								</div>
 								<div className="resistance-rod">
-									{autoReportArray.brakeResist.map((item, i) => (
+									{reportArray.brakeResist.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -415,7 +415,7 @@ function Report(props) {
 									))}
 								</div>
 								<div className="ovality">
-									{autoReportArray.brakeOval.map((item, i) => (
+									{reportArray.brakeOval.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -427,7 +427,7 @@ function Report(props) {
 							</div>
 							<div className="lux-meter">
 								<div className="intensity">
-									{autoReportArray.luxLow.map((item, i) => (
+									{reportArray.luxLow.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -435,7 +435,7 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{autoReportArray.luxHigh.map((item, i) => (
+									{reportArray.luxHigh.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -445,7 +445,7 @@ function Report(props) {
 									))}
 								</div>
 								<div className="alineationLux">
-									{autoReportArray.luxAng.map((item, i) => (
+									{reportArray.luxAng.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -456,7 +456,7 @@ function Report(props) {
 								</div>
 							</div>
 							<div className="decibel-meter">
-								{autoReportArray.soundInt.map((item, i) => (
+								{reportArray.soundInt.map((item, i) => (
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
@@ -468,7 +468,7 @@ function Report(props) {
 							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
 							-1 ? (
 								<div className="gases">
-									{autoReportArray.carbonMonoxide.map((item, i) => (
+									{reportArray.carbonMonoxide.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -476,7 +476,7 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{autoReportArray.hydroCarbon.map((item, i) => (
+									{reportArray.hydroCarbon.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -484,7 +484,7 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{autoReportArray.nitrogenOxides.map((item, i) => (
+									{reportArray.nitrogenOxides.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>{item.ruta}</p>
@@ -493,7 +493,7 @@ function Report(props) {
 								</div>
 							) : (
 								<div className="opacimeter">
-									{autoReportArray.opacity.map((item, i) => (
+									{reportArray.opacity.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
@@ -503,6 +503,155 @@ function Report(props) {
 									))}
 								</div>
 							)}
+							<div className="date">
+								<p className="start-date">
+									{startDate.getDate() +
+										'/' +
+										(startDate.getMonth() + 1) +
+										'/' +
+										startDate.getFullYear()}
+								</p>
+								<p className="end-date">
+									{dueDateCalculator().getDate() +
+										'/' +
+										(dueDateCalculator().getMonth() + 1) +
+										'/' +
+										dueDateCalculator().getFullYear()}
+								</p>
+							</div>
+						</article>
+					) : (
+						<article className="txtRender">
+							<div className="header-info">
+								{reportArray.headerInfo.map((item, i) => (
+									<p className={item.class} key={i}>
+										{item.ruta}
+									</p>
+								))}
+							</div>
+							<div className="weight">
+								{reportArray.weight.map((item, i) => (
+									<p className={item.class} key={i}>
+										{item.ruta}
+									</p>
+								))}
+							</div>
+							<div className="suspention">
+								{reportArray.suspention.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{minorOrEqual(item.ruta, 'susp')}
+										</p>
+									</div>
+								))}
+							</div>
+							<div className="brake">
+								<div className="performance">
+									{reportArray.brakePerf.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{minorOrEqual(item.ruta, 'brakePerf')}
+											</p>
+										</div>
+									))}
+								</div>
+								<div className="strength">
+									{reportArray.brakeStrenght.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{minorOrEqual(item.ruta, 'brakeStrenght')}
+											</p>
+										</div>
+									))}
+								</div>
+								<div className="resistance-rod">
+									{reportArray.brakeResist.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeResist')}
+											</p>
+										</div>
+									))}
+								</div>
+								<div className="ovality">
+									{reportArray.brakeOval.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeOval')}
+											</p>
+										</div>
+									))}
+								</div>
+							</div>
+							<div className="lux-meter">
+								<div className="intensity">
+									{reportArray.luxLow.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'luxLow')}
+											</p>
+										</div>
+									))}
+									{reportArray.luxHigh.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'luxHigh')}
+											</p>
+										</div>
+									))}
+								</div>
+								<div className="alineationLux">
+									{reportArray.luxAng.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'luxAng')}
+											</p>
+										</div>
+									))}
+								</div>
+							</div>
+							<div className="decibel-meter">
+								{reportArray.soundInt.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{noiseEvaluator(item.ruta, yearRectificatordb(), tipo)}
+										</p>
+									</div>
+								))}
+							</div>
+							<div className="gases">
+								{reportArray.carbonMonoxide.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{COEvaluator(item.ruta, yearRectificatorGas())}
+										</p>
+									</div>
+								))}
+								{reportArray.hydroCarbon.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>
+											{HCEvaluator(item.ruta, yearRectificatorGas())}
+										</p>
+									</div>
+								))}
+								{reportArray.nitrogenOxides.map((item, i) => (
+									<div key={i}>
+										<p className={item.class}>{item.ruta}</p>
+										<p className={item.classEval}>{item.ruta}</p>
+									</div>
+								))}
+							</div>
 							<div className="date">
 								<p className="start-date">
 									{startDate.getDate() +

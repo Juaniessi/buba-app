@@ -1,8 +1,8 @@
-let autoReportArray;
+let ReportArray;
 
 function autoReportArrayFiller() {
 	if (window.fileAsObject !== '') {
-		autoReportArray = {
+		ReportArray = {
 			headerInfo: [
 				{
 					ruta: window.fileAsObject.header.patente,
@@ -291,7 +291,175 @@ function autoReportArrayFiller() {
 			],
 		};
 	}
-	return autoReportArray;
+	return ReportArray;
 }
 
-export {autoReportArrayFiller};
+function motoReportArrayFiller() {
+	if (window.fileAsObject !== '') {
+		ReportArray = {
+			headerInfo: [
+				{
+					ruta: window.fileAsObject.header.patente,
+					class: 'plate',
+				},
+				{
+					ruta: window.fileAsObject.header.marcaDelVehiculo,
+					class: 'brand',
+				},
+				{
+					ruta: window.fileAsObject.header.modelo,
+					class: 'model',
+				},
+				{
+					ruta: window.fileAsObject.header.kilometros,
+					class: 'mileage',
+				},
+			],
+			weight: [
+				{
+					ruta: window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo,
+					class: 'front-left',
+				},
+				{
+					ruta: window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo,
+					class: 'rear-left',
+				},
+			],
+			suspention: [
+				{
+					ruta: window.fileAsObject.suspensionEjeDelantero
+						.rendimientoDelanteroIzquierdo,
+					class: 'front-left',
+					classEval: 'front-left-eval',
+				},
+				{
+					ruta: window.fileAsObject.suspensionEjeTrasero
+						.rendimientoTraseroIzquierdo,
+					class: 'rear-left',
+					classEval: 'rear-left-eval',
+				},
+			],
+			brakePerf: [
+				{
+					ruta: window.fileAsObject.frenosEje_1.rendimientoDelEje,
+					class: 'front',
+					classEval: 'front-eval',
+				},
+				{
+					ruta: window.fileAsObject.frenosEje_2.rendimientoDelEje,
+					class: 'rear',
+					classEval: 'rear-eval',
+				},
+			],
+			brakeStrenght: [
+				{
+					ruta: window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
+					class: 'front-left',
+					classEval: 'front-left-eval',
+				},
+				{
+					ruta: window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
+					class: 'rear-left',
+					classEval: 'rear-left-eval',
+				},
+				{
+					ruta: window.fileAsObject.frenoDeManoEje_2
+						.fuerzaDeFrenadoLadoIzquierdo,
+					class: 'hand-left',
+					classEval: 'hand-left-eval',
+				},
+			],
+			brakeResist: [
+				{
+					ruta: window.fileAsObject.frenosEje_1
+						.resistenciaALaRodaduraLadoIzquierdo,
+					class: 'front-left',
+					classEval: 'front-left-eval',
+				},
+				{
+					ruta: window.fileAsObject.frenosEje_2
+						.resistenciaALaRodaduraLadoIzquierdo,
+					class: 'rear-left',
+					classEval: 'rear-left-eval',
+				},
+			],
+			brakeOval: [
+				{
+					ruta: window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
+					class: 'front-left',
+					classEval: 'front-left-eval',
+				},
+				{
+					ruta: window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
+					class: 'rear-left',
+					classEval: 'rear-left-eval',
+				},
+			],
+			luxLow: [
+				{
+					ruta: window.fileAsObject.luxometro.intensidadBajaIzquierda,
+					class: 'left-low',
+					classEval: 'left-low-eval',
+				},
+				{
+					ruta: window.fileAsObject.luxometro.intensidadAuxiliarIzquierda,
+					class: 'left-aux',
+					classEval: 'left-aux-eval',
+				},
+			],
+			luxHigh: [
+				{
+					ruta: window.fileAsObject.luxometro.intensidadAltaIzquierda,
+					class: 'left-high',
+					classEval: 'left-high-eval',
+				},
+			],
+			luxAng: [
+				{
+					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical,
+					class: 'left-vert',
+					classEval: 'left-vert-eval',
+				},
+				{
+					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoHorizontal,
+					class: 'left-hor',
+					classEval: 'left-hor-eval',
+				},
+			],
+			soundInt: [
+				{
+					ruta: window.fileAsObject.sonometro.valorDeMedicion,
+					class: 'sound-int',
+					classEval: 'sound-int-eval',
+				},
+			],
+			carbonMonoxide: [
+				{
+					ruta: window.fileAsObject.analizadorDeGases
+						.resultadoMonoxidoDeCarbonoCO,
+					class: 'CO',
+					classEval: 'CO-eval',
+				},
+			],
+			hydroCarbon: [
+				{
+					ruta: window.fileAsObject.analizadorDeGases
+						.resultadoPartesPorMillonHC,
+					class: 'HCC',
+					classEval: 'HCC-eval',
+				},
+			],
+			nitrogenOxides: [
+				{
+					ruta: window.fileAsObject.analizadorDeGases
+						.resultadoPartesPorMillonNox,
+					class: 'Nox',
+					classEval: 'Nox-eval',
+				},
+			],
+		};
+	}
+	return ReportArray;
+}
+
+export {autoReportArrayFiller, motoReportArrayFiller};
