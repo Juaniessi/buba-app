@@ -1174,6 +1174,10 @@ function fixPercentajesInObj(obj) {
 
 }
 
+/**
+ * Transforms strings into dates
+ * @param {*} obj the file as object  
+ */
 function fixStringsToDates(obj){
 
 	let dateIn1 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto1 ;
@@ -1182,15 +1186,32 @@ function fixStringsToDates(obj){
 	let dateOut1 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto1 ;
 	obj.estadísticaDePuestos.fechaDeSalidaDelPuesto1 = getDatesFromString(dateOut1)
 
-	let dateIn2 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2 ;
+
+  /** 
+   * When dates in and out of station 2 are undefined 
+   * they will take the values of in and outs in station 1 
+   */
+
+  let dateIn2 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2 ;
+  if (dateIn2 === undefined) { dateIn2 = dateIn1 ;}
 	obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2 = getDatesFromString(dateIn2)
 
 	let dateOut2 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2 ;
+  if (dateOut2 === undefined) { dateOut2 = dateOut1 ; }
 	obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2 = getDatesFromString(dateOut2)
+
 
 }
 
+/**
+ * Parses a string with the format [dd/mm/yyyy HH:mm:ss] or [dd/m/yyyy HH:mm:ss]  into a date
+ * 
+ * @param {*} value a date in string format. Example: [25/2/2021 09:32:49]
+ * @returns A date or undefined if undefined
+ */
 function getDatesFromString(value) {
+
+  if (value===undefined){ return undefined} ;
 
   let day;
   let month;
