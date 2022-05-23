@@ -62,7 +62,6 @@ function Main() {
 			} else {
 				setReportArray(autoReportArrayFiller());
 			}
-
 			loadFileRef.current.value = null;
 			loadImgRef.current.value = null;
 			severeFlag.current = 0;
@@ -88,6 +87,12 @@ function Main() {
 			setImgUpload(URL.createObjectURL(event.target.files[0]));
 		}
 	};
+
+	/**
+	 * loadFileRef and loadImgRef are used to clear the file between
+	 * rerenders so yo can actually chose the same file twice when you
+	 * forgot to change the type.
+	 */
 
 	const loadFileRef = useRef(null);
 	const loadImgRef = useRef(null);
