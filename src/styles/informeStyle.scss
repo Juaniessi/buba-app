@@ -1,11 +1,17 @@
 .finalReport {
 	position: relative;
+
 	.report-img {
 		margin: 10px 0;
 		border: solid black 1px;
-
 		width: 600px;
 		z-index: -1;
+	}
+	.car-photo{
+		position: absolute;
+		width: 162px;
+		top:23px;
+		left:423px;
 	}
 
 	p {

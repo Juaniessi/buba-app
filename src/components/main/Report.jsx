@@ -32,6 +32,9 @@ function Report(props) {
 		handleTxtRender,
 		reportArray,
 		engineType,
+		imgUpload,
+		onImageChange,
+		loadImgRef,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -40,7 +43,7 @@ function Report(props) {
 	 * @param {*} imgSelector variable to store the img to display.
 	 * @returns the img to display.
 	 */
-	function reportImgselector(tipo) {
+	function reportImgSelector(tipo) {
 		if (tipo === 'Auto') {
 			imgSelector = carReport;
 		} else if (tipo === 'Camioneta') {
@@ -57,6 +60,9 @@ function Report(props) {
 		return imgSelector;
 	}
 
+	/**
+	 * @constant minorOrEqArray is a MAP containing the key and values to generate the evaluation.
+	 */
 	const minorOrEqArray = new Map([
 		['susp', [10, 40, 60]],
 		['brakePerf', [10, 40, 50]],
@@ -64,6 +70,9 @@ function Report(props) {
 		['brakeStrenght', [0.1, 0.3, 0.99]],
 	]);
 
+	/**
+	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
+	 */
 	const majorOrEqArray = new Map([
 		['brakeDif', [50, 15, 12]],
 		['brakeResist', [2, 1, 0.5]],
@@ -323,7 +332,6 @@ function Report(props) {
 		}
 		return dueDate;
 	}
-
 	return (
 		<>
 			<div className="btn-input-txt">
@@ -338,17 +346,31 @@ function Report(props) {
 					onChange={handleTxtRender}
 				/>
 			</div>
+			<div>
+				<label htmlFor="image_uploads">
+					Choose images to upload (PNG, JPG)
+				</label>
+				<input
+				ref={loadImgRef}
+					type="file"
+					id="image_uploads"
+					name="image_uploads"
+					accept=".jpg, .jpeg, .png"
+					onChange={onImageChange}
+				/>
+			</div>
 			<section className="finalReport">
 				<>
 					<img
 						className="report-img"
-						src={reportImgselector(tipo)}
-						alt="report-img"
+						src={reportImgSelector(tipo)}
+						alt="Imagen molde del informe"
 					/>
+					<img className='car-photo' src={imgUpload} alt="Foto del vehiculo" />
 					{reportArray === '' ? (
 						''
 					) : tipo !== 'Moto' ? (
-						<article className="txtRender">
+						<article className="txtRenderAuto">
 							<div className="header-info">
 								{reportArray.headerInfo.map((item, i) => (
 									<p className={item.class} key={i}>
@@ -539,7 +561,7 @@ function Report(props) {
 							</div>
 						</article>
 					) : (
-						<article className="txtRender">
+						<article className="txtRenderMoto">
 							<div className="header-info">
 								{reportArray.headerInfo.map((item, i) => (
 									<p className={item.class} key={i}>

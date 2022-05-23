@@ -19,6 +19,7 @@ function Main() {
 		setTxtRender('');
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
+		setImgUpload(null);
 	};
 	const [severidad, setSeveridad] = useState({
 		value: 'Moderado',
@@ -63,6 +64,7 @@ function Main() {
 			}
 
 			loadFileRef.current.value = null;
+			loadImgRef.current.value = null;
 			severeFlag.current = 0;
 			moderateFlag.current = 0;
 		}, 90);
@@ -75,9 +77,20 @@ function Main() {
 		label: '4 Tiempos',
 	});
 
-	const [imgUpload, setImgUpload] = useState('');
+	const [imgUpload, setImgUpload] = useState(null);
+
+	/**
+	 * this function takes the img and creates an URL you can use as a src=""
+	 * @param {*} event the uploadesd image.
+	 */
+	const onImageChange = (event) => {
+		if (event.target.files && event.target.files[0]) {
+			setImgUpload(URL.createObjectURL(event.target.files[0]));
+		}
+	};
 
 	const loadFileRef = useRef(null);
+	const loadImgRef = useRef(null);
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
 
@@ -146,6 +159,8 @@ function Main() {
 					handleTxtRender={handleTxtRender}
 					reportArray={reportArray}
 					engineType={engineType}
+					imgUpload={imgUpload}
+					onImageChange={onImageChange}
 				/>
 			</section>
 		</main>

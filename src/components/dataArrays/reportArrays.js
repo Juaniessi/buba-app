@@ -362,12 +362,6 @@ function motoReportArrayFiller() {
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
-				{
-					ruta: window.fileAsObject.frenoDeManoEje_2
-						.fuerzaDeFrenadoLadoIzquierdo,
-					class: 'hand-left',
-					classEval: 'hand-left-eval',
-				},
 			],
 			brakeResist: [
 				{

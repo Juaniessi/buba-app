@@ -9,6 +9,13 @@
   z-index: -1;
 }
 
+.finalReport .car-photo {
+  position: absolute;
+  width: 162px;
+  top: 23px;
+  left: 423px;
+}
+
 .finalReport p {
   position: absolute;
   font-size: 0.6rem;
