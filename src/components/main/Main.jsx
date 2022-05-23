@@ -17,7 +17,8 @@ function Main() {
 		setDescripcion({value: '', label: ''});
 		setLista([]);
 		setTxtRender('');
-		setReportArray("");
+		setReportArray('');
+		setEngineType({value: '4T', label: '4 Tiempos'});
 	};
 	const [severidad, setSeveridad] = useState({
 		value: 'Moderado',
@@ -69,6 +70,13 @@ function Main() {
 	/*autoReportArray stores the object that needs to be read in order to create the Report */
 	const [reportArray, setReportArray] = useState('');
 
+	const [engineType, setEngineType] = useState({
+		value: '4T',
+		label: '4 Tiempos',
+	});
+
+	const [imgUpload, setImgUpload] = useState('');
+
 	const loadFileRef = useRef(null);
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
@@ -92,6 +100,24 @@ function Main() {
 							{item.label}
 						</label>
 					))}
+					<div className="engine-type">
+						{tipo === 'Moto'
+							? radioGeneratorArray.engineType.map((item, i) => (
+									<label className="btn-inside" htmlFor={item.value} key={i}>
+										<input
+											type="radio"
+											className="btn-inside rad-c"
+											name="engineType"
+											id={item.value}
+											value={item.value}
+											checked={engineType.value === item.value} //determina que visualmente se vea checked
+											onChange={() => setEngineType(item)}
+										/>
+										{item.label}
+									</label>
+							  ))
+							: ''}
+					</div>
 				</div>
 			</form>
 			<section className="finalReport">
@@ -119,6 +145,7 @@ function Main() {
 					txtRender={txtRender}
 					handleTxtRender={handleTxtRender}
 					reportArray={reportArray}
+					engineType={engineType}
 				/>
 			</section>
 		</main>

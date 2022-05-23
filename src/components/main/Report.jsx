@@ -5,7 +5,6 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
-import {reportArray} from '../dataArrays/reportArrays';
 
 function Report(props) {
 	const {
@@ -32,6 +31,7 @@ function Report(props) {
 		txtRender,
 		handleTxtRender,
 		reportArray,
+		engineType,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -75,13 +75,16 @@ function Report(props) {
 		['HC<=1991', [2500, 900, 600]],
 		['HC<=1994', [2500, 600, 400]],
 		['HC>1994', [2500, 400, 300]],
-		['CO<=1991', [10, 4.5, 3.5]],
-		['CO<=1994', [10, 3, 2]],
-		['CO>1994', [10, 2.5, 2]],
+		['CO<=1991', [7, 4.5, 2.5]],
+		['CO<=1994', [5, 3, 2]],
+		['CO>1994', [5, 2.5, 2]],
 		['noiseAutoMotoViejo', [100, 88.1, 80]],
 		['noiseAutoMotoNuevo', [100, 83.1, 80]],
 		['noiseCamionViejo', [100, 95.1, 85]],
 		['noiseCamionNuevo', [100, 87, 84]],
+		['HC-4T', [4000, 3000, 1500]],
+		['HC-2T', [12000, 9000, 4500]],
+		['CO-Moto', [8, 4.5, 2.5]],
 	]);
 	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
 	 * @param {*} txtProp prop from object: fileAsObject.
@@ -269,6 +272,15 @@ function Report(props) {
 			case 3:
 				return majorOrEqual(txtProp, 'CO>1994');
 			default:
+		}
+	}
+
+	function HCEvaluatorMoto(txtProp, engineType) {
+		switch (engineType) {
+			case '4T':
+				return majorOrEqual(txtProp, 'HC-4T');
+			case '2T':
+				return majorOrEqual(txtProp, 'HC-2T');
 		}
 	}
 
@@ -490,12 +502,12 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{reportArray.nitrogenOxides.map((item, i) => (
+									{/* {reportArray.nitrogenOxides.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>{item.ruta}</p>
 										</div>
-									))}
+									))} */}
 								</div>
 							) : (
 								<div className="opacimeter">
@@ -639,7 +651,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{COEvaluator(item.ruta, yearRectificatorGas())}
+											{majorOrEqual(item.ruta, 'CO-Moto')}
 										</p>
 									</div>
 								))}
@@ -647,16 +659,16 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{HCEvaluator(item.ruta, yearRectificatorGas())}
+											{HCEvaluatorMoto(item.ruta, engineType.value)}
 										</p>
 									</div>
 								))}
-								{reportArray.nitrogenOxides.map((item, i) => (
+								{/* {reportArray.nitrogenOxides.map((item, i) => (
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>{item.ruta}</p>
 									</div>
-								))}
+								))} */}
 							</div>
 							<div className="date">
 								<p className="start-date">

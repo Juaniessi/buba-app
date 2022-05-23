@@ -35,6 +35,16 @@ const radioGeneratorArray = {
 			label: 'Grave',
 		},
 	],
+	engineType: [
+		{
+			value: '4T',
+			label: '4 Tiempos',
+		},
+		{
+			value: '2T',
+			label: '2 Tiempos',
+		},
+	],
 };
 
 export {radioGeneratorArray};
