@@ -337,14 +337,6 @@ function Report(props) {
 										{item.ruta}
 									</p>
 								))}
-								{/* <p className="plate">{window.fileAsObject.header.patente}</p>
-								<p className="brand">
-									{window.fileAsObject.header.marcaDelVehiculo}
-								</p>
-								<p className="model">{window.fileAsObject.header.modelo}</p>
-								<p className="mileage">
-									{window.fileAsObject.header.kilometros}
-								</p> */}
 							</div>
 							<div className="alineation">
 								{autoReportArray.alineation.map((item, i) => (
@@ -355,22 +347,6 @@ function Report(props) {
 										</p>
 									</div>
 								))}
-								{/* <p className="front-al">
-									{window.fileAsObject.alineacion.resultadoAlineacionEje1}
-								</p>
-								<p className="front-al-eval">
-									{alineationEvaluator(
-										window.fileAsObject.alineacion.resultadoAlineacionEje1
-									)}
-								</p>
-								<p className="rear-al">
-									{window.fileAsObject.alineacion.resultadoAlineacionEje2}
-								</p>
-								<p className="rear-al-eval">
-									{alineationEvaluator(
-										window.fileAsObject.alineacion.resultadoAlineacionEje2
-									)}
-								</p> */}
 							</div>
 							<div className="weight">
 								{autoReportArray.weight.map((item, i) => (
@@ -378,18 +354,6 @@ function Report(props) {
 										{item.ruta}
 									</p>
 								))}
-								{/* <p className="front-left">
-									{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo}
-								</p>
-								<p className="front-right">
-									{window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho}
-								</p>
-								<p className="rear-left">
-									{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}
-								</p>
-								<p className="rear-right">
-									{window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}
-								</p> */}
 							</div>
 							<div className="suspention">
 								{autoReportArray.suspention.map((item, i) => (
@@ -400,58 +364,6 @@ function Report(props) {
 										</p>
 									</div>
 								))}
-								{/* <p className="front-left">
-									{
-										window.fileAsObject.suspensionEjeDelantero
-											.rendimientoDelanteroIzquierdo
-									}
-								</p>
-								<p className="front-left-eval">
-									{minorOrEqual(
-										window.fileAsObject.suspensionEjeDelantero
-											.rendimientoDelanteroIzquierdo,
-										'susp'
-									)}
-								</p>
-								<p className="front-right">
-									{
-										window.fileAsObject.suspensionEjeDelantero
-											.rendimientoDelanteroDerecho
-									}
-								</p>
-								<p className="front-right-eval">
-									{minorOrEqual(
-										window.fileAsObject.suspensionEjeDelantero
-											.rendimientoDelanteroDerechos,
-										'susp'
-									)}
-								</p>
-								<p className="rear-left">
-									{
-										window.fileAsObject.suspensionEjeTrasero
-											.rendimientoTraseroIzquierdo
-									}
-								</p>
-								<p className="rear-left-eval">
-									{minorOrEqual(
-										window.fileAsObject.suspensionEjeTrasero
-											.rendimientoTraseroIzquierdo,
-										'susp'
-									)}
-								</p>
-								<p className="rear-right">
-									{
-										window.fileAsObject.suspensionEjeTrasero
-											.rendimientoTraseroDerecho
-									}
-								</p>
-								<p className="rear-right-eval">
-									{minorOrEqual(
-										window.fileAsObject.suspensionEjeTrasero
-											.rendimientoTraseroDerecho,
-										'susp'
-									)}
-								</p> */}
 							</div>
 							<div className="brake">
 								<div className="performance">
@@ -471,33 +383,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="front">
-										{window.fileAsObject.frenosEje_1.rendimientoDelEje}
-									</p>
-									<p className="front-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenosEje_1.rendimientoDelEje,
-											'brakePerf'
-										)}
-									</p>
-									<p className="rear">
-										{window.fileAsObject.frenosEje_2.rendimientoDelEje}
-									</p>
-									<p className="rear-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenosEje_2.rendimientoDelEje,
-											'brakePerf'
-										)}
-									</p>
-									<p className="hand">
-										{window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje}
-									</p>
-									<p className="hand-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje,
-											'handBrakePerf'
-										)}
-									</p> */}
 								</div>
 								<div className="difference">
 									{autoReportArray.brakeDif.map((item, i) => (
@@ -508,45 +393,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="front">
-										{
-											window.fileAsObject.frenosEje_1
-												.diferenciaFzaFrenadoLadoALado
-										}
-									</p>
-									<p className="front-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_1
-												.diferenciaFzaFrenadoLadoALado,
-											'brakeDif'
-										)}
-									</p>
-									<p className="rear">
-										{
-											window.fileAsObject.frenosEje_2
-												.diferenciaFzaFrenadoLadoALado
-										}
-									</p>
-									<p className="rear-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_2
-												.diferenciaFzaFrenadoLadoALado,
-											'brakeDif'
-										)}
-									</p>
-									<p className="hand">
-										{
-											window.fileAsObject.frenoDeManoEje_2
-												.diferenciaFzaFrenadoLadoALado
-										}
-									</p>
-									<p className="hand-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenoDeManoEje_2
-												.diferenciaFzaFrenadoLadoALado,
-											'brakeDif'
-										)}
-									</p> */}
 								</div>
 								<div className="strength">
 									{autoReportArray.brakeStrenght.map((item, i) => (
@@ -557,78 +403,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="front-left">
-										{
-											window.fileAsObject.frenosEje_1
-												.fuerzaDeFrenadoLadoIzquierdo
-										}
-									</p>
-									<p className="front-left-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenosEje_1
-												.fuerzaDeFrenadoLadoIzquierdo,
-											'brakeStrenght'
-										)}
-									</p>
-									<p className="front-right">
-										{window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho}
-									</p>
-									<p className="front-right-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenosEje_1
-												.fuerzaDeFrenadoLadoDerecho,
-											'brakeStrenght'
-										)}
-									</p>
-									<p className="rear-left">
-										{
-											window.fileAsObject.frenosEje_2
-												.fuerzaDeFrenadoLadoIzquierdo
-										}
-									</p>
-									<p className="rear-left-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenosEje_2
-												.fuerzaDeFrenadoLadoIzquierdo,
-											'brakeStrenght'
-										)}
-									</p>
-									<p className="rear-right">
-										{window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho}
-									</p>
-									<p className="rear-right-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenosEje_2
-												.fuerzaDeFrenadoLadoDerecho,
-											'brakeStrenght'
-										)}
-									</p>
-									<p className="hand-left">
-										{
-											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo
-										}
-									</p>
-									<p className="hand-left-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo,
-											'brakeStrenght'
-										)}
-									</p>
-									<p className="hand-right">
-										{
-											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoDerecho
-										}
-									</p>
-									<p className="hand-right-eval">
-										{minorOrEqual(
-											window.fileAsObject.frenoDeManoEje_2
-												.fuerzaDeFrenadoLadoIzquierdo,
-											'brakeStrenght'
-										)}
-									</p> */}
 								</div>
 								<div className="resistance-rod">
 									{autoReportArray.brakeResist.map((item, i) => (
@@ -639,58 +413,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="front-left">
-										{
-											window.fileAsObject.frenosEje_1
-												.resistenciaALaRodaduraLadoIzquierdo
-										}
-									</p>
-									<p className="front-left-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_1
-												.resistenciaALaRodaduraLadoIzquierdo,
-											'brakeResist'
-										)}
-									</p>
-									<p className="front-right">
-										{
-											window.fileAsObject.frenosEje_1
-												.resistenciaALaRodaduraLadoDerecho
-										}
-									</p>
-									<p className="front-right-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_1
-												.resistenciaALaRodaduraLadoDerecho,
-											'brakeResist'
-										)}
-									</p>
-									<p className="rear-left">
-										{
-											window.fileAsObject.frenosEje_2
-												.resistenciaALaRodaduraLadoIzquierdo
-										}
-									</p>
-									<p className="rear-left-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_2
-												.resistenciaALaRodaduraLadoIzquierdo,
-											'brakeResist'
-										)}
-									</p>
-									<p className="rear-right">
-										{
-											window.fileAsObject.frenosEje_2
-												.resistenciaALaRodaduraLadoDerecho
-										}
-									</p>
-									<p className="rear-right-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_2
-												.resistenciaALaRodaduraLadoDerecho,
-											'brakeResist'
-										)}
-									</p> */}
 								</div>
 								<div className="ovality">
 									{autoReportArray.brakeOval.map((item, i) => (
@@ -701,42 +423,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="front-left">
-										{window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo}
-									</p>
-									<p className="front-left-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
-											'brakeOval'
-										)}
-									</p>
-									<p className="front-right">
-										{window.fileAsObject.frenosEje_1.ovalidadLadoDerecho}
-									</p>
-									<p className="front-right-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_1.ovalidadLadoDerecho,
-											'brakeOval'
-										)}
-									</p>
-									<p className="rear-left">
-										{window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo}
-									</p>
-									<p className="rear-left-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
-											'brakeOval'
-										)}
-									</p>
-									<p className="rear-right">
-										{window.fileAsObject.frenosEje_2.ovalidadLadoDerecho}
-									</p>
-									<p className="rear-right-eval">
-										{majorOrEqual(
-											window.fileAsObject.frenosEje_2.ovalidadLadoDerecho,
-											'brakeOval'
-										)}
-									</p> */}
 								</div>
 							</div>
 							<div className="lux-meter">
@@ -757,60 +443,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="left-low">
-										{window.fileAsObject.luxometro.intensidadBajaIzquierda}
-									</p>
-									<p className="left-low-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda,
-											'luxLow'
-										)}
-									</p>
-									<p className="right-low">
-										{window.fileAsObject.luxometro.intensidadBajaDerecha}
-									</p>
-									<p className="right-low-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadBajaDerecha,
-											'luxLow'
-										)}
-									</p>
-									<p className="left-high">
-										{window.fileAsObject.luxometro.intensidadAltaIzquierda}
-									</p>
-									<p className="left-high-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda,
-											'luxHigh'
-										)}
-									</p>
-									<p className="right-high">
-										{window.fileAsObject.luxometro.intensidadAltaDerecha}
-									</p>
-									<p className="right-high-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadBajaIzquierda,
-											'luxHigh'
-										)}
-									</p>
-									<p className="left-aux">
-										{window.fileAsObject.luxometro.intensidadAuxiliarIzquierda}
-									</p>
-									<p className="left-aux-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadAuxiliarIzquierda,
-											'luxLow'
-										)}
-									</p>
-									<p className="right-aux">
-										{window.fileAsObject.luxometro.intensidadAuxiliarDerecha}
-									</p>
-									<p className="right-aux-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro.intensidadBajaDerecha,
-											'luxLow'
-										)}
-									</p> */}
 								</div>
 								<div className="alineationLux">
 									{autoReportArray.luxAng.map((item, i) => (
@@ -821,58 +453,6 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* <p className="left-vert">
-										{
-											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoVertical
-										}
-									</p>
-									<p className="left-vert-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoVertical,
-											'luxAng'
-										)}
-									</p>
-									<p className="right-vert">
-										{
-											window.fileAsObject.luxometro
-												.alineacionFaroDerechoVertical
-										}
-									</p>
-									<p className="right-vert-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro
-												.alineacionFaroDerechoVertical,
-											'luxAng'
-										)}
-									</p>
-									<p className="left-hor">
-										{
-											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoHorizontal
-										}
-									</p>
-									<p className="left-hor-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro
-												.alineacionFaroIzquierdoHorizontal,
-											'luxAng'
-										)}
-									</p>
-									<p className="right-hor">
-										{
-											window.fileAsObject.luxometro
-												.alineacionFaroDerechoHorizontal
-										}
-									</p>
-									<p className="right-hor-eval">
-										{majorOrEqual(
-											window.fileAsObject.luxometro
-												.alineacionFaroDerechoHorizontal,
-											'luxAng'
-										)}
-									</p> */}
 								</div>
 							</div>
 							<div className="decibel-meter">
@@ -884,110 +464,45 @@ function Report(props) {
 										</p>
 									</div>
 								))}
-								{/* <p className="sound-int">
-									{window.fileAsObject.sonometro.valorDeMedicion}
-								</p>
-								<p className="sound-int-eval">
-									{noiseEvaluator(
-										window.fileAsObject.sonometro.valorDeMedicion,
-										yearRectificatordb(),
-										tipo
-									)}
-								</p> */}
 							</div>
-							<div className="gases">
-								{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
-								-1 ? (
-									<>
-										{autoReportArray.carbonMonoxide.map((item, i) => (
-											<div key={i}>
-												<p className={item.class}>{item.ruta}</p>
-												<p className={item.classEval}>
-													{COEvaluator(item.ruta, yearRectificatorGas())}
-												</p>
-											</div>
-										))}
-										{/* <p className="CO">
-											{
-												window.fileAsObject.analizadorDeGases
-													.resultadoMonoxidoDeCarbonoCO
-											}
-										</p>
-										<p className="CO-eval">
-											{COEvaluator(
-												window.fileAsObject.analizadorDeGases
-													.resultadoMonoxidoDeCarbonoCO,
-												yearRectificatorGas()
-											)}
-										</p> */}
-										{autoReportArray.hydroCarbon.map((item, i) => (
-											<div key={i}>
-												<p className={item.class}>{item.ruta}</p>
-												<p className={item.classEval}>
-													{HCEvaluator(item.ruta, yearRectificatorGas())}
-												</p>
-											</div>
-										))}
-										{/* <p className="HCC">
-											{
-												window.fileAsObject.analizadorDeGases
-													.resultadoPartesPorMillonHC
-											}
-										</p>
-										<p className="HCC-eval">
-											{HCEvaluator(
-												window.fileAsObject.analizadorDeGases
-													.resultadoPartesPorMillonHC,
-												yearRectificatorGas()
-											)}
-										</p> */}
-										{autoReportArray.nitrogenOxides.map((item, i) => (
-											<div key={i}>
-												<p className={item.class}>{item.ruta}</p>
-												<p className={item.classEval}>{item.ruta}</p>
-											</div>
-										))}
-										{/* <p className="Nox">
-											{
-												window.fileAsObject.analizadorDeGases
-													.resultadoPartesPorMillonNox
-											}
-										</p>
-										<p className="Nox-eval"></p> */}
-									</>
-								) : (
-									<p></p>
-								)}
-							</div>
-							<div className="opacimeter">
-								{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
-								-1 ? (
-									<>
-										<p></p>
-									</>
-								) : (
-									<>
-										{autoReportArray.opacity.map((item, i) => (
-											<div key={i}>
-												<p className={item.class}>{item.ruta}</p>
-												<p className={item.classEval}>
-													{majorOrEqual(item.ruta, 'opacity')}
-												</p>
-											</div>
-										))}
-										{/* <p className="opacity">
-											{window.fileAsObject.opacimetro.resultadoMedicionOpacidad}
-										</p>
-										<p className="opacity-eval">
-											{majorOrEqual(
-												window.fileAsObject.opacimetro
-													.resultadoMedicionOpacidad,
-												'opacity'
-											)}
-										</p> */}
-									</>
-								)}
-							</div>
+							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
+							-1 ? (
+								<div className="gases">
+									{autoReportArray.carbonMonoxide.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{COEvaluator(item.ruta, yearRectificatorGas())}
+											</p>
+										</div>
+									))}
+									{autoReportArray.hydroCarbon.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{HCEvaluator(item.ruta, yearRectificatorGas())}
+											</p>
+										</div>
+									))}
+									{autoReportArray.nitrogenOxides.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>{item.ruta}</p>
+										</div>
+									))}
+								</div>
+							) : (
+								<div className="opacimeter">
+									{autoReportArray.opacity.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'opacity')}
+											</p>
+										</div>
+									))}
+								</div>
+							)}
 							<div className="date">
 								<p className="start-date">
 									{startDate.getDate() +
