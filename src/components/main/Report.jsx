@@ -28,7 +28,6 @@ function Report(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
-		txtRender,
 		handleTxtRender,
 		reportArray,
 		engineType,
@@ -76,7 +75,7 @@ function Report(props) {
 	const majorOrEqArray = new Map([
 		['brakeDif', [50, 15, 12]],
 		['brakeResist', [2, 1, 0.5]],
-		['brakeOval', [80, 30, 16]],
+		['brakeOval', [80, 50, 16]],
 		['luxLow', [200, 27, 26]],
 		['luxHigh', [200, 150, 65]],
 		['luxAng', [15, 7, 5]],
@@ -214,6 +213,7 @@ function Report(props) {
 					return majorOrEqual(txtProp, 'noiseAutoMotoViejo');
 				case 2:
 					return majorOrEqual(txtProp, 'noiseAutoMotoNuevo');
+				default:
 			}
 		} else if (tipo === 'Camion') {
 			switch (caseNumber) {
@@ -290,6 +290,7 @@ function Report(props) {
 				return majorOrEqual(txtProp, 'HC-4T');
 			case '2T':
 				return majorOrEqual(txtProp, 'HC-2T');
+			default:
 		}
 	}
 
@@ -351,7 +352,7 @@ function Report(props) {
 					Choose images to upload (PNG, JPG)
 				</label>
 				<input
-				ref={loadImgRef}
+					ref={loadImgRef}
 					type="file"
 					id="image_uploads"
 					name="image_uploads"
@@ -366,7 +367,7 @@ function Report(props) {
 						src={reportImgSelector(tipo)}
 						alt="Imagen molde del informe"
 					/>
-					<img className='car-photo' src={imgUpload} alt="Foto del vehiculo" />
+					<img className="car-photo" src={imgUpload} alt="Foto del vehiculo" />
 					{reportArray === '' ? (
 						''
 					) : tipo !== 'Moto' ? (
