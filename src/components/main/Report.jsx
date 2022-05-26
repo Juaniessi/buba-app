@@ -34,6 +34,7 @@ function Report(props) {
 		imgUpload,
 		onImageChange,
 		loadImgRef,
+		severityOrder,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -333,6 +334,7 @@ function Report(props) {
 		}
 		return dueDate;
 	}
+
 	return (
 		<>
 			<div className="btn-input-txt">
@@ -365,7 +367,7 @@ function Report(props) {
 					<img
 						className="report-img"
 						src={reportImgSelector(tipo)}
-						alt="Imagen molde del informe"
+						alt="Report background image"
 					/>
 					<img className="car-photo" src={imgUpload} alt="Foto del vehiculo" />
 					{reportArray === '' ? (
@@ -730,6 +732,9 @@ function Report(props) {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
+					severeFlag={severeFlag}
+					moderateFlag={moderateFlag}
+					severityOrder={severityOrder}
 				/>
 			</section>
 		</>

@@ -23,6 +23,9 @@ function DefectList(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		severeFlag,
+		moderateFlag,
+		severityOrder,
 	} = props;
 
 	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
@@ -33,27 +36,21 @@ function DefectList(props) {
 			: []; //esta varibale almacena el array de descripción a mapear
 	let severityColour; //esta varaible me da el color de la severidad
 
+	/**
+	 * added severeFlag and moderate flag in order to rerender the Date.
+	 * @param {*} e
+	 * @returns
+	 */
+
 	let armarLista = (e) => {
 		e.preventDefault(); // va con esto para que el submit no borre todo, porque esta dentro de la etiqueta form
-		let sevOrder = 2; //variable creada para poder ordenar por severidad
-
-		switch (severidad) {
-			case 'Leve':
-				sevOrder = 3;
-				break;
-			case 'Grave':
-				sevOrder = 1;
-				break;
-			default:
-				sevOrder = 2; //este es el caso de moderado, que de paso esta seteado al comienzo
-		}
 
 		let itemLista = {
 			grupo: grupo.label,
 			seccion: seccion.label,
 			desc: seccion.value === 'otro' ? unlistedDef : descripcion.label,
 			sev: severidad.value,
-			Ord: sevOrder,
+			Ord: severidad.order,
 		};
 
 		if (
@@ -63,11 +60,16 @@ function DefectList(props) {
 			(unlistedDef !== '' || descripcion.value !== '')
 		) {
 			setLista(lista.concat(itemLista));
-			setSeveridad({value: 'Moderado', label: 'Moderado'});
+			setSeveridad({value: 'Moderado', label: 'Moderado', order: 2});
 			setGrupo({value: '', label: ''});
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
 			setUnlistedDef('');
+			if (severidad.value === 'Moderado') {
+				moderateFlag.current++;
+			} else if (severidad.value === 'Grave') {
+				severeFlag.current++;
+			}
 		} else {
 			alert('Todos los campos deben estar completos');
 		}
@@ -105,6 +107,7 @@ function DefectList(props) {
 			default:
 				severityColour = '';
 		}
+		console.log(lista);
 
 		return (
 			<tr className={`item-lista`} key={i}>
@@ -138,7 +141,7 @@ function DefectList(props) {
 				<tbody>
 					{lista
 						.sort(function (a, b) {
-							if (a.Ord !== b.Ord) return a.Ord - b.Ord;
+							if (a.Ord !== b.Ord) return b.Ord - a.Ord;
 							if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
 							if (a.seccion !== b.seccion)
 								return a.seccion > b.seccion ? 1 : -1;

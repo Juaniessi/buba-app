@@ -10,7 +10,7 @@ import {
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (item) => {
-		setSeveridad({value: 'Moderado', label: 'Moderado'});
+		setSeveridad({value: 'Moderado', label: 'Moderado', order: 2});
 		setTipo(item.value);
 		setGrupo({value: '', label: ''});
 		setSeccion({value: '', label: ''});
@@ -20,10 +20,15 @@ function Main() {
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		setImgUpload(null);
+		severeFlag.current = 0;
+		moderateFlag.current = 0;
+		loadFileRef.current.value = null;
+		loadImgRef.current.files = [];
 	};
 	const [severidad, setSeveridad] = useState({
 		value: 'Moderado',
 		label: 'Moderado',
+		order: 2,
 	});
 	const handleSeveridad = (item) => {
 		setSeveridad(item);
@@ -62,13 +67,9 @@ function Main() {
 			} else {
 				setReportArray(autoReportArrayFiller());
 			}
-			loadFileRef.current.value = null;
-			loadImgRef.current.value = null;
-			severeFlag.current = 0;
-			moderateFlag.current = 0;
 		}, 90);
 	};
-	/*autoReportArray stores the object that needs to be read in order to create the Report */
+	/*reportArray stores the object that needs to be read in order to create the Report */
 	const [reportArray, setReportArray] = useState('');
 
 	const [engineType, setEngineType] = useState({
@@ -77,7 +78,7 @@ function Main() {
 	});
 
 	const [imgUpload, setImgUpload] = useState(null);
-
+	
 	/**
 	 * this function takes the img and creates an URL you can use as a src=""
 	 * @param {*} event the uploadesd image.
@@ -95,7 +96,7 @@ function Main() {
 	 */
 
 	const loadFileRef = useRef(null);
-	const loadImgRef = useRef(null);
+	const loadImgRef = useRef([]);
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
 

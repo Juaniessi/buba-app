@@ -1,8 +1,13 @@
-let ReportArray;
+let reportArray;
 
+/**
+ * Uses the object to create the structure to be read by the maps that fill
+ * the HTML structure from "Report"
+ * @returns
+ */
 function autoReportArrayFiller() {
 	if (window.fileAsObject !== '') {
-		ReportArray = {
+		reportArray = {
 			headerInfo: [
 				{
 					ruta: window.fileAsObject.header.patente,
@@ -291,12 +296,12 @@ function autoReportArrayFiller() {
 			],
 		};
 	}
-	return ReportArray;
+	return reportArray;
 }
 
 function motoReportArrayFiller() {
 	if (window.fileAsObject !== '') {
-		ReportArray = {
+		reportArray = {
 			headerInfo: [
 				{
 					ruta: window.fileAsObject.header.patente,
@@ -453,7 +458,7 @@ function motoReportArrayFiller() {
 			],
 		};
 	}
-	return ReportArray;
+	return reportArray;
 }
 
 export {autoReportArrayFiller, motoReportArrayFiller};
