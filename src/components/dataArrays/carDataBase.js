@@ -1,3 +1,6 @@
+/**
+ * Stores the data base for the car defect list
+ */
 const autoArray = {
 	grupo: [
 		{

@@ -337,23 +337,26 @@ function Report(props) {
 
 	return (
 		<>
-			<div className="btn-input-txt">
-				<label htmlFor="file-input" id="file-input-label">
+			<div className="btn-txt-render-container">
+				<label htmlFor="file-input" id="file-input-label" className="txt-label">
 					Seleccione archivo a procesar:
 				</label>
 				<input
+					className="btn-txt-input"
 					ref={loadFileRef}
 					type="file"
 					id="file-input"
+					name="file-input"
 					accept="text/plain"
 					onChange={handleTxtRender}
 				/>
 			</div>
-			<div>
-				<label htmlFor="image_uploads">
-					Choose images to upload (PNG, JPG)
+			<div className="btn-txt-render-container">
+				<label htmlFor="image_uploads" className="txt-label">
+					Seleccione la foto del vehículo:
 				</label>
 				<input
+					className="btn-txt-input"
 					ref={loadImgRef}
 					type="file"
 					id="image_uploads"
