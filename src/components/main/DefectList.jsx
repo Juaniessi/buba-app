@@ -25,7 +25,6 @@ function DefectList(props) {
 		setLista,
 		severeFlag,
 		moderateFlag,
-		severityOrder,
 	} = props;
 
 	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
@@ -80,6 +79,11 @@ function DefectList(props) {
 	//funcion que borra un item de la lista
 	function eraseDefect(index) {
 		const nuevaLista = lista.filter((algo, i) => {
+			if (lista[i].sev === 'Moderado') {
+				moderateFlag.current--;
+			} else if (lista[i].sev === 'Grave') {
+				severeFlag.current--;
+			}
 			/* "algo" es para decirle al filter que tome las props
 			 y despues "i" que es el índice */
 			return index !== i ? true : false;
@@ -107,7 +111,6 @@ function DefectList(props) {
 			default:
 				severityColour = '';
 		}
-		console.log(lista);
 
 		return (
 			<tr className={`item-lista`} key={i}>

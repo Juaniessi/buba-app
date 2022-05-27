@@ -5,6 +5,8 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
+import fileArrow from "../../assets/file-arrow-up-solid.svg";
+import fileImage from "../../assets/file-image-solid.svg";
 
 function Report(props) {
 	const {
@@ -107,11 +109,11 @@ function Report(props) {
 		if (txtProp <= params[0]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
-			severeFlag.current++;
+			++severeFlag.current;
 		} else if (txtProp <= params[1]) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-			moderateFlag.current++;
+			++moderateFlag.current;
 		} else if (txtProp <= params[2]) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -134,11 +136,11 @@ function Report(props) {
 		if (txtProp >= params[0]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
-			severeFlag.current++;
+			++severeFlag.current;
 		} else if (txtProp >= params[1]) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-			moderateFlag.current++;
+			++moderateFlag.current;
 		} else if (txtProp >= params[2]) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -161,11 +163,11 @@ function Report(props) {
 		if (alineation <= -10 || alineation >= 10) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
-			severeFlag.current++;
+			++severeFlag.current;
 		} else if (alineation <= -5 || alineation >= 5) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-			moderateFlag.current++;
+			++moderateFlag.current;
 		} else if (alineation <= -3 || alineation >= 3) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -356,7 +358,7 @@ function Report(props) {
 					Seleccione la foto del vehículo:
 				</label>
 				<input
-					className="btn-txt-input"
+					className="btn-img-input"
 					ref={loadImgRef}
 					type="file"
 					id="image_uploads"

@@ -17,14 +17,15 @@ function Main() {
 		setDescripcion({value: '', label: ''});
 		setLista([]);
 		setTxtRender('');
+		setImgUpload('');
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		severeFlag.current = 0;
 		moderateFlag.current = 0;
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
-		setImgUpload('');
 	};
+
 	const [severidad, setSeveridad] = useState({
 		value: 'Moderado',
 		label: 'Moderado',
@@ -57,15 +58,17 @@ function Main() {
 	 * @function reportArrayFiller called to fill the object in order to read ir latter.
 	 */
 	const handleTxtRender = (e) => {
+		
+		severeFlag.current = 0;
+		moderateFlag.current = 0;
+		setLista([]);
+
 		procesTxt(e);
-		setTimeout(function () {
-			severeFlag.current = 0;
-			moderateFlag.current = 0;
-			setLista([]);
-		}, 10);
+
 		setTimeout(function () {
 			setTxtRender(window.fileAsObject);
 		}, 60);
+
 		setTimeout(function () {
 			if (tipo === 'Moto') {
 				setReportArray(motoReportArrayFiller());
@@ -106,8 +109,14 @@ function Main() {
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
 
+	function consoleAnalizer() {
+		console.log(moderateFlag.current);
+		console.log(severeFlag.current);
+	}
+
 	return (
 		<main>
+			<button onClick={consoleAnalizer}>analizar consola</button>
 			<form className="form-radio">
 				<h2>Tipo de vehículo</h2>
 				<div className="btn-package type-c">
