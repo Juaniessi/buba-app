@@ -141,7 +141,7 @@ td {
 
 .engine-type {
 	background-color: darkgray;
-	color:white;
+	color: white;
 	width: max-content;
 	border-radius: 5px;
 }
@@ -155,4 +155,20 @@ td {
 
 .black {
 	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.date-calc {
+	.btn-inside {
+		border-radius: 3px;
+		padding: 2px;
+	}
+	.Condicional {
+		background-color: rgba(255, 100, 0, 0.5);
+	}
+	.Rechazado {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+	.Apto {
+		background-color: rgba(81, 209, 246, 0.5);
+	}
 }

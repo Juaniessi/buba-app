@@ -5,8 +5,8 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
-import fileArrow from "../../assets/file-arrow-up-solid.svg";
-import fileImage from "../../assets/file-image-solid.svg";
+import fileArrow from '../../assets/file-arrow-up-solid.svg';
+import fileImage from '../../assets/file-image-solid.svg';
 
 function Report(props) {
 	const {
@@ -37,6 +37,7 @@ function Report(props) {
 		onImageChange,
 		loadImgRef,
 		severityOrder,
+		dateCalcBtn,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -327,14 +328,36 @@ function Report(props) {
 	function dueDateCalculator() {
 		let dueDate = new Date(startDate.getTime());
 
-		if (severeFlag.current > 0) {
+		if (dateCalcBtn.value === "Rechazado") {
 			dueDate = addDays(startDate, 0);
-		} else if (moderateFlag.current > 0) {
+		} else if (dateCalcBtn.value === "Condicional") {
 			dueDate = addDays(startDate, 60);
-		} else {
+		} else if(dateCalcBtn.value === "Apto"){
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
 		}
 		return dueDate;
+	}
+
+	function dateStamper() {
+		
+		return (
+			<div className="date">
+				<p className="start-date">
+					{startDate.getDate() +
+						'/' +
+						(startDate.getMonth() + 1) +
+						'/' +
+						startDate.getFullYear()}
+				</p>
+				<p className="end-date">
+					{dueDateCalculator().getDate() +
+						'/' +
+						(dueDateCalculator().getMonth() + 1) +
+						'/' +
+						dueDateCalculator().getFullYear()}
+				</p>
+			</div>
+		);
 	}
 
 	return (
@@ -372,7 +395,7 @@ function Report(props) {
 					<img
 						className="report-img"
 						src={reportImgSelector(tipo)}
-						alt="Report background image"
+						alt="Report background mold"
 					/>
 					<img className="car-photo" src={imgUpload} alt="Foto del vehiculo" />
 					{reportArray === '' ? (
@@ -552,7 +575,7 @@ function Report(props) {
 								</div>
 							)}
 							<div className="date">
-								<p className="start-date">
+								{/* <p className="start-date">
 									{startDate.getDate() +
 										'/' +
 										(startDate.getMonth() + 1) +
@@ -565,7 +588,8 @@ function Report(props) {
 										(dueDateCalculator().getMonth() + 1) +
 										'/' +
 										dueDateCalculator().getFullYear()}
-								</p>
+								</p> */}
+								{dateStamper()}
 							</div>
 						</article>
 					) : (
@@ -701,7 +725,7 @@ function Report(props) {
 								))} */}
 							</div>
 							<div className="date">
-								<p className="start-date">
+								{/* <p className="start-date">
 									{startDate.getDate() +
 										'/' +
 										(startDate.getMonth() + 1) +
@@ -714,7 +738,8 @@ function Report(props) {
 										(dueDateCalculator().getMonth() + 1) +
 										'/' +
 										dueDateCalculator().getFullYear()}
-								</p>
+								</p> */}
+								{dateStamper()}
 							</div>
 						</article>
 					)}

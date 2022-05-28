@@ -20,6 +20,7 @@ function Main() {
 		setImgUpload('');
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
+		setDateCalcBtn({value: 'Apto', label: 'Apto'});
 		severeFlag.current = 0;
 		moderateFlag.current = 0;
 		loadFileRef.current.value = null;
@@ -58,11 +59,9 @@ function Main() {
 	 * @function reportArrayFiller called to fill the object in order to read ir latter.
 	 */
 	const handleTxtRender = (e) => {
-		
+		setLista([]);
 		severeFlag.current = 0;
 		moderateFlag.current = 0;
-		setLista([]);
-
 		procesTxt(e);
 
 		setTimeout(function () {
@@ -75,7 +74,12 @@ function Main() {
 			} else {
 				setReportArray(autoReportArrayFiller());
 			}
-		}, 90);
+		}, 70);
+
+		setTimeout(function () {
+			severeFlag.current = 0;
+			moderateFlag.current = 0;
+		}, 80);
 	};
 	/*reportArray stores the object that needs to be read in order to create the Report */
 	const [reportArray, setReportArray] = useState('');
@@ -98,6 +102,11 @@ function Main() {
 		}
 	};
 
+	const [dateCalcBtn, setDateCalcBtn] = useState({value: 'Apto', label: 'Apto'});
+	const handleDateCalcBtn = (item) => {
+		setDateCalcBtn(item);
+	};
+
 	/**
 	 * loadFileRef and loadImgRef are used to clear the file between
 	 * rerenders so yo can actually chose the same file twice when you
@@ -109,14 +118,8 @@ function Main() {
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
 
-	function consoleAnalizer() {
-		console.log(moderateFlag.current);
-		console.log(severeFlag.current);
-	}
-
 	return (
 		<main>
-			<button onClick={consoleAnalizer}>analizar consola</button>
 			<form className="form-radio">
 				<h2>Tipo de vehículo</h2>
 				<div className="btn-package type-c">
@@ -153,6 +156,26 @@ function Main() {
 							: ''}
 					</div>
 				</div>
+				<h3>Calcular fecha</h3>
+				<div className="date-calc">
+					{radioGeneratorArray.dateCalc.map((item, i) => (
+						<label
+							className={`btn-inside ${item.value}`}
+							htmlFor={item.value}
+							key={i}>
+							<input
+								type="radio"
+								className={`btn-inside rad-c`}
+								name="dateCalcBtn"
+								id={item.value}
+								value={item.value}
+								checked={dateCalcBtn.value === item.value} //determina que visualmente se vea checked
+								onChange={() => handleDateCalcBtn(item)}
+							/>
+							{item.label}
+						</label>
+					))}
+				</div>
 			</form>
 			<section className="finalReport">
 				<Report
@@ -183,6 +206,7 @@ function Main() {
 					imgUpload={imgUpload}
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
+					dateCalcBtn={dateCalcBtn}
 				/>
 			</section>
 		</main>

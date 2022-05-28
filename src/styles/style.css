@@ -202,4 +202,21 @@ td {
 .black {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.date-calc .btn-inside {
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.date-calc .Condicional {
+  background-color: rgba(255, 100, 0, 0.5);
+}
+
+.date-calc .Rechazado {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.date-calc .Apto {
+  background-color: rgba(81, 209, 246, 0.5);
+}
 /*# sourceMappingURL=style.css.map */

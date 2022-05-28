@@ -48,6 +48,20 @@ const radioGeneratorArray = {
 			label: '2 Tiempos',
 		},
 	],
+	dateCalc: [
+		{
+			value: 'Apto',
+			label: 'Apto',
+		},
+		{
+			value: 'Condicional',
+			label: 'Condicional',
+		},
+		{
+			value: 'Rechazado',
+			label: 'Rechazado',
+		},
+	],
 };
 
 export {radioGeneratorArray};
