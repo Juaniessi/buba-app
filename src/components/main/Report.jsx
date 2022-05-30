@@ -67,25 +67,25 @@ function Report(props) {
 	 * @constant minorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorOrEqArray = new Map([
-		['susp', [10, 40, 60]],
-		['brakePerf', [10, 40, 50]],
+		['susp', [5, 40, 60]],
+		['brakePerf', [10, 40, 45]],
 		['handBrakePerf', [1, 14.4, 17]],
-		['brakeStrenght', [0.1, 0.3, 0.99]],
+		['brakeStrenght', [0.1, 0.3, 0.5]],
 	]);
 
 	/**
 	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const majorOrEqArray = new Map([
-		['brakeDif', [50, 15, 12]],
-		['brakeResist', [2, 1, 0.5]],
-		['brakeOval', [80, 50, 16]],
+		['brakeDif', [70, 15, 12]],
+		['brakeResist', [2, 1, 0.7]],
+		['brakeOval', [80, 50, 40]],
 		['luxLow', [200, 27, 26]],
 		['luxHigh', [200, 150, 65]],
 		['luxAng', [15, 7, 5]],
 		['opacity', [2, 0.25, 0.2]],
-		['HC<=1991', [2500, 900, 600]],
-		['HC<=1994', [2500, 600, 400]],
+		['HC<=1991', [2500, 900, 700]],
+		['HC<=1994', [2500, 600, 500]],
 		['HC>1994', [2500, 400, 300]],
 		['CO<=1991', [7, 4.5, 2.5]],
 		['CO<=1994', [5, 3, 2]],
@@ -96,7 +96,7 @@ function Report(props) {
 		['noiseCamionNuevo', [100, 87, 84]],
 		['HC-4T', [4000, 3000, 1500]],
 		['HC-2T', [12000, 9000, 4500]],
-		['CO-Moto', [8, 4.5, 2.5]],
+		['CO-Moto', [8, 4.5, 3.5]],
 	]);
 	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
 	 * @param {*} txtProp prop from object: fileAsObject.
