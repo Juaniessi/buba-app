@@ -27,22 +27,29 @@ function DefectList(props) {
 		moderateFlag,
 	} = props;
 
-	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray; //esta variable cambia entre los arrays de autos y motos
-	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : []; //esta variable almacena el array de seccion a mapear
+	/**
+	 * @param tipoArray swithces between the array of CAR and Moto.
+	 * @param section stores the array to be maped in the "section" submenu.
+	 * @param description stores the array to be maped in the "description" submenu.
+	 */
+	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
+	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
 	let description =
 		seccion.value !== '' && grupo.value !== ''
 			? tipoArray.descripciones[grupo.value][seccion.value] || []
-			: []; //esta varibale almacena el array de descripción a mapear
-	let severityColour; //esta varaible me da el color de la severidad
+			: [];
 
 	/**
-	 * added severeFlag and moderate flag in order to rerender the Date.
-	 * @param {*} e
-	 * @returns
+	 * added severeFlag and moderate flag in order to rerender the Date currently not working.
+	 * @param {*} e the event is the
+	 * @returns creates and sets the object "itemLista" in the array "lista" via setLista()
+	 * taking in cosideration some conditions and then refreshing the radio buttons.
+	 * *Also preventDefault() is used to prevent the submit button to erase everything
+	 * as it is inside a <Form>
 	 */
 
-	let armarLista = (e) => {
-		e.preventDefault(); // va con esto para que el submit no borre todo, porque esta dentro de la etiqueta form
+	let addToList = (e) => {
+		e.preventDefault();
 
 		let itemLista = {
 			grupo: grupo.label,
@@ -64,11 +71,11 @@ function DefectList(props) {
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
 			setUnlistedDef('');
-			if (severidad.value === 'Moderado') {
+			/* if (severidad.value === 'Moderado') {
 				moderateFlag.current++;
 			} else if (severidad.value === 'Grave') {
 				severeFlag.current++;
-			}
+			} */
 		} else {
 			alert('Todos los campos deben estar completos');
 		}
@@ -76,29 +83,40 @@ function DefectList(props) {
 		return;
 	};
 
-	//funcion que borra un item de la lista
+	/**
+	 * Erases items from the defect list. Creates nuevaLista and then filters it
+	 * recibing the "props" (we don´t use them, just need the param to be there
+	 * so ".filter" understands that "i" is the index),
+	 * and the index "i" in the array.
+	 * @param {*} index the list without the item choosen by index.
+	 */
+
 	function eraseDefect(index) {
-		const nuevaLista = lista.filter((algo, i) => {
-			if (lista[i].sev === 'Moderado') {
+		const nuevaLista = lista.filter((props, i) => {
+			/* 	if (lista[i].sev === 'Moderado') {
 				moderateFlag.current--;
 			} else if (lista[i].sev === 'Grave') {
 				severeFlag.current--;
-			}
-			/* "algo" es para decirle al filter que tome las props
-			 y despues "i" que es el índice */
+			} */
 			return index !== i ? true : false;
 		});
 		setLista(nuevaLista);
 	}
 
+	/**
+	 * Selects between the diferent styles to be added to each item and then creats the list.
+	 * *"seccion" is not being used because ther is no need to display it right now.
+	 * @param severityColour stores the clase to be added to the defect list item.
+	 * @param i the index value of the array.
+	 * @param props the values of the state variables to create the list.
+	 * @returns the HTML code with clases to be inserted.
+	 */
 	function defectList(props, i) {
 		/* no estoy usando seccion porque de momento no lo quiero en el render, 
 		pero lo dejo por si algún día pinta que aparezca */
 		const {grupo, seccion, desc, sev} = props;
-
-		switch (
-			sev //cambia entre las clases de los posibles colores según la severidad
-		) {
+		let severityColour;
+		switch (sev) {
 			case 'Leve':
 				severityColour = 'yellow';
 				break;
@@ -149,7 +167,7 @@ function DefectList(props) {
 							if (a.seccion !== b.seccion)
 								return a.seccion > b.seccion ? 1 : -1;
 							return a.desc > b.desc ? 1 : -1;
-						}) //uso operadores ternarios para devolver números y no comparar longitudes de strings
+						}) //tertiary operators used to compare numbers instead of string lenght
 						.map(defectList)}
 				</tbody>
 			</table>
@@ -164,7 +182,7 @@ function DefectList(props) {
 								name="severity"
 								id={item.value}
 								value={item.value}
-								checked={severidad.value === item.value} //determina que visualmente se vea checked
+								checked={severidad.value === item.value} //determines visual efect of checked
 								onChange={() => handleSeveridad(item)}
 							/>
 							{item.label}
@@ -215,7 +233,7 @@ function DefectList(props) {
 									{item.label}
 								</label>
 							))}
-						{grupo.value.length > 0 && ( //esta primera línea hace que se renderice solo si encuentra algo en el array de grupo
+						{grupo.value.length > 0 && (
 							<label className="btn-inside" htmlFor="otro">
 								<input
 									type="radio"
@@ -269,7 +287,7 @@ function DefectList(props) {
 						onChange={(e) => setUnlistedDef(e.target.value)}></textarea>
 				</div>
 				<div className="div-btn">
-					<button className="send-btn" onClick={armarLista}>
+					<button className="send-btn" onClick={addToList}>
 						Agregar a la lista
 					</button>
 				</div>

@@ -268,7 +268,7 @@ function Report(props) {
 		}
 	}
 
-	/**  function to evaluate if HC ppm are ok, the same function is used for CO.
+	/**  function to evaluate if the HC ppm on CARS are ok, simliar function is used for CO.
 	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
 	 * bacause you need another more parameter to compare.
 	 * @param {*} txtProp prop from object: fileAsObject.
@@ -287,6 +287,13 @@ function Report(props) {
 		}
 	}
 
+	/**  function to evaluate if the CO emisions are OK, for bouth CAR and MOTO.
+	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
+	 * bacause you need another more parameter to compare.
+	 * @param {*} txtProp prop from object: fileAsObject.
+	 * @param {*} caseNumber value extracted from yearRectificatorGas.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
+	 */
 	function COEvaluator(txtProp, caseNumber) {
 		switch (caseNumber) {
 			case 1:
@@ -299,6 +306,13 @@ function Report(props) {
 		}
 	}
 
+	/**  function to evaluate if the HC ppm on motos are ok.
+	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
+	 * bacause you need another more parameter to compare.
+	 * @param {*} txtProp prop from object: fileAsObject.
+	 * @param {*} caseNumber value extracted from yearRectificatorGas.
+	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
+	 */
 	function HCEvaluatorMoto(txtProp, engineType) {
 		switch (engineType) {
 			case '4T':
@@ -310,10 +324,10 @@ function Report(props) {
 	}
 
 	/**
-	 * @params {*} startDate given the case that "fechaDeSalidaDelPuesto2" does not exist,
+	 * @param {*} startDate given the case that "fechaDeSalidaDelPuesto2" does not exist,
 	 * like in the txt of Motocicles, fechaDeSalidaDelPuesto2 = fechaDeSalidaDelPuesto1
 	 * and fechaDeIngresoAlPuesto2 = fechaDeIngresoAlPuesto1,
-	 * this is all solved in the "fileAnalizer".
+	 * this is all solved in the "fileAnalizer.js".
 	 */
 	let startDate =
 		window.fileAsObject === undefined
@@ -349,7 +363,7 @@ function Report(props) {
 		return dueDate;
 	}
 	/**
-	 * calulates and arranges the date in a legible way.
+	 * calulates the "due date" and arranges bouth dates in a legible way.
 	 * @returns the HTML code with the date embeded and the clases to position it.
 	 */
 	function dateStamper() {

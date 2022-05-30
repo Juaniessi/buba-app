@@ -81,9 +81,15 @@ function Main() {
 			moderateFlag.current = 0;
 		}, 80);
 	};
-	/*reportArray stores the object that needs to be read in order to create the Report */
+
+	/*
+	 *reportArray stores the object that needs to be read in order to create the Report
+	 */
 	const [reportArray, setReportArray] = useState('');
 
+	/**
+	 * created to manage multi motor types in MOTO.
+	 */
 	const [engineType, setEngineType] = useState({
 		value: '4T',
 		label: '4 Tiempos',
@@ -102,7 +108,14 @@ function Main() {
 		}
 	};
 
-	const [dateCalcBtn, setDateCalcBtn] = useState({value: 'Apto', label: 'Apto'});
+	/**
+	 * created to handle the button while an automated function for dates
+	 * is in progress.
+	 */
+	const [dateCalcBtn, setDateCalcBtn] = useState({
+		value: 'Apto',
+		label: 'Apto',
+	});
 	const handleDateCalcBtn = (item) => {
 		setDateCalcBtn(item);
 	};
@@ -115,6 +128,11 @@ function Main() {
 
 	const loadFileRef = useRef(null);
 	const loadImgRef = useRef([]);
+
+	/**
+	 * severeFlag and moderateFlag are currently not being used.
+	 */
+
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
 
