@@ -339,6 +339,7 @@ function Report(props) {
 	}
 
 	function dateStamper() {
+		const dueDate = dueDateCalculator();
 		return (
 			<div className="date">
 				<p className="start-date">
@@ -349,11 +350,11 @@ function Report(props) {
 						startDate.getFullYear()}
 				</p>
 				<p className="end-date">
-					{dueDateCalculator().getDate() +
+					{dueDate.getDate() +
 						'/' +
-						dueDateCalculator().getMonth() +
+						dueDate.getMonth() +
 						'/' +
-						dueDateCalculator().getFullYear()}
+						dueDate.getFullYear()}
 				</p>
 			</div>
 		);
