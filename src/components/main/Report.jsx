@@ -328,31 +328,30 @@ function Report(props) {
 	function dueDateCalculator() {
 		let dueDate = new Date(startDate.getTime());
 
-		if (dateCalcBtn.value === "Rechazado") {
+		if (dateCalcBtn.value === 'Rechazado') {
 			dueDate = addDays(startDate, 0);
-		} else if (dateCalcBtn.value === "Condicional") {
+		} else if (dateCalcBtn.value === 'Condicional') {
 			dueDate = addDays(startDate, 60);
-		} else if(dateCalcBtn.value === "Apto"){
+		} else if (dateCalcBtn.value === 'Apto') {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
 		}
 		return dueDate;
 	}
 
 	function dateStamper() {
-		
 		return (
 			<div className="date">
 				<p className="start-date">
 					{startDate.getDate() +
 						'/' +
-						(startDate.getMonth() + 1) +
+						startDate.getMonth() +
 						'/' +
 						startDate.getFullYear()}
 				</p>
 				<p className="end-date">
 					{dueDateCalculator().getDate() +
 						'/' +
-						(dueDateCalculator().getMonth() + 1) +
+						dueDateCalculator().getMonth() +
 						'/' +
 						dueDateCalculator().getFullYear()}
 				</p>
