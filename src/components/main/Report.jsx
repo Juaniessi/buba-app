@@ -67,7 +67,7 @@ function Report(props) {
 	 * @constant minorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorOrEqArray = new Map([
-		['brakePerf', [10, 40, 45]],
+		['brakePerf', [10, 40, 48]],
 		['handBrakePerf', [1, 14.4, 17]],
 		['brakeStrenght', [0.1, 0.3, 0.5]],
 	]);
