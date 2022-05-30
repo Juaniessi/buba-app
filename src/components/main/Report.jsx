@@ -67,7 +67,6 @@ function Report(props) {
 	 * @constant minorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorOrEqArray = new Map([
-		['susp', [5, 40, 60]],
 		['brakePerf', [10, 40, 45]],
 		['handBrakePerf', [1, 14.4, 17]],
 		['brakeStrenght', [0.1, 0.3, 0.5]],
@@ -98,6 +97,15 @@ function Report(props) {
 		['HC-2T', [12000, 9000, 4500]],
 		['CO-Moto', [8, 4.5, 3.5]],
 	]);
+
+	/**
+	 * @constant minorAndMajorOrEqArray is a MAP containing the key and values to generate the evaluation.
+	 */
+	const minorAndMajorOrEqArray = new Map([
+		['susp', [10, 98.5, 39.9, 101, 45, 102]],
+		['alin', [-26, 26, -5, 5, -4, 4]],
+	]);
+
 	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
 	 * @param {*} txtProp prop from object: fileAsObject.
 	 * @param {*} paramSelector value extracted from minorOrEqArray via get() method from maps.
@@ -153,29 +161,32 @@ function Report(props) {
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
-	/**  function to evaluate if alineation is ok, the same function is used for most evaluations.
-	 * @param {*} alineation prop from object: fileAsObject.
+	/**  function to evaluate txt properties when the comparisson is <= and >=. It also handles the severity flags.
+	 * @param {*} txtProp prop from object: fileAsObject.
+	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 
-	function alineationEvaluator(alineation) {
+	function minorAndMajorOrEqual(txtProp, paramSelector) {
+		let params = minorAndMajorOrEqArray.get(paramSelector);
 		let severityEvaluation = '';
 		let severityLetter = '';
-		if (alineation <= -10 || alineation >= 10) {
+		if (txtProp <= params[0] || txtProp >= params[1]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
 			++severeFlag.current;
-		} else if (alineation <= -5 || alineation >= 5) {
+		} else if (txtProp <= params[2] || txtProp >= params[3]) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
 			++moderateFlag.current;
-		} else if (alineation <= -3 || alineation >= 3) {
+		} else if (txtProp <= params[4] || txtProp >= params[5]) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
 		} else {
 			severityEvaluation = '';
 			severityLetter = 'A';
 		}
+
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
@@ -337,7 +348,10 @@ function Report(props) {
 		}
 		return dueDate;
 	}
-
+	/**
+	 * calulates and arranges the date in a legible way.
+	 * @returns the HTML code with the date embeded and the clases to position it.
+	 */
 	function dateStamper() {
 		const dueDate = dueDateCalculator();
 		return (
@@ -414,7 +428,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{alineationEvaluator(item.ruta)}
+											{minorAndMajorOrEqual(item.ruta, 'alin')}
 										</p>
 									</div>
 								))}
@@ -431,7 +445,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorOrEqual(item.ruta, 'susp')}
+											{minorAndMajorOrEqual(item.ruta, 'susp')}
 										</p>
 									</div>
 								))}
@@ -613,7 +627,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorOrEqual(item.ruta, 'susp')}
+											{minorAndMajorOrEqual(item.ruta, 'susp')}
 										</p>
 									</div>
 								))}
