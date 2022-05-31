@@ -7,11 +7,11 @@
 		width: 600px;
 		z-index: -1;
 	}
-	.car-photo{
+	.car-photo {
 		position: absolute;
 		width: 162px;
-		top:23px;
-		left:423px;
+		top: 23px;
+		left: 423px;
 	}
 
 	p {
@@ -443,8 +443,15 @@
 	.minor {
 		background-color: rgba(255, 240, 0, 0.5);
 	}
+	.result-rto {
+		top: 210px;
+		left: 20px;
+		border-radius: 3px;
+		padding: 3px;
+		font-size: 0.8rem;
+		font-weight: bold;
+	}	
 }
 
-.btn-img-input{
-	
+.btn-img-input {
 }

@@ -140,7 +140,7 @@ td {
 }
 
 .lista-final .item-lista {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   height: 16px;
 }
 
@@ -212,15 +212,15 @@ td {
   padding: 2px;
 }
 
-.date-calc .Condicional {
+.Condicional {
   background-color: rgba(255, 100, 0, 0.5);
 }
 
-.date-calc .Rechazado {
+.Rechazado {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.date-calc .Apto {
+.Apto {
   background-color: rgba(81, 209, 246, 0.5);
 }
 /*# sourceMappingURL=style.css.map */

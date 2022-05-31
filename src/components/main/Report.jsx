@@ -772,6 +772,7 @@ function Report(props) {
 						</article>
 					)}
 				</>
+				<p className={`result-rto ${dateCalcBtn.value}`}>Resultado RTO: {dateCalcBtn.label}</p>
 				<DefectList
 					tipo={tipo}
 					severidad={severidad}

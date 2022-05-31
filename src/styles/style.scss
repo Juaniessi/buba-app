@@ -103,7 +103,7 @@ td {
 		font-size: 0.8rem;
 	}
 	.item-lista {
-		font-size: 0.65rem;
+		font-size: 0.55rem;
 		height: 16px;
 	}
 	.grupo-col {
@@ -158,18 +158,19 @@ td {
 }
 
 .date-calc {
-	margin:0.5rem;
+	margin: 0.5rem;
 	.btn-inside {
 		border-radius: 3px;
 		padding: 2px;
 	}
-	.Condicional {
-		background-color: rgba(255, 100, 0, 0.5);
-	}
-	.Rechazado {
-		background-color: rgba(0, 0, 0, 0.3);
-	}
-	.Apto {
-		background-color: rgba(81, 209, 246, 0.5);
-	}
+}
+
+.Condicional {
+	background-color: rgba(255, 100, 0, 0.5);
+}
+.Rechazado {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.Apto {
+	background-color: rgba(81, 209, 246, 0.5);
 }

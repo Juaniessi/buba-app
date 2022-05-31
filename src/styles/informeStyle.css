@@ -515,4 +515,13 @@
 .finalReport .minor {
   background-color: rgba(255, 240, 0, 0.5);
 }
+
+.finalReport .result-rto {
+  top: 210px;
+  left: 20px;
+  border-radius: 3px;
+  padding: 3px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
 /*# sourceMappingURL=informeStyle.css.map */
