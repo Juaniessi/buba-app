@@ -1224,6 +1224,11 @@ function getDatesFromString(value) {
   let time;
   let resultDate;
 
+  if (value.length === 16) {
+    date = value.substring(0, 8);
+    time = value.substring(8, 16);
+  }
+
   if (value.length === 17) {
     date = value.substring(0, 9);
     time = value.substring(9, 17);
