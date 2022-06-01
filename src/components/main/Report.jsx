@@ -5,6 +5,7 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
+import printSolid from '../../assets/print-solid.svg';
 import fileArrow from '../../assets/file-arrow-up-solid.svg';
 import fileImage from '../../assets/file-image-solid.svg';
 
@@ -389,37 +390,50 @@ function Report(props) {
 		);
 	}
 
+	const printPage = () => {
+		window.print();
+		return false;
+	};
+
 	return (
 		<>
-			<div className="btn-txt-render-container">
-				<label htmlFor="file-input" id="file-input-label" className="txt-label">
-					Seleccione archivo a procesar:
-				</label>
-				<input
-					className="btn-txt-input"
-					ref={loadFileRef}
-					type="file"
-					id="file-input"
-					name="file-input"
-					accept="text/plain"
-					onChange={handleTxtRender}
-				/>
+			<div className='insert-btn-cont'>
+				<div className="btn-txt-render-container">
+					<label
+						htmlFor="file-input"
+						id="file-input-label"
+						className="txt-label">
+						Seleccione archivo a procesar:
+					</label>
+					<input
+						className="btn-txt-input"
+						ref={loadFileRef}
+						type="file"
+						id="file-input"
+						name="file-input"
+						accept="text/plain"
+						onChange={handleTxtRender}
+					/>
+				</div>
+				<div className="btn-txt-render-container">
+					<label htmlFor="image_uploads" className="txt-label">
+						Seleccione la foto del vehículo:
+					</label>
+					<input
+						className="btn-img-input"
+						ref={loadImgRef}
+						type="file"
+						id="image_uploads"
+						name="image_uploads"
+						accept=".jpg, .jpeg, .png"
+						onChange={onImageChange}
+					/>
+				</div>
+				<button className="print-btn" onClick={printPage}>
+					<img src={printSolid} alt="" />
+				</button>
 			</div>
-			<div className="btn-txt-render-container">
-				<label htmlFor="image_uploads" className="txt-label">
-					Seleccione la foto del vehículo:
-				</label>
-				<input
-					className="btn-img-input"
-					ref={loadImgRef}
-					type="file"
-					id="image_uploads"
-					name="image_uploads"
-					accept=".jpg, .jpeg, .png"
-					onChange={onImageChange}
-				/>
-			</div>
-			<section className="finalReport">
+			<section className="finalReport print">
 				<>
 					<img
 						className="report-img"
@@ -603,23 +617,7 @@ function Report(props) {
 									))}
 								</div>
 							)}
-							<div className="date">
-								{/* <p className="start-date">
-									{startDate.getDate() +
-										'/' +
-										(startDate.getMonth() + 1) +
-										'/' +
-										startDate.getFullYear()}
-								</p>
-								<p className="end-date">
-									{dueDateCalculator().getDate() +
-										'/' +
-										(dueDateCalculator().getMonth() + 1) +
-										'/' +
-										dueDateCalculator().getFullYear()}
-								</p> */}
-								{dateStamper()}
-							</div>
+							<div className="date">{dateStamper()}</div>
 						</article>
 					) : (
 						<article className="txtRenderMoto">
@@ -753,23 +751,7 @@ function Report(props) {
 									</div>
 								))} */}
 							</div>
-							<div className="date">
-								{/* <p className="start-date">
-									{startDate.getDate() +
-										'/' +
-										(startDate.getMonth() + 1) +
-										'/' +
-										startDate.getFullYear()}
-								</p>
-								<p className="end-date">
-									{dueDateCalculator().getDate() +
-										'/' +
-										(dueDateCalculator().getMonth() + 1) +
-										'/' +
-										dueDateCalculator().getFullYear()}
-								</p> */}
-								{dateStamper()}
-							</div>
+							<div className="date">{dateStamper()}</div>
 						</article>
 					)}
 				</>

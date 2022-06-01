@@ -3,6 +3,33 @@
 	src: local('Roboto'), url(../assets/Roboto-Regular.ttf) format('truetype');
 }
 
+@media print {
+	header {
+		display: none;
+	}
+	form {
+		display: none;
+	}
+	input {
+		display: none;
+	}
+	label {
+		display: none;
+	}
+	button {
+		display: none;
+	}
+	#no-print {
+		display: none;
+	}
+	.print {
+		visibility: visible;
+	}
+	.quitar-col {
+		display: none;
+	}
+}
+
 * {
 	font-family: 'Roboto', 'Courier New', Courier, monospace;
 	margin: 0;
@@ -96,7 +123,7 @@ td {
 
 .lista-final {
 	position: absolute;
-	top: 575px;
+	top: 670px;
 	left: 15px;
 
 	.lista-headers {
@@ -107,15 +134,15 @@ td {
 		height: 16px;
 	}
 	.grupo-col {
-		min-width: 95px;
+		min-width: 90px;
 		text-align: center;
 	}
 	.descripcion-col {
 		padding-left: 3px;
-		min-width: 407px;
+		min-width: 503px;
 	}
 	.severidad-col {
-		min-width: 60px;
+		min-width: 65px;
 		text-align: center;
 	}
 }

@@ -1,31 +1,30 @@
 .finalReport {
 	position: relative;
-
 	.report-img {
 		margin: 10px 0;
 		border: solid black 1px;
-		width: 600px;
+		width: 700px;
 		z-index: -1;
 	}
 	.car-photo {
 		position: absolute;
-		width: 162px;
-		top: 23px;
-		left: 423px;
+		width: 186px;
+		top: 27px;
+		left: 495px;
 	}
 
 	p {
 		position: absolute;
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 	}
 	span {
 		position: absolute;
-		font-size: 0.6rem;
+		font-size: 0.8rem;
 		justify-content: center;
 		align-items: center;
 		display: flex;
-		width: 12px;
-		height: 12px;
+		width: 13px;
+		height: 13px;
 		border: 0.5px black solid;
 		border-radius: 2.5px;
 	}
@@ -33,404 +32,404 @@
 		width: auto;
 		color: white;
 		.start-date {
-			top: 53px;
-			left: 200px;
+			top: 61px;
+			left: 235px;
 		}
 		.end-date {
-			top: 53px;
-			left: 293px;
+			top: 61px;
+			left: 343px;
 		}
 	}
 	.header-info {
 		.plate {
-			top: 120px;
-			left: 60px;
+			top: 138px;
+			left: 68px;
 		}
 		.brand {
-			top: 120px;
-			left: 150px;
+			top: 138px;
+			left: 172px;
 		}
 		.model {
-			top: 120px;
-			left: 275px;
+			top: 138px;
+			left: 318px;
 		}
 		.mileage {
-			top: 120px;
-			left: 373px;
+			top: 138px;
+			left: 433px;
 		}
 	}
 	.alineation {
 		.front-al {
-			top: 195px;
-			left: 282px;
+			top: 226px;
+			left: 322px;
 		}
 		.front-al-eval {
-			top: 195px;
-			left: 310px;
+			top: 226px;
+			left: 360px;
 		}
 		.rear-al {
-			top: 557px;
-			left: 282px;
+			top: 649px;
+			left: 322px;
 		}
 		.rear-al-eval {
-			top: 557px;
-			left: 305px;
+			top: 649px;
+			left: 355px;
 		}
 	}
 	.weight {
 		.front-left {
-			top: 245px;
-			left: 158px;
+			top: 285px;
+			left: 185px;
 		}
 		.front-right {
-			top: 245px;
-			left: 326px;
+			top: 285px;
+			left: 379px;
 		}
 		.rear-left {
-			top: 376px;
-			left: 158px;
+			top: 436px;
+			left: 185px;
 		}
 		.rear-right {
-			top: 376px;
-			left: 326px;
+			top: 436px;
+			left: 379px;
 		}
 	}
 	.suspention {
 		.front-left {
-			top: 263px;
-			left: 158px;
+			top: 305px;
+			left: 185px;
 		}
 		.front-right {
-			top: 263px;
-			left: 326px;
+			top: 305px;
+			left: 379px;
 		}
 		.rear-left {
-			top: 395px;
-			left: 158px;
+			top: 458px;
+			left: 185px;
 		}
 		.rear-right {
-			top: 395px;
-			left: 326px;
+			top: 458px;
+			left: 379px;
 		}
 		.front-left-eval {
-			top: 263px;
-			left: 141px;
+			top: 305px;
+			left: 168px;
 		}
 		.front-right-eval {
-			top: 263px;
-			left: 359px;
+			top: 305px;
+			left: 410px;
 		}
 		.rear-left-eval {
-			top: 395px;
-			left: 141px;
+			top: 458px;
+			left: 168px;
 		}
 		.rear-right-eval {
-			top: 395px;
-			left: 359px;
+			top: 458px;
+			left: 410px;
 		}
 	}
 	.brake {
 		.performance {
 			.front {
-				top: 290px;
-				left: 158px;
+				top: 337px;
+				left: 185px;
 			}
 			.rear {
-				top: 420px;
-				left: 158px;
+				top: 488px;
+				left: 185px;
 			}
 			.hand {
-				top: 502px;
-				left: 158px;
+				top: 585px;
+				left: 185px;
 			}
 			.front-eval {
-				top: 290px;
-				left: 141px;
+				top: 337px;
+				left: 168px;
 			}
 			.rear-eval {
-				top: 421px;
-				left: 141px;
+				top: 488px;
+				left: 168px;
 			}
 			.hand-eval {
-				top: 502px;
-				left: 141px;
+				top: 585px;
+				left: 168px;
 			}
 		}
 		.difference {
 			.front {
-				top: 304px;
-				left: 158px;
+				top: 353px;
+				left: 185px;
 			}
 			.rear {
-				top: 434px;
-				left: 158px;
+				top: 504px;
+				left: 185px;
 			}
 			.hand {
-				top: 517px;
-				left: 158px;
+				top: 601px;
+				left: 185px;
 			}
 			.front-eval {
-				top: 304px;
-				left: 141px;
+				top: 353px;
+				left: 168px;
 			}
 			.rear-eval {
-				top: 434px;
-				left: 141px;
+				top: 504px;
+				left: 168px;
 			}
 			.hand-eval {
-				top: 517px;
-				left: 141px;
+				top: 601px;
+				left: 168px;
 			}
 		}
 		.strength {
 			.front-left {
-				top: 318px;
-				left: 158px;
+				top: 368px;
+				left: 185px;
 			}
 			.front-right {
-				top: 318px;
-				left: 326px;
+				top: 368px;
+				left: 379px;
 			}
 			.rear-left {
-				top: 448px;
-				left: 158px;
+				top: 520px;
+				left: 185px;
 			}
 			.rear-right {
-				top: 448px;
-				left: 326px;
+				top: 520px;
+				left: 379px;
 			}
 			.front-left-eval {
-				top: 318px;
-				left: 141px;
+				top: 368px;
+				left: 168px;
 			}
 			.front-right-eval {
-				top: 318px;
-				left: 359px;
+				top: 368px;
+				left: 410px;
 			}
 			.rear-left-eval {
-				top: 448px;
-				left: 141px;
+				top: 520px;
+				left: 168px;
 			}
 			.rear-right-eval {
-				top: 448px;
-				left: 359px;
+				top: 520px;
+				left: 410px;
 			}
 			.hand-left {
-				top: 533px;
-				left: 158px;
+				top: 620px;
+				left: 185px;
 			}
 			.hand-right {
-				top: 533px;
-				left: 326px;
+				top: 620px;
+				left: 379px;
 			}
 			.hand-left-eval {
-				top: 533px;
-				left: 141px;
+				top: 620px;
+				left: 168px;
 			}
 			.hand-right-eval {
-				top: 533px;
-				left: 359px;
+				top: 620px;
+				left: 410px;
 			}
 		}
 		.resistance-rod {
 			.front-left {
-				top: 332px;
-				left: 158px;
+				top: 386px;
+				left: 185px;
 			}
 			.front-right {
-				top: 332px;
-				left: 326px;
+				top: 386px;
+				left: 379px;
 			}
 			.rear-left {
-				top: 462px;
-				left: 158px;
+				top: 537px;
+				left: 185px;
 			}
 			.rear-right {
-				top: 462px;
-				left: 326px;
+				top: 537px;
+				left: 379px;
 			}
 			.front-left-eval {
-				top: 332px;
-				left: 141px;
+				top: 386px;
+				left: 168px;
 			}
 			.front-right-eval {
-				top: 332px;
-				left: 359px;
+				top: 386px;
+				left: 410px;
 			}
 			.rear-left-eval {
-				top: 462px;
-				left: 141px;
+				top: 537px;
+				left: 168px;
 			}
 			.rear-right-eval {
-				top: 462px;
-				left: 359px;
+				top: 537px;
+				left: 410px;
 			}
 		}
 		.ovality {
 			.front-left {
-				top: 347px;
-				left: 158px;
+				top: 402px;
+				left: 185px;
 			}
 			.front-right {
-				top: 347px;
-				left: 326px;
+				top: 402px;
+				left: 379px;
 			}
 			.rear-left {
-				top: 476px;
-				left: 158px;
+				top: 553px;
+				left: 185px;
 			}
 			.rear-right {
-				top: 476px;
-				left: 326px;
+				top: 553px;
+				left: 379px;
 			}
 			.front-left-eval {
-				top: 347px;
-				left: 141px;
+				top: 402px;
+				left: 168px;
 			}
 			.front-right-eval {
-				top: 347px;
-				left: 359px;
+				top: 402px;
+				left: 410px;
 			}
 			.rear-left-eval {
-				top: 476px;
-				left: 141px;
+				top: 553px;
+				left: 168px;
 			}
 			.rear-right-eval {
-				top: 476px;
-				left: 359px;
+				top: 553px;
+				left: 410px;
 			}
 		}
 	}
 	.lux-meter {
 		.intensity {
 			.left-low {
-				top: 260px;
-				left: 470px;
+				top: 302px;
+				left: 547px;
 			}
 			.right-low {
-				top: 260px;
-				left: 523px;
+				top: 302px;
+				left: 608px;
 			}
 			.left-high {
-				top: 276px;
-				left: 470px;
+				top: 320px;
+				left: 547px;
 			}
 			.right-high {
-				top: 276px;
-				left: 523px;
+				top: 320px;
+				left: 608px;
 			}
 			.left-aux {
-				top: 293px;
-				left: 470px;
+				top: 340px;
+				left: 547px;
 			}
 			.right-aux {
-				top: 293px;
-				left: 523px;
+				top: 340px;
+				left: 608px;
 			}
 			.left-low-eval {
-				top: 260px;
-				left: 499px;
+				top: 302px;
+				left: 575px;
 			}
 			.right-low-eval {
-				top: 260px;
-				left: 551px;
+				top: 302px;
+				left: 640px;
 			}
 			.left-high-eval {
-				top: 276px;
-				left: 499px;
+				top: 320px;
+				left: 575px;
 			}
 			.right-high-eval {
-				top: 276px;
-				left: 551px;
+				top: 320px;
+				left: 640px;
 			}
 			.left-aux-eval {
-				top: 293px;
-				left: 499px;
+				top: 340px;
+				left: 575px;
 			}
 			.right-aux-eval {
-				top: 293px;
-				left: 551px;
+				top: 340px;
+				left: 640px;
 			}
 		}
 		.alineationLux {
 			.left-vert {
-				top: 340px;
-				left: 470px;
+				top: 393px;
+				left: 547px;
 			}
 			.right-vert {
-				top: 340px;
-				left: 523px;
+				top: 393px;
+				left: 608px;
 			}
 			.left-hor {
-				top: 356px;
-				left: 470px;
+				top: 413px;
+				left: 547px;
 			}
 			.right-hor {
-				top: 356px;
-				left: 523px;
+				top: 413px;
+				left: 608px;
 			}
 			.left-vert-eval {
-				top: 340px;
-				left: 499px;
+				top: 393px;
+				left: 575px;
 			}
 			.right-vert-eval {
-				top: 340px;
-				left: 551px;
+				top: 393px;
+				left: 640px;
 			}
 			.left-hor-eval {
-				top: 356px;
-				left: 499px;
+				top: 413px;
+				left: 575px;
 			}
 			.right-hor-eval {
-				top: 356px;
-				left: 551px;
+				top: 413px;
+				left: 640px;
 			}
 		}
 	}
 	.decibel-meter {
 		.sound-int {
-			top: 407px;
-			left: 497px;
+			top: 472px;
+			left: 578px;
 		}
 		.sound-int-eval {
-			top: 407px;
-			left: 527px;
+			top: 472px;
+			left: 607px;
 		}
 	}
 	.gases {
 		.CO {
-			top: 459px;
-			left: 497px;
+			top: 534px;
+			left: 578px;
 		}
 		.CO-eval {
-			top: 459px;
-			left: 527px;
+			top: 534px;
+			left: 607px;
 		}
 		.HCC {
-			top: 475px;
-			left: 497px;
+			top: 554px;
+			left: 578px;
 		}
 		.HCC-eval {
-			top: 475px;
-			left: 527px;
+			top: 554px;
+			left: 607px;
 		}
 		.Nox {
-			top: 492px;
-			left: 497px;
+			top: 573px;
+			left: 578px;
 		}
 		.Nox-eval {
-			top: 492px;
-			left: 527px;
+			top: 573px;
+			left: 607px;
 		}
 	}
 	.opacimeter {
 		.opacity {
-			top: 532px;
-			left: 497px;
+			top: 620px;
+			left: 578px;
 		}
 		.opacity-eval {
-			top: 532px;
-			left: 527px;
+			top: 620px;
+			left: 607px;
 		}
 	}
 
@@ -444,15 +443,27 @@
 		background-color: rgba(255, 240, 0, 0.5);
 	}
 	.result-rto {
-		top: 210px;
+		top: 240px;
 		left: 20px;
 		border-radius: 3px;
 		padding: 3px;
 		font-size: 0.8rem;
 		font-weight: bold;
-	}	
+	}
 }
 
+.insert-btn-cont{
+	display: flex;
+	width: 700px;
+	align-items: center;
+}
+
+.print-btn {
+	width: 120px;
+	padding: 5px;
+}
+
+
 .btn-img-input {
-	
+
 }

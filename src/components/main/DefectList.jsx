@@ -148,7 +148,7 @@ function DefectList(props) {
 
 	return (
 		<>
-			<table className="lista-final">
+			<table className="lista-final print">
 				<thead>
 					<tr className="lista-headers">
 						<th className="grupo-col">Grupo</th>

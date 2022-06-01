@@ -2,9 +2,9 @@ import React from 'react';
 
 function Header() {
 	return (
-		<div>
+		<header>
 			<h1>Armador de informes</h1>
-		</div>
+		</header>
 	);
 }
 
