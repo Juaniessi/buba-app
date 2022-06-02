@@ -172,22 +172,22 @@ td {
 }
 
 .lista-final .grupo-col {
-  min-width: 90px;
+  width: 105px;
   text-align: center;
 }
 
 .lista-final .descripcion-col {
   padding-left: 3px;
-  min-width: 503px;
+  width: 489px;
 }
 
 .lista-final .severidad-col {
-  min-width: 65px;
+  width: 65px;
   text-align: center;
 }
 
 .phantom-col {
-  min-width: 30px;
+  width: 30px;
   background-color: transparent;
   border: 1px solid transparent;
 }
@@ -249,9 +249,5 @@ td {
 
 .Apto {
   background-color: rgba(81, 209, 246, 0.5);
-}
-
-.print-btn {
-  width: 50px;
 }
 /*# sourceMappingURL=style.css.map */

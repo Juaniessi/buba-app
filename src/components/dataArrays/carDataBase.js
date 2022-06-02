@@ -31,8 +31,15 @@ const autoArray = {
 			value: 'inspFosa',
 			label: 'Inspección en Fosa',
 		},
+		{
+			value: 'acumDefectos',
+			label: 'Acumulación de defectos',
+		},
 	],
 	seccion: {
+		acumDefectos: [
+			{value: 'acumDefectosSeccion', label: 'Acumulación de defectos'},
+		],
 		direccion: [
 			{
 				value: 'alineacion',
@@ -211,7 +218,14 @@ const autoArray = {
 	},
 
 	descripciones: {
-		/*Dirección */
+		acumDefectos: {
+			acumDefectosSeccion: [
+				{
+					value: 'acumDefectosDesc',
+					label: 'Decrementa estado de aptitud por acumulación de defectos.',
+				},
+			],
+		},
 		direccion: {
 			alineacion: [
 				{
@@ -299,7 +313,6 @@ const autoArray = {
 				},
 			],
 		},
-		/*Suspensión */
 		suspension: {
 			rotulas: [
 				{
@@ -358,7 +371,6 @@ const autoArray = {
 					label: 'Fuelle de transmisión trasero derecho en mal estado.',
 				},
 			],
-
 			parrillas: [
 				{
 					value: 'bujeSusDelIzq',
@@ -385,7 +397,6 @@ const autoArray = {
 					label: 'Brazo Pitman con holgura. Reemplazar y alinear.',
 				},
 			],
-
 			amortiguadores: [
 				{
 					value: 'bajoRendAmortDelIzq',
@@ -502,7 +513,6 @@ const autoArray = {
 				},
 			],
 		},
-		/* Frenos */
 		freno: {
 			rendDeFrenado: [
 				{
@@ -550,7 +560,6 @@ const autoArray = {
 						'Diferencia de frenado freno de mano (frena menos rueda derecha).',
 				},
 			],
-
 			ruedaFrenada: [
 				{
 					value: 'rueFreDelIzq',
@@ -573,7 +582,6 @@ const autoArray = {
 						'Rueda frenada, sin accionamiento de frenos (freno trasero derecho defectuoso).',
 				},
 			],
-
 			ovalAlab: [
 				{
 					value: 'disFreDelIzqAlab',
@@ -608,7 +616,6 @@ const autoArray = {
 					label: 'Ovalidad en campana de freno trasera derecha.',
 				},
 			],
-
 			frenoCPF: [
 				{
 					value: 'cirHidDelFre',
@@ -637,7 +644,6 @@ const autoArray = {
 				},
 			],
 		},
-		/* Emisiones */
 		emisiones: {
 			gases: [
 				{
@@ -664,7 +670,6 @@ const autoArray = {
 				},
 			],
 		},
-		/* Sistema Eléctrico */
 		sistemaElectrico: {
 			lucesDel: [
 				{
@@ -805,8 +810,40 @@ const autoArray = {
 					label: 'Luz testigo de ALTA TEMPERATURA encendido.',
 				},
 				{
-					value: 'InsNoFunCor',
+					value: 'insNoFunCor',
 					label: 'Instrumental no funciona correctamente.',
+				},
+				{
+					value: 'luzTestControlTraccion',
+					label: 'Luz testigo de control de tracción.',
+				},
+				{
+					value: 'luzTestDirAsist',
+					label: 'Luz testigo de dirección asistida.',
+				},
+				{
+					value: 'luzTestCintSeg',
+					label: 'Luz testigo de cinturones de seguridad.',
+				},
+				{
+					value: 'luzTestNeumaticoDes',
+					label: 'Luz testigo de neumático desinflado.',
+				},
+				{
+					value: 'luzTestAirBag',
+					label: 'Luz testigo de AIRBAG.',
+				},
+				{
+					value: 'luzTestEPC',
+					label: 'Luz testigo de EPC (Electronic Power Control).',
+				},
+				{
+					value: 'luzTestBajoNivelFluido',
+					label: 'Luz testigo de bajo nivel de fluido.',
+				},
+				{
+					value: 'luzTestPastillasFreno',
+					label: 'Luz testigo de desgaste de pastillas de freno.',
 				},
 			],
 			limpiaParabrisas: [
@@ -816,7 +853,6 @@ const autoArray = {
 				},
 			],
 		},
-		/* Inspección Visual */
 		inspVisual: {
 			kit: [
 				{
@@ -1080,7 +1116,6 @@ const autoArray = {
 				},
 			],
 		},
-		/* Inspección de Fosa */
 		inspFosa: {
 			fluidos: [
 				{

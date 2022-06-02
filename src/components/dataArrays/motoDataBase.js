@@ -20,8 +20,15 @@ const motoArray = {
 			value: 'inspVisual',
 			label: 'Inspección Visual',
 		},
+		{
+			value: 'acumDefectos',
+			label: 'Acumulación de defectos',
+		},
 	],
 	seccion: {
+		acumDefectos: [
+			{value: 'acumDefectosSeccion', label: 'Acumulación de defectos'},
+		],
 		suspension: [
 			{
 				value: 'amortiguadores',
@@ -134,7 +141,14 @@ const motoArray = {
 		],
 	},
 	descripciones: {
-		/*Suspensión */
+		acumDefectos: {
+			acumDefectosSeccion: [
+				{
+					value: 'acumDefectosDesc',
+					label: 'Decrementa estado de aptitud por acumulación de defectos.',
+				},
+			],
+		},
 		suspension: {
 			amortiguadores: [
 				{
@@ -167,7 +181,6 @@ const motoArray = {
 				},
 			],
 		},
-		/* Frenos */
 		frenos: {
 			rendDeFrenado: [
 				{
@@ -232,7 +245,6 @@ const motoArray = {
 				},
 			],
 		},
-		/* Emisiones */
 		emisiones: {
 			gases: [
 				{
@@ -254,7 +266,6 @@ const motoArray = {
 				},
 			],
 		},
-		/* Sistema Eléctrico */
 		sistElectrico: {
 			lucesDel: [
 				{
@@ -362,7 +373,6 @@ const motoArray = {
 				},
 			],
 		},
-		/* Inspección Visual */
 		inspVisual: {
 			kit: [
 				{
