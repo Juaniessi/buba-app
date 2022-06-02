@@ -397,41 +397,45 @@ function Report(props) {
 
 	return (
 		<>
-			<div className='insert-btn-cont'>
+			<div className="insert-btn-cont">
 				<div className="btn-txt-render-container">
 					<label
 						htmlFor="file-input"
 						id="file-input-label"
-						className="txt-label">
-						Seleccione archivo a procesar:
+						className="wrap-label">
+						Seleccione archivo txt a procesar:
+						<img src={fileArrow} alt="upload file" className="upload-btn-img" />
+						<input
+							className="btn-input"
+							ref={loadFileRef}
+							type="file"
+							id="file-input"
+							name="file-input"
+							accept="text/plain"
+							onChange={handleTxtRender}
+						/>
 					</label>
-					<input
-						className="btn-txt-input"
-						ref={loadFileRef}
-						type="file"
-						id="file-input"
-						name="file-input"
-						accept="text/plain"
-						onChange={handleTxtRender}
-					/>
 				</div>
 				<div className="btn-txt-render-container">
-					<label htmlFor="image_uploads" className="txt-label">
+					<label htmlFor="image_uploads" className="wrap-label">
 						Seleccione la foto del vehículo:
+						<img src={fileImage} alt="upload img" className="upload-btn-img" />
+						<input
+							className="btn-input"
+							ref={loadImgRef}
+							type="file"
+							id="image_uploads"
+							name="image_uploads"
+							accept=".jpg, .jpeg, .png"
+							onChange={onImageChange}
+						/>
 					</label>
-					<input
-						className="btn-img-input"
-						ref={loadImgRef}
-						type="file"
-						id="image_uploads"
-						name="image_uploads"
-						accept=".jpg, .jpeg, .png"
-						onChange={onImageChange}
-					/>
 				</div>
-				<button className="print-btn" onClick={printPage}>
-					<img src={printSolid} alt="" />
-				</button>
+				<label className='wrap-label' htmlFor="print-btn"> Imprimr informe:
+					<button className="print-btn" id="print-btn" onClick={printPage}>
+						<img src={printSolid} alt="printer" />
+					</button>
+				</label>
 			</div>
 			<section className="finalReport print">
 				<>

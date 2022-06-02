@@ -175,10 +175,13 @@ function DefectList(props) {
 				<h2>Severidad</h2>
 				<div className="btn-package severity-c">
 					{radioGeneratorArray.severity.map((item, i) => (
-						<label className="btn-inside" htmlFor={item.value} key={i}>
+						<label
+							className={`btn-inside ${item.class}`}
+							htmlFor={item.value}
+							key={i}>
 							<input
 								type="radio"
-								className="btn-inside rad-c"
+								className="rad-c"
 								name="severity"
 								id={item.value}
 								value={item.value}
@@ -198,10 +201,13 @@ function DefectList(props) {
 								return a.label > b.label ? 1 : -1;
 							})
 							.map((item, i) => (
-								<label className="btn-inside" htmlFor={item.value} key={i}>
+								<label
+									className={grupo.value === item.value ? 'radio-checked' : ''}
+									htmlFor={item.value}
+									key={i}>
 									<input
 										type="radio"
-										className="btn-inside rad-c"
+										className="rad-c"
 										name="group"
 										id={item.value}
 										value={item.value}
@@ -220,10 +226,10 @@ function DefectList(props) {
 								return a.label > b.label ? 1 : -1;
 							})
 							.map((item, i) => (
-								<label className="btn-inside" htmlFor={item.value} key={i}>
+								<label className={seccion.value === item.value ? 'radio-checked' : ''} htmlFor={item.value} key={i}>
 									<input
 										type="radio"
-										className="btn-inside rad-c"
+										className="rad-c"
 										name="section"
 										id={item.value}
 										value={item.value}
@@ -234,14 +240,14 @@ function DefectList(props) {
 								</label>
 							))}
 						{grupo.value.length > 0 && (
-							<label className="btn-inside" htmlFor="otro">
+							<label className={seccion.value === "otro" ? 'radio-checked' : ''} htmlFor="otro">
 								<input
 									type="radio"
 									name="section"
 									id="otro"
 									value="otro"
 									checked={seccion.value === 'otro'}
-									className="btn-inside rad-c"
+									className="rad-c"
 									onChange={() => handleSeccion({value: 'otro', label: 'Otro'})}
 								/>
 								<b>Otros</b>
@@ -256,10 +262,10 @@ function DefectList(props) {
 								return a.label > b.label ? 1 : -1;
 							})
 							.map((item, i) => (
-								<label className="btn-inside" htmlFor={item.value} key={i}>
+								<label className={descripcion.value === item.value ? 'radio-checked' : ''} htmlFor={item.value} key={i}>
 									<input
 										type="radio"
-										className="btn-inside rad-c"
+										className="rad-c"
 										name="description"
 										id={item.value}
 										value={item.value}

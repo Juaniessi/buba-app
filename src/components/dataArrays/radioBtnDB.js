@@ -26,16 +26,19 @@ const radioGeneratorArray = {
 			value: 'Leve',
 			label: 'Leve',
 			order: 1,
+			class: "yellow",
 		},
 		{
 			value: 'Moderado',
 			label: 'Moderado',
 			order: 2,
+			class: "orange",
 		},
 		{
 			value: 'Grave',
 			label: 'Grave',
 			order: 3,
+			class: "black",
 		},
 	],
 	engineType: [

@@ -109,7 +109,12 @@ h3 {
 }
 
 .btn-inside {
-  margin: 0.1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  padding: 2px;
 }
 
 .rad-c {
@@ -210,12 +215,16 @@ td {
 }
 
 .engine-type {
-  background-color: darkgray;
   color: white;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.engine-type .btn-inside {
+  background-color: darkgray;
 }
 
 .orange {
@@ -231,12 +240,7 @@ td {
 }
 
 .date-calc {
-  margin: 0.5rem;
-}
-
-.date-calc .btn-inside {
-  border-radius: 3px;
-  padding: 2px;
+  margin: 1rem;
 }
 
 .Condicional {

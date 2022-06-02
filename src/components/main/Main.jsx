@@ -149,7 +149,7 @@ function Main() {
 						<label className="btn-inside" htmlFor={item.value} key={i}>
 							<input
 								type="radio"
-								className="btn-inside rad-c"
+								className="rad-c"
 								name="tipo"
 								id={item.value}
 								value={item.value}
@@ -165,7 +165,7 @@ function Main() {
 									<label className="btn-inside" htmlFor={item.value} key={i}>
 										<input
 											type="radio"
-											className="btn-inside rad-c"
+											className="rad-c"
 											name="engineType"
 											id={item.value}
 											value={item.value}
@@ -187,7 +187,7 @@ function Main() {
 							key={i}>
 							<input
 								type="radio"
-								className={`btn-inside rad-c`}
+								className={`rad-c`}
 								name="dateCalcBtn"
 								id={item.value}
 								value={item.value}
