@@ -22,6 +22,9 @@
   #no-print {
     display: none;
   }
+  #no-print2 {
+    display: none;
+  }
   .print {
     visibility: visible;
   }
@@ -131,26 +134,27 @@ h3 {
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
-}
-
-.unlisted-defect {
-  margin: 0.2rem;
-  width: 400px;
-}
-
-.div-btn {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   margin-bottom: 1rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 500px;
 }
 
-.div-btn .send-btn {
+.unlisted-ctn .send-btn {
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
   width: 200px;
   height: 50px;
+  cursor: pointer;
+}
+
+.unlisted-ctn .unlisted-defect {
+  margin: 0.2rem;
 }
 
 table,

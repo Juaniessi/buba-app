@@ -226,7 +226,12 @@ function DefectList(props) {
 								return a.label > b.label ? 1 : -1;
 							})
 							.map((item, i) => (
-								<label className={seccion.value === item.value ? 'radio-checked' : ''} htmlFor={item.value} key={i}>
+								<label
+									className={
+										seccion.value === item.value ? 'radio-checked' : ''
+									}
+									htmlFor={item.value}
+									key={i}>
 									<input
 										type="radio"
 										className="rad-c"
@@ -240,7 +245,9 @@ function DefectList(props) {
 								</label>
 							))}
 						{grupo.value.length > 0 && (
-							<label className={seccion.value === "otro" ? 'radio-checked' : ''} htmlFor="otro">
+							<label
+								className={seccion.value === 'otro' ? 'radio-checked' : ''}
+								htmlFor="otro">
 								<input
 									type="radio"
 									name="section"
@@ -262,7 +269,12 @@ function DefectList(props) {
 								return a.label > b.label ? 1 : -1;
 							})
 							.map((item, i) => (
-								<label className={descripcion.value === item.value ? 'radio-checked' : ''} htmlFor={item.value} key={i}>
+								<label
+									className={
+										descripcion.value === item.value ? 'radio-checked' : ''
+									}
+									htmlFor={item.value}
+									key={i}>
 									<input
 										type="radio"
 										className="rad-c"
@@ -277,7 +289,7 @@ function DefectList(props) {
 							))}
 					</div>
 				</div>
-				<h3 className="unlisted-defect"> Defecto no listado</h3>
+				<h2 className="unlisted-defect"> Defecto no listado</h2>
 				<div className="unlisted-ctn">
 					<label htmlFor="unlisted-defect" className="unlisted-defect">
 						Seleccióne grupo al que pertenece la falla, luego el seleccione la
@@ -291,8 +303,6 @@ function DefectList(props) {
 						cols="50"
 						rows="3"
 						onChange={(e) => setUnlistedDef(e.target.value)}></textarea>
-				</div>
-				<div className="div-btn">
 					<button className="send-btn" onClick={addToList}>
 						Agregar a la lista
 					</button>

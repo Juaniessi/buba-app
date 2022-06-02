@@ -397,7 +397,7 @@ function Report(props) {
 
 	return (
 		<>
-			<div className="insert-btn-cont">
+			<div className="insert-btn-cont" id="no-print2">
 				<div className="btn-txt-render-container">
 					<label
 						htmlFor="file-input"
@@ -431,7 +431,9 @@ function Report(props) {
 						/>
 					</label>
 				</div>
-				<label className='wrap-label' htmlFor="print-btn"> Imprimr informe:
+				<label className="wrap-label" htmlFor="print-btn">
+					{' '}
+					Imprimr informe:
 					<button className="print-btn" id="print-btn" onClick={printPage}>
 						<img src={printSolid} alt="printer" />
 					</button>

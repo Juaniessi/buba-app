@@ -7,7 +7,6 @@ import {
 	motoReportArrayFiller,
 } from '../dataArrays/reportArrays';
 
-
 function Main() {
 	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (item) => {
@@ -137,16 +136,18 @@ function Main() {
 	const severeFlag = useRef(0);
 	const moderateFlag = useRef(0);
 
-	
-
 	return (
 		<main>
-			
-			<form className="form-radio" id='no-print'>
+			<form className="form-radio" id="no-print">
 				<h2>Tipo de vehículo</h2>
 				<div className="btn-package type-c">
 					{radioGeneratorArray.type.map((item, i) => (
-						<label className="btn-inside" htmlFor={item.value} key={i}>
+						<label
+							className={`btn-inside ${
+								tipo === item.value ? 'radio-checked' : ''
+							}`}
+							htmlFor={item.value}
+							key={i}>
 							<input
 								type="radio"
 								className="rad-c"
