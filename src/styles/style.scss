@@ -22,7 +22,7 @@
 	#no-print {
 		display: none;
 	}
-	#no-print2{
+	#no-print2 {
 		display: none;
 	}
 	.print {
@@ -98,6 +98,7 @@ h3 {
 	border: 0px;
 	width: 1em;
 	height: 1em;
+	margin-right: 2px;
 }
 
 .unlisted-ctn {
@@ -116,7 +117,6 @@ h3 {
 	}
 	.unlisted-defect {
 		margin: 0.2rem;
-
 	}
 }
 
@@ -137,19 +137,19 @@ td {
 		font-size: 0.8rem;
 	}
 	.item-lista {
-		font-size: 0.55rem;
+		font-size: 0.65rem;
 		height: 16px;
 	}
 	.grupo-col {
-		width: 105px;
+		width: 125px;
 		text-align: center;
 	}
 	.descripcion-col {
 		padding-left: 3px;
-		width: 489px;
+		width: 473px;
 	}
 	.severidad-col {
-		width: 65px;
+		width: 60px;
 		text-align: center;
 	}
 }
@@ -183,15 +183,16 @@ td {
 	}
 }
 .orange {
-	background-color: rgba(255, 100, 0, 0.5);
+	background-color: rgba(255, 160, 0, 0.75);
 }
 
 .yellow {
-	background-color: rgba(255, 240, 0, 0.5);
+	background-color: rgba(255, 240, 0, 0.75);
 }
 
 .black {
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
 }
 
 .date-calc {
@@ -199,11 +200,12 @@ td {
 }
 
 .Condicional {
-	background-color: rgba(255, 100, 0, 0.5);
+	background-color: rgba(255, 160, 0, 0.75);
 }
 .Rechazado {
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
 }
 .Apto {
-	background-color: rgba(81, 209, 246, 0.5);
+	background-color: rgba(81, 209, 246, 0.75);
 }

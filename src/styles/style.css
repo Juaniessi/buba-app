@@ -124,6 +124,7 @@ h3 {
   border: 0px;
   width: 1em;
   height: 1em;
+  margin-right: 2px;
 }
 
 .unlisted-ctn {
@@ -176,22 +177,22 @@ td {
 }
 
 .lista-final .item-lista {
-  font-size: 0.55rem;
+  font-size: 0.65rem;
   height: 16px;
 }
 
 .lista-final .grupo-col {
-  width: 105px;
+  width: 125px;
   text-align: center;
 }
 
 .lista-final .descripcion-col {
   padding-left: 3px;
-  width: 489px;
+  width: 473px;
 }
 
 .lista-final .severidad-col {
-  width: 65px;
+  width: 60px;
   text-align: center;
 }
 
@@ -232,15 +233,16 @@ td {
 }
 
 .orange {
-  background-color: rgba(255, 100, 0, 0.5);
+  background-color: rgba(255, 160, 0, 0.75);
 }
 
 .yellow {
-  background-color: rgba(255, 240, 0, 0.5);
+  background-color: rgba(255, 240, 0, 0.75);
 }
 
 .black {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 .date-calc {
@@ -248,14 +250,15 @@ td {
 }
 
 .Condicional {
-  background-color: rgba(255, 100, 0, 0.5);
+  background-color: rgba(255, 160, 0, 0.75);
 }
 
 .Rechazado {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 .Apto {
-  background-color: rgba(81, 209, 246, 0.5);
+  background-color: rgba(81, 209, 246, 0.75);
 }
 /*# sourceMappingURL=style.css.map */

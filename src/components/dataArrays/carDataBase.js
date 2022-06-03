@@ -230,15 +230,15 @@ const autoArray = {
 			alineacion: [
 				{
 					value: 'trenDelDesalin',
-					label: 'Tren delantero desalineado',
+					label: 'Tren delantero desalineado.',
 				},
 				{
 					value: 'trenTraDesalin',
-					label: 'Tren trasero desalineado',
+					label: 'Tren trasero desalineado.',
 				},
 				{
 					value: 'volanteDesalin',
-					label: 'Volante desalineado con respecto a la caja de dirección',
+					label: 'Volante desalineado con respecto a la caja de dirección.',
 				},
 			],
 			extremosDeDireccion: [
@@ -906,11 +906,19 @@ const autoArray = {
 			equipamiento: [
 				{
 					value: 'taponCombustible',
-					label: 'Tapón de combustible no reglamentario.',
+					label: 'Tapón de combustible no reglamentario o ausente.',
 				},
 				{
 					value: 'bateria',
 					label: 'Batería sin sujeción.',
+				},
+				{
+					value: 'bateriaRota',
+					label: 'Batería con defectos.',
+				},
+				{
+					value: 'bateriaConex',
+					label: 'Conexiones de batería con defectos.',
 				},
 			],
 			vidrios: [
@@ -1085,11 +1093,11 @@ const autoArray = {
 			altura: [
 				{
 					value: 'alturaAum',
-					label: 'Altura del vehiculo aumentada',
+					label: 'Altura del vehículo aumentada.',
 				},
 				{
 					value: 'alturaDis',
-					label: 'Altura del vehiculo disminuida',
+					label: 'Altura del vehículo disminuida.',
 				},
 			],
 			protPasiva: [
@@ -1107,7 +1115,7 @@ const autoArray = {
 			carroceria: [
 				{
 					value: 'adiNoRegCar',
-					label: 'Aditamento no reglamentario en la carrocería ',
+					label: 'Aditamento no reglamentario en la carrocería.',
 				},
 				{
 					value: 'adiFueLinPar',
