@@ -433,7 +433,7 @@ function Report(props) {
 				</div>
 				<label className="wrap-label" htmlFor="print-btn">
 					{' '}
-					Imprimr informe:
+					Imprimir informe:
 					<button className="print-btn" id="print-btn" onClick={printPage}>
 						<img src={printSolid} alt="printer" />
 					</button>
