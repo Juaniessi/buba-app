@@ -199,6 +199,7 @@ function Main() {
 						</label>
 					))}
 				</div>
+				<h3>Cargar de archivos</h3>
 			</form>
 			<section className="finalReport">
 				<Report
