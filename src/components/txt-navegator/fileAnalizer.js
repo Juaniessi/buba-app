@@ -1020,7 +1020,7 @@ function stringToNumber(number, decimalValues) {
  * @returns the number as a percentage
  */
 function numberToPercentage(number, decimalValues) {
-  let numReady = Number((number * 100).toFixed(decimalValues));
+  let numReady = Number((number * 1).toFixed(decimalValues));
 
   if (isNaN(parseFloat(numReady))) {
     numReady = EMPTY;
@@ -1041,7 +1041,8 @@ function fixPercentajesInObj(obj) {
     freno1Ovalidad1,
     TWO_INT
   );
-  obj.frenosEje_1.ovalidadLadoDerecho = numberToPercentage(
+  
+  obj.frenosEje_1.ovalidadLadoIzquierdo = numberToPercentage(
     freno1Ovalidad2,
     TWO_INT
   );
@@ -1052,7 +1053,7 @@ function fixPercentajesInObj(obj) {
     freno2Ovalidad1,
     TWO_INT
   );
-  obj.frenosEje_2.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenosEje_2.ovalidadLadoIzquierdo = numberToPercentage(
     freno2Ovalidad2,
     TWO_INT
   );
@@ -1063,7 +1064,7 @@ function fixPercentajesInObj(obj) {
     freno3Ovalidad1,
     TWO_INT
   );
-  obj.frenosEje_3.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenosEje_3.ovalidadLadoIzquierdo = numberToPercentage(
     freno3Ovalidad2,
     TWO_INT
   );
@@ -1074,7 +1075,7 @@ function fixPercentajesInObj(obj) {
     freno4Ovalidad1,
     TWO_INT
   );
-  obj.frenosEje_4.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenosEje_4.ovalidadLadoIzquierdo = numberToPercentage(
     freno4Ovalidad2,
     TWO_INT
   );
@@ -1085,7 +1086,7 @@ function fixPercentajesInObj(obj) {
     freno5Ovalidad1,
     TWO_INT
   );
-  obj.frenosEje_5.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenosEje_5.ovalidadLadoIzquierdo = numberToPercentage(
     freno5Ovalidad2,
     TWO_INT
   );
@@ -1096,7 +1097,7 @@ function fixPercentajesInObj(obj) {
     freno6Ovalidad1,
     TWO_INT
   );
-  obj.frenosEje_6.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenosEje_6.ovalidadLadoIzquierdo = numberToPercentage(
     freno6Ovalidad2,
     TWO_INT
   );
@@ -1107,7 +1108,7 @@ function fixPercentajesInObj(obj) {
     frenoMano1_Ovalidad1,
     TWO_INT
   );
-  obj.frenoDeManoEje_1.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenoDeManoEje_1.ovalidadLadoIzquierdo = numberToPercentage(
     frenoMano1_Ovalidad2,
     TWO_INT
   );
@@ -1118,7 +1119,7 @@ function fixPercentajesInObj(obj) {
     frenoMano2_Ovalidad1,
     TWO_INT
   );
-  obj.frenoDeManoEje_2.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenoDeManoEje_2.ovalidadLadoIzquierdo = numberToPercentage(
     frenoMano2_Ovalidad2,
     TWO_INT
   );
@@ -1129,7 +1130,7 @@ function fixPercentajesInObj(obj) {
     frenoMano3_Ovalidad1,
     TWO_INT
   );
-  obj.frenoDeManoEje_3.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenoDeManoEje_3.ovalidadLadoIzquierdo = numberToPercentage(
     frenoMano3_Ovalidad2,
     TWO_INT
   );
@@ -1140,7 +1141,7 @@ function fixPercentajesInObj(obj) {
     frenoMano4_Ovalidad1,
     TWO_INT
   );
-  obj.frenoDeManoEje_4.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenoDeManoEje_4.ovalidadLadoIzquierdo = numberToPercentage(
     frenoMano4_Ovalidad2,
     TWO_INT
   );
@@ -1151,7 +1152,7 @@ function fixPercentajesInObj(obj) {
     frenoMano5_Ovalidad1,
     TWO_INT
   );
-  obj.frenoDeManoEje_5.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenoDeManoEje_5.ovalidadLadoIzquierdo = numberToPercentage(
     frenoMano5_Ovalidad2,
     TWO_INT
   );
@@ -1162,7 +1163,7 @@ function fixPercentajesInObj(obj) {
     frenoMano6_Ovalidad1,
     TWO_INT
   );
-  obj.frenoDeManoEje_6.ovalidadLadoDerecho = numberToPercentage(
+  obj.frenoDeManoEje_6.ovalidadLadoIzquierdo = numberToPercentage(
     frenoMano6_Ovalidad2,
     TWO_INT
   );
