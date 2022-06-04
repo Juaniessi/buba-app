@@ -358,7 +358,7 @@ function Report(props) {
 		if (dateCalcBtn.value === 'Rechazado') {
 			dueDate = addDays(startDate, 0);
 		} else if (dateCalcBtn.value === 'Condicional') {
-			dueDate = addDays(startDate, 60);
+			dueDate = addDays(startDate, 61);
 		} else if (dateCalcBtn.value === 'Apto') {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
 		}
