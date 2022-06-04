@@ -125,6 +125,7 @@ h3 {
   width: 1em;
   height: 1em;
   margin-right: 2px;
+  cursor: pointer;
 }
 
 .unlisted-ctn {
@@ -243,10 +244,6 @@ td {
 .black {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-}
-
-.date-calc {
-  margin: 1rem;
 }
 
 .Condicional {

@@ -397,6 +397,7 @@ function Report(props) {
 
 	return (
 		<>
+		<h3>Cargar de archivos</h3>
 			<div className="insert-btn-cont" id="no-print2">
 				<div className="btn-txt-render-container">
 					<label

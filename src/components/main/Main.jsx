@@ -180,7 +180,7 @@ function Main() {
 					</div>
 				</div>
 				<h3>Calcular fecha</h3>
-				<div className="date-calc">
+				<div className="btn-package">
 					{radioGeneratorArray.dateCalc.map((item, i) => (
 						<label
 							className={`btn-inside ${item.value}`}

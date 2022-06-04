@@ -456,11 +456,13 @@
 	display: flex;
 	width: 700px;
 	align-items: center;
+	margin-top: 0.5rem;
 }
 
 .print-btn {
 	width: 100px;
 	padding: 5px;
+	cursor: pointer;
 }
 
 /* .insert-btn-cont{
@@ -491,6 +493,5 @@
 	cursor: pointer;
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
 	border-radius: 3px;
-	padding: 2px;
 	background-color: rgb(204, 255, 204);
 }
