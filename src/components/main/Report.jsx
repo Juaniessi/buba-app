@@ -71,7 +71,7 @@ function Report(props) {
 		['brakePerf', [10, 40, 48]],
 		['handBrakePerf', [3, 14.4, 17]],
 		['brakeStrenght', [0.1, 0.3, 0.5]],
-		['brakeStrenghtMoto', [0.05, 0.19, 0.35]],
+		['brakeStrenghtMoto', [0.05, 0.15, 0.3]],
 	]);
 
 	/**
@@ -80,7 +80,7 @@ function Report(props) {
 	const majorOrEqArray = new Map([
 		['brakeDif', [70, 15.1, 10]],
 		['brakeResist', [2, 1, 0.7]],
-		['brakeOval', [80, 50, 40]],
+		['brakeOval', [80, 50, 30]],
 		['luxLow', [200, 27, 26]],
 		['luxHigh', [200, 150, 65]],
 		['luxAng', [15, 7, 5]],

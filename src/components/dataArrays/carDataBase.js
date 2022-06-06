@@ -995,7 +995,7 @@ const autoArray = {
 				},
 				{
 					value: 'espExtDelNoFun',
-					label: 'Espejo exterior delantero no funcional.',
+					label: 'Espejo exterior dercho no funcional.',
 				},
 				{
 					value: 'espIntCenNoFun',
