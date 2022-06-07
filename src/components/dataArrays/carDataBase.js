@@ -375,12 +375,12 @@ const autoArray = {
 				{
 					value: 'bujeSusDelIzq',
 					label:
-						'Buje parrilla de suspensión delantera izquierda en mal estado. Reemplazar y alinear.',
+						'Buje de parrilla de suspensión delantera izquierda en mal estado. Reemplazar y alinear.',
 				},
 				{
 					value: 'bujeSusDelDer',
 					label:
-						'Buje parrilla de suspensión delantera derecha en mal estado. Reemplazar y alinear.',
+						'Buje de parrilla de suspensión delantera derecha en mal estado. Reemplazar y alinear.',
 				},
 				{
 					value: 'bujeSusTraIzq',
@@ -390,7 +390,7 @@ const autoArray = {
 				{
 					value: 'bujeSusTraDer',
 					label:
-						'Buje parrilla de suspensión trasera derecha en mal estado.Reemplazar y alinear.',
+						'Buje de parrilla de suspensión trasera derecha en mal estado.Reemplazar y alinear.',
 				},
 				{
 					value: 'brazoPit',
