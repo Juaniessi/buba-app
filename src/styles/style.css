@@ -71,7 +71,7 @@ label {
   -webkit-box-direction: normal;
       -ms-flex-flow: row nowrap;
           flex-flow: row nowrap;
-  height: 280px;
+  min-height: 280px;
 }
 
 .form-radio {

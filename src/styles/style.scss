@@ -60,7 +60,7 @@ label {
 .variable-btn {
 	display: flex;
 	flex-flow: row nowrap;
-	height: 280px;
+	min-height: 280px;
 }
 .form-radio {
 	display: flex;
