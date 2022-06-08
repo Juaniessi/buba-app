@@ -171,7 +171,7 @@ function DefectList(props) {
 						.map(defectList)}
 				</tbody>
 			</table>
-			<form className="form-radio-ext">
+			<form className="form-radio-ext" id="no-print3">
 				<h2>Severidad</h2>
 				<div className="btn-package severity-c">
 					{radioGeneratorArray.severity.map((item, i) => (
@@ -202,7 +202,11 @@ function DefectList(props) {
 							})
 							.map((item, i) => (
 								<label
-									className={grupo.value === item.value ? 'radio-checked group-c' : 'group-c'}
+									className={
+										grupo.value === item.value
+											? 'radio-checked group-c'
+											: 'group-c'
+									}
 									htmlFor={item.value}
 									key={i}>
 									<input
@@ -228,7 +232,9 @@ function DefectList(props) {
 							.map((item, i) => (
 								<label
 									className={
-										seccion.value === item.value ? 'radio-checked section-c' : 'section-c'
+										seccion.value === item.value
+											? 'radio-checked section-c'
+											: 'section-c'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -244,7 +250,6 @@ function DefectList(props) {
 									{item.label}
 								</label>
 							))}
-						
 					</div>
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
@@ -272,7 +277,7 @@ function DefectList(props) {
 									{item.label}
 								</label>
 							))}
-							{seccion.value.length > 0 && (
+						{seccion.value.length > 0 && (
 							<label
 								className={descripcion.value === 'otro' ? 'radio-checked' : ''}
 								htmlFor="otro">
@@ -283,7 +288,9 @@ function DefectList(props) {
 									value="otro"
 									checked={descripcion.value === 'otro'}
 									className="rad-c"
-									onChange={() => handleDescripcion({value: 'otro', label: 'Otro'})}
+									onChange={() =>
+										handleDescripcion({value: 'otro', label: 'Otro'})
+									}
 								/>
 								<b>Otros</b>
 							</label>

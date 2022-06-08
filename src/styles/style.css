@@ -4,19 +4,15 @@
 }
 
 @media print {
-  header {
-    display: none;
-  }
-  form {
-    display: none;
-  }
-  input {
-    display: none;
-  }
-  label {
-    display: none;
-  }
-  button {
+  header,
+  form,
+  label,
+  h2,
+  h3,
+  button,
+  input,
+  textarea,
+  .quitar-col {
     display: none;
   }
   #no-print {
@@ -25,11 +21,11 @@
   #no-print2 {
     display: none;
   }
+  #no-print3 {
+    display: none;
+  }
   .print {
     visibility: visible;
-  }
-  .quitar-col {
-    display: none;
   }
 }
 
