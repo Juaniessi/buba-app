@@ -1127,8 +1127,7 @@ const autoArray = {
 				},
 				{
 					value: 'obsPar',
-					label:
-						'Obstrucción de visión en parabrisas por elementos adheridos al mismo.',
+					label: 'Parabrisas obstruido por elementos adheridos al mismo.',
 				},
 				{
 					value: 'apeVenDelIzqDef',
