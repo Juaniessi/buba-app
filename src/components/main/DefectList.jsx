@@ -54,7 +54,7 @@ function DefectList(props) {
 		let itemLista = {
 			grupo: grupo.label,
 			seccion: seccion.label,
-			desc: seccion.value === 'otro' ? unlistedDef : descripcion.label,
+			desc: descripcion.value === 'otro' ? unlistedDef : descripcion.label,
 			sev: severidad.value,
 			Ord: severidad.order,
 		};
@@ -133,7 +133,7 @@ function DefectList(props) {
 		return (
 			<tr className={`item-lista`} key={i}>
 				<td className={`grupo-col ${severityColour}`}>{grupo}</td>
-				{/* <td className={`${severityColour}`}>{seccion}</td> */}
+				<td className={`seccion-col ${severityColour}`}>{seccion}</td>
 				<td className={`descripcion-col ${severityColour}`}>{desc}</td>
 				<td className={`severidad-col ${severityColour}`}>{sev}</td>
 				<td className="phantom-col"></td>
@@ -152,7 +152,7 @@ function DefectList(props) {
 				<thead>
 					<tr className="lista-headers">
 						<th className="grupo-col">Grupo</th>
-						{/* <th>Sección</th> */}
+						<th className="seccion-col">Sección</th>
 						<th className="descripcion-col">Descripción</th>
 						<th className="severidad-col">Severidad</th>
 						<th className="phantom-col"></th>
@@ -244,22 +244,7 @@ function DefectList(props) {
 									{item.label}
 								</label>
 							))}
-						{grupo.value.length > 0 && (
-							<label
-								className={seccion.value === 'otro' ? 'radio-checked' : ''}
-								htmlFor="otro">
-								<input
-									type="radio"
-									name="section"
-									id="otro"
-									value="otro"
-									checked={seccion.value === 'otro'}
-									className="rad-c"
-									onChange={() => handleSeccion({value: 'otro', label: 'Otro'})}
-								/>
-								<b>Otros</b>
-							</label>
-						)}
+						
 					</div>
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
@@ -287,6 +272,22 @@ function DefectList(props) {
 									{item.label}
 								</label>
 							))}
+							{seccion.value.length > 0 && (
+							<label
+								className={descripcion.value === 'otro' ? 'radio-checked' : ''}
+								htmlFor="otro">
+								<input
+									type="radio"
+									name="description"
+									id="otro"
+									value="otro"
+									checked={descripcion.value === 'otro'}
+									className="rad-c"
+									onChange={() => handleDescripcion({value: 'otro', label: 'Otro'})}
+								/>
+								<b>Otros</b>
+							</label>
+						)}
 					</div>
 				</div>
 				<h2 className="unlisted-defect"> Defecto no listado</h2>

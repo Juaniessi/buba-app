@@ -78,9 +78,7 @@ const motoArray = {
 				label: 'Fijaciones',
 			},
 		],
-		acumDefectos: [
-			{value: 'acumDefectosSeccion', label: 'Acumulación de defectos'},
-		],
+		acumDefectos: [{value: 'acumDefectosSeccion', label: 'Defectos'}],
 		suspension: [
 			{
 				value: 'amortiguadores',

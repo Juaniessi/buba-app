@@ -97,9 +97,7 @@ const autoArray = {
 				label: 'Rueda de auxilio',
 			},
 		],
-		acumDefectos: [
-			{value: 'acumDefectosSeccion', label: 'Acumulación de defectos'},
-		],
+		acumDefectos: [{value: 'acumDefectosSeccion', label: 'Defectos'}],
 		direccion: [
 			{
 				value: 'alineacion',
@@ -286,19 +284,23 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluTraIzq',
-					label: 'Baja intensidad de iluminación en luz de posición trasera izquierda.',
+					label:
+						'Baja intensidad de iluminación en luz de posición trasera izquierda.',
 				},
 				{
 					value: 'bajIntIluTraDer',
-					label: 'Baja intensidad de iluminación en luz de posición trasera derecha.',
+					label:
+						'Baja intensidad de iluminación en luz de posición trasera derecha.',
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz de posición delantera izquierda.',
+					label:
+						'Baja intensidad de iluminación en luz de posición delantera izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz de posición delantera derecha.',
+					label:
+						'Baja intensidad de iluminación en luz de posición delantera derecha.',
 				},
 			],
 			lucesDeFreno: [
@@ -319,15 +321,18 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluTraIzq',
-					label: 'Baja intensidad de iluminación en luz de freno trasera izquierda.',
+					label:
+						'Baja intensidad de iluminación en luz de freno trasera izquierda.',
 				},
 				{
 					value: 'bajIntIluTraDer',
-					label: 'Baja intensidad de iluminación en luz de freno trasera derecha.',
+					label:
+						'Baja intensidad de iluminación en luz de freno trasera derecha.',
 				},
 				{
 					value: 'bajIntIluCenDer',
-					label: 'Baja intensidad de iluminación en luz de freno trasera central.',
+					label:
+						'Baja intensidad de iluminación en luz de freno trasera central.',
 				},
 			],
 			luzBaja: [
@@ -345,11 +350,13 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz baja delantera izquierda.',
+					label:
+						'Baja intensidad de iluminación en luz baja delantera izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz baja delantera derecha.',
+					label:
+						'Baja intensidad de iluminación en luz baja delantera derecha.',
 				},
 			],
 			luzAlta: [
@@ -367,11 +374,13 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz alta delantera izquierda.',
+					label:
+						'Baja intensidad de iluminación en luz alta delantera izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz alta delantera derecha.',
+					label:
+						'Baja intensidad de iluminación en luz alta delantera derecha.',
 				},
 			],
 			luzPat: [
@@ -609,7 +618,6 @@ const autoArray = {
 						'Rótula maza delantera derecha con holgura. Reemplazar y alinear.',
 				},
 			],
-
 			fuelles: [
 				{
 					value: 'fuelleCajaDirIzq',
@@ -684,22 +692,22 @@ const autoArray = {
 				{
 					value: 'bajoRendAmortDelIzq',
 					label:
-						'Bajo rendimiento de amortiguación (amortiguador delantero izquierdo defectuoso).',
+						'Amortiguador delantero izquierdo defectuoso.',
 				},
 				{
 					value: 'bajoRendAmortDelDer',
 					label:
-						'Bajo rendimiento de amortiguación (amortiguador delantero derecho defectuoso).',
+						'Amortiguador delantero derecho defectuoso.',
 				},
 				{
 					value: 'bajoRendAmortTraIzq',
 					label:
-						'Bajo rendimiento de amortiguación (amortiguador trasero izquierdo defectuoso).',
+						'Amortiguador trasero izquierdo defectuoso.',
 				},
 				{
 					value: 'bajoRendAmortTraDer',
 					label:
-						'Bajo rendimiento de amortiguación (amortiguador trasero derecho defectuoso).',
+						'Amortiguador trasero derecho defectuoso.',
 				},
 				{
 					value: 'perdAmortDelIzq',
