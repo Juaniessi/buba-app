@@ -35,8 +35,68 @@ const autoArray = {
 			value: 'acumDefectos',
 			label: 'Acumulación de defectos',
 		},
+		{
+			value: 'ruedas',
+			label: 'Ruedas',
+		},
+		{
+			value: 'luces',
+			label: 'Luces',
+		},
 	],
 	seccion: {
+		luces: [
+			{
+				value: 'lucesDePos',
+				label: 'Luces de posición',
+			},
+			{
+				value: 'lucesDeFreno',
+				label: 'Luces de freno',
+			},
+			{
+				value: 'luzBaja',
+				label: 'Luces bajas',
+			},
+			{
+				value: 'luzAlta',
+				label: 'Luces altas',
+			},
+			{
+				value: 'balizas',
+				label: 'Balizas',
+			},
+			{
+				value: 'guines',
+				label: 'Guiñes',
+			},
+			{
+				value: 'luzRev',
+				label: 'Luz de reversa',
+			},
+			{
+				value: 'luzPat',
+				label: 'Luz de patente',
+			},
+		],
+		ruedas: [
+			{
+				value: 'neumaticos',
+				label: 'Neumáticos',
+			},
+			{
+				value: 'llantas',
+				label: 'Llantas',
+			},
+			{
+				value: 'fijaciones',
+				label: 'Fijaciones',
+			},
+			{
+				value: 'auxilio',
+				label: 'Rueda de auxilio',
+			},
+		],
 		acumDefectos: [
 			{value: 'acumDefectosSeccion', label: 'Acumulación de defectos'},
 		],
@@ -180,10 +240,6 @@ const autoArray = {
 				label: 'Ópticas',
 			},
 			{
-				value: 'ruedas',
-				label: 'Ruedas',
-			},
-			{
 				value: 'altura',
 				label: 'Altura',
 			},
@@ -218,6 +274,230 @@ const autoArray = {
 	},
 
 	descripciones: {
+		luces: {
+			lucesDePos: [
+				{
+					value: 'luzPosDelIzq',
+					label: 'Luz de posición delantera izquierda no enciende.',
+				},
+				{
+					value: 'luzPosDelDer',
+					label: 'Luz de posición delantera derecha no enciende.',
+				},
+				{
+					value: 'luzPosTraIzq',
+					label: 'Luz de posición trasera izquierda no enciende.',
+				},
+				{
+					value: 'luzPosTraDer',
+					label: 'Luz de posición trasera derecha no enciende.',
+				},
+
+				{
+					value: 'bajIntIluTraIzq',
+					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
+				},
+				{
+					value: 'bajIntIluTraDer',
+					label: 'Baja intensidad de iluminación en luz trasera derecha.',
+				},
+			],
+			lucesDeFreno: [
+				{
+					value: 'luzFreTraIzqNoRes',
+					label:
+						'Luz de freno trasera izquierda no responde al accionamiento del pedal.',
+				},
+				{
+					value: 'luzFreTraDerNoRes',
+					label:
+						'Luz de freno trasera derecha no responde al accionamiento del pedal.',
+				},
+				{
+					value: 'luzFreTraCenNoRes',
+					label:
+						'Luz de freno trasera central no responde al accionamiento del pedal.',
+				},
+				{
+					value: 'bajIntIluTraIzq',
+					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
+				},
+				{
+					value: 'bajIntIluTraDer',
+					label: 'Baja intensidad de iluminación en luz trasera derecha.',
+				},
+			],
+			luzBaja: [
+				{
+					value: 'luzBajSinPatron',
+					label: 'Luz baja no describe patrón reglamentario.',
+				},
+				{
+					value: 'luzBajIzq',
+					label: 'Luz baja izquierda no enciende.',
+				},
+				{
+					value: 'luzBajDer',
+					label: 'Luz baja derecha no enciende.',
+				},
+				{
+					value: 'bajIntIluDelIzq',
+					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
+				},
+				{
+					value: 'bajIntIluDelDer',
+					label: 'Baja intensidad de iluminación en luz delantera derecha.',
+				},
+			],
+			luzAlta: [
+				{
+					value: 'luzAltSinPatron',
+					label: 'Luz alta no describe patrón reglamentario.',
+				},
+				{
+					value: 'luzAltDelIzq',
+					label: 'Luz alta delantera izquierda no enciende.',
+				},
+				{
+					value: 'luzAltDelDer',
+					label: 'Luz alta delantera derecha no enciende.',
+				},
+				{
+					value: 'bajIntIluDelIzq',
+					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
+				},
+				{
+					value: 'bajIntIluDelDer',
+					label: 'Baja intensidad de iluminación en luz delantera derecha.',
+				},
+			],
+			luzPat: [
+				{
+					value: 'luzPatDel',
+					label: 'Luz de patente delantera no enciende.',
+				},
+				{
+					value: 'luzPatTra',
+					label: 'Luz de patente trasera no enciende.',
+				},
+			],
+			balizas: [
+				{
+					value: 'luzBalizasDel',
+					label: 'Luces de balizas delanteras no destellan correctamente.',
+				},
+				{
+					value: 'luzBalizasTra',
+					label: 'Luces de balizas traseras no destellan correctamente.',
+				},
+				{
+					value: 'luzBalizasLat',
+					label: 'Luces de balizas laterales no destellan correctamente.',
+				},
+			],
+			guines: [
+				{
+					value: 'luzGirDelIzq',
+					label: 'Luz de giro delantera izquierda no destella correctamente.',
+				},
+				{
+					value: 'luzGirDelDer',
+					label: 'Luz de giro delantera derecha no  destella correctamente.',
+				},
+				{
+					value: 'luzGirTraIzq',
+					label: 'Luz de giro trasera izquierda no destella correctamente.',
+				},
+				{
+					value: 'luzGirTraDer',
+					label: 'Luz de giro trasera derecha no destella correctamente.',
+				},
+				{
+					value: 'luzGirLatIzq',
+					label: 'Luz de giro lateral izquiera no destella correctamente.',
+				},
+				{
+					value: 'luzGirLatDer',
+					label: 'Luz de giro lateral derecha no destella correctamente.',
+				},
+			],
+			luzRev: [
+				{
+					value: 'luzRev',
+					label: 'Luz de reversa no enciende.',
+				},
+			],
+		},
+		ruedas: {
+			auxilio: [
+				{
+					value: 'sinRueAux',
+					label: 'Falta rueda de auxilio.',
+				},
+				{
+					value: 'rueAuxMal',
+					label: 'Rueda de auxilio en mal estado.',
+				},
+				{
+					value: 'sopRueAuxDef',
+					label: 'Soporte rueda de auxilio con defectos.',
+				},
+			],
+			llantas: [
+				{
+					value: 'llaDelIzqDef',
+					label: 'Llanta delantera izquierda deformada.',
+				},
+				{
+					value: 'llaDelDerDef',
+					label: 'Llanta delantera derecha deformada.',
+				},
+				{
+					value: 'llaTraIzqDef',
+					label: 'Llanta trasera izquierda deformada.',
+				},
+				{
+					value: 'llaTraDerDef',
+					label: 'Llanta trasera derecha deformada.',
+				},
+			],
+			neumaticos: [
+				{
+					value: 'neuDelIzqMal',
+					label: 'Neumático delantero izquierdo en mal estado.',
+				},
+				{
+					value: 'neuDelDerMal',
+					label: 'Neumático delantero derecho en mal estado.',
+				},
+				{
+					value: 'neuTraIzqMal',
+					label: 'Neumático trasero izquierdo en mal estado.',
+				},
+				{
+					value: 'neuTraDerMal',
+					label: 'Neumático trasero derecho en mal estado.',
+				},
+			],
+			fijaciones: [
+				{
+					value: 'falPerRueDelIzq',
+					label: 'Falta perno/tuerca de fijación en rueda delantera izquierda.',
+				},
+				{
+					value: 'falPerRueDelDer',
+					label: 'Falta perno/tuerca de fijación en rueda delantera derecha.',
+				},
+				{
+					value: 'falPerRueTraIzq',
+					label: 'Falta perno/tuerca de fijación en rueda trasera izquierda.',
+				},
+				{
+					value: 'falPerRueTraDer',
+					label: 'Falta perno/tuerca de fijación en rueda trasera derecha.',
+				},
+			],
+		},
 		acumDefectos: {
 			acumDefectosSeccion: [
 				{
@@ -671,113 +951,6 @@ const autoArray = {
 			],
 		},
 		sistemaElectrico: {
-			lucesDel: [
-				{
-					value: 'luzGirDelIzq',
-					label: 'Luz de giro delantera izquierda no destella correctamente.',
-				},
-				{
-					value: 'luzGirDelDer',
-					label: 'Luz de giro delantera derecha no  destella correctamente.',
-				},
-				{
-					value: 'luzPosDelIzq',
-					label: 'Luz de posición delantera izquierda no enciende.',
-				},
-				{
-					value: 'luzPosDelDer',
-					label: 'Luz de posición delantera derecha no enciende.',
-				},
-				{
-					value: 'luzBajIzq',
-					label: 'Luz baja izquierda no enciende.',
-				},
-				{
-					value: 'luzBajDer',
-					label: 'Luz baja derecha no enciende.',
-				},
-				{
-					value: 'luzAltDelIzq',
-					label: 'Luz alta delantera izquierda no enciende.',
-				},
-				{
-					value: 'luzAltDelDer',
-					label: 'Luz alta delantera derecha no enciende.',
-				},
-				{
-					value: 'luzBalizasDel',
-					label: 'Luces de balizas delanteras no destellan correctamente.',
-				},
-				{
-					value: 'luzBajSinPatron',
-					label: 'Luz baja no describe patrón reglamentario.',
-				},
-				{
-					value: 'luzAltSinPatron',
-					label: 'Luz alta no describe patrón reglamentario.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz delantera derecha.',
-				},
-			],
-			lucesTra: [
-				{
-					value: 'luzFreTraIzqNoRes',
-					label:
-						'Luz de freno trasera izquierda no responde al accionamiento del pedal.',
-				},
-				{
-					value: 'luzFreTraDerNoRes',
-					label:
-						'Luz de freno trasera derecha no responde al accionamiento del pedal.',
-				},
-				{
-					value: 'luzFreTraCenNoRes',
-					label:
-						'Luz de freno trasera central no responde al accionamiento del pedal.',
-				},
-				{
-					value: 'luzRev',
-					label: 'Luz de reversa no enciende.',
-				},
-				{
-					value: 'luzPat',
-					label: 'Luz de patente no enciende.',
-				},
-				{
-					value: 'luzPosTraIzq',
-					label: 'Luz de posición trasera izquierda no enciende.',
-				},
-				{
-					value: 'luzPosTraDer',
-					label: 'Luz de posición trasera derecha no enciende.',
-				},
-				{
-					value: 'luzGirTraIzq',
-					label: 'Luz de giro trasera izquierda no destella correctamente.',
-				},
-				{
-					value: 'luzGirTraDer',
-					label: 'Luz de giro trasera derecha no destella correctamente.',
-				},
-				{
-					value: 'luzBalizasTra',
-					label: 'Luces de balizas traseras no destellan correctamente.',
-				},
-				{
-					value: 'bajIntIluTraIzq',
-					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
-				},
-				{
-					value: 'bajIntIluTraDer',
-					label: 'Baja intensidad de iluminación en luz trasera derecha.',
-				},
-			],
 			bocina: [
 				{
 					value: 'bocina',
@@ -857,7 +1030,7 @@ const autoArray = {
 			kit: [
 				{
 					value: 'kitSeguridad',
-					label: 'Kit de seguridad de incompleto.',
+					label: 'Kit de seguridad incompleto.',
 				},
 			],
 			patentes: [
@@ -943,15 +1116,18 @@ const autoArray = {
 				},
 				{
 					value: 'apeVenDelDerDef',
-					label: 'Sistema de apertura de ventanilla delantera derecha defectuoso.',
+					label:
+						'Sistema de apertura de ventanilla delantera derecha defectuoso.',
 				},
 				{
 					value: 'apeVenTraIzqDef',
-					label: 'Sistema de apertura de ventanilla trasera izquierda defectuoso.',
+					label:
+						'Sistema de apertura de ventanilla trasera izquierda defectuoso.',
 				},
 				{
 					value: 'apeVenTraDerDef',
-					label: 'Sistema de apertura de ventanilla trasera derecha defectuoso.',
+					label:
+						'Sistema de apertura de ventanilla trasera derecha defectuoso.',
 				},
 			],
 			paraGolpes: [
@@ -1028,68 +1204,6 @@ const autoArray = {
 					label: 'Óptica delantera derecha opaca.',
 				},
 			],
-			ruedas: [
-				{
-					value: 'neuDelIzqMal',
-					label: 'Neumático delantero izquierdo en mal estado.',
-				},
-				{
-					value: 'neuDelDerMal',
-					label: 'Neumático delantero derecho en mal estado.',
-				},
-				{
-					value: 'neuTraIzqMal',
-					label: 'Neumático trasero izquierdo en mal estado.',
-				},
-				{
-					value: 'neuTraDerMal',
-					label: 'Neumático trasero derecho en mal estado.',
-				},
-				{
-					value: 'llaDelIzqDef',
-					label: 'Llanta delantera izquierda deformada.',
-				},
-				{
-					value: 'llaDelDerDef',
-					label: 'Llanta delantera derecha deformada.',
-				},
-				{
-					value: 'llaTraIzqDef',
-					label: 'Llanta trasera izquierda deformada.',
-				},
-				{
-					value: 'llaTraDerDef',
-					label: 'Llanta trasera derecha deformada.',
-				},
-				{
-					value: 'sinRueAux',
-					label: 'Falta rueda de auxilio.',
-				},
-				{
-					value: 'rueAuxMal',
-					label: 'Rueda de auxilio en mal estado.',
-				},
-				{
-					value: 'sopRueAuxDef',
-					label: 'Soporte rueda de auxilio con defectos.',
-				},
-				{
-					value: 'falPerRueDelIzq',
-					label: 'Falta perno/tuerca de fijación en rueda delantera izquierda.',
-				},
-				{
-					value: 'falPerRueDelDer',
-					label: 'Falta perno/tuerca de fijación en rueda delantera derecha.',
-				},
-				{
-					value: 'falPerRueTraIzq',
-					label: 'Falta perno/tuerca de fijación en rueda trasera izquierda.',
-				},
-				{
-					value: 'falPerRueTraDer',
-					label: 'Falta perno/tuerca de fijación en rueda trasera derecha.',
-				},
-			],
 			altura: [
 				{
 					value: 'alturaAum',
@@ -1109,7 +1223,7 @@ const autoArray = {
 			airBag: [
 				{
 					value: 'airDet',
-					label: 'Airbag detonado.',
+					label: 'AIRBAG detonado.',
 				},
 			],
 			carroceria: [

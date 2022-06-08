@@ -236,12 +236,12 @@ const motoArray = {
 				{
 					value: 'fMinDel',
 					label:
-						'Frenos delanteros no cumplen con la fuerza mínima requerida (1 kN).',
+						'Frenos delanteros no cumplen con la fuerza mínima requerida para el modelo.',
 				},
 				{
 					value: 'fMilTra',
 					label:
-						'Frenos traseros no cumplen con la fuerza mínima requerida (1 kN).',
+						'Frenos traseros no cumplen con la fuerza mínima requerida para el modelo.',
 				},
 			],
 		},
@@ -274,11 +274,11 @@ const motoArray = {
 				},
 				{
 					value: 'luzGirDelDer',
-					label: 'Luz de giro delantera derecha no  destella correctamente.',
+					label: 'Luz de giro delantera derecha no destella correctamente.',
 				},
 				{
 					value: 'luzPosDel',
-					label: 'Luz de posición delanterano enciende.',
+					label: 'Luz de posición delantera no enciende.',
 				},
 				{
 					value: 'luzBaja',
