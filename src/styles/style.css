@@ -71,6 +71,7 @@ label {
   -webkit-box-direction: normal;
       -ms-flex-flow: row nowrap;
           flex-flow: row nowrap;
+  height: 280px;
 }
 
 .form-radio {
@@ -91,7 +92,6 @@ label {
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
           flex-flow: column nowrap;
-  min-height: 540px;
 }
 
 .btn-package {
@@ -113,7 +113,7 @@ label {
 }
 
 .section-c {
-  width: 205px;
+  width: 190px;
 }
 
 .btn-inside {

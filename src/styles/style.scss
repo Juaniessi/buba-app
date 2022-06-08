@@ -60,6 +60,7 @@ label {
 .variable-btn {
 	display: flex;
 	flex-flow: row nowrap;
+	height: 280px;
 }
 .form-radio {
 	display: flex;
@@ -69,7 +70,6 @@ label {
 .form-radio-ext {
 	display: flex;
 	flex-flow: column nowrap;
-	min-height: 540px;
 }
 
 .btn-package {
@@ -86,7 +86,7 @@ label {
 }
 
 .section-c {
-	width: 205px;
+	width: 190px;
 }
 
 .btn-inside {
