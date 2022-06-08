@@ -939,37 +939,37 @@ const autoArray = {
 				{
 					value: 'apeVenDelIzqDef',
 					label:
-						'Sistema  apertura de ventanilla delantera izquierda defectuoso.',
+						'Sistema de apertura de ventanilla delantera izquierda defectuoso.',
 				},
 				{
 					value: 'apeVenDelDerDef',
-					label: 'Sistema apertura de ventanilla delantera derecha defectuoso.',
+					label: 'Sistema de apertura de ventanilla delantera derecha defectuoso.',
 				},
 				{
 					value: 'apeVenTraIzqDef',
-					label: 'Sistema apertura de ventanilla trasera izquierda defectuoso.',
+					label: 'Sistema de apertura de ventanilla trasera izquierda defectuoso.',
 				},
 				{
 					value: 'apeVenTraDerDef',
-					label: 'Sistema apertura de ventanilla trasera derecha defectuoso.',
+					label: 'Sistema de apertura de ventanilla trasera derecha defectuoso.',
 				},
 			],
 			paraGolpes: [
 				{
 					value: 'ancParDelIzqMal',
-					label: 'Anclaje paragolpes delantero izquierdo en mal estado.',
+					label: 'Anclaje de paragolpes delantero izquierdo en mal estado.',
 				},
 				{
 					value: 'ancParDelDerMal',
-					label: 'Anclaje paragolpes delantero derecho en mal estado.',
+					label: 'Anclaje de paragolpes delantero derecho en mal estado.',
 				},
 				{
 					value: 'ancParTraIzqMal',
-					label: 'Anclaje paragolpes trasero izquierdo en mal estado.',
+					label: 'Anclaje de paragolpes trasero izquierdo en mal estado.',
 				},
 				{
 					value: 'ancParTraDerMal',
-					label: 'Anclaje paragolpes trasero derecho en mal estado.',
+					label: 'Anclaje de paragolpes trasero derecho en mal estado.',
 				},
 				{
 					value: 'parDelRot',
