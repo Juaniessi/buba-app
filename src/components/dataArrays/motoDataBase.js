@@ -196,12 +196,12 @@ const motoArray = {
 					label: 'Luz de posición trasera no enciende.',
 				},
 				{
-					value: 'bajIntIluzDel',
-					label: 'Baja intensidad de iluminación en luz delantera.',
+					value: 'bajIntIluDel',
+					label: 'Baja intensidad de iluminación en luz de posición delantera.',
 				},
 				{
-					value: 'bajIntIluzTra',
-					label: 'Baja intensidad de iluminación en luz trasera.',
+					value: 'bajIntIluTra',
+					label: 'Baja intensidad de iluminación en luz de posición trasera.',
 				},
 			],
 			lucesDeFreno: [
@@ -216,7 +216,7 @@ const motoArray = {
 				},
 				{
 					value: 'bajIntIluTraFren',
-					label: 'Baja intensidad de iluminación en luz trasera de freno.',
+					label: 'Baja intensidad de iluminación en luz de freno trasera.',
 				},
 			],
 			luzBaja: [
@@ -230,7 +230,7 @@ const motoArray = {
 				},
 				{
 					value: 'bajIntIluDel',
-					label: 'Baja intensidad de iluminación en luz delantera.',
+					label: 'Baja intensidad de iluminación en luz baja delantera.',
 				},
 			],
 			luzAlta: [
@@ -244,7 +244,7 @@ const motoArray = {
 				},
 				{
 					value: 'bajIntIluDel',
-					label: 'Baja intensidad de iluminación en luz delantera.',
+					label: 'Baja intensidad de iluminación en luz alta delantera.',
 				},
 			],
 			luzPat: [

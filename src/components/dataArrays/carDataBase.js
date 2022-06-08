@@ -286,19 +286,19 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluTraIzq',
-					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
+					label: 'Baja intensidad de iluminación en luz de posición trasera izquierda.',
 				},
 				{
 					value: 'bajIntIluTraDer',
-					label: 'Baja intensidad de iluminación en luz trasera derecha.',
+					label: 'Baja intensidad de iluminación en luz de posición trasera derecha.',
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
+					label: 'Baja intensidad de iluminación en luz de posición delantera izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz delantera derecha.',
+					label: 'Baja intensidad de iluminación en luz de posición delantera derecha.',
 				},
 			],
 			lucesDeFreno: [
@@ -319,11 +319,15 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluTraIzq',
-					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
+					label: 'Baja intensidad de iluminación en luz de freno trasera izquierda.',
 				},
 				{
 					value: 'bajIntIluTraDer',
-					label: 'Baja intensidad de iluminación en luz trasera derecha.',
+					label: 'Baja intensidad de iluminación en luz de freno trasera derecha.',
+				},
+				{
+					value: 'bajIntIluCenDer',
+					label: 'Baja intensidad de iluminación en luz de freno trasera central.',
 				},
 			],
 			luzBaja: [
@@ -341,11 +345,11 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
+					label: 'Baja intensidad de iluminación en luz baja delantera izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz delantera derecha.',
+					label: 'Baja intensidad de iluminación en luz baja delantera derecha.',
 				},
 			],
 			luzAlta: [
@@ -363,11 +367,11 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
+					label: 'Baja intensidad de iluminación en luz alta delantera izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz delantera derecha.',
+					label: 'Baja intensidad de iluminación en luz alta delantera derecha.',
 				},
 			],
 			luzPat: [
@@ -423,7 +427,7 @@ const autoArray = {
 			luzRev: [
 				{
 					value: 'luzRev',
-					label: 'Luz de reversa no enciende.',
+					label: 'Luz de reversa no funciona correctamente.',
 				},
 			],
 		},
