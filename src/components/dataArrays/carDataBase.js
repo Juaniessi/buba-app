@@ -691,23 +691,19 @@ const autoArray = {
 			amortiguadores: [
 				{
 					value: 'bajoRendAmortDelIzq',
-					label:
-						'Amortiguador delantero izquierdo defectuoso.',
+					label: 'Amortiguador delantero izquierdo defectuoso.',
 				},
 				{
 					value: 'bajoRendAmortDelDer',
-					label:
-						'Amortiguador delantero derecho defectuoso.',
+					label: 'Amortiguador delantero derecho defectuoso.',
 				},
 				{
 					value: 'bajoRendAmortTraIzq',
-					label:
-						'Amortiguador trasero izquierdo defectuoso.',
+					label: 'Amortiguador trasero izquierdo defectuoso.',
 				},
 				{
 					value: 'bajoRendAmortTraDer',
-					label:
-						'Amortiguador trasero derecho defectuoso.',
+					label: 'Amortiguador trasero derecho defectuoso.',
 				},
 				{
 					value: 'perdAmortDelIzq',
@@ -940,12 +936,12 @@ const autoArray = {
 				{
 					value: 'altoNivO2',
 					label:
-						'Emisión de gases supera los límites permitidos (alto nivel de monóxido de carbono).',
+						'Emisión de gases supera los límites permitidos de monóxido de carbono.',
 				},
 				{
 					value: 'altoNivHco',
 					label:
-						'Emisión de gases supera los límites permitidos (alto nivel de hidrocarburos).',
+						'Emisión de gases supera los límites permitidos de hidrocarburos.',
 				},
 				{
 					value: 'altoNivOpa',
@@ -956,8 +952,7 @@ const autoArray = {
 			ruido: [
 				{
 					value: 'altoNivConSon',
-					label:
-						'Alto nivel de contaminación sonora (superior a 84 decibeles).',
+					label: 'Alto nivel de contaminación sonora.',
 				},
 			],
 		},

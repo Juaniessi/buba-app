@@ -95,7 +95,7 @@ label {
 }
 
 .btn-package {
-  margin: 0.7rem;
+  margin: 0.5rem;
 }
 
 .col-class {
@@ -109,11 +109,11 @@ label {
 }
 
 .group-c {
-  min-width: 165px;
+  width: 200px;
 }
 
 .section-c {
-  min-width: 205px;
+  width: 205px;
 }
 
 .btn-inside {

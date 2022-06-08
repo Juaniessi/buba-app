@@ -433,19 +433,18 @@ const motoArray = {
 				{
 					value: 'gasCO',
 					label:
-						'Emisión de gases supera los límites permitidos (alto nivel de monóxido de carbono).',
+						'Emisión de gases supera los límites permitidos de monóxido de carbono.',
 				},
 				{
 					value: 'gasHC',
 					label:
-						'Emisión de gases supera los límites permitidos (alto nivel de hidrocarburos).',
+						'Emisión de gases supera los límites permitidos de hidrocarburos.',
 				},
 			],
 			ruido: [
 				{
 					value: 'ruidoAlto',
-					label:
-						'Alto nivel de contaminación sonora (superior a 84 decibeles).',
+					label: 'Alto nivel de contaminación sonora.',
 				},
 			],
 		},

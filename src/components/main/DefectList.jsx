@@ -63,7 +63,7 @@ function DefectList(props) {
 			severidad.value !== '' &&
 			grupo.value !== '' &&
 			seccion.value !== '' &&
-			(unlistedDef !== '' || descripcion.value !== '')
+			descripcion.value !== ''
 		) {
 			setLista(lista.concat(itemLista));
 			setSeveridad({value: 'Moderado', label: 'Moderado', order: 2});
