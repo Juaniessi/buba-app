@@ -24,8 +24,60 @@ const motoArray = {
 			value: 'acumDefectos',
 			label: 'Acumulación de defectos',
 		},
+		{
+			value: 'ruedas',
+			label: 'Ruedas',
+		},
+		{
+			value: 'luces',
+			label: 'Luces',
+		},
 	],
 	seccion: {
+		luces: [
+			{
+				value: 'lucesDePos',
+				label: 'Luces de posición',
+			},
+			{
+				value: 'lucesDeFreno',
+				label: 'Luces de freno',
+			},
+			{
+				value: 'luzBaja',
+				label: 'Luces bajas',
+			},
+			{
+				value: 'luzAlta',
+				label: 'Luces altas',
+			},
+			{
+				value: 'balizas',
+				label: 'Balizas',
+			},
+			{
+				value: 'guines',
+				label: 'Guiñes',
+			},
+			{
+				value: 'luzPat',
+				label: 'Luz de patente',
+			},
+		],
+		ruedas: [
+			{
+				value: 'neumaticos',
+				label: 'Neumáticos',
+			},
+			{
+				value: 'llantas',
+				label: 'Llantas',
+			},
+			{
+				value: 'fijaciones',
+				label: 'Fijaciones',
+			},
+		],
 		acumDefectos: [
 			{value: 'acumDefectosSeccion', label: 'Acumulación de defectos'},
 		],
@@ -69,20 +121,16 @@ const motoArray = {
 		],
 		sistElectrico: [
 			{
-				value: 'lucesTra',
-				label: 'Luces traseras',
-			},
-			{
-				value: 'lucesDel',
-				label: 'Luces delanteras',
-			},
-			{
 				value: 'bocina',
 				label: 'Bocina',
 			},
 			{
 				value: 'instrumental',
 				label: 'Instrumental',
+			},
+			{
+				value: 'testigos',
+				label: 'Testigos',
 			},
 		],
 		inspVisual: [
@@ -119,10 +167,6 @@ const motoArray = {
 				label: 'Ópticas',
 			},
 			{
-				value: 'ruedas',
-				label: 'Ruedas',
-			},
-			{
 				value: 'cadena',
 				label: 'Cadena',
 			},
@@ -141,6 +185,147 @@ const motoArray = {
 		],
 	},
 	descripciones: {
+		luces: {
+			lucesDePos: [
+				{
+					value: 'luzPosDel',
+					label: 'Luz de posición delantera no enciende.',
+				},
+				{
+					value: 'luzPosTra',
+					label: 'Luz de posición trasera no enciende.',
+				},
+				{
+					value: 'bajIntIluzDel',
+					label: 'Baja intensidad de iluminación en luz delantera.',
+				},
+				{
+					value: 'bajIntIluzTra',
+					label: 'Baja intensidad de iluminación en luz trasera.',
+				},
+			],
+			lucesDeFreno: [
+				{
+					value: 'luzFreTraIzqNoRes1',
+					label: 'Luz de freno trasera no responde al accionamiento del pedal.',
+				},
+				{
+					value: 'luzFreTraIzqNoRes2',
+					label:
+						'Luz de freno trasera no responde al accionamiento del manubrio.',
+				},
+				{
+					value: 'bajIntIluTraFren',
+					label: 'Baja intensidad de iluminación en luz trasera de freno.',
+				},
+			],
+			luzBaja: [
+				{
+					value: 'luzBajSinPatron',
+					label: 'Luz baja no describe patrón reglamentario.',
+				},
+				{
+					value: 'luzBaj',
+					label: 'Luz baja no enciende.',
+				},
+				{
+					value: 'bajIntIluDel',
+					label: 'Baja intensidad de iluminación en luz delantera.',
+				},
+			],
+			luzAlta: [
+				{
+					value: 'luzAltSinPatron',
+					label: 'Luz alta no describe patrón reglamentario.',
+				},
+				{
+					value: 'luzAltDel',
+					label: 'Luz alta delantera  no enciende.',
+				},
+				{
+					value: 'bajIntIluDel',
+					label: 'Baja intensidad de iluminación en luz delantera.',
+				},
+			],
+			luzPat: [
+				{
+					value: 'luzPatTra',
+					label: 'Luz de patente trasera no enciende.',
+				},
+			],
+			balizas: [
+				{
+					value: 'luzBalizasDel',
+					label: 'Luces de balizas delanteras no destellan correctamente.',
+				},
+				{
+					value: 'luzBalizasTra',
+					label: 'Luces de balizas traseras no destellan correctamente.',
+				},
+				{
+					value: 'luzBalizasLat',
+					label: 'Luces de balizas laterales no destellan correctamente.',
+				},
+			],
+			guines: [
+				{
+					value: 'luzGirDelIzq',
+					label: 'Luz de giro delantera izquierda no destella correctamente.',
+				},
+				{
+					value: 'luzGirDelDer',
+					label: 'Luz de giro delantera derecha no  destella correctamente.',
+				},
+				{
+					value: 'luzGirTraIzq',
+					label: 'Luz de giro trasera izquierda no destella correctamente.',
+				},
+				{
+					value: 'luzGirTraDer',
+					label: 'Luz de giro trasera derecha no destella correctamente.',
+				},
+				{
+					value: 'luzGirLatIzq',
+					label: 'Luz de giro lateral izquiera no destella correctamente.',
+				},
+				{
+					value: 'luzGirLatDer',
+					label: 'Luz de giro lateral derecha no destella correctamente.',
+				},
+			],
+		},
+		ruedas: {
+			llantas: [
+				{
+					value: 'llaDelDef',
+					label: 'Llanta delanteradeformada.',
+				},
+				{
+					value: 'llaTraDef',
+					label: 'Llanta trasera deformada.',
+				},
+			],
+			neumaticos: [
+				{
+					value: 'neuDelMal',
+					label: 'Neumático delantero en mal estado.',
+				},
+				{
+					value: 'neuTraMal',
+					label: 'Neumático trasero en mal estado.',
+				},
+			],
+			fijaciones: [
+				{
+					value: 'falPerRueDel',
+					label: 'Falta perno/tuerca de fijación en rueda delantera.',
+				},
+				{
+					value: 'falPerRueTra',
+					label: 'Falta perno/tuerca de fijación en rueda trasera.',
+				},
+			],
+		},
 		acumDefectos: {
 			acumDefectosSeccion: [
 				{
@@ -267,90 +452,13 @@ const motoArray = {
 			],
 		},
 		sistElectrico: {
-			lucesDel: [
-				{
-					value: 'luzGirDelIzq',
-					label: 'Luz de giro delantera izquierda no destella correctamente.',
-				},
-				{
-					value: 'luzGirDelDer',
-					label: 'Luz de giro delantera derecha no destella correctamente.',
-				},
-				{
-					value: 'luzPosDel',
-					label: 'Luz de posición delantera no enciende.',
-				},
-				{
-					value: 'luzBaja',
-					label: 'Luz baja no enciende.',
-				},
-				{
-					value: 'luzDel',
-					label: 'Luz alta delantera no enciende.',
-				},
-				{
-					value: 'luzBaliza',
-					label: 'Luces de balizas no destellan correctamente.',
-				},
-				{
-					value: 'luzBajaPat',
-					label: 'Luz baja no describe patrón reglamentario.',
-				},
-				{
-					value: 'luzAltaPat',
-					label: 'Luz alta no describe patrón reglamentario.',
-				},
-				{
-					value: 'luzPocaInt',
-					label: 'Baja intensidad de iluminación en luz delantera.',
-				},
-			],
-			lucesTra: [
-				{
-					value: 'luzFreTraPalanca',
-					label:
-						'Luz de freno trasera no responde al accionamiento de la palanca de freno.',
-				},
-				{
-					value: 'luzFreTraPedal',
-					label: 'Luz de freno trasera no responde al accionamiento del pedal.',
-				},
-				{
-					value: 'luzPat',
-					label: 'Luz de patente no enciende.',
-				},
-				{
-					value: 'luzPosTra',
-					label: 'Luz de posición trasera no enciende.',
-				},
-				{
-					value: 'luzGirTraIzq',
-					label: 'Luz de giro trasera izquierda no destella correctamente.',
-				},
-				{
-					value: 'luzGirTraDer',
-					label: 'Luz de giro trasera derecha no destella correctamente.',
-				},
-				{
-					value: 'LuzBalTra',
-					label: 'Luces de balizas no destellan correctamente.',
-				},
-				{
-					value: 'bajaIntTraIzq',
-					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
-				},
-				{
-					value: 'bajaIntTraDer',
-					label: 'Baja intensidad de iluminación en luz trasera derecha.',
-				},
-			],
 			bocina: [
 				{
 					value: 'bocina',
 					label: 'Bocina no funciona.',
 				},
 			],
-			instrumental: [
+			testigos: [
 				{
 					value: 'tesPresAc',
 					label: 'Luz testigo de falta de PRESIÓN DE ACEITE encendido.',
@@ -372,12 +480,26 @@ const motoArray = {
 					label: 'Instrumental no funciona correctamente.',
 				},
 			],
+			instrumental: [
+				{
+					value: 'velocimetro',
+					label: 'Velocímetro no funciona correctamente.',
+				},
+				{
+					value: 'tacometro',
+					label: 'Tacómetro no funciona correctamente.',
+				},
+				{
+					value: 'insNoFunCor',
+					label: 'Instrumental no funciona correctamente.',
+				},
+			],
 		},
 		inspVisual: {
 			kit: [
 				{
 					value: 'kit',
-					label: 'Kit de seguridad de incompleto.',
+					label: 'Kit de seguridad incompleto.',
 				},
 			],
 			alineacion: [
@@ -407,6 +529,14 @@ const motoArray = {
 				},
 			],
 			carroceria: [
+				{
+					value: 'manubrio',
+					label: 'Manubrio o manillar con defectos.',
+				},
+				{
+					value: 'cuadro',
+					label: 'Cuadro con defectos.',
+				},
 				{
 					value: 'ancGuardDel',
 					label: 'Anclaje guardabarros delantero en mal estado.',

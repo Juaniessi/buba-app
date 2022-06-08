@@ -148,7 +148,6 @@ const autoArray = {
 				label: 'Casos poco frecuentes',
 			},
 		],
-
 		freno: [
 			{
 				value: 'rendDeFrenado',
@@ -171,7 +170,6 @@ const autoArray = {
 				label: 'Casos poco frecuentes',
 			},
 		],
-
 		emisiones: [
 			{
 				value: 'gases',
@@ -182,16 +180,7 @@ const autoArray = {
 				label: 'Ruido',
 			},
 		],
-
 		sistemaElectrico: [
-			{
-				value: 'lucesTra',
-				label: 'Luces traseras',
-			},
-			{
-				value: 'lucesDel',
-				label: 'Luces delanteras',
-			},
 			{
 				value: 'bocina',
 				label: 'Bocina',
@@ -204,8 +193,11 @@ const autoArray = {
 				value: 'limpiaParabrisas',
 				label: 'Limpia Parabrisas',
 			},
+			{
+				value: 'testigos',
+				label: 'Testigos',
+			},
 		],
-
 		inspVisual: [
 			{
 				value: 'kit',
@@ -292,7 +284,6 @@ const autoArray = {
 					value: 'luzPosTraDer',
 					label: 'Luz de posición trasera derecha no enciende.',
 				},
-
 				{
 					value: 'bajIntIluTraIzq',
 					label: 'Baja intensidad de iluminación en luz trasera izquierda.',
@@ -300,6 +291,14 @@ const autoArray = {
 				{
 					value: 'bajIntIluTraDer',
 					label: 'Baja intensidad de iluminación en luz trasera derecha.',
+				},
+				{
+					value: 'bajIntIluDelIzq',
+					label: 'Baja intensidad de iluminación en luz delantera izquierda.',
+				},
+				{
+					value: 'bajIntIluDelDer',
+					label: 'Baja intensidad de iluminación en luz delantera derecha.',
 				},
 			],
 			lucesDeFreno: [
@@ -959,6 +958,24 @@ const autoArray = {
 			],
 			instrumental: [
 				{
+					value: 'velocimetro',
+					label: 'Velocímetro no funciona correctamente.',
+				},
+				{
+					value: 'tacometro',
+					label: 'Tacómetro no funciona correctamente.',
+				},
+				{
+					value: 'insNoFunCor',
+					label: 'Instrumental no funciona correctamente.',
+				},
+			],
+			testigos: [
+				{
+					value: 'insNoFunCor',
+					label: 'Instrumental no funciona correctamente.',
+				},
+				{
 					value: 'luzTesAbsEnc',
 					label: 'Luz testigo de ABS encendido.',
 				},
@@ -982,10 +999,7 @@ const autoArray = {
 					value: 'luzTesAltTempEnc',
 					label: 'Luz testigo de ALTA TEMPERATURA encendido.',
 				},
-				{
-					value: 'insNoFunCor',
-					label: 'Instrumental no funciona correctamente.',
-				},
+
 				{
 					value: 'luzTestControlTraccion',
 					label: 'Luz testigo de control de tracción.',

@@ -58,6 +58,11 @@ h3 {
   font-size: 1.1rem;
 }
 
+label {
+  cursor: pointer;
+  margin: 0.5px 0;
+}
+
 .variable-btn {
   display: -webkit-box;
   display: -ms-flexbox;
