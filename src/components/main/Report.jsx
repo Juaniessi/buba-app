@@ -78,7 +78,7 @@ function Report(props) {
 	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const majorOrEqArray = new Map([
-		['brakeDif', [70, 15.1, 10]],
+		['brakeDif', [90, 15.1, 10]],
 		['brakeResist', [2, 1, 0.7]],
 		['brakeOval', [80, 50, 30]],
 		['luxLow', [200, 27, 26]],
