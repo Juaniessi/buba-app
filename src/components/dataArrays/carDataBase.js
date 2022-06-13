@@ -71,7 +71,7 @@ const autoArray = {
 				label: 'Guiñes',
 			},
 			{
-				value: 'luzRev',
+				value: 'luzRevSec',
 				label: 'Luz de reversa',
 			},
 			{
@@ -246,7 +246,6 @@ const autoArray = {
 				label: 'Carrocería',
 			},
 		],
-
 		inspFosa: [
 			{
 				value: 'fluidos',
@@ -433,9 +432,9 @@ const autoArray = {
 					label: 'Luz de giro lateral derecha no destella correctamente.',
 				},
 			],
-			luzRev: [
+			luzRevSec: [
 				{
-					value: 'luzRev',
+					value: 'luzRevDes',
 					label: 'Luz de reversa no funciona correctamente.',
 				},
 			],
