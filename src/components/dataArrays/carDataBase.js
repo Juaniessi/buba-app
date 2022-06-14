@@ -350,12 +350,12 @@ const autoArray = {
 				{
 					value: 'bajIntIluDelIzq',
 					label:
-						'Baja intensidad de iluminación en luz baja delantera izquierda.',
+						'Baja intensidad de iluminación en luz baja izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
 					label:
-						'Baja intensidad de iluminación en luz baja delantera derecha.',
+						'Baja intensidad de iluminación en luz baja derecha.',
 				},
 			],
 			luzAlta: [
@@ -365,21 +365,21 @@ const autoArray = {
 				},
 				{
 					value: 'luzAltDelIzq',
-					label: 'Luz alta delantera izquierda no enciende.',
+					label: 'Luz alta izquierda no enciende.',
 				},
 				{
 					value: 'luzAltDelDer',
-					label: 'Luz alta delantera derecha no enciende.',
+					label: 'Luz alta derecha no enciende.',
 				},
 				{
 					value: 'bajIntIluDelIzq',
 					label:
-						'Baja intensidad de iluminación en luz alta delantera izquierda.',
+						'Baja intensidad de iluminación en luz alta izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
 					label:
-						'Baja intensidad de iluminación en luz alta delantera derecha.',
+						'Baja intensidad de iluminación en luz alta derecha.',
 				},
 			],
 			luzPat: [
