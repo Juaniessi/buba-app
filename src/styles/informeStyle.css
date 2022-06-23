@@ -577,4 +577,23 @@
   border-radius: 3px;
   background-color: #ccffcc;
 }
+
+.references {
+  width: 660px;
+  position: absolute;
+  left: 15px;
+  top: 925px;
+  padding: 1px;
+  font-size: 0.5rem;
+}
+
+.def-name {
+  text-align: center;
+  width: 40px;
+}
+
+.def-col {
+  padding-left: 2px;
+  background-color: white;
+}
 /*# sourceMappingURL=informeStyle.css.map */
