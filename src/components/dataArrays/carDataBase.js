@@ -142,8 +142,20 @@ const autoArray = {
 				label: 'Cazoletas',
 			},
 			{
-				value: 'suspCPF',
-				label: 'Casos poco frecuentes',
+				value: 'barraDir',
+				label: 'Barra de dirección',
+			},
+			{
+				value: 'barraEst',
+				label: 'Barra estabilizadora',
+			},
+			{
+				value: 'trenTras',
+				label: 'Tren Trasero',
+			},
+			{
+				value: 'rodam',
+				label: 'Rodamientos',
 			},
 		],
 		freno: [
@@ -164,8 +176,12 @@ const autoArray = {
 				label: 'Ovalidad o Alabebeo',
 			},
 			{
-				value: 'frenoCPF',
-				label: 'Casos poco frecuentes',
+				value: 'fuerzaFren',
+				label: 'Fuerza de frenado',
+			},
+			{
+				value: 'circHidr',
+				label: 'Circuito hidráulico',
 			},
 		],
 		emisiones: [
@@ -349,13 +365,11 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label:
-						'Baja intensidad de iluminación en luz baja izquierda.',
+					label: 'Baja intensidad de iluminación en luz baja izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label:
-						'Baja intensidad de iluminación en luz baja derecha.',
+					label: 'Baja intensidad de iluminación en luz baja derecha.',
 				},
 			],
 			luzAlta: [
@@ -373,13 +387,11 @@ const autoArray = {
 				},
 				{
 					value: 'bajIntIluDelIzq',
-					label:
-						'Baja intensidad de iluminación en luz alta izquierda.',
+					label: 'Baja intensidad de iluminación en luz alta izquierda.',
 				},
 				{
 					value: 'bajIntIluDelDer',
-					label:
-						'Baja intensidad de iluminación en luz alta derecha.',
+					label: 'Baja intensidad de iluminación en luz alta derecha.',
 				},
 			],
 			luzPat: [
@@ -607,14 +619,24 @@ const autoArray = {
 		suspension: {
 			rotulas: [
 				{
-					value: 'rotMazaIzq',
+					value: 'rotMazaSupIzq',
 					label:
-						'Rótula maza delantera izquierda con holgura. Reemplazar y alinear.',
+						'Rótula maza delantera superior izquierda con holgura. Reemplazar y alinear.',
 				},
 				{
-					value: 'rotMazaDer',
+					value: 'rotMazaSupDer',
 					label:
-						'Rótula maza delantera derecha con holgura. Reemplazar y alinear.',
+						'Rótula maza delantera superior derecha con holgura. Reemplazar y alinear.',
+				},
+				{
+					value: 'rotMazaInfIzq',
+					label:
+						'Rótula maza delantera inferior izquierda con holgura. Reemplazar y alinear.',
+				},
+				{
+					value: 'rotMazaInfDer',
+					label:
+						'Rótula maza delantera inferior derecha con holgura. Reemplazar y alinear.',
 				},
 			],
 			fuelles: [
@@ -758,7 +780,35 @@ const autoArray = {
 					label: 'Cazoleta trasera derecha con holgura. Reemplazar y alinear.',
 				},
 			],
-			suspCPF: [
+			barraEst: [
+				{
+					value: 'barEstDel',
+					label: 'Barra estabilizadora delantera con defectos.',
+				},
+				{
+					value: 'barEstTra',
+					label: 'Barra estabilizadora trasera con defectos.',
+				},
+			],
+			barraDir: [
+				{
+					value: 'barDirIzq',
+					label:
+						'Barra de dirección con holgura rueda izquierda. Reemplazar y alinear.',
+				},
+				{
+					value: 'barDirDer',
+					label:
+						'Barra de dirección con holgura rueda derecha. Reemplazar y alinear.',
+				},
+			],
+			trenTras: [
+				{
+					value: 'puenteTra',
+					label: 'Puente trasero en mal estado.',
+				},
+			],
+			rodam: [
 				{
 					value: 'rodDelIzq',
 					label: 'Rodamientos defectuosos rueda delantera izquierda.',
@@ -774,28 +824,6 @@ const autoArray = {
 				{
 					value: 'rodTraDer',
 					label: 'Rodamientos defectuosos rueda trasera derecha.',
-				},
-				{
-					value: 'barEstDel',
-					label: 'Barra estabilizadora delantera con defectos.',
-				},
-				{
-					value: 'barEstTra',
-					label: 'Barra estabilizadora trasera con defectos.',
-				},
-				{
-					value: 'barDirIzq',
-					label:
-						'Barra de dirección con holgura rueda izquierda. Reemplazar y alinear.',
-				},
-				{
-					value: 'barDirDer',
-					label:
-						'Barra de dirección con holgura rueda derecha. Reemplazar y alinear.',
-				},
-				{
-					value: 'puenteTra',
-					label: 'Puente trasero en mal estado.',
 				},
 			],
 		},
@@ -902,17 +930,7 @@ const autoArray = {
 					label: 'Ovalidad en campana de freno trasera derecha.',
 				},
 			],
-			frenoCPF: [
-				{
-					value: 'cirHidDelFre',
-					label:
-						'Circuito hidráulico delantero de sistema de frenado con defectos.',
-				},
-				{
-					value: 'cirHidTraFre',
-					label:
-						'Circuito hidráulico trasero de sistema de frenado con defectos.',
-				},
+			fuerzaFren: [
 				{
 					value: 'freDelFueMin',
 					label:
@@ -927,6 +945,34 @@ const autoArray = {
 					value: 'freManFueMin',
 					label:
 						'Freno de mano no cumple con la fuerza mínima requerida (1 kN).',
+				},
+			],
+			circHidr: [
+				{
+					value: 'cirHidDelFre',
+					label:
+						'Circuito hidráulico delantero de sistema de frenado con defectos.',
+				},
+				{
+					value: 'cirHidTraFre',
+					label:
+						'Circuito hidráulico trasero de sistema de frenado con defectos.',
+				},
+				{
+					value: 'flexDelIzQ',
+					label: 'Flexible delantero izquierdo con defectos.',
+				},
+				{
+					value: 'flexDelDer',
+					label: 'Flexible delantero derecho con defectos.',
+				},
+				{
+					value: 'flexTraIzQ',
+					label: 'Flexible trasero izquierdo con defectos.',
+				},
+				{
+					value: 'flexTraDer',
+					label: 'Flexible trasero derecho con defectos.',
 				},
 			],
 		},
