@@ -70,8 +70,8 @@ function Report(props) {
 	const minorOrEqArray = new Map([
 		['brakePerf', [10, 40, 48]],
 		['handBrakePerf', [3, 14.4, 17]],
-		['brakeStrenghtDel', [0.15, 0.3, 0.46]],
-		['brakeStrenghtTra', [0.05, 0.3, 0.46]],
+		['brakeStrenghtFront', [0.15, 0.3, 0.46]],
+		['brakeStrenghtRear', [0.05, 0.3, 0.46]],
 		['brakeStrenghtMoto', [0.05, 0.15, 0.3]],
 	]);
 
@@ -516,19 +516,19 @@ function Report(props) {
 									))}
 								</div>
 								<div className="strength">
-									{reportArray.brakeStrenghtDel.map((item, i) => (
+									{reportArray.brakeStrenghtFront.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakeStrenghtDel')}
+												{minorOrEqual(item.ruta, 'brakeStrenghtFront')}
 											</p>
 										</div>
 									))}
-									{reportArray.brakeStrenghtTra.map((item, i) => (
+									{reportArray.brakeStrenghtRear.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakeStrenghtTra')}
+												{minorOrEqual(item.ruta, 'brakeStrenghtRear')}
 											</p>
 										</div>
 									))}

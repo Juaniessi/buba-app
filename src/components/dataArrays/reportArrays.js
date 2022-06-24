@@ -119,7 +119,7 @@ function autoReportArrayFiller() {
 					classEval: 'hand-eval',
 				},
 			],
-			brakeStrenghtDel: [
+			brakeStrenghtFront: [
 				{
 					ruta: window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'front-left',
@@ -131,7 +131,7 @@ function autoReportArrayFiller() {
 					classEval: 'front-right-eval',
 				},
 			],
-			brakeStrenghtTra: [
+			brakeStrenghtRear: [
 				{
 					ruta: window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'rear-left',
