@@ -85,8 +85,8 @@ const motoArray = {
 				label: 'Amortiguadores',
 			},
 			{
-				value: 'suspCPF',
-				label: 'Casos poco frecuentes',
+				value: 'horquilla',
+				label: 'Horquillas',
 			},
 		],
 		frenos: [
@@ -353,7 +353,7 @@ const motoArray = {
 					label: 'Pérdida de fluido en amortiguador trasero.',
 				},
 			],
-			suspCPF: [
+			horquilla: [
 				{
 					value: 'horqDel',
 					label: 'Horquilla delantera con holgura.',
