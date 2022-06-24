@@ -70,7 +70,7 @@ function Report(props) {
 	const minorOrEqArray = new Map([
 		['brakePerf', [10, 40, 48]],
 		['handBrakePerf', [3, 14.4, 17]],
-		['brakeStrenght', [0.1, 0.3, 0.46]],
+		['brakeStrenght', [0.01, 0.3, 0.46]],
 		['brakeStrenghtMoto', [0.05, 0.15, 0.3]],
 	]);
 
