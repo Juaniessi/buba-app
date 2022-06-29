@@ -317,6 +317,10 @@ const autoArray = {
 					label:
 						'Baja intensidad de iluminación en luz de posición delantera derecha.',
 				},
+				{
+					value: 'ningunaPos',
+					label: 'Ninguna luz de posición funciona.',
+				},
 			],
 			lucesDeFreno: [
 				{
@@ -349,6 +353,10 @@ const autoArray = {
 					label:
 						'Baja intensidad de iluminación en luz de freno trasera central.',
 				},
+				{
+					value: 'ningunaFren',
+					label: 'Ninguna luz de freno funciona.',
+				},
 			],
 			luzBaja: [
 				{
@@ -371,6 +379,10 @@ const autoArray = {
 					value: 'bajIntIluDelDer',
 					label: 'Baja intensidad de iluminación en luz baja derecha.',
 				},
+				{
+					value: 'ningunaBaja',
+					label: 'Ninguna luz baja funciona.',
+				},
 			],
 			luzAlta: [
 				{
@@ -392,6 +404,10 @@ const autoArray = {
 				{
 					value: 'bajIntIluDelDer',
 					label: 'Baja intensidad de iluminación en luz alta derecha.',
+				},
+				{
+					value: 'ningunaAlta',
+					label: 'Ninguna luz alta funciona.',
 				},
 			],
 			luzPat: [
@@ -442,6 +458,14 @@ const autoArray = {
 				{
 					value: 'luzGirLatDer',
 					label: 'Luz de giro lateral derecha no destella correctamente.',
+				},
+				{
+					value: 'variosGuinDel',
+					label: 'No destellan correctamente luces de guiñe delanteras.',
+				},
+				{
+					value: 'variosGuinTra',
+					label: 'No destellan correctamente luces de guiñe traseras.',
 				},
 			],
 			luzRevSec: [
@@ -620,35 +644,29 @@ const autoArray = {
 			rotulas: [
 				{
 					value: 'rotMazaSupIzq',
-					label:
-						'Rótula maza delantera superior izquierda con holgura. Reemplazar y alinear.',
+					label: 'Rótula maza delantera superior izquierda con holgura.',
 				},
 				{
 					value: 'rotMazaSupDer',
-					label:
-						'Rótula maza delantera superior derecha con holgura. Reemplazar y alinear.',
+					label: 'Rótula maza delantera superior derecha con holgura.',
 				},
 				{
 					value: 'rotMazaInfIzq',
-					label:
-						'Rótula maza delantera inferior izquierda con holgura. Reemplazar y alinear.',
+					label: 'Rótula maza delantera inferior izquierda con holgura.',
 				},
 				{
 					value: 'rotMazaInfDer',
-					label:
-						'Rótula maza delantera inferior derecha con holgura. Reemplazar y alinear.',
+					label: 'Rótula maza delantera inferior derecha con holgura.',
 				},
 			],
 			fuelles: [
 				{
 					value: 'fuelleCajaDirIzq',
-					label:
-						'Fuelle caja de dirección izquierdo en mal estado. Reemplazar y alinear.',
+					label: 'Fuelle caja de dirección izquierdo en mal estado.',
 				},
 				{
 					value: 'fuelleCajaDirDer',
-					label:
-						'Fuelle caja de dirección derecho en mal estado. Reemplazar y alinear.',
+					label: 'Fuelle caja de dirección derecho en mal estado.',
 				},
 				{
 					value: 'fuelleMazDelIzq',
@@ -687,22 +705,22 @@ const autoArray = {
 				{
 					value: 'bujeSusDelIzq',
 					label:
-						'Buje de parrilla de suspensión delantera izquierda en mal estado. Reemplazar y alinear.',
+						'Buje de parrilla de suspensión delantera izquierda en mal estado.',
 				},
 				{
 					value: 'bujeSusDelDer',
 					label:
-						'Buje de parrilla de suspensión delantera derecha en mal estado. Reemplazar y alinear.',
+						'Buje de parrilla de suspensión delantera derecha en mal estado.',
 				},
 				{
 					value: 'bujeSusTraIzq',
 					label:
-						'Buje de parrilla de suspensión trasera izquierda en mal estado.Reemplazar y alinear.',
+						'Buje de parrilla de suspensión trasera izquierda en mal estado.',
 				},
 				{
 					value: 'bujeSusTraDer',
 					label:
-						'Buje de parrilla de suspensión trasera derecha en mal estado.Reemplazar y alinear.',
+						'Buje de parrilla de suspensión trasera derecha en mal estado.',
 				},
 				{
 					value: 'brazoPit',
