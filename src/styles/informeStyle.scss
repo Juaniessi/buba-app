@@ -434,7 +434,9 @@
 	}
 
 	.severe {
-		background-color: rgba(0, 0, 0, 0.3);
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		font-weight: 600;
 	}
 	.moderate {
 		background-color: rgba(255, 100, 0, 0.5);

@@ -505,7 +505,9 @@
 }
 
 .finalReport .severe {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: 600;
 }
 
 .finalReport .moderate {
