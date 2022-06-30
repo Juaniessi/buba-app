@@ -103,8 +103,12 @@ const motoArray = {
 				label: 'Ovalidad o Alabebeo',
 			},
 			{
-				value: 'frenoCPF',
-				label: 'Casos poco frecuentes',
+				value: 'circHidr',
+				label: 'Circuito hidráulico',
+			},
+			{
+				value: 'fMinDeFreno',
+				label: 'Fuerza mín. de frenado',
 			},
 		],
 		emisiones: [
@@ -405,7 +409,7 @@ const motoArray = {
 					label: 'Ovalidad en campana de freno trasera.',
 				},
 			],
-			frenoCPF: [
+			circHidr: [
 				{
 					value: 'circHidDelDef',
 					label:
@@ -416,6 +420,8 @@ const motoArray = {
 					label:
 						'Circuito hidráulico trasero de sistema de frenado con defectos.',
 				},
+			],
+			fMinDeFreno: [
 				{
 					value: 'fMinDel',
 					label:

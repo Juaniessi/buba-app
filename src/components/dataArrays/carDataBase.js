@@ -1159,6 +1159,14 @@ const autoArray = {
 					value: 'cinTraCenDef',
 					label: 'Cinturón de seguridad trasero central defectuoso o faltante.',
 				},
+				{
+					value: 'cint2Tra',
+					label: 'Cinturon trasero izquierdo o derecho de de dos puntos.',
+				},
+				{
+					value: 'cint2Del',
+					label: 'Cinturon delantero izquierdo o derecho de de dos puntos.',
+				},
 			],
 			equipamiento: [
 				{
