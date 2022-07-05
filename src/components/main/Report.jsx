@@ -337,17 +337,6 @@ function Report(props) {
 			? ''
 			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
 
-	/**
-	 *
-	 * @param {*} date Date in wich the vehicle was entered in the system.
-	 * @param {*} validationPeriod Number of days to be added to the date. It represents the time in wich this report will cease to be valid.
-	 * @returns The date value plus the validation period to form a dueDate.
-	 */
-	function addDays(date, validationPeriod) {
-		const result = new Date(date);
-		result.setDate(result.getDate() + validationPeriod);
-		return result;
-	}
 
 	/**
 	 * Calculates the due date for this report.
@@ -357,9 +346,9 @@ function Report(props) {
 		let dueDate = new Date(startDate.getTime());
 
 		if (dateCalcBtn.value === 'Rechazado') {
-			dueDate = addDays(startDate, 0);
+			dueDate = new Date(startDate.getTime());
 		} else if (dateCalcBtn.value === 'Condicional') {
-			dueDate = addDays(startDate, 59);
+			dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
 		} else if (dateCalcBtn.value === 'Apto') {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
 		}
@@ -377,7 +366,7 @@ function Report(props) {
 					<b>
 						{startDate.getDate() +
 							'/' +
-							startDate.getMonth() +
+							Number(startDate.getMonth()+1) +
 							'/' +
 							startDate.getFullYear()}
 					</b>
@@ -386,7 +375,7 @@ function Report(props) {
 					<b>
 						{dueDate.getDate() +
 							'/' +
-							dueDate.getMonth() +
+							Number(dueDate.getMonth()+1) +
 							'/' +
 							dueDate.getFullYear()}
 					</b>
