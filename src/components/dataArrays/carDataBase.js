@@ -493,65 +493,59 @@ const autoArray = {
 			llantas: [
 				{
 					value: 'llaDelIzqDef',
-					label:
-						'Llanta delantera izquierda deformada. Neumáticos y llantas deben coincidir su eje.',
+					label: 'Llanta delantera izquierda deformada.',
 				},
 				{
 					value: 'llaDelDerDef',
-					label:
-						'Llanta delantera derecha deformada. Neumáticos y llantas deben coincidir su eje.',
+					label: 'Llanta delantera derecha deformada.',
 				},
 				{
 					value: 'llaTraIzqDef',
-					label:
-						'Llanta trasera izquierda deformada. Neumáticos y llantas deben coincidir su eje.',
+					label: 'Llanta trasera izquierda deformada.',
 				},
 				{
 					value: 'llaTraDerDef',
-					label:
-						'Llanta trasera derecha deformada. Neumáticos y llantas deben coincidir su eje.',
+					label: 'Llanta trasera derecha deformada.',
 				},
 				{
 					value: 'parTraLla',
-					label:
-						'Ambas llantas traseras en mal estado. Neumáticos y llantas deben coincidir su eje.',
+					label: 'Ambas llantas traseras en mal estado.',
 				},
 				{
 					value: 'parDelLla',
-					label:
-						'Ambas llantas delanteras en mal estado. Neumáticos y llantas deben coincidir su eje.',
+					label: 'Ambas llantas delanteras en mal estado.',
 				},
 			],
 			neumaticos: [
 				{
 					value: 'neuDelIzqMal',
 					label:
-						'Neumático delantero izquierdo en mal estado. Neumáticos y llantas deben coincidir su eje.',
+						'Neumático delantero izquierdo en mal estado. Los neumáticos deben ser identicos en su eje.',
 				},
 				{
 					value: 'neuDelDerMal',
 					label:
-						'Neumático delantero derecho en mal estado. Neumáticos y llantas deben coincidir su eje.',
+						'Neumático delantero derecho en mal estado. Los neumáticos deben ser identicos en su eje.',
 				},
 				{
 					value: 'neuTraIzqMal',
 					label:
-						'Neumático trasero izquierdo en mal estado. Neumáticos y llantas deben coincidir su eje.',
+						'Neumático trasero izquierdo en mal estado. Los neumáticos deben ser identicos en su eje.',
 				},
 				{
 					value: 'neuTraDerMal',
 					label:
-						'Neumático trasero derecho en mal estado. Neumáticos y llantas deben coincidir su eje.',
+						'Neumático trasero derecho en mal estado. Los neumáticos deben ser identicos en su eje.',
 				},
 				{
 					value: 'parTraNeu',
 					label:
-						'Ambos neumáticos traseros en mal estado. Neumáticos y llantas deben coincidir su eje.',
+						'Ambos neumáticos traseros en mal estado. Los neumáticos deben ser identicos en su eje.',
 				},
 				{
 					value: 'parDelNeu',
 					label:
-						'Ambos neumáticos delanteros en mal estado. Neumáticos y llantas deben coincidir su eje.',
+						'Ambos neumáticos delanteros en mal estado. Los neumáticos deben ser identicos en su eje.',
 				},
 			],
 			fijaciones: [
