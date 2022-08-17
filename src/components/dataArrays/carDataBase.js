@@ -275,6 +275,10 @@ const autoArray = {
 				value: 'chasis',
 				label: 'Chasis',
 			},
+			{
+				value: 'transmision',
+				label: 'Transmisión',
+			},
 		],
 	},
 
@@ -1404,6 +1408,16 @@ const autoArray = {
 				{
 					value: 'chasisDef',
 					label: 'Chasis deformado.',
+				},
+			],
+			transmision: [
+				{
+					value: 'homoIzq',
+					label: 'Homocinética delantera izqueirda con holgura.',
+				},
+				{
+					value: 'homoDer',
+					label: 'Homocinética delantera Derecha con holgura.',
 				},
 			],
 		},
