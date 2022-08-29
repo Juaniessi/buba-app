@@ -6,12 +6,12 @@ import {
 	autoReportArrayFiller,
 	motoReportArrayFiller,
 } from '../dataArrays/reportArrays';
+import resetBtnImg from '../../assets/arrow-rotate-left-solid.svg';
 
 function Main() {
-	const [tipo, setTipo] = useState('Auto');
-	const handleTipo = (item) => {
+	const resetBtn = () => {
 		setSeveridad({value: 'Moderado', label: 'Moderado', order: 2});
-		setTipo(item.value);
+		setTipo('Auto');
 		setGrupo({value: '', label: ''});
 		setSeccion({value: '', label: ''});
 		setDescripcion({value: '', label: ''});
@@ -25,6 +25,15 @@ function Main() {
 		moderateFlag.current = 0;
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
+	};
+	const [tipo, setTipo] = useState('Auto');
+	const handleTipo = (item) => {
+		if (item.value === 'Moto') {
+			setLista([]);
+			setReportArray('');
+		}
+		setTipo(item.value);
+		setEngineType({value: '4T', label: '4 Tiempos'});
 	};
 
 	const [severidad, setSeveridad] = useState({
@@ -139,6 +148,14 @@ function Main() {
 	return (
 		<main>
 			<form className="form-radio" id="no-print">
+				<label
+					id="reset-btn"
+					className="wrap-label reset-btn"
+					htmlFor="rest-btn"
+					onClick={resetBtn}>
+					Reiniciar todos los campos:
+					<img className="reset-img" src={resetBtnImg} alt="reset" />
+				</label>
 				<h2>Tipo de vehículo</h2>
 				<div className="btn-package type-c">
 					{radioGeneratorArray.type.map((item, i) => (
@@ -199,7 +216,7 @@ function Main() {
 						</label>
 					))}
 				</div>
-				<h3>Cargar de archivos</h3>
+				<h3>Carga de archivos e impresión</h3>
 			</form>
 			<section className="finalReport">
 				<Report

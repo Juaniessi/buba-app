@@ -467,6 +467,27 @@
 	cursor: pointer;
 }
 
+.reset-btn {
+	position: absolute;
+	left: 450px;
+	top: 10px;
+	background-color: rgb(255, 70, 70);
+	color: white;
+	font-weight: 500;
+}
+
+.reset-img {
+	width: 50px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+#reset-btn {
+	width: 180px;
+	height: 100px;
+	font-size: large;
+}
+
 /* .insert-btn-cont{
 	border: solid 1px black;
 } */
