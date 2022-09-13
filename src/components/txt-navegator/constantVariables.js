@@ -127,6 +127,10 @@ export const LINEA_DE_PRUEBA = 'lineaDePrueba';
  * Name of the key "estadísticaDePuestos" from the structureMap in file constantMaps.js
  */
 export const ESTADISTICA_DE_PUESTOS = 'estadísticaDePuestos';
+/**
+ * Name of the key "fotovalidacion" from the structureMap in file constantMaps.js
+ */
+ export const FOTOVALIDACION = 'fotovalidacion';
 
 /**
  * Identifier for selecction of mapHeader in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
@@ -232,6 +236,10 @@ export const intLineaDePrueba = 24;
  * Identifier for selecction of mapEstadisticaDePuesto in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
  */
 export const intEstadisticaDePuesto = 25;
+/**
+ * Identifier for selecction of mapFotovalidacion in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ */
+ export const intFotovalidacion = 26;
 
 /**
  * Normalization of name patente for the key in the final JSON structure.
@@ -783,6 +791,12 @@ export const nroDeLineaPto9 = 'nroDeLineaPto9';
  * Normalization of name nroDeLineaPto10 for the key in the final JSON structure.
  */
 export const nroDeLineaPto10 = 'nroDeLineaPto10';
+
+/**
+ * Normalization of name fotovalidación for the key in the final JSON structure.
+ */
+ export const fotovalidacion = 'fotovalidacion';
+
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
@@ -1731,6 +1745,12 @@ export const N80039 = '80039';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N80040 = '80040';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+ export const N100030 = '100030';
+
+ 
 
 /**
  * Amount of decimal values used to round a number

@@ -26,6 +26,7 @@ import {
   valoresCalibradosMap,
   lineaDePruebaMap,
   estadisticaDePuestosMap,
+  fotovalidacionMap,
   headerKeys,
   alineacionKeys,
   suspencionEjeDelanteroKeys,
@@ -52,6 +53,7 @@ import {
   valoresCalibradosKeys,
   lineaDePruebaKeys,
   estadisticaDePuestosKeys,
+  fotovalidacionKeys,
   collectionOfVariables,
 } from "./constantCollections.js";
 import {
@@ -86,6 +88,7 @@ import {
   intValoresCalibrados,
   intLineaDePrueba,
   intEstadisticaDePuesto,
+  intFotovalidacion,
   TWO_INT,
 } from "./constantVariables.js";
 import { structureMap } from "./globalVariables.js";
@@ -316,6 +319,7 @@ function populateStructure() {
   let mappedValoresCalibrados = new Map();
   let mappedLineaDePrueba = new Map();
   let mappedEstadisticaDePuestos = new Map();
+  let mappedFotovalidacion = new Map();
 
   let collectionOfMaps = [
     mappedHeader,
@@ -344,6 +348,7 @@ function populateStructure() {
     mappedValoresCalibrados,
     mappedLineaDePrueba,
     mappedEstadisticaDePuestos,
+    mappedFotovalidacion,
   ];
 
   /** Generates structure elements to be replaced on the model map */
@@ -407,6 +412,7 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
   mapValoresCalibrados(key, value, collectionOfMaps[intValoresCalibrados]);
   mapLineaDePrueba(key, value, collectionOfMaps[intLineaDePrueba]);
   mapEstadísticaDePuestos(key, value, collectionOfMaps[intEstadisticaDePuesto]);
+  mapFotovalidacion(key, value, collectionOfMaps[intFotovalidacion]);
 }
 
 /**
@@ -914,6 +920,23 @@ function mapEstadísticaDePuestos(key, value, mappedObj) {
   for (let i = 0; i < estadisticaDePuestosKeys.length; i++) {
     if (key === estadisticaDePuestosKeys[i]) {
       mappedObj.set(estadisticaDePuestosMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+}
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the fotovalidacion structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+ function mapFotovalidacion(key, value, mappedObj) {
+  for (let i = 0; i < fotovalidacionKeys.length; i++) {
+    if (key === fotovalidacionKeys[i]) {
+      mappedObj.set(fotovalidacionMap.get(key), mapSingleFile.get(key));
     }
   }
   return mappedObj;

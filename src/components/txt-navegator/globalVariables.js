@@ -25,6 +25,7 @@ import {
 	VALORES_CALIBRADOS,
 	LINEA_DE_PRUEBA,
 	ESTADISTICA_DE_PUESTOS,
+	FOTOVALIDACION,
 } from './constantVariables.js';
 
 import {
@@ -54,6 +55,7 @@ import {
 	valoresCalibradosMap,
 	lineaDePruebaMap,
 	estadisticaDePuestosMap,
+	fotovalidacionMap,
 } from './constantCollections.js';
 
 
@@ -88,4 +90,5 @@ export let structureMap = new Map([
 	[VALORES_CALIBRADOS, valoresCalibradosMap],
 	[LINEA_DE_PRUEBA, lineaDePruebaMap],
 	[ESTADISTICA_DE_PUESTOS, estadisticaDePuestosMap],
+	[FOTOVALIDACION, fotovalidacionMap],
 ]);
