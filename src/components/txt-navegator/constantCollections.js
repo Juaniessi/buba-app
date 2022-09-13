@@ -432,7 +432,7 @@ import {
 export const categories = [
   "[HEADER]",
   "Datos Vehículo",
-  "Datos Propietario",
+  "Datos Propietario Vehículo",
   "Resultado Luxometro",
   "Resultado Sonometro",
   "Resultado Gases",
@@ -457,6 +457,9 @@ export const categories = [
   "Inspección Visual Detector de Holguras",
   "Profundida de Neumaticos",
   "Fotovalidación",
+  "[DATA OUT]",
+  "Respaldo Documentos",
+  "Datos Conductor Vehículo",
 ];
 
 /**
