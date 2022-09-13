@@ -54,7 +54,9 @@ import {
   lineaDePruebaKeys,
   estadisticaDePuestosKeys,
   fotovalidacionKeys,
+  profundidaDeNeumaticosKeys,
   collectionOfVariables,
+  profundidaDeNeumaticosMap,
 } from "./constantCollections.js";
 import {
   SEMICOLON,
@@ -90,6 +92,7 @@ import {
   intEstadisticaDePuesto,
   intFotovalidacion,
   TWO_INT,
+  intprofundidaDeNeumaticos,
 } from "./constantVariables.js";
 import { structureMap } from "./globalVariables.js";
 
@@ -320,6 +323,7 @@ function populateStructure() {
   let mappedLineaDePrueba = new Map();
   let mappedEstadisticaDePuestos = new Map();
   let mappedFotovalidacion = new Map();
+  let mappedProfundidaDeNeumaticos = new Map();
 
   let collectionOfMaps = [
     mappedHeader,
@@ -349,6 +353,7 @@ function populateStructure() {
     mappedLineaDePrueba,
     mappedEstadisticaDePuestos,
     mappedFotovalidacion,
+    mappedProfundidaDeNeumaticos,
   ];
 
   /** Generates structure elements to be replaced on the model map */
@@ -413,6 +418,11 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
   mapLineaDePrueba(key, value, collectionOfMaps[intLineaDePrueba]);
   mapEstadísticaDePuestos(key, value, collectionOfMaps[intEstadisticaDePuesto]);
   mapFotovalidacion(key, value, collectionOfMaps[intFotovalidacion]);
+  mapProfundidadDeNeumaticos(
+    key,
+    value,
+    collectionOfMaps[intprofundidaDeNeumaticos]
+  );
 }
 
 /**
@@ -933,10 +943,28 @@ function mapEstadísticaDePuestos(key, value, mappedObj) {
  * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
  * @returns the new constructed map with data from the mapSingleFile global variable
  */
- function mapFotovalidacion(key, value, mappedObj) {
+function mapFotovalidacion(key, value, mappedObj) {
   for (let i = 0; i < fotovalidacionKeys.length; i++) {
     if (key === fotovalidacionKeys[i]) {
       mappedObj.set(fotovalidacionMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+}
+
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the ProfundidadDeNeumaticos structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+function mapProfundidadDeNeumaticos(key, value, mappedObj) {
+  for (let i = 0; i < profundidaDeNeumaticosKeys.length; i++) {
+    if (key === profundidaDeNeumaticosKeys[i]) {
+      mappedObj.set(profundidaDeNeumaticosMap.get(key), mapSingleFile.get(key));
     }
   }
   return mappedObj;
@@ -1277,7 +1305,7 @@ function getDatesFromString(value) {
   minutes = timeArray[1];
   seconds = timeArray[2];
 
-  if ((month - 1) != NaN) {
+  if (month - 1 != NaN) {
     month = month - 1;
   }
 
