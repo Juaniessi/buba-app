@@ -1305,7 +1305,9 @@ function getDatesFromString(value) {
 	minutes = timeArray[1];
 	seconds = timeArray[2];
 
-	if (month - 1 !== NaN) {
+	let monthMinusOne = month - 1;
+
+	if (!isNaN(monthMinusOne)) {
 		month = month - 1;
 	}
 
