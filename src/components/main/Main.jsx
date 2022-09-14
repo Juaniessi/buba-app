@@ -21,8 +21,6 @@ function Main() {
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
-		severeFlag.current = 0;
-		moderateFlag.current = 0;
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
 	};
@@ -69,8 +67,6 @@ function Main() {
 	 */
 	const handleTxtRender = (e) => {
 		setLista([]);
-		severeFlag.current = 0;
-		moderateFlag.current = 0;
 		procesTxt(e);
 
 		setTimeout(function () {
@@ -84,11 +80,6 @@ function Main() {
 				setReportArray(autoReportArrayFiller());
 			}
 		}, 70);
-
-		setTimeout(function () {
-			severeFlag.current = 0;
-			moderateFlag.current = 0;
-		}, 80);
 	};
 
 	/*
@@ -137,13 +128,6 @@ function Main() {
 
 	const loadFileRef = useRef(null);
 	const loadImgRef = useRef([]);
-
-	/**
-	 * severeFlag and moderateFlag are currently not being used.
-	 */
-
-	const severeFlag = useRef(0);
-	const moderateFlag = useRef(0);
 
 	return (
 		<main>
@@ -222,8 +206,6 @@ function Main() {
 				<Report
 					tipo={tipo}
 					loadFileRef={loadFileRef}
-					severeFlag={severeFlag}
-					moderateFlag={moderateFlag}
 					severidad={severidad}
 					setSeveridad={setSeveridad}
 					handleSeveridad={handleSeveridad}

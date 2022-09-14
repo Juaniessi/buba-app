@@ -13,8 +13,6 @@ function Report(props) {
 	const {
 		tipo,
 		loadFileRef,
-		severeFlag,
-		moderateFlag,
 		severidad,
 		setSeveridad,
 		handleSeveridad,
@@ -121,11 +119,9 @@ function Report(props) {
 		if (txtProp <= params[0]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
-			++severeFlag.current;
 		} else if (txtProp <= params[1]) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-			++moderateFlag.current;
 		} else if (txtProp <= params[2]) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -148,11 +144,9 @@ function Report(props) {
 		if (txtProp >= params[0]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
-			++severeFlag.current;
 		} else if (txtProp >= params[1]) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-			++moderateFlag.current;
 		} else if (txtProp >= params[2]) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -177,11 +171,9 @@ function Report(props) {
 		if (txtProp <= params[0] || txtProp >= params[1]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
-			++severeFlag.current;
 		} else if (txtProp <= params[2] || txtProp >= params[3]) {
 			severityEvaluation = 'moderate';
 			severityLetter = 'M';
-			++moderateFlag.current;
 		} else if (txtProp <= params[4] || txtProp >= params[5]) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
@@ -337,7 +329,6 @@ function Report(props) {
 			? ''
 			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
 
-
 	/**
 	 * Calculates the due date for this report.
 	 * @returns The calculated due date.
@@ -366,7 +357,7 @@ function Report(props) {
 					<b>
 						{startDate.getDate() +
 							'/' +
-							Number(startDate.getMonth()+1) +
+							Number(startDate.getMonth() + 1) +
 							'/' +
 							startDate.getFullYear()}
 					</b>
@@ -375,7 +366,7 @@ function Report(props) {
 					<b>
 						{dueDate.getDate() +
 							'/' +
-							Number(dueDate.getMonth()+1) +
+							Number(dueDate.getMonth() + 1) +
 							'/' +
 							dueDate.getFullYear()}
 					</b>
@@ -784,8 +775,6 @@ function Report(props) {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
-					severeFlag={severeFlag}
-					moderateFlag={moderateFlag}
 					severityOrder={severityOrder}
 				/>
 				<table className="references print">

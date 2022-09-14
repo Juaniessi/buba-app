@@ -23,8 +23,6 @@ function DefectList(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
-		severeFlag,
-		moderateFlag,
 	} = props;
 
 	/**
@@ -71,11 +69,6 @@ function DefectList(props) {
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
 			setUnlistedDef('');
-			/* if (severidad.value === 'Moderado') {
-				moderateFlag.current++;
-			} else if (severidad.value === 'Grave') {
-				severeFlag.current++;
-			} */
 		} else {
 			alert('Todos los campos deben estar completos');
 		}
@@ -93,11 +86,6 @@ function DefectList(props) {
 
 	function eraseDefect(index) {
 		const nuevaLista = lista.filter((props, i) => {
-			/* 	if (lista[i].sev === 'Moderado') {
-				moderateFlag.current--;
-			} else if (lista[i].sev === 'Grave') {
-				severeFlag.current--;
-			} */
 			return index !== i ? true : false;
 		});
 		setLista(nuevaLista);
