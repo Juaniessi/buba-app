@@ -826,9 +826,24 @@ export const nroDeLineaPto9 = "nroDeLineaPto9";
  */
 export const nroDeLineaPto10 = "nroDeLineaPto10";
 /**
- * Normalization of name fotovalidación for the key in the final JSON structure.
+ * Normalization of name fotovalidacion_1 for the key in the final JSON structure.
  */
-export const fotovalidacion = "fotovalidacion";
+export const fotovalidacion_1 = "fotovalidacion_1";
+/**
+ * Normalization of name fotovalidacion_2 for the key in the final JSON structure.
+ */
+ export const fotovalidacion_2 = "fotovalidacion_2";
+ /**
+ * Normalization of name fotovalidacion_3 for the key in the final JSON structure.
+ */
+export const fotovalidacion_3 = "fotovalidacion_3";
+/**
+ * Normalization of name fotovalidacion_4 for the key in the final JSON structure.
+ */
+ export const fotovalidacion_4 = "fotovalidacion_4";
+
+
+
 /**
  * Normalization of name profundidaDeNeumaticos for the key in the final JSON structure.
  */
@@ -1862,6 +1877,19 @@ export const N80040 = "80040";
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N100030 = "100030";
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100031 = "100031";
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100032 = "100032";
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100033 = "100033";
+
 
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
