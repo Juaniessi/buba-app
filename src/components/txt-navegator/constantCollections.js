@@ -407,7 +407,10 @@ import {
   N80039,
   N80040,
   FOTOVALIDACION,
-  fotovalidacion,
+  fotovalidacion_1,
+  fotovalidacion_2,
+  fotovalidacion_3,
+  fotovalidacion_4,
   N100030,
   nomProvN61000,
   nomProvN61001,
@@ -472,7 +475,7 @@ export const categories = [
   "[DATA OUT]",
   "Respaldo Documentos",
   "Datos Conductor Vehículo",
-  "Datos de Prueba" ,
+  "Datos de Prueba",
 ];
 
 /**
@@ -838,7 +841,7 @@ export const estadisticaDePuestosKeys = [
 /**
  * All keys from the fotovalidacion category in the excel file.
  */
-export const fotovalidacionKeys = [N100030];
+export const fotovalidacionKeys = [N100030, N100031, N100032, N100033];
 
 /**
  * All keys and values from the profundidaDeNeumaticos category in the excel file.
@@ -1227,9 +1230,14 @@ export const estadisticaDePuestosMap = new Map([
 ]);
 
 /**
- * All keys and values from the fotovalidacion category in the excel file.
+ * All keys and values from the fotovalidacion_1 category in the excel file.
  */
-export const fotovalidacionMap = new Map([[N100030, fotovalidacion]]);
+export const fotovalidacionMap = new Map([
+  [N100030, fotovalidacion_1],
+  [N100031, fotovalidacion_2],
+  [N100032, fotovalidacion_3],
+  [N100033, fotovalidacion_4],
+]);
 
 /**
  * All keys and values from the profundidaDeNeumaticos category in the excel file.
