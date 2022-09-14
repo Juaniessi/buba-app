@@ -268,7 +268,7 @@ function autoReportArrayFiller() {
 			carbonMonoxide: [
 				{
 					ruta: window.fileAsObject.analizadorDeGases
-						.resultadoMonoxidoDeCarbonoCOEnAltaRPM,
+						.resultadoMonoxidoDeCarbonoEnAltaRPM,
 					class: 'CO',
 					classEval: 'CO-eval',
 				},
@@ -276,7 +276,7 @@ function autoReportArrayFiller() {
 			hydroCarbon: [
 				{
 					ruta: window.fileAsObject.analizadorDeGases
-						.resultadoPartesPorMillonHCEnAltaRPM,
+						.resultadoHidroCarburosHCAltaRPM,
 					class: 'HCC',
 					classEval: 'HCC-eval',
 				},
