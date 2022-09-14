@@ -77,6 +77,12 @@ import {
   resultadoPartesPorMillonNox,
   resultadoDioxidoDeCarbonoCO1,
   lambda,
+  resultadoMonoxidoDeCarbonoEnAltaRPM,
+  resultadoHidroCarburosHCAltaRPM,
+  resultadoOxigenoO2EnAltaRPM,
+  resultadoOxidoNitrosoNoxEnAltaRPM,
+  resultadoDioxidoDeCarbonoEnAltaRPM,
+  resultadoObservaciones,
   fuerzaDeFrenadoLadoDerecho,
   fuerzaDeFrenadoLadoIzquierdo,
   diferenciaFzaFrenadoLadoALado,
@@ -214,6 +220,12 @@ import {
   N39003,
   N39004,
   N39005,
+  N39007,
+  N39008,
+  N39009,
+  N39010,
+  N39011,
+  N39006,
   N50000,
   N50001,
   N50010,
@@ -540,6 +552,12 @@ export const analizadorDeGasesKeys = [
   N39003,
   N39004,
   N39005,
+  N39007,
+  N39008,
+  N39009,
+  N39010,
+  N39011,
+  N39006,
 ];
 /**
  * All keys from the frenosEje_1 category in the excel file.
@@ -925,6 +943,12 @@ export const analizadorDeGasesMap = new Map([
   [N39003, resultadoPartesPorMillonNox],
   [N39004, resultadoDioxidoDeCarbonoCO1],
   [N39005, lambda],
+  [N39007, resultadoMonoxidoDeCarbonoEnAltaRPM],
+  [N39008, resultadoHidroCarburosHCAltaRPM],
+  [N39009, resultadoOxigenoO2EnAltaRPM],
+  [N39010, resultadoOxidoNitrosoNoxEnAltaRPM],
+  [N39011, resultadoDioxidoDeCarbonoEnAltaRPM],
+  [N39006, resultadoObservaciones],
 ]);
 /**
  * All keys and values from the frenosEje_1 category in the excel file.

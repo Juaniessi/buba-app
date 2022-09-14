@@ -460,6 +460,32 @@ export const resultadoDioxidoDeCarbonoCO1 = "resultadoDioxidoDeCarbonoCO1";
  * Normalization of name Lambda for the key in the final JSON structure.
  */
 export const lambda = "lambda";
+
+/**
+ * Normalization of name resultadoMonoxidoDeCarbonoEnAltaRPM for the key in the final JSON structure.
+ */
+export const resultadoMonoxidoDeCarbonoEnAltaRPM = "resultadoMonoxidoDeCarbonoEnAltaRPM" ;
+/**
+ * Normalization of name resultadoHidroCarburosHCAltaRPM for the key in the final JSON structure.
+ */
+export const resultadoHidroCarburosHCAltaRPM = "resultadoHidroCarburosHCAltaRPM" ;
+/**
+ * Normalization of name resultadoOxigenoO2EnAltaRPM for the key in the final JSON structure.
+ */
+export const resultadoOxigenoO2EnAltaRPM = "resultadoOxigenoO2EnAltaRPM" ;
+/**
+ * Normalization of name resultadoOxidoNitrosoNoxEnAltaRPM for the key in the final JSON structure.
+ */
+export const resultadoOxidoNitrosoNoxEnAltaRPM = "resultadoOxidoNitrosoNoxEnAltaRPM" ;
+/**
+ * Normalization of name resultadoDioxidoDeCarbonoEnAltaRPM for the key in the final JSON structure.
+ */
+export const resultadoDioxidoDeCarbonoEnAltaRPM = "resultadoDioxidoDeCarbonoEnAltaRPM" ;
+/**
+ * Normalization of name resultadoObservaciones for the key in the final JSON structure.
+ */
+export const resultadoObservaciones = "resultadoObservaciones" ;
+
 /**
  * Normalization of name fuerzaDeFrenadoLadoDerecho for the key in the final JSON structure.
  */
@@ -1088,6 +1114,30 @@ export const N39004 = "39004";
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N39005 = "39005";
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const  N39007 = "39007" ;
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const  N39008 = "39008" ;
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const  N39009 = "39009" ;
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const  N39010 = "39010" ;
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const  N39011 = "39011" ;
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const  N39006 = "39006" ;
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
