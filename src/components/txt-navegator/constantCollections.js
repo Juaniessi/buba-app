@@ -472,6 +472,7 @@ export const categories = [
   "[DATA OUT]",
   "Respaldo Documentos",
   "Datos Conductor Vehículo",
+  "Datos de Prueba" ,
 ];
 
 /**
