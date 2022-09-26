@@ -181,7 +181,7 @@ function DefectList(props) {
 					))}
 				</div>
 				<div className="variable-btn">
-					<div className="btn-package col-class group-c">
+					<div className="btn-package col-class">
 						<h3>Grupo</h3>
 						{tipoArray.grupo
 							.sort(function (a, b) {
@@ -210,7 +210,7 @@ function DefectList(props) {
 								</label>
 							))}
 					</div>
-					<div className="btn-package col-class section-c">
+					<div className="btn-package col-class">
 						<h3>Sección</h3>
 						{section
 							.sort(function (a, b) {
@@ -239,7 +239,7 @@ function DefectList(props) {
 								</label>
 							))}
 					</div>
-					<div className="btn-package col-class description-c">
+					<div className="btn-package col-class">
 						<h3>Descripción</h3>
 						{description
 							.sort(function (a, b) {
@@ -249,7 +249,9 @@ function DefectList(props) {
 							.map((item, i) => (
 								<label
 									className={
-										descripcion.value === item.value ? 'radio-checked' : ''
+										descripcion.value === item.value
+											? 'radio-checked description-c'
+											: 'description-c'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -267,7 +269,11 @@ function DefectList(props) {
 							))}
 						{seccion.value.length > 0 && (
 							<label
-								className={descripcion.value === 'otro' ? 'radio-checked' : ''}
+								className={
+									descripcion.value === 'otro'
+										? 'radio-checked description-c'
+										: 'description-c'
+								}
 								htmlFor="otro">
 								<input
 									type="radio"

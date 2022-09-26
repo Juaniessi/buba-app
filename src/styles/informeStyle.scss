@@ -504,6 +504,11 @@
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
 }
 
+.wrap-label:active {
+	box-shadow: none;
+	transform: translateY(4px);
+}
+
 .btn-input {
 	display: none;
 }

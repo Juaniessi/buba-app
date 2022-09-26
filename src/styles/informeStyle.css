@@ -585,6 +585,13 @@
           box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
 }
 
+.wrap-label:active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+}
+
 .btn-input {
   display: none;
 }

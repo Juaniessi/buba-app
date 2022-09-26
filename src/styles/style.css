@@ -108,8 +108,32 @@ label {
   width: 200px;
 }
 
+.group-c:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  background-color: #b4ffff;
+}
+
 .section-c {
   width: 190px;
+}
+
+.section-c:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  background-color: #b4ffff;
+}
+
+.description-c:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  background-color: #b4ffff;
 }
 
 .btn-inside {
