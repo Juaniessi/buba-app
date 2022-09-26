@@ -192,8 +192,8 @@ function DefectList(props) {
 								<label
 									className={
 										grupo.value === item.value
-											? 'radio-checked group-c'
-											: 'group-c'
+											? 'radio-checked'
+											: 'group-c focus'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -221,8 +221,8 @@ function DefectList(props) {
 								<label
 									className={
 										seccion.value === item.value
-											? 'radio-checked section-c'
-											: 'section-c'
+											? 'radio-checked'
+											: 'section-c focus'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -250,8 +250,8 @@ function DefectList(props) {
 								<label
 									className={
 										descripcion.value === item.value
-											? 'radio-checked description-c'
-											: 'description-c'
+											? 'radio-checked'
+											: 'description-c focus'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -271,8 +271,8 @@ function DefectList(props) {
 							<label
 								className={
 									descripcion.value === 'otro'
-										? 'radio-checked description-c'
-										: 'description-c'
+										? 'radio-checked'
+										: 'focus'
 								}
 								htmlFor="otro">
 								<input
