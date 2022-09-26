@@ -32,6 +32,7 @@ function Report(props) {
 		handleTxtRender,
 		reportArray,
 		engineType,
+		truckSize,
 		imgUpload,
 		onImageChange,
 		loadImgRef,
@@ -137,7 +138,7 @@ function Report(props) {
 	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
-	function majorOrEqual(txtProp, paramSelector) {
+	function majorOrEqual(txtProp, paramSelector, truckSize) {
 		let params = majorOrEqArray.get(paramSelector);
 		let severityEvaluation = '';
 		let severityLetter = '';
@@ -155,6 +156,11 @@ function Report(props) {
 			severityLetter = 'A';
 		}
 
+		if (truckSize === 'bigTruck') {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
@@ -164,10 +170,11 @@ function Report(props) {
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 
-	function minorAndMajorOrEqual(txtProp, paramSelector) {
+	function minorAndMajorOrEqual(txtProp, paramSelector, truckSize) {
 		let params = minorAndMajorOrEqArray.get(paramSelector);
 		let severityEvaluation = '';
 		let severityLetter = '';
+
 		if (txtProp <= params[0] || txtProp >= params[1]) {
 			severityEvaluation = 'severe';
 			severityLetter = 'G';
@@ -181,7 +188,10 @@ function Report(props) {
 			severityEvaluation = '';
 			severityLetter = 'A';
 		}
-
+		if (truckSize === 'bigTruck') {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
 		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
 	}
 
@@ -465,7 +475,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorAndMajorOrEqual(item.ruta, 'susp')}
+											{minorAndMajorOrEqual(item.ruta, 'susp', truckSize.value)}
 										</p>
 									</div>
 								))}
@@ -522,7 +532,11 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeResist')}
+												{majorOrEqual(
+													item.ruta,
+													'brakeResist',
+													truckSize.value
+												)}
 											</p>
 										</div>
 									))}

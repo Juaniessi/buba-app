@@ -227,7 +227,7 @@ td {
 }
 
 .engine-type {
-  color: white;
+  color: black;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -236,7 +236,7 @@ td {
 }
 
 .engine-type .btn-inside {
-  background-color: darkgray;
+  background-color: #ffff64;
 }
 
 .orange {

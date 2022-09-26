@@ -44,11 +44,21 @@ const radioGeneratorArray = {
 	engineType: [
 		{
 			value: '4T',
-			label: '4 Tiempos',
+			label: 'Motor 4 tiempos',
 		},
 		{
 			value: '2T',
-			label: '2 Tiempos',
+			label: 'Motor 2 tiempos',
+		},
+	],
+	truckSize: [
+		{
+			value: 'smallTruck',
+			label: 'Camión pequeño',
+		},
+		{
+			value: 'bigTruck',
+			label: 'Camión grande (No susp. ni Rueda frenada)',
 		},
 	],
 	dateCalc: [
@@ -65,6 +75,7 @@ const radioGeneratorArray = {
 			label: 'Rechazado',
 		},
 	],
+
 };
 
 export {radioGeneratorArray};

@@ -157,6 +157,10 @@ const autoArray = {
 				value: 'rodam',
 				label: 'Rodamientos',
 			},
+			{
+				value: 'hojasDeElastico',
+				label: 'Hojas de elástico',
+			},
 		],
 		freno: [
 			{
@@ -182,6 +186,10 @@ const autoArray = {
 			{
 				value: 'circHidr',
 				label: 'Circuito hidráulico',
+			},
+			{
+				value: 'circNeu',
+				label: 'Circuito neumático',
 			},
 		],
 		emisiones: [
@@ -243,7 +251,7 @@ const autoArray = {
 			},
 			{
 				value: 'opticas',
-				label: 'Ópticas',
+				label: 'Ópticas y faros',
 			},
 			{
 				value: 'altura',
@@ -605,6 +613,14 @@ const autoArray = {
 					label:
 						'Extremo de dirección derecho con holgura. Reemplazar y alinear.',
 				},
+				{
+					value: 'fuelleExtDirDer',
+					label: 'Fuele de extremo de dirección derecho en mal estado.',
+				},
+				{
+					value: 'fuelleExtDirIzq',
+					label: 'Fuele de extremo de dirección izquierdo en mal estado.',
+				},
 			],
 			direccionMecanica: [
 				{
@@ -624,6 +640,14 @@ const autoArray = {
 					value: 'barraDirDer',
 					label:
 						'Barra de dirección con holgura rueda derecha. Reemplazar y alinear.',
+				},
+				{
+					value: 'fuelleCajaDirIzq',
+					label: 'Fuelle caja de dirección izquierdo en mal estado.',
+				},
+				{
+					value: 'fuelleCajaDirDer',
+					label: 'Fuelle caja de dirección derecho en mal estado.',
 				},
 			],
 			direccionAsistida: [
@@ -686,14 +710,6 @@ const autoArray = {
 				},
 			],
 			fuelles: [
-				{
-					value: 'fuelleCajaDirIzq',
-					label: 'Fuelle caja de dirección izquierdo en mal estado.',
-				},
-				{
-					value: 'fuelleCajaDirDer',
-					label: 'Fuelle caja de dirección derecho en mal estado.',
-				},
 				{
 					value: 'fuelleMazDelIzq',
 					label: 'Fuelle de maza delantera izquierda en mal estado.',
@@ -1019,6 +1035,34 @@ const autoArray = {
 					label: 'Flexible trasero derecho con defectos.',
 				},
 			],
+			circNeu: [
+				{
+					value: 'cirNeuDelFre',
+					label:
+						'Circuito neumático delantero de sistema de frenado con defectos.',
+				},
+				{
+					value: 'cirNeuTraFre',
+					label:
+						'Circuito neumático trasero de sistema de frenado con defectos.',
+				},
+				{
+					value: 'flexDelIzQ',
+					label: 'Flexible delantero izquierdo con defectos.',
+				},
+				{
+					value: 'flexDelDer',
+					label: 'Flexible delantero derecho con defectos.',
+				},
+				{
+					value: 'flexTraIzQ',
+					label: 'Flexible trasero izquierdo con defectos.',
+				},
+				{
+					value: 'flexTraDer',
+					label: 'Flexible trasero derecho con defectos.',
+				},
+			],
 		},
 		emisiones: {
 			gases: [
@@ -1320,6 +1364,22 @@ const autoArray = {
 					value: 'optDelDerOpa',
 					label: 'Óptica delantera derecha opaca.',
 				},
+				{
+					value: 'optLatDer',
+					label: 'Óptica laterla derecha en mal estado.',
+				},
+				{
+					value: 'optLatIzq',
+					label: 'Óptica laterla izquierda en mal estado.',
+				},
+				{
+					value: 'farLatDer',
+					label: 'Fáro de posición lateral derecho en mal estado (vehículo pesado).',
+				},
+				{
+					value: 'farLatizq',
+					label: 'Fáro de posición lateral izquierdo en mal estado (vehículo pesado).',
+				},
 			],
 			altura: [
 				{
@@ -1418,6 +1478,14 @@ const autoArray = {
 				{
 					value: 'homoDer',
 					label: 'Homocinética delantera Derecha con holgura.',
+				},
+				{
+					value: 'protCardDel',
+					label: 'Protección para caida de cardan delantero.',
+				},
+				{
+					value: 'protCardTra',
+					label: 'Protección para caida de cardan trasero.',
 				},
 			],
 		},

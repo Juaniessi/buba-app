@@ -94,6 +94,14 @@ function Main() {
 		value: '4T',
 		label: '4 Tiempos',
 	});
+	/**
+	 * created to manage truck sizes.
+	 * to use porpperly, add truckSize.value to evaluation functions.
+	 */
+	const [truckSize, setTruckSize] = useState({
+		value: 'smallTruck',
+		label: 'Camión pequeño',
+	});
 
 	const [imgUpload, setImgUpload] = useState(null);
 
@@ -135,7 +143,7 @@ function Main() {
 				<label
 					id="reset-btn"
 					className="wrap-label reset-btn"
-					htmlFor="rest-btn"
+					htmlFor="reset-btn"
 					onClick={resetBtn}>
 					Reiniciar todos los campos:
 					<img className="reset-img" src={resetBtnImg} alt="reset" />
@@ -171,8 +179,26 @@ function Main() {
 											name="engineType"
 											id={item.value}
 											value={item.value}
-											checked={engineType.value === item.value} //determina que visualmente se vea checked
+											checked={engineType.value === item.value}
 											onChange={() => setEngineType(item)}
+										/>
+										{item.label}
+									</label>
+							  ))
+							: ''}
+					</div>
+					<div className="engine-type">
+						{tipo === 'Camion'
+							? radioGeneratorArray.truckSize.map((item, i) => (
+									<label className="btn-inside" htmlFor={item.value} key={i}>
+										<input
+											type="radio"
+											className="rad-c"
+											name="truckSize"
+											id={item.value}
+											value={item.value}
+											checked={truckSize.value === item.value}
+											onChange={() => setTruckSize(item)}
 										/>
 										{item.label}
 									</label>
@@ -226,6 +252,7 @@ function Main() {
 					handleTxtRender={handleTxtRender}
 					reportArray={reportArray}
 					engineType={engineType}
+					truckSize={truckSize}
 					imgUpload={imgUpload}
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
