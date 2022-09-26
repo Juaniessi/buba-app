@@ -20,6 +20,7 @@ function Main() {
 		setImgUpload('');
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
+		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
@@ -32,6 +33,7 @@ function Main() {
 		}
 		setTipo(item.value);
 		setEngineType({value: '4T', label: '4 Tiempos'});
+		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
 	};
 
 	const [severidad, setSeveridad] = useState({
