@@ -172,9 +172,9 @@ function Main() {
 						</label>
 					))}
 					<div className="engine-and-size-ctn">
-						<div className="engine-and-size">
-							{tipo === 'Moto'
-								? radioGeneratorArray.engineType.map((item, i) => (
+						{tipo === 'Moto'
+							? radioGeneratorArray.engineType.map((item, i) => (
+									<div className="engine-and-size">
 										<label className="btn-inside" htmlFor={item.value} key={i}>
 											<input
 												type="radio"
@@ -187,12 +187,12 @@ function Main() {
 											/>
 											{item.label}
 										</label>
-								  ))
-								: ''}
-						</div>
-						<div className="engine-and-size">
-							{tipo === 'Camion'
-								? radioGeneratorArray.truckSize.map((item, i) => (
+									</div>
+							  ))
+							: ''}
+						{tipo === 'Camion'
+							? radioGeneratorArray.truckSize.map((item, i) => (
+									<div className="engine-and-size">
 										<label className="btn-inside" htmlFor={item.value} key={i}>
 											<input
 												type="radio"
@@ -205,9 +205,9 @@ function Main() {
 											/>
 											{item.label}
 										</label>
-								  ))
-								: ''}
-						</div>
+									</div>
+							  ))
+							: ''}
 					</div>
 				</div>
 				<h3>Calcular fecha</h3>
