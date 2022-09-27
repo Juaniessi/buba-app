@@ -241,16 +241,19 @@ td {
   border: none;
 }
 
-.engine-type {
+.engine-and-size-ctn {
+  margin-top: 1rem;
+}
+
+.engine-and-size {
   color: black;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   border-radius: 5px;
-  margin-top: 1rem;
 }
 
-.engine-type .btn-inside {
+.engine-and-size .btn-inside {
   background-color: #ffff64;
 }
 

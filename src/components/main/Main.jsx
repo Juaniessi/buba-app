@@ -151,7 +151,7 @@ function Main() {
 					<img className="reset-img" src={resetBtnImg} alt="reset" />
 				</label>
 				<h2>Tipo de vehículo</h2>
-				<div className="btn-package type-c">
+				<div className="btn-package">
 					{radioGeneratorArray.type.map((item, i) => (
 						<label
 							className={`btn-inside ${
@@ -171,41 +171,43 @@ function Main() {
 							{item.label}
 						</label>
 					))}
-					<div className="engine-type">
-						{tipo === 'Moto'
-							? radioGeneratorArray.engineType.map((item, i) => (
-									<label className="btn-inside" htmlFor={item.value} key={i}>
-										<input
-											type="radio"
-											className="rad-c"
-											name="engineType"
-											id={item.value}
-											value={item.value}
-											checked={engineType.value === item.value}
-											onChange={() => setEngineType(item)}
-										/>
-										{item.label}
-									</label>
-							  ))
-							: ''}
-					</div>
-					<div className="engine-type">
-						{tipo === 'Camion'
-							? radioGeneratorArray.truckSize.map((item, i) => (
-									<label className="btn-inside" htmlFor={item.value} key={i}>
-										<input
-											type="radio"
-											className="rad-c"
-											name="truckSize"
-											id={item.value}
-											value={item.value}
-											checked={truckSize.value === item.value}
-											onChange={() => setTruckSize(item)}
-										/>
-										{item.label}
-									</label>
-							  ))
-							: ''}
+					<div className="engine-and-size-ctn">
+						<div className="engine-and-size">
+							{tipo === 'Moto'
+								? radioGeneratorArray.engineType.map((item, i) => (
+										<label className="btn-inside" htmlFor={item.value} key={i}>
+											<input
+												type="radio"
+												className="rad-c"
+												name="engineType"
+												id={item.value}
+												value={item.value}
+												checked={engineType.value === item.value}
+												onChange={() => setEngineType(item)}
+											/>
+											{item.label}
+										</label>
+								  ))
+								: ''}
+						</div>
+						<div className="engine-and-size">
+							{tipo === 'Camion'
+								? radioGeneratorArray.truckSize.map((item, i) => (
+										<label className="btn-inside" htmlFor={item.value} key={i}>
+											<input
+												type="radio"
+												className="rad-c"
+												name="truckSize"
+												id={item.value}
+												value={item.value}
+												checked={truckSize.value === item.value}
+												onChange={() => setTruckSize(item)}
+											/>
+											{item.label}
+										</label>
+								  ))
+								: ''}
+						</div>
 					</div>
 				</div>
 				<h3>Calcular fecha</h3>
