@@ -615,11 +615,11 @@ const autoArray = {
 				},
 				{
 					value: 'fuelleExtDirDer',
-					label: 'Fuele de extremo de dirección derecho en mal estado.',
+					label: 'Fuelle de extremo de dirección derecho en mal estado.',
 				},
 				{
 					value: 'fuelleExtDirIzq',
-					label: 'Fuele de extremo de dirección izquierdo en mal estado.',
+					label: 'Fuelle de extremo de dirección izquierdo en mal estado.',
 				},
 			],
 			direccionMecanica: [
@@ -640,14 +640,6 @@ const autoArray = {
 					value: 'barraDirDer',
 					label:
 						'Barra de dirección con holgura rueda derecha. Reemplazar y alinear.',
-				},
-				{
-					value: 'fuelleCajaDirIzq',
-					label: 'Fuelle caja de dirección izquierdo en mal estado.',
-				},
-				{
-					value: 'fuelleCajaDirDer',
-					label: 'Fuelle caja de dirección derecho en mal estado.',
 				},
 			],
 			direccionAsistida: [
@@ -1374,11 +1366,13 @@ const autoArray = {
 				},
 				{
 					value: 'farLatDer',
-					label: 'Fáro de posición lateral derecho en mal estado (vehículo pesado).',
+					label:
+						'Fáro de posición lateral derecho en mal estado (vehículo pesado).',
 				},
 				{
 					value: 'farLatizq',
-					label: 'Fáro de posición lateral izquierdo en mal estado (vehículo pesado).',
+					label:
+						'Fáro de posición lateral izquierdo en mal estado (vehículo pesado).',
 				},
 			],
 			altura: [
