@@ -27,7 +27,7 @@ function Main() {
 	};
 	const [tipo, setTipo] = useState('Auto');
 	const handleTipo = (item) => {
-		if (item.value === 'Moto') {
+		if (tipo === 'Moto' || item.value === 'Moto') {
 			setLista([]);
 			setReportArray('');
 		}
