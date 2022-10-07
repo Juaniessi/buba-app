@@ -7,6 +7,7 @@ import {
 	motoReportArrayFiller,
 } from '../dataArrays/reportArrays';
 import resetBtnImg from '../../assets/arrow-rotate-left-solid.svg';
+import WeightSum from './WeigthSum';
 
 function Main() {
 	const resetBtn = () => {
@@ -132,7 +133,7 @@ function Main() {
 
 	/**
 	 * loadFileRef and loadImgRef are used to clear the file between
-	 * rerenders so yo can actually chose the same file twice when you
+	 * rerenders so you can actually chose the same file twice when you
 	 * forgot to change the type.
 	 */
 
@@ -142,6 +143,7 @@ function Main() {
 	return (
 		<main>
 			<form className="form-radio" id="no-print">
+			<WeightSum tipo={tipo} txtRender={txtRender} />
 				<label
 					id="reset-btn"
 					className="wrap-label reset-btn"
