@@ -3,23 +3,33 @@ import React from 'react';
 function WeightSum(props) {
 	const {tipo, txtRender} = props;
 	return (
-		<main >
+		<main>
 			{tipo === 'Moto' &&
 			window.fileAsObject !== undefined &&
 			txtRender !== '' ? (
 				<div className="weightsTable">
 					<div>
+						Peso total:{' '}
+						{Math.round(
+							Number(
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
+									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo
+							)
+						)}
+					</div>
+					<div>
 						Peso eje delantero:{' '}
-						{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo}
+						{Math.round(
+							Number(
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
+							)
+						)}
 					</div>
 					<div>
 						Peso eje trasero:{' '}
-						{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}
-					</div>
-					<div>
-						Peso total:{' '}
-						{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
-							window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo}
+						{Math.round(
+							Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo)
+						)}
 					</div>
 				</div>
 			) : (
@@ -30,21 +40,33 @@ function WeightSum(props) {
 			txtRender !== '' ? (
 				<div className="weightsTable">
 					<div>
+						Peso total:{' '}
+						{Math.round(
+							Number(
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
+									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo +
+									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho +
+									window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho
+							)
+						)}
+					</div>
+					<div>
 						Peso eje delantero:{' '}
-						{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
-							window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho}
+						{Math.round(
+							Number(
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
+									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho
+							)
+						)}
 					</div>
 					<div>
 						Peso eje trasero:{' '}
-						{window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo +
-							window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}
-					</div>
-					<div>
-						Peso total:{' '}
-						{window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
-							window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo +
-							window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho +
-							window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho}
+						{Math.round(
+							Number(
+								window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo +
+									window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho
+							)
+						)}
 					</div>
 				</div>
 			) : (
