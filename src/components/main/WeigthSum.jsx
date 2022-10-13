@@ -8,6 +8,7 @@ function WeightSum(props) {
 			window.fileAsObject !== undefined &&
 			txtRender !== '' ? (
 				<div className="weightsTable">
+					<div>Combustible: Nafta</div>
 					<div>
 						Peso total:{' '}
 						{Math.round(
@@ -39,6 +40,12 @@ function WeightSum(props) {
 			window.fileAsObject !== undefined &&
 			txtRender !== '' ? (
 				<div className="weightsTable">
+					<div>
+						Combustible:{' '}
+						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1
+							? 'Nafta/Gas'
+							: 'Diesel'}
+					</div>
 					<div>
 						Peso total:{' '}
 						{Math.round(

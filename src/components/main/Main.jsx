@@ -143,7 +143,7 @@ function Main() {
 	return (
 		<main>
 			<form className="form-radio" id="no-print">
-			<WeightSum tipo={tipo} txtRender={txtRender} />
+				<WeightSum tipo={tipo} txtRender={txtRender} />
 				<label
 					id="reset-btn"
 					className="wrap-label reset-btn"
@@ -176,8 +176,8 @@ function Main() {
 					<div className="engine-and-size-ctn">
 						{tipo === 'Moto'
 							? radioGeneratorArray.engineType.map((item, i) => (
-									<div className="engine-and-size">
-										<label className="btn-inside" htmlFor={item.value} key={i}>
+									<div className="engine-and-size" key={i}>
+										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
 												className="rad-c"
@@ -194,8 +194,8 @@ function Main() {
 							: ''}
 						{tipo === 'Camion'
 							? radioGeneratorArray.truckSize.map((item, i) => (
-									<div className="engine-and-size">
-										<label className="btn-inside" htmlFor={item.value} key={i}>
+									<div className="engine-and-size" key={i}>
+										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
 												className="rad-c"

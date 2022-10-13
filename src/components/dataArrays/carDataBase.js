@@ -1471,7 +1471,7 @@ const autoArray = {
 				},
 				{
 					value: 'homoDer',
-					label: 'Homocinética delantera Derecha con holgura.',
+					label: 'Homocinética delantera derecha con holgura.',
 				},
 				{
 					value: 'protCardDel',
