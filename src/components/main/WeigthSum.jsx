@@ -13,10 +13,14 @@ function WeightSum(props) {
 						Peso total:{' '}
 						{Math.round(
 							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
-									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
 							)
-						)}
+						) +
+							Math.round(
+								Number(
+									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo
+								)
+							)}
 					</div>
 					<div>
 						Peso eje delantero:{' '}
@@ -50,30 +54,44 @@ function WeightSum(props) {
 						Peso total:{' '}
 						{Math.round(
 							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
-									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo +
-									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho +
-									window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
 							)
-						)}
+						) +
+							Math.round(
+								Number(
+									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo
+								)
+							) +
+							Math.round(
+								Number(
+									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho
+								)
+							) +
+							Math.round(
+								Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho)
+							)}
 					</div>
 					<div>
 						Peso eje delantero:{' '}
 						{Math.round(
 							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo +
-									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho
+								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
 							)
-						)}
+						) +
+							Math.round(
+								Number(
+									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho
+								)
+							)}
 					</div>
 					<div>
 						Peso eje trasero:{' '}
 						{Math.round(
-							Number(
-								window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo +
-									window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho
-							)
-						)}
+							Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo)
+						) +
+							Math.round(
+								Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho)
+							)}
 					</div>
 				</div>
 			) : (
