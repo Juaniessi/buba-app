@@ -46,9 +46,7 @@ function WeightSum(props) {
 				<div className="weightsTable">
 					<div>
 						Combustible:{' '}
-						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1
-							? 'Nafta/Gas'
-							: 'Diesel'}
+						{window.fileAsObject.header.subModelo}
 					</div>
 					<div>
 						Peso total:{' '}
