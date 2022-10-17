@@ -841,6 +841,14 @@ const autoArray = {
 					value: 'barEstTra',
 					label: 'Barra estabilizadora trasera con defectos.',
 				},
+				{
+					value: 'bujesBarEstDel',
+					label: 'Bujes y/o bieletas de barra estabilizadora delantera con defectos.',
+				},
+				{
+					value: 'bujesBarEstTra',
+					label: 'Bujes y/o bieletas de barra estabilizadora trasera con defectos.',
+				},
 			],
 			barraDir: [
 				{
@@ -1177,6 +1185,10 @@ const autoArray = {
 				{
 					value: 'kitSeguridad',
 					label: 'Kit de seguridad incompleto.',
+				},
+				{
+					value: 'matafuego',
+					label: 'Carga de matafuegos vencida.',
 				},
 			],
 			patentes: [
