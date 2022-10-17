@@ -1084,7 +1084,7 @@ const autoArray = {
 		sistemaElectrico: {
 			bocina: [
 				{
-					value: 'bocina',
+					value: 'bocinaNo',
 					label: 'Bocina no funciona.',
 				},
 			],

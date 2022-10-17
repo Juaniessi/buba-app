@@ -457,7 +457,7 @@ const motoArray = {
 		sistElectrico: {
 			bocina: [
 				{
-					value: 'bocina',
+					value: 'bocinaNo',
 					label: 'Bocina no funciona.',
 				},
 			],
@@ -477,10 +477,6 @@ const motoArray = {
 				{
 					value: 'tesTemp',
 					label: 'Luz testigo de ALTA TEMPERATURA encendido.',
-				},
-				{
-					value: 'instrumental',
-					label: 'Instrumental no funciona correctamente.',
 				},
 			],
 			instrumental: [
