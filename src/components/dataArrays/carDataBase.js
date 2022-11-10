@@ -701,24 +701,6 @@ const autoArray = {
 					label: 'Rótula maza delantera inferior derecha con holgura.',
 				},
 			],
-			fuelles: [
-				{
-					value: 'fuelleMazDelIzq',
-					label: 'Fuelle de maza delantera izquierda en mal estado.',
-				},
-				{
-					value: 'fuelleMazaDelDer',
-					label: 'Fuelle de maza delantera derecha en mal estado.',
-				},
-				{
-					value: 'fuelleMazaTraIzq',
-					label: 'Fuelle de maza trasera izquierda en mal estado.',
-				},
-				{
-					value: 'fuelleMazaTraDer',
-					label: 'Fuelle de maza trasera derecha en mal estado.',
-				},
-			],
 			parrillas: [
 				{
 					value: 'bujeSusDelIzq',
@@ -1019,6 +1001,22 @@ const autoArray = {
 				{
 					value: 'flexTraDer',
 					label: 'Flexible trasero derecho con defectos.',
+				},
+				{
+					value: 'perdfluDelizq',
+					label: 'Pérdida de líquido de freno en rueda delantera izquierda.',
+				},
+				{
+					value: 'perdfluDelDer',
+					label: 'Pérdida de líquido de freno en rueda delantera derecha.',
+				},
+				{
+					value: 'perdfluTraizq',
+					label: 'Pérdida de líquido de freno en rueda trasera izquierda.',
+				},
+				{
+					value: 'perdfluTraDer',
+					label: 'Pérdida de líquido de freno en rueda trasera derecha.',
 				},
 			],
 			circNeu: [
@@ -1494,6 +1492,22 @@ const autoArray = {
 				{
 					value: 'fuelleTransTraDer',
 					label: 'Fuelle de transmisión trasero derecho en mal estado.',
+				},
+				{
+					value: 'fuelleMazDelIzq',
+					label: 'Fuelle de maza delantera izquierda en mal estado.',
+				},
+				{
+					value: 'fuelleMazaDelDer',
+					label: 'Fuelle de maza delantera derecha en mal estado.',
+				},
+				{
+					value: 'fuelleMazaTraIzq',
+					label: 'Fuelle de maza trasera izquierda en mal estado.',
+				},
+				{
+					value: 'fuelleMazaTraDer',
+					label: 'Fuelle de maza trasera derecha en mal estado.',
 				},
 			],
 		},
