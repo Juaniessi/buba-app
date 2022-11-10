@@ -718,22 +718,6 @@ const autoArray = {
 					value: 'fuelleMazaTraDer',
 					label: 'Fuelle de maza trasera derecha en mal estado.',
 				},
-				{
-					value: 'fuelleTransDelIzq',
-					label: 'Fuelle de transmisión delantero izquierdo en mal estado.',
-				},
-				{
-					value: 'fuelleTransDelDer',
-					label: 'Fuelle de transmisión delantero derecho en mal estado.',
-				},
-				{
-					value: 'fuelleTransTraIzq',
-					label: 'Fuelle de transmisión trasero izquierdo en mal estado.',
-				},
-				{
-					value: 'fuelleTransTraDer',
-					label: 'Fuelle de transmisión trasero derecho en mal estado.',
-				},
 			],
 			parrillas: [
 				{
@@ -843,11 +827,13 @@ const autoArray = {
 				},
 				{
 					value: 'bujesBarEstDel',
-					label: 'Bujes y/o bieletas de barra estabilizadora delantera con defectos.',
+					label:
+						'Bujes y/o bieletas de barra estabilizadora delantera con defectos.',
 				},
 				{
 					value: 'bujesBarEstTra',
-					label: 'Bujes y/o bieletas de barra estabilizadora trasera con defectos.',
+					label:
+						'Bujes y/o bieletas de barra estabilizadora trasera con defectos.',
 				},
 			],
 			barraDir: [
@@ -1492,6 +1478,22 @@ const autoArray = {
 				{
 					value: 'protCardTra',
 					label: 'Protección para caida de cardan trasero.',
+				},
+				{
+					value: 'fuelleTransDelIzq',
+					label: 'Fuelle de transmisión delantero izquierdo en mal estado.',
+				},
+				{
+					value: 'fuelleTransDelDer',
+					label: 'Fuelle de transmisión delantero derecho en mal estado.',
+				},
+				{
+					value: 'fuelleTransTraIzq',
+					label: 'Fuelle de transmisión trasero izquierdo en mal estado.',
+				},
+				{
+					value: 'fuelleTransTraDer',
+					label: 'Fuelle de transmisión trasero derecho en mal estado.',
 				},
 			],
 		},
