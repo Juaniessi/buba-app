@@ -13,12 +13,10 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"dev": "react-scripts start",
-		"start": "react-scripts star",
+		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"heroku-postbuild": "npm run build",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build"
 	},
