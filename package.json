@@ -12,7 +12,7 @@
 		"serve": "^13.0.2",
 		"web-vitals": "^2.1.4"
 	},
-	"homepage": "http://{juaniessi}.github.io/{buba-app}",
+	"homepage": "http://juaniessi.github.io/buba-app",
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
