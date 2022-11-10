@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "%7Bjuaniessi%7D.github.io/%7Bbuba-app%7D/precache-manifest.aa24d13d29020b2baf49a5b6d64f2522.js"
+  "/buba-app/precache-manifest.4a7ea2fe55607f9def683e145acf9a35.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("%7Bjuaniessi%7D.github.io/%7Bbuba-app%7D/index.html", {
+workbox.routing.registerNavigationRoute("/buba-app/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
