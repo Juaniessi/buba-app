@@ -126,10 +126,6 @@ const autoArray = {
 				label: 'Rótulas',
 			},
 			{
-				value: 'fuelles',
-				label: 'Fuelles',
-			},
-			{
 				value: 'parrillas',
 				label: 'Parrillas',
 			},
@@ -834,6 +830,14 @@ const autoArray = {
 				{
 					value: 'puenteTra',
 					label: 'Puente trasero en mal estado.',
+				},
+				{
+					value: 'bujeIzqTra',
+					label: 'Buje izquierdo de puente trasero en mal estado.',
+				},
+				{
+					value: 'bujeDerTra',
+					label: 'Buje derecho de puente trasero en mal estado.',
 				},
 			],
 			rodam: [
