@@ -187,6 +187,10 @@ const autoArray = {
 				value: 'circNeu',
 				label: 'Circuito neumático',
 			},
+			{
+				value: 'frenMan',
+				label: 'Freno de mano',
+			},
 		],
 		emisiones: [
 			{
@@ -1051,6 +1055,16 @@ const autoArray = {
 					label: 'Flexible trasero derecho con defectos.',
 				},
 			],
+			frenMan: [
+				{
+					value: 'noTraba',
+					label: 'Frenos de mano no traba.',
+				},
+				{
+					value: 'regFrenMan',
+					label: 'Regular freno de mano.',
+				},
+			],
 		},
 		emisiones: {
 			gases: [
@@ -1438,6 +1452,10 @@ const autoArray = {
 				{
 					value: 'perAciBat',
 					label: 'Pérdida de ácido en la batería.',
+				},
+				{
+					value: 'perAcIndef',
+					label: 'Pérdida de aceite indefinida.',
 				},
 			],
 			sistEscape: [
