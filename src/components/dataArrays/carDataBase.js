@@ -729,20 +729,32 @@ const autoArray = {
 			],
 			amortiguadores: [
 				{
+					value: 'ambosEjeDel',
+					label: 'Ambos amortiguadores delanteros defectuosos.',
+				},
+				{
+					value: 'ambosEjeTra',
+					label: 'Ambos amortiguadores traseros defectuosos.',
+				},
+				{
 					value: 'bajoRendAmortDelIzq',
-					label: 'Amortiguador delantero izquierdo defectuoso.',
+					label:
+						'Amortiguador delantero izquierdo defectuoso (se recomienda cambiar el par).',
 				},
 				{
 					value: 'bajoRendAmortDelDer',
-					label: 'Amortiguador delantero derecho defectuoso.',
+					label:
+						'Amortiguador delantero derecho defectuoso (se recomienda cambiar el par).',
 				},
 				{
 					value: 'bajoRendAmortTraIzq',
-					label: 'Amortiguador trasero izquierdo defectuoso.',
+					label:
+						'Amortiguador trasero izquierdo defectuoso (se recomienda cambiar el par).',
 				},
 				{
 					value: 'bajoRendAmortTraDer',
-					label: 'Amortiguador trasero derecho defectuoso.',
+					label:
+						'Amortiguador trasero derecho defectuoso (se recomienda cambiar el par).',
 				},
 				{
 					value: 'perdAmortDelIzq',
