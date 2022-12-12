@@ -477,11 +477,11 @@ const autoArray = {
 				},
 				{
 					value: 'variosGuinDel',
-					label: 'No destellan correctamente luces de guiñe delanteras.',
+					label: 'No destellan correctamente ambas luces de giro delanteras.',
 				},
 				{
 					value: 'variosGuinTra',
-					label: 'No destellan correctamente luces de guiñe traseras.',
+					label: 'No destellan correctamente ambas luces de giro traseras.',
 				},
 			],
 			luzRevSec: [
