@@ -78,12 +78,14 @@ label {
 }
 
 .group-c {
-	width: 200px;
+	min-width: 200px;
 }
 
 .section-c {
-	width: 190px;
+	min-width: 190px;
 }
+
+
 
 .focus:hover {
 	cursor: pointer;
@@ -188,6 +190,7 @@ td {
 		border: none;
 	}
 }
+
 .engine-and-size-ctn {
 	display: flex;
 	flex-flow: row wrap;
