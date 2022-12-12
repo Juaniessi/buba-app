@@ -1,5 +1,5 @@
 {
-  "main.css": "/buba-app/static/css/main.25c11ad9.chunk.css",
+  "main.css": "/buba-app/static/css/main.8478652b.chunk.css",
   "main.js": "/buba-app/static/js/main.31de39c8.chunk.js",
   "main.js.map": "/buba-app/static/js/main.31de39c8.chunk.js.map",
   "runtime~main.js": "/buba-app/static/js/runtime~main.a9c42cb6.js",
@@ -7,9 +7,9 @@
   "static/js/2.0981f4ce.chunk.js": "/buba-app/static/js/2.0981f4ce.chunk.js",
   "static/js/2.0981f4ce.chunk.js.map": "/buba-app/static/js/2.0981f4ce.chunk.js.map",
   "index.html": "/buba-app/index.html",
-  "precache-manifest.c03d297c318d27c589c8d293b27bdb34.js": "/buba-app/precache-manifest.c03d297c318d27c589c8d293b27bdb34.js",
+  "precache-manifest.62386c54325d5cecd500de6c3b31c641.js": "/buba-app/precache-manifest.62386c54325d5cecd500de6c3b31c641.js",
   "service-worker.js": "/buba-app/service-worker.js",
-  "static/css/main.25c11ad9.chunk.css.map": "/buba-app/static/css/main.25c11ad9.chunk.css.map",
+  "static/css/main.8478652b.chunk.css.map": "/buba-app/static/css/main.8478652b.chunk.css.map",
   "static/media/style.css": "/buba-app/static/media/Roboto-Regular.f36638c2.ttf",
   "static/media/arrow-rotate-left-solid.svg": "/buba-app/static/media/arrow-rotate-left-solid.efae2287.svg",
   "static/media/file-arrow-up-solid.svg": "/buba-app/static/media/file-arrow-up-solid.c28a88b6.svg",
