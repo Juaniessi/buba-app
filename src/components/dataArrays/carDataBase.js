@@ -536,32 +536,32 @@ const autoArray = {
 				{
 					value: 'neuDelIzqMal',
 					label:
-						'Neumático delantero izquierdo en mal estado. Los neumáticos deben ser identicos en su eje.',
+						'Neumático delantero izquierdo en mal estado. Los neumáticos deben ser idénticos en su eje.',
 				},
 				{
 					value: 'neuDelDerMal',
 					label:
-						'Neumático delantero derecho en mal estado. Los neumáticos deben ser identicos en su eje.',
+						'Neumático delantero derecho en mal estado. Los neumáticos deben ser idénticos en su eje.',
 				},
 				{
 					value: 'neuTraIzqMal',
 					label:
-						'Neumático trasero izquierdo en mal estado. Los neumáticos deben ser identicos en su eje.',
+						'Neumático trasero izquierdo en mal estado. Los neumáticos deben ser idénticos en su eje.',
 				},
 				{
 					value: 'neuTraDerMal',
 					label:
-						'Neumático trasero derecho en mal estado. Los neumáticos deben ser identicos en su eje.',
+						'Neumático trasero derecho en mal estado. Los neumáticos deben ser idénticos en su eje.',
 				},
 				{
 					value: 'parTraNeu',
 					label:
-						'Ambos neumáticos traseros en mal estado. Los neumáticos deben ser identicos en su eje.',
+						'Ambos neumáticos traseros en mal estado. Los neumáticos deben ser idénticos en su eje.',
 				},
 				{
 					value: 'parDelNeu',
 					label:
-						'Ambos neumáticos delanteros en mal estado. Los neumáticos deben ser identicos en su eje.',
+						'Ambos neumáticos delanteros en mal estado. Los neumáticos deben ser idénticos en su eje.',
 				},
 			],
 			fijaciones: [
@@ -1440,6 +1440,10 @@ const autoArray = {
 					value: 'headTraCen',
 					label: 'Apoyacabezas trasero central en mal estado o faltante.',
 				},
+				{
+					value: 'headTraNo',
+					label: 'Sin apoyacabezas traseros.',
+				},
 			],
 			airBag: [
 				{
@@ -1461,11 +1465,11 @@ const autoArray = {
 			opennings: [
 				{
 					value: 'pDelIzq',
-					label: 'Puerta delantera izqueirda no abre o cierra correctamente.',
+					label: 'Puerta delantera izquierda no abre o cierra correctamente.',
 				},
 				{
 					value: 'pTraIzq',
-					label: 'Puerta trasera izqueirda no abre o cierra correctamente.',
+					label: 'Puerta trasera izquierda no abre o cierra correctamente.',
 				},
 				{
 					value: 'pDelDer',
