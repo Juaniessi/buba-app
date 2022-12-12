@@ -133,6 +133,7 @@ label {
 }
 .unlisted-ctn .unlisted-defect {
   margin: 0.2rem;
+  padding: 0 2px;
 }
 
 table,
