@@ -269,6 +269,10 @@ const autoArray = {
 				value: 'carroceria',
 				label: 'Carrocería',
 			},
+			{
+				value: 'opennings',
+				label: 'Aberturas o puertas',
+			},
 		],
 		inspFosa: [
 			{
@@ -1416,6 +1420,26 @@ const autoArray = {
 					value: 'sinTabique',
 					label: 'Sin tabique divisor.',
 				},
+				{
+					value: 'headDelIzq',
+					label: 'Apoyacabezas delantero izquierdo en mal estado o faltante.',
+				},
+				{
+					value: 'headTraIzq',
+					label: 'Apoyacabezas trasero izquierdo en mal estado o faltante.',
+				},
+				{
+					value: 'headDelDer',
+					label: 'Apoyacabezas delantero derecho en mal estado o faltante.',
+				},
+				{
+					value: 'headTraDer',
+					label: 'Apoyacabezas trasero derecho en mal estado o faltante.',
+				},
+				{
+					value: 'headTraCen',
+					label: 'Apoyacabezas trasero central en mal estado o faltante.',
+				},
 			],
 			airBag: [
 				{
@@ -1432,6 +1456,32 @@ const autoArray = {
 					value: 'adiFueLinPar',
 					label:
 						'Aditamento en el vehículo fuera de la línea de los paragolpes.',
+				},
+			],
+			opennings: [
+				{
+					value: 'pDelIzq',
+					label: 'Puerta delantera izqueirda no abre o cierra correctamente.',
+				},
+				{
+					value: 'pTraIzq',
+					label: 'Puerta trasera izqueirda no abre o cierra correctamente.',
+				},
+				{
+					value: 'pDelDer',
+					label: 'Puerta delantera derecha no abre o cierra correctamente.',
+				},
+				{
+					value: 'pTraDer',
+					label: 'Puerta trasera derecha no abre o cierra correctamente.',
+				},
+				{
+					value: 'baul',
+					label: 'Portón trasero o tapa baúl no abre o cierra correctamente.',
+				},
+				{
+					value: 'capo',
+					label: 'Capó no abre o cierra correctamente.',
 				},
 			],
 		},
