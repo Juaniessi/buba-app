@@ -85,8 +85,6 @@ label {
 	min-width: 190px;
 }
 
-
-
 .focus:hover {
 	cursor: pointer;
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
@@ -146,6 +144,7 @@ td {
 	position: absolute;
 	top: 670px;
 	left: 15px;
+	border: none;
 
 	.lista-headers {
 		font-size: 0.8rem;
@@ -170,24 +169,24 @@ td {
 		width: 60px;
 		text-align: center;
 	}
-}
-.phantom-col {
-	width: 30px;
-	background-color: transparent;
-	border: 1px solid transparent;
-}
-.quitar-col {
-	min-width: 40px;
-	border: 1px solid transparent;
-}
-.erase-btn-ctn {
-	text-align: center;
-	border: 1px solid transparent;
-	.erase-btn {
-		width: 12px;
-		height: 12px;
-		background-color: rgba(255, 255, 255, 0);
+	.phantom-col {
+		width: 30px;
+		background-color: transparent;
 		border: none;
+	}
+	.quitar-col {
+		min-width: 40px;
+		border: none;
+	}
+	.erase-btn-ctn {
+		text-align: center;
+		border: none;
+		.erase-btn {
+			width: 12px;
+			height: 12px;
+			background-color: rgba(255, 255, 255, 0);
+			border: none;
+		}
 	}
 }
 
