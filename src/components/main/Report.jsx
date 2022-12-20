@@ -79,22 +79,22 @@ function Report(props) {
 	 */
 	const majorOrEqArray = new Map([
 		['brakeDif', [90, 15.1, 10]],
-		['brakeResist', [2, 1, 0.7]],
+		['brakeResist', [4, 1, 0.7]],
 		['brakeOval', [80, 50, 30]],
 		['luxLow', [200, 27, 26]],
 		['luxHigh', [200, 150, 65]],
 		['luxAng', [15, 7, 5]],
-		['opacity', [2, 0.25, 0.2]],
+		['opacity', [5, 0.25, 0.2]],
 		['HC<=1991', [2500, 900, 600]],
 		['HC<=1994', [2500, 600, 400]],
 		['HC>1994', [2500, 400, 250]],
 		['CO<=1991', [15, 4.5, 2]],
 		['CO<=1994', [15, 3, 1.5]],
 		['CO>1994', [15, 2.5, 1]],
-		['noiseAutoMotoViejo', [100, 88.1, 80]],
-		['noiseAutoMotoNuevo', [100, 83.1, 80]],
+		['noiseAutoMotoViejo', [100, 85.1, 77]],
+		['noiseAutoMotoNuevo', [100, 80.1, 77]],
 		['noiseCamionViejo', [100, 95.1, 85]],
-		['noiseCamionNuevo', [100, 87, 84]],
+		['noiseCamionNuevo', [100, 87.1, 84]],
 		['HC-4T', [4000, 3000, 1500]],
 		['HC-2T', [12000, 9000, 4500]],
 		['CO-Moto', [8, 4.5, 3.5]],
@@ -104,7 +104,7 @@ function Report(props) {
 	 * @constant minorAndMajorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorAndMajorOrEqArray = new Map([
-		['susp', [5, 98.5, 39.9, 101, 65, 102]],
+		['susp', [-1, 101, 39.9, 96, 65, 90]],
 		['alin', [-26, 26, -5, 5, -4, 4]],
 	]);
 
@@ -227,7 +227,12 @@ function Report(props) {
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
 	function noiseEvaluator(txtProp, caseNumber, tipo) {
-		if (tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Moto') {
+		if (
+			tipo === 'Auto' ||
+			tipo === 'Camioneta' ||
+			tipo === 'Moto' ||
+			tipo === 'Minibus'
+		) {
 			switch (caseNumber) {
 				case 1:
 					return majorOrEqual(txtProp, 'noiseAutoMotoViejo');
