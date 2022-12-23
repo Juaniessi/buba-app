@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "e28eae46302318005bb1",
+    "revision": "3eaac01aec6c346beb0f",
     "url": "/buba-app/static/css/main.815b4a24.chunk.css"
   },
   {
-    "revision": "e28eae46302318005bb1",
-    "url": "/buba-app/static/js/main.05978bb9.chunk.js"
+    "revision": "3eaac01aec6c346beb0f",
+    "url": "/buba-app/static/js/main.e64cf386.chunk.js"
   },
   {
     "revision": "505e43fb4fcb4670e0d8",
@@ -60,7 +60,7 @@ self.__precacheManifest = [
     "url": "/buba-app/static/media/arrow-rotate-left-solid.efae2287.svg"
   },
   {
-    "revision": "1ded4928606e332a8ef05fe12b42e092",
+    "revision": "aa424d47bfd07d67d7b59ad94ae4a2a8",
     "url": "/buba-app/index.html"
   }
 ];
