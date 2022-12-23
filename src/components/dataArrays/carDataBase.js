@@ -618,12 +618,12 @@ const autoArray = {
 						'Extremo de dirección derecho con holgura. Reemplazar y alinear.',
 				},
 				{
-					value: 'fuelleExtDirDer',
-					label: 'Fuelle de extremo de dirección derecho en mal estado.',
+					value: 'guardaExtDirDer',
+					label: 'Guardapolvo de extremo de dirección derecho en mal estado.',
 				},
 				{
-					value: 'fuelleExtDirIzq',
-					label: 'Fuelle de extremo de dirección izquierdo en mal estado.',
+					value: 'guardaExtDirIzq',
+					label: 'Guardapolvo de extremo de dirección izquierdo en mal estado.',
 				},
 			],
 			direccionMecanica: [
