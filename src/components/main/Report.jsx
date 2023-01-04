@@ -33,6 +33,7 @@ function Report(props) {
 		reportArray,
 		engineType,
 		truckSize,
+		transmisionType,
 		imgUpload,
 		onImageChange,
 		loadImgRef,
@@ -138,7 +139,7 @@ function Report(props) {
 	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
-	function majorOrEqual(txtProp, paramSelector, truckSize) {
+	function majorOrEqual(txtProp, paramSelector, truckSize, transmisionType) {
 		let params = majorOrEqArray.get(paramSelector);
 		let severityEvaluation = '';
 		let severityLetter = '';
@@ -152,6 +153,11 @@ function Report(props) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
 		} else {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+
+		if (transmisionType === '4x4') {
 			severityEvaluation = '';
 			severityLetter = 'A';
 		}
@@ -540,7 +546,8 @@ function Report(props) {
 												{majorOrEqual(
 													item.ruta,
 													'brakeResist',
-													truckSize.value
+													truckSize.value,
+													transmisionType.value
 												)}
 											</p>
 										</div>

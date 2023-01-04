@@ -22,6 +22,7 @@ function Main() {
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
+		setTransmisionType({value: '4x2', label: 'Normal'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
@@ -35,6 +36,7 @@ function Main() {
 		setTipo(item.value);
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
+		setTransmisionType({value: '4x2', label: 'Normal'});
 	};
 
 	const [severidad, setSeveridad] = useState({
@@ -98,12 +100,21 @@ function Main() {
 		label: '4 Tiempos',
 	});
 	/**
-	 * created to manage truck sizes.
+	 * manages truck sizes.
 	 * to use porpperly, add truckSize.value to evaluation functions.
 	 */
 	const [truckSize, setTruckSize] = useState({
 		value: 'smallTruck',
 		label: 'Camión pequeño',
+	});
+	/**
+	 * manages truck sizes.
+	 * to use porpperly, add truckSize.value to evaluation functions.
+	 */
+
+	const [transmisionType, setTransmisionType] = useState({
+		value: '4x2',
+		label: 'Normal',
 	});
 
 	const [imgUpload, setImgUpload] = useState(null);
@@ -210,6 +221,24 @@ function Main() {
 									</div>
 							  ))
 							: ''}
+						{tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Minibus'
+							? radioGeneratorArray.transmisionType.map((item, i) => (
+									<div className="engine-and-size" key={i}>
+										<label className="btn-inside" htmlFor={item.value}>
+											<input
+												type="radio"
+												className="rad-c"
+												name="transmisionType"
+												id={item.value}
+												value={item.value}
+												checked={transmisionType.value === item.value}
+												onChange={() => setTransmisionType(item)}
+											/>
+											{item.label}
+										</label>
+									</div>
+							  ))
+							: ''}
 					</div>
 				</div>
 				<h3>Calcular fecha</h3>
@@ -259,6 +288,7 @@ function Main() {
 					reportArray={reportArray}
 					engineType={engineType}
 					truckSize={truckSize}
+					transmisionType={transmisionType}
 					imgUpload={imgUpload}
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
