@@ -11,7 +11,7 @@ import WeightSum from './WeigthSum';
 
 function Main() {
 	const resetBtn = () => {
-		setSeveridad({value: 'Moderado', label: 'Moderado', order: 2});
+		setSeveridad({value: 'Leve', label: 'Leve', order: 1});
 		setTipo('Auto');
 		setGrupo({value: '', label: ''});
 		setSeccion({value: '', label: ''});
@@ -38,9 +38,9 @@ function Main() {
 	};
 
 	const [severidad, setSeveridad] = useState({
-		value: 'Moderado',
-		label: 'Moderado',
-		order: 2,
+		value: 'Leve',
+		label: 'Leve',
+		order: 1,
 	});
 	const handleSeveridad = (item) => {
 		setSeveridad(item);
