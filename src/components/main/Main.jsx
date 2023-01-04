@@ -101,15 +101,15 @@ function Main() {
 	});
 	/**
 	 * manages truck sizes.
-	 * to use porpperly, add truckSize.value to evaluation functions.
+	 * to use porpperly, add truckSize.value to evaluation functions and send it as param when nedded.
 	 */
 	const [truckSize, setTruckSize] = useState({
 		value: 'smallTruck',
 		label: 'Camión pequeño',
 	});
 	/**
-	 * manages truck sizes.
-	 * to use porpperly, add truckSize.value to evaluation functions.
+	 * manages transmision type.
+	 * to use porpperly, add transmisionType.value to evaluation functions and send it as param when nedded.
 	 */
 
 	const [transmisionType, setTransmisionType] = useState({
