@@ -27,7 +27,7 @@ import {
   ESTADISTICA_DE_PUESTOS,
   FOTOVALIDACION,
   PROFUNDIDAD_DE_NEUMATICOS,
-} from "./constantVariables.js";
+} from './constantVariables.js';
 
 import {
   headerMap,
@@ -58,7 +58,7 @@ import {
   estadisticaDePuestosMap,
   fotovalidacionMap,
   profundidaDeNeumaticosMap,
-} from "./constantCollections.js";
+} from './constantCollections.js';
 
 /**
  *  Global Variable stores the map with the excel representation of data

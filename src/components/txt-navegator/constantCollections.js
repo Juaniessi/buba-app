@@ -442,43 +442,43 @@ import {
   N610011,
   N610012,
   PROFUNDIDAD_DE_NEUMATICOS,
-} from "./constantVariables.js";
+} from './constantVariables.js';
 
 /**
  * Dirty Categories used to clean the trash data from the read file.
  */
 export const categories = [
-  "[HEADER]",
-  "Datos Vehículo",
-  "Datos Propietario Vehículo",
-  "Resultado Luxometro",
-  "Resultado Sonometro",
-  "Resultado Gases",
-  "Resultado Opacimetro",
-  "Resultados Alineador al Paso",
-  "Resultados Suspensión Eje Delantero",
-  "Resultados Suspensión Eje Trasero",
-  "Resultado Frenometro Eje Delantero",
-  "Resultado Frenometro Eje Trasero",
-  "Resultado Freno de Mano Eje Delantero",
-  "Resultado Freno de Mano Eje Trasero",
-  "Pruebas de Rodadura",
-  "Parametros del Equipo ",
-  "Datos de Generales del Ensayo",
-  "END MET DATA",
-  "------------End Of File--------------",
-  "999999=Fin de Archivo",
-  "[ENDOFFILE]",
-  "999999=END OF FILE",
-  "[DATAOUT]",
-  "Inspección Visual",
-  "Inspección Visual Detector de Holguras",
-  "Profundida de Neumaticos",
-  "Fotovalidación",
-  "[DATA OUT]",
-  "Respaldo Documentos",
-  "Datos Conductor Vehículo",
-  "Datos de Prueba",
+  '[HEADER]',
+  'Datos Vehículo',
+  'Datos Propietario Vehículo',
+  'Resultado Luxometro',
+  'Resultado Sonometro',
+  'Resultado Gases',
+  'Resultado Opacimetro',
+  'Resultados Alineador al Paso',
+  'Resultados Suspensión Eje Delantero',
+  'Resultados Suspensión Eje Trasero',
+  'Resultado Frenometro Eje Delantero',
+  'Resultado Frenometro Eje Trasero',
+  'Resultado Freno de Mano Eje Delantero',
+  'Resultado Freno de Mano Eje Trasero',
+  'Pruebas de Rodadura',
+  'Parametros del Equipo ',
+  'Datos de Generales del Ensayo',
+  'END MET DATA',
+  '------------End Of File--------------',
+  '999999=Fin de Archivo',
+  '[ENDOFFILE]',
+  '999999=END OF FILE',
+  '[DATAOUT]',
+  'Inspección Visual',
+  'Inspección Visual Detector de Holguras',
+  'Profundida de Neumaticos',
+  'Fotovalidación',
+  '[DATA OUT]',
+  'Respaldo Documentos',
+  'Datos Conductor Vehículo',
+  'Datos de Prueba',
 ];
 
 /**
@@ -548,7 +548,7 @@ export const suspencionEjeTraseroKeys = [
 /**
  * All keys from the opacimetro category in the excel file.
  */
-export const opacimetroKeys = ["38500"];
+export const opacimetroKeys = ['38500'];
 /**
  * All keys from the analizadorDeGases category in the excel file.
  */
@@ -737,7 +737,7 @@ export const frenoDeManoEje_6Keys = [
 /**
  * All keys from the sonometro category in the excel file.
  */
-export const sonometroKeys = ["60000"];
+export const sonometroKeys = ['60000'];
 /**
  * All keys from the luxometro category in the excel file.
  */
