@@ -79,7 +79,8 @@ function Report(props) {
 	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const majorOrEqArray = new Map([
-		['brakeDif', [90, 15.1, 10]],
+		['brakeDifDel', [80, 15.1, 10]],
+		['brakeDifTra', [95, 15.1, 12]],
 		['brakeResist', [4, 1, 0.7]],
 		['brakeOval', [80, 50, 30]],
 		['luxLow', [200, 27, 26]],
@@ -511,11 +512,19 @@ function Report(props) {
 									))}
 								</div>
 								<div className="difference">
-									{reportArray.brakeDif.map((item, i) => (
+									{reportArray.brakeDifDel.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeDif')}
+												{majorOrEqual(item.ruta, 'brakeDifDel')}
+											</p>
+										</div>
+									))}
+									{reportArray.brakeDifTra.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeDifTra')}
 											</p>
 										</div>
 									))}
