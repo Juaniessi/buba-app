@@ -1277,6 +1277,18 @@ const autoArray = {
 					value: 'bateriaConex',
 					label: 'Conexiones de batería con defectos.',
 				},
+				{
+					value: 'butacaDI',
+					label: 'Butaca delantera izqueirda mal anclada o en mal estado.',
+				},
+				{
+					value: 'butacaDD',
+					label: 'Butaca delantera derecha mal anclada o en mal estado.',
+				},
+				{
+					value: 'butacaT',
+					label: 'Butaca trasera mal anclada o en mal estado.',
+				},
 			],
 			vidrios: [
 				{
@@ -1443,6 +1455,23 @@ const autoArray = {
 				{
 					value: 'headTraNo',
 					label: 'Sin apoyacabezas traseros.',
+				},
+				{
+					value: 'doorPanelDI',
+					label:
+						'Panel de puerta delantero izquierdo en mal estado o faltante.',
+				},
+				{
+					value: 'doorPanelDD',
+					label: 'Panel de puerta delantero derecho en mal estado o faltante.',
+				},
+				{
+					value: 'doorPanelTI',
+					label: 'Panel de puerta trasero izquierdo en mal estado o faltante.',
+				},
+				{
+					value: 'doorPanelTD',
+					label: 'Panel de puerta trasero derecho en mal estado o faltante.',
 				},
 			],
 			airBag: [
