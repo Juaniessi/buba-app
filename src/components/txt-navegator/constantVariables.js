@@ -132,9 +132,13 @@ export const ESTADISTICA_DE_PUESTOS = 'estadísticaDePuestos';
  */
 export const FOTOVALIDACION = 'fotovalidacion';
 /**
- * Name of the key "fotovalidacion" from the structureMap in file constantMaps.js
+ * Name of the key "profundidadDeNeumaticos" from the structureMap in file constantMaps.js
  */
 export const PROFUNDIDAD_DE_NEUMATICOS = 'profundidadDeNeumaticos';
+/**
+ * Name of the key "profundidadDeNeumaticos" from the structureMap in file constantMaps.js
+ */
+export const PRUEBAS = 'pruebas';
 
 /**
  * Identifier for selecction of mapHeader in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
@@ -248,6 +252,10 @@ export const intFotovalidacion = 26;
  * Identifier for selecction of intprofundidaDeNeumaticos in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
  */
 export const intprofundidaDeNeumaticos = 27;
+/**
+ * Identifier for selecction of intprofundidaDeNeumaticos in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ */
+export const intPruebas = 28;
 
 /**
  * Normalization of name patente for the key in the final JSON structure.
@@ -290,50 +298,174 @@ export const tipoVehiculo = 'tipoVehiculo';
  */
 export const combustible = 'combustible';
 /**
+ * Normalization of name colorPrimario for the key in the final JSON structure.
+ */
+export const colorPrimario = 'colorPrimario';
+/**
+ * Normalization of name colorSecundario for the key in the final JSON structure.
+ */
+export const colorSecundario = 'colorSecundario';
+/**
+ * Normalization of name clase for the key in the final JSON structure.
+ */
+export const clase = 'clase';
+/**
+ * Normalization of name pasajeros for the key in the final JSON structure.
+ */
+export const pasajeros = 'pasajeros';
+/**
+ * Normalization of name cilindrada for the key in the final JSON structure.
+ */
+export const cilindrada = 'cilindrada';
+/**
+ * Normalization of name servicio for the key in the final JSON structure.
+ */
+export const servicio = 'servicio';
+/**
+ * Normalization of name observaciones for the key in the final JSON structure.
+ */
+export const observaciones = 'observaciones';
+/**
  * Normalization of name cantidadDeEjes for the key in the final JSON structure.
  */
 export const cantidadDeEjes = 'cantidadDeEjes';
 /**
- * Normalization of name apellido for the key in the final JSON structure.
+ * Normalization of name apellidoPropietario for the key in the final JSON structure.
  */
-export const apellido = 'apellido';
+export const apellidoPropietario = 'apellidoPropietario';
 /**
- * Normalization of name nombre for the key in the final JSON structure.
+ * Normalization of name nombrePropietario for the key in the final JSON structure.
  */
-export const nombre = 'nombre';
+export const nombrePropietario = 'nombrePropietario';
 /**
- * Normalization of name dirección for the key in the final JSON structure.
+ * Normalization of name direccionPropietario for the key in the final JSON structure.
  */
-export const direccion = 'direccion';
+export const direccionPropietario = 'direccionPropietario';
 /**
- * Normalization of name documentoDeIdentidad for the key in the final JSON structure.
+ * Normalization of name documentoDeIdentidadPropietario for the key in the final JSON structure.
  */
-export const documentoDeIdentidad = 'documentoDeIdentidad';
+export const documentoDeIdentidadPropietario = 'documentoDeIdentidadPropietario';
 /**
- * Normalization of name email for the key in the final JSON structure.
+ * Normalization of name emailConductor for the key in the final JSON structure.
  */
-export const email = 'email';
+export const emailConductor = 'emailConductor';
 /**
- * Normalization of name teléfono for the key in the final JSON structure.
+ * Normalization of name teléfonoConductor for the key in the final JSON structure.
  */
-export const teléfono = 'teléfono';
+export const telefonoConductor = 'teléfonoConductor';
 /**
- * Normalization of name localidad for the key in the final JSON structure.
+ * Normalization of name localidadPropietario for the key in the final JSON structure.
  */
-export const localidad = 'localidad';
+export const localidadPropietario = 'localidadPropietario';
 /**
- * Normalization of name provincia for the key in the final JSON structure.
+ * Normalization of name provinciaPropietario for the key in the final JSON structure.
  */
-export const provincia = 'provincia';
+export const provinciaPropietario = 'provinciaPropietario';
 /**
- * Normalization of name idPrueba for the key in the final JSON structure.
+ * Normalization of name nacionalidadConductor for the key in the final JSON structure.
  */
-export const idPruebaRefTramite = 'idPruebaRefTramite'; // ID PRUEBA (Referencia Tramite)
+export const nacionalidadConductor = 'nacionalidadConductor';
+/**
+ * Normalization of name apellidoConductor for the key in the final JSON structure.
+ */
+export const apellidoConductor = 'apellidoConductor';
+/**
+ * Normalization of name nombreConductor for the key in the final JSON structure.
+ */
+export const nombreConductor = 'nombreConductor';
+/**
+ * Normalization of name direccionConductor for the key in the final JSON structure.
+ */
+export const direccionConductor = 'direccionConductor';
+/**
+ * Normalization of name localidadConductor for the key in the final JSON structure.
+ */
+export const localidadConductor = 'localidadConductor';
+/**
+ * Normalization of name provinciaConductor for the key in the final JSON structure.
+ */
+export const provinciaConductor = 'provinciaConductor';
+/**
+ * Normalization of name documentoDeIdentidadConductor for the key in the final JSON structure.
+ */
+export const documentoDeIdentidadConductor = 'documentoDeIdentidadConductor';
+/**
+ * Normalization of name licenciaDeConducirConductor for the key in the final JSON structure.
+ */
+export const licenciaDeConducirConductor = 'licenciaDeConducirConductor';
+/**
+ * Normalization of name categoriaLicenciaConductor for the key in the final JSON structure.
+ */
+export const categoriaLicenciaConductor = 'categoriaLicenciaConductor';
+/**
+ * Normalization of name vigenciaLicenciaConductor for the key in the final JSON structure.
+ */
+export const vigenciaLicenciaConductor = 'vigenciaLicenciaConductor';
+/**
+ * Normalization of name seguroCompañia for the key in the final JSON structure.
+ */
+export const seguroCompañia = 'seguroCompañia';
+/**
+ * Normalization of name seguroPoliza for the key in the final JSON structure.
+ */
+export const seguroPoliza = 'seguroPoliza';
+/**
+ * Normalization of name seguroVigencia for the key in the final JSON structure.
+ */
+export const seguroVigencia = 'seguroVigencia';
+/**
+ * Normalization of name fotoDocumento_1 for the key in the final JSON structure.
+ */
+export const fotoDocumento_1 = 'fotoDocumento_1';
+/**
+ * Normalization of name fotoDocumento_2 for the key in the final JSON structure.
+ */
+export const fotoDocumento_2 = 'fotoDocumento_2';
+/**
+ * Normalization of name fotoDocumento_3 for the key in the final JSON structure.
+ */
+export const fotoDocumento_3 = 'fotoDocumento_3';
+/**
+ * Normalization of name fotoDocumento_4 for the key in the final JSON structure.
+ */
+export const fotoDocumento_4 = 'fotoDocumento_4';
+/**
+ * Normalization of name cantidadDeRuedas for the key in the final JSON structure.
+ */
+export const cantidadDeRuedas = 'cantidadDeRuedas';
+/**
+ * Normalization of name cooperativa for the key in the final JSON structure.
+ */
+export const cooperativa = 'cooperativa';
+/**
+ * Normalization of name ambito_O for the key in the final JSON structure.
+ */
+export const ambito_O = 'ambito_O';
+/**
+ * Normalization of name discoNumero for the key in the final JSON structure.
+ */
+export const discoNumero = 'discoNumero';
+/**
+ * Normalization of name idPruebaRefTramite for the key in the final JSON structure.
+ */
+export const idPruebaRefTramite = 'idPruebaRefTramite'; 
+/**
+ * Normalization of name revision for the key in the final JSON structure.
+ */
+export const revision = 'revision'; 
+/**
+ * Normalization of name numLineaAsignada for the key in the final JSON structure.
+ */
+export const numLineaAsignada = 'numLineaAsignada'; 
+/**
+ * Normalization of name resultadoFinalRevision for the key in the final JSON structure.
+ */
+export const resultadoFinalRevision = 'resultadoFinalRevision'; 
 
 /**
  * Normalization of name (AAAAMMDDhhmmss for the key in the final JSON structure.
  */
-export const fechaHora = 'fechaHora'; // (AAAAMMDDhhmmss)
+export const fechaHora = 'fechaHora'; 
 /**
  * Normalization of name pruebaDeAlineacion for the key in the final JSON structure.
  */
@@ -370,6 +502,10 @@ export const pruebaDeInspFosa = 'pruebaDeInspFosa';
  * Normalization of name pruebaSonometro for the key in the final JSON structure.
  */
 export const pruebaSonometro = 'pruebaSonometro';
+/**
+ * Normalization of name pruebaRodadura for the key in the final JSON structure.
+ */
+export const pruebaRodadura = 'pruebaRodadura';
 /**
  * Normalization of name resultadoAlineacionEje1 for the key in the final JSON structure.
  */
@@ -950,6 +1086,34 @@ export const N10210 = '10210';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
+export const N10211 = '10211';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10212 = '10212';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10213 = '10213';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10214 = '10214';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10215 = '10215';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10216 = '10216';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10217 = '10217';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
 export const N10300 = '10300';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
@@ -979,6 +1143,105 @@ export const N10306 = '10306';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N10307 = '10307';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10308 = '10308';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10309 = '10309';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10310 = '10310';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10311 = '10311';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10312 = '10312';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10313 = '10313';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10314 = '10314';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10315 = '10315';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10316 = '10316';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10317 = '10317';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10318 = '10318';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10319 = '10319';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10320 = '10320';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10321 = '10321';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10322 = '10322';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10323 = '10323';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10324 = '10324';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10325 = '10325';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10326 = '10326';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10327 = '10327';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N10328 = '10328';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N16004 = '16004';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N16003 = '16003';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N16002 = '16002';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
@@ -1023,6 +1286,10 @@ export const N15007 = '15007';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N15008 = '15008';
+/**
+* Constant with the key for identifing a value  in the structures used to map or print a json
+*/
+export const N15009 = '15009';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */

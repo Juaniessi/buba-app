@@ -57,6 +57,8 @@ import {
   profundidaDeNeumaticosKeys,
   collectionOfVariables,
   profundidaDeNeumaticosMap,
+  pruebasKeys,
+  pruebasMap,
 } from './constantCollections.js';
 import {
   SEMICOLON,
@@ -93,6 +95,8 @@ import {
   intFotovalidacion,
   TWO_INT,
   intprofundidaDeNeumaticos,
+  intPruebas,
+
 } from './constantVariables.js';
 import { structureMap } from './globalVariables.js';
 
@@ -324,6 +328,7 @@ function populateStructure() {
   let mappedEstadisticaDePuestos = new Map();
   let mappedFotovalidacion = new Map();
   let mappedProfundidaDeNeumaticos = new Map();
+  let mappedPrueba = new Map();
 
   let collectionOfMaps = [
     mappedHeader,
@@ -354,6 +359,7 @@ function populateStructure() {
     mappedEstadisticaDePuestos,
     mappedFotovalidacion,
     mappedProfundidaDeNeumaticos,
+    mappedPrueba,
   ];
 
   /** Generates structure elements to be replaced on the model map */
@@ -423,6 +429,7 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
     value,
     collectionOfMaps[intprofundidaDeNeumaticos]
   );
+  mapPruebas(key,value,collectionOfMaps[intPruebas])
 }
 
 /**
@@ -965,6 +972,24 @@ function mapProfundidadDeNeumaticos(key, value, mappedObj) {
   for (let i = 0; i < profundidaDeNeumaticosKeys.length; i++) {
     if (key === profundidaDeNeumaticosKeys[i]) {
       mappedObj.set(profundidaDeNeumaticosMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+}
+
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the ProfundidadDeNeumaticos structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+function mapPruebas(key, value, mappedObj) {
+  for (let i = 0; i < pruebasKeys.length; i++) {
+    if (key === pruebasKeys[i]) {
+      mappedObj.set(pruebasMap.get(key), mapSingleFile.get(key));
     }
   }
   return mappedObj;

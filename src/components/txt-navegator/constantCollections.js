@@ -36,14 +36,14 @@ import {
   tipoVehiculo,
   combustible,
   cantidadDeEjes,
-  apellido,
-  nombre,
-  direccion,
-  documentoDeIdentidad,
-  email,
-  teléfono,
-  localidad,
-  provincia,
+  apellidoPropietario,
+  nombrePropietario,
+  direccionPropietario,
+  documentoDeIdentidadPropietario,
+  emailConductor,
+  telefonoConductor,
+  localidadPropietario,
+  provinciaPropietario,
   idPruebaRefTramite,
   fechaHora,
   pruebaDeAlineacion,
@@ -442,6 +442,70 @@ import {
   N610011,
   N610012,
   PROFUNDIDAD_DE_NEUMATICOS,
+  N16004,
+  N16003,
+  N16002,
+  N15009,
+  colorPrimario,
+  colorSecundario,
+  clase,
+  pasajeros,
+  cilindrada,
+  servicio,
+  observaciones,
+  N10211,
+  N10212,
+  N10213,
+  N10214,
+  N10215,
+  N10216,
+  N10217,
+  N10308,
+  N10309,
+  N10310,
+  N10311,
+  N10312,
+  N10313,
+  N10314,
+  N10315,
+  N10316,
+  N10317,
+  N10318,
+  N10319,
+  N10320,
+  N10328,
+  N10327,
+  N10326,
+  N10325,
+  N10324,
+  N10323,
+  N10322,
+  N10321,
+  nacionalidadConductor,
+  apellidoConductor,
+  nombreConductor,
+  direccionConductor,
+  localidadConductor,
+  provinciaConductor,
+  documentoDeIdentidadConductor,
+  licenciaDeConducirConductor,
+  categoriaLicenciaConductor,
+  vigenciaLicenciaConductor,
+  seguroCompañia,
+  seguroPoliza,
+  seguroVigencia,
+  fotoDocumento_1,
+  fotoDocumento_2,
+  fotoDocumento_3,
+  fotoDocumento_4,
+  cantidadDeRuedas,
+  cooperativa,
+  ambito_O,
+  discoNumero,
+  pruebaRodadura,
+  revision,
+  numLineaAsignada,
+  resultadoFinalRevision,
 } from './constantVariables.js';
 
 /**
@@ -496,6 +560,13 @@ export const headerKeys = [
   N10208,
   N10209,
   N10210,
+  N10211,
+  N10212,
+  N10213,
+  N10214,
+  N10215,
+  N10216,
+  N10217,
   N10300,
   N10301,
   N10302,
@@ -504,17 +575,27 @@ export const headerKeys = [
   N10305,
   N10306,
   N10307,
-  N16001,
-  N16000,
-  N15000,
-  N15001,
-  N15002,
-  N15003,
-  N15004,
-  N15005,
-  N15006,
-  N15007,
-  N15008,
+  N10308,
+  N10309,
+  N10310,
+  N10311,
+  N10312,
+  N10313,
+  N10314,
+  N10315,
+  N10316,
+  N10317,
+  N10318,
+  N10319,
+  N10320,
+  N10321,
+  N10322,
+  N10323,
+  N10324,
+  N10325,
+  N10326,
+  N10327,
+  N10328,
 ];
 
 /**
@@ -866,6 +947,28 @@ export const profundidaDeNeumaticosKeys = [
 ];
 
 /**
+ * All keys and values from the pruebas category in the excel file.
+ */
+export const pruebasKeys = [
+  N15000,
+  N15001,
+  N15002,
+  N15003,
+  N15004,
+  N15005,
+  N15006,
+  N15007,
+  N15008,
+  N15009,
+
+  N16000,
+  N16001,
+  N16002,
+  N16003,
+  N16004,
+];
+
+/**
  * All keys and values from the header category in the excel file.
  */
 export const headerMap = new Map([
@@ -880,25 +983,46 @@ export const headerMap = new Map([
   [N10208, tipoVehiculo],
   [N10209, combustible],
   [N10210, cantidadDeEjes],
-  [N10300, apellido],
-  [N10301, nombre],
-  [N10302, direccion],
-  [N10303, documentoDeIdentidad],
-  [N10304, email],
-  [N10305, teléfono],
-  [N10306, localidad],
-  [N10307, provincia],
-  [N16001, idPruebaRefTramite],
-  [N16000, fechaHora],
-  [N15000, pruebaDeAlineacion],
-  [N15001, pruebaDeSuspension],
-  [N15002, pruebaDeFrenos],
-  [N15003, pruebaDeFrenosDeMano],
-  [N15004, pruebaDeLuces],
-  [N15005, pruebaDeGases],
-  [N15006, pruebaDeInspVisual],
-  [N15007, pruebaDeInspFosa],
-  [N15008, pruebaSonometro],
+  [N10211,colorPrimario], // nuevo codigosUltimate2020
+  [N10212,colorSecundario], // nuevo codigosUltimate2020
+  [N10213,clase], // nuevo codigosUltimate2020
+  [N10214,pasajeros], // nuevo codigosUltimate2020
+  [N10215,cilindrada], // nuevo codigosUltimate2020
+  [N10216,servicio], // nuevo codigosUltimate2020
+  [N10217,observaciones], // nuevo codigosUltimate2020
+
+  [N10300, apellidoPropietario], // renombrado codigosUltimate2020
+  [N10301, nombrePropietario], // renombrado codigosUltimate2020
+  [N10302, direccionPropietario], // renombrado codigosUltimate2020
+  [N10303, documentoDeIdentidadPropietario], // renombrado codigosUltimate2020
+  [N10304, emailConductor], // renombrado codigosUltimate2020
+  [N10305, telefonoConductor], // renombrado codigosUltimate2020
+  [N10306, localidadPropietario], // renombrado codigosUltimate2020
+  [N10307, provinciaPropietario], // renombrado codigosUltimate2020
+
+  [N10308, nacionalidadConductor], //nuevo codigosUltimate2020
+  [N10309, apellidoConductor], //nuevo codigosUltimate2020
+  [N10310, nombreConductor], //nuevo codigosUltimate2020
+  [N10311, direccionConductor], //nuevo codigosUltimate2020
+  [N10312, localidadConductor], //nuevo codigosUltimate2020
+  [N10313, provinciaConductor], //nuevo codigosUltimate2020
+  [N10314, documentoDeIdentidadConductor], // nuevo codigosUltimate2020
+  [N10315, licenciaDeConducirConductor], // nuevo codigosUltimate2020
+  [N10316, categoriaLicenciaConductor], // nuevo codigosUltimate2020
+  [N10317, vigenciaLicenciaConductor], // nuevo codigosUltimate2020
+  [N10318, seguroCompañia], // nuevo codigosUltimate2020
+  [N10319, seguroPoliza], // nuevo codigosUltimate2020
+  [N10320, seguroVigencia], // nuevo codigosUltimate2020
+  [N10321, fotoDocumento_1], // nuevo codigosUltimate2020
+  [N10322, fotoDocumento_2], // nuevo codigosUltimate2020
+  [N10323, fotoDocumento_3], // nuevo codigosUltimate2020
+  [N10324, fotoDocumento_4], // nuevo codigosUltimate2020
+  [N10325, cantidadDeRuedas], // nuevo codigosUltimate2020
+  [N10326, cooperativa], // nuevo codigosUltimate2020
+  [N10327, ambito_O], // nuevo codigosUltimate2020
+  [N10328, discoNumero], // nuevo codigosUltimate2020
+
+
 ]);
 
 /**
@@ -1260,6 +1384,27 @@ export const profundidaDeNeumaticosMap = new Map([
   [N610011, nomProvN610011],
   [N610012, nomProvN610012],
 ]);
+
+export const pruebasMap = new Map([
+  
+  [N15000, pruebaDeAlineacion],
+  [N15001, pruebaDeSuspension],
+  [N15002, pruebaDeFrenos],
+  [N15003, pruebaDeFrenosDeMano],
+  [N15004, pruebaDeLuces],
+  [N15005, pruebaDeGases],
+  [N15006, pruebaDeInspVisual],
+  [N15007, pruebaDeInspFosa],
+  [N15008, pruebaSonometro],
+  [N15009, pruebaRodadura], // nuevo codigosUltimate2020
+
+  [N16000, fechaHora],
+  [N16001, idPruebaRefTramite],
+  [N16002, revision], // nuevo codigosUltimate2020
+  [N16003, numLineaAsignada], // nuevo codigosUltimate2020
+  [N16004, resultadoFinalRevision], // nuevo codigosUltimate2020
+
+]) ;
 
 /**
  *  Stores the map with the excel representation of data.

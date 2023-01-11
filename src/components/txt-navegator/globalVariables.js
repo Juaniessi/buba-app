@@ -27,6 +27,7 @@ import {
   ESTADISTICA_DE_PUESTOS,
   FOTOVALIDACION,
   PROFUNDIDAD_DE_NEUMATICOS,
+  PRUEBAS,
 } from './constantVariables.js';
 
 import {
@@ -58,6 +59,7 @@ import {
   estadisticaDePuestosMap,
   fotovalidacionMap,
   profundidaDeNeumaticosMap,
+  pruebasMap,
 } from './constantCollections.js';
 
 /**
@@ -93,4 +95,5 @@ export let structureMap = new Map([
   [ESTADISTICA_DE_PUESTOS, estadisticaDePuestosMap],
   [FOTOVALIDACION, fotovalidacionMap],
   [PROFUNDIDAD_DE_NEUMATICOS, profundidaDeNeumaticosMap],
+  [PRUEBAS, pruebasMap],
 ]);
