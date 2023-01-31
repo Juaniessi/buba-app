@@ -24,6 +24,7 @@ function Main() {
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
 		setTransmisionType({value: '4x2', label: 'Normal'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
+		setExtendDueDate(false);
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
 	};
@@ -116,6 +117,12 @@ function Main() {
 		value: '4x2',
 		label: 'Normal',
 	});
+
+	const [extendDueDate, setExtendDueDate] = useState(false);
+
+	const handleDueDateExtend = () => {
+		setExtendDueDate(!extendDueDate);
+	};
 
 	const [imgUpload, setImgUpload] = useState(null);
 
@@ -260,6 +267,23 @@ function Main() {
 							{item.label}
 						</label>
 					))}
+					{dateCalcBtn.value === 'Apto' ? (
+						<label
+							className={`btn-inside extendDueDate`}
+							htmlFor="dueDateExtender">
+							Vigencia por 2 años
+							<input
+								type="checkbox"
+								className="checkBox"
+								name="dueDateExtender"
+								id="dueDateExtender"
+								value="2"
+								checked={extendDueDate}
+								onChange={handleDueDateExtend}></input>
+						</label>
+					) : (
+						''
+					)}
 				</div>
 				<h3>Carga de archivos e impresión</h3>
 			</form>
@@ -293,6 +317,7 @@ function Main() {
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
 					dateCalcBtn={dateCalcBtn}
+					extendDueDate={extendDueDate}
 				/>
 			</section>
 		</main>

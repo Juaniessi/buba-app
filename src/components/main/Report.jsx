@@ -39,6 +39,7 @@ function Report(props) {
 		loadImgRef,
 		severityOrder,
 		dateCalcBtn,
+		extendDueDate,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -362,9 +363,12 @@ function Report(props) {
 			dueDate = new Date(startDate.getTime());
 		} else if (dateCalcBtn.value === 'Condicional') {
 			dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
-		} else if (dateCalcBtn.value === 'Apto') {
+		} else if (dateCalcBtn.value === 'Apto' && extendDueDate === false) {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
+		} else if (dateCalcBtn.value === 'Apto' && extendDueDate === true) {
+			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 2));
 		}
+
 		return dueDate;
 	}
 	/**
