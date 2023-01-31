@@ -24,7 +24,7 @@ function Main() {
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
 		setTransmisionType({value: '4x2', label: 'Normal'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
-		setExtendDueDate({value: '1a', label: '1 año'});
+		setSelectValidity({value: '1a', label: '1 año'});
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
 	};
@@ -122,13 +122,13 @@ function Main() {
 	 * manages dueDate for the report.
 	 */
 
-	const [extendDueDate, setExtendDueDate] = useState({
+	const [selectValidity, setSelectValidity] = useState({
 		value: '1a',
 		label: '1 año',
 	});
 
 	const handleDueDateExtend = (item) => {
-		setExtendDueDate(item);
+		setSelectValidity(item);
 	};
 
 	const [imgUpload, setImgUpload] = useState(null);
@@ -275,12 +275,12 @@ function Main() {
 						</label>
 					))}{' '}
 					<span>Vigencia:</span>
-					{radioGeneratorArray.extendDueDate.map((item, i) => (
+					{radioGeneratorArray.selectValidity.map((item, i) => (
 						<label
 							className={
 								dateCalcBtn.value !== 'Apto'
 									? 'btn-inside'
-									: extendDueDate.value === item.value
+									: selectValidity.value === item.value
 									? 'radio-checked btn-inside'
 									: 'focus btn-inside'
 							}
@@ -293,7 +293,7 @@ function Main() {
 								name="dueDateSelector"
 								id={item.value}
 								value={item.value}
-								checked={extendDueDate.value === item.value} //determina que visualmente se vea checked
+								checked={selectValidity.value === item.value} //determina que visualmente se vea checked
 								onChange={() => handleDueDateExtend(item)}
 							/>
 							{item.label}
@@ -332,7 +332,7 @@ function Main() {
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
 					dateCalcBtn={dateCalcBtn}
-					extendDueDate={extendDueDate}
+					selectValidity={selectValidity}
 				/>
 			</section>
 		</main>

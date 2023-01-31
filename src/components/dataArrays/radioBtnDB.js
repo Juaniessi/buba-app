@@ -85,7 +85,7 @@ const radioGeneratorArray = {
 			label: 'Rechazado',
 		},
 	],
-	extendDueDate: [
+	selectValidity: [
 		{
 			value: '1a',
 			label: '1 año',
