@@ -232,7 +232,7 @@ td {
 .weightsTable {
 	position: absolute;
 	left: 481px;
-	top: 130px;
+	top: 120px;
 	border: 1px solid black;
 	background-color: rgb(255, 255, 100);
 	font-weight: 600;
@@ -240,18 +240,4 @@ td {
 	padding: 5px;
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
 	border-radius: 5px;
-}
-
-.checkBox {
-	margin-left: 2px;
-	border: 0px;
-	width: 1em;
-	height: 1em;
-	cursor: pointer;
-	align-items: center;
-}
-
-.extendDueDate {
-	margin-left: 1rem;
-	background-color: rgba(0, 0, 0, 0.15);
 }

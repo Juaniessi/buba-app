@@ -363,10 +363,12 @@ function Report(props) {
 			dueDate = new Date(startDate.getTime());
 		} else if (dateCalcBtn.value === 'Condicional') {
 			dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
-		} else if (dateCalcBtn.value === 'Apto' && extendDueDate === false) {
+		} else if (dateCalcBtn.value === 'Apto' && extendDueDate.value === '1a') {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
-		} else if (dateCalcBtn.value === 'Apto' && extendDueDate === true) {
+		} else if (dateCalcBtn.value === 'Apto' && extendDueDate.value === '2a') {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 2));
+		} else if (dateCalcBtn.value === 'Apto' && extendDueDate.value === '6m') {
+			dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
 		}
 
 		return dueDate;

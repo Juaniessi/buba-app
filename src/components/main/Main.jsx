@@ -24,7 +24,7 @@ function Main() {
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
 		setTransmisionType({value: '4x2', label: 'Normal'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
-		setExtendDueDate(false);
+		setExtendDueDate({value: '1a', label: '1 año'});
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
 	};
@@ -118,10 +118,17 @@ function Main() {
 		label: 'Normal',
 	});
 
-	const [extendDueDate, setExtendDueDate] = useState(false);
+	/**
+	 * manages dueDate for the report.
+	 */
 
-	const handleDueDateExtend = () => {
-		setExtendDueDate(!extendDueDate);
+	const [extendDueDate, setExtendDueDate] = useState({
+		value: '1a',
+		label: '1 año',
+	});
+
+	const handleDueDateExtend = (item) => {
+		setExtendDueDate(item);
 	};
 
 	const [imgUpload, setImgUpload] = useState(null);
@@ -266,24 +273,32 @@ function Main() {
 							/>
 							{item.label}
 						</label>
-					))}
-					{dateCalcBtn.value === 'Apto' ? (
+					))}{' '}
+					<span>Vigencia:</span>
+					{radioGeneratorArray.extendDueDate.map((item, i) => (
 						<label
-							className={`btn-inside extendDueDate`}
-							htmlFor="dueDateExtender">
-							Vigencia por 2 años
+							className={
+								dateCalcBtn.value !== 'Apto'
+									? 'btn-inside'
+									: extendDueDate.value === item.value
+									? 'radio-checked btn-inside'
+									: 'focus btn-inside'
+							}
+							htmlFor={item.value}
+							key={i}>
 							<input
-								type="checkbox"
-								className="checkBox"
-								name="dueDateExtender"
-								id="dueDateExtender"
-								value="2"
-								checked={extendDueDate}
-								onChange={handleDueDateExtend}></input>
+								type="radio"
+								className={`rad-c`}
+								disabled={dateCalcBtn.value !== 'Apto'}
+								name="dueDateSelector"
+								id={item.value}
+								value={item.value}
+								checked={extendDueDate.value === item.value} //determina que visualmente se vea checked
+								onChange={() => handleDueDateExtend(item)}
+							/>
+							{item.label}
 						</label>
-					) : (
-						''
-					)}
+					))}
 				</div>
 				<h3>Carga de archivos e impresión</h3>
 			</form>

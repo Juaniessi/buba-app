@@ -85,6 +85,20 @@ const radioGeneratorArray = {
 			label: 'Rechazado',
 		},
 	],
+	extendDueDate: [
+		{
+			value: '1a',
+			label: '1 año',
+		},
+		{
+			value: '2a',
+			label: '2 años',
+		},
+		{
+			value: '6m',
+			label: '6 meses',
+		},
+	],
 };
 
 export {radioGeneratorArray};
