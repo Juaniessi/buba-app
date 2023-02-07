@@ -35,10 +35,12 @@
 .finalReport .date .start-date {
   top: 61px;
   left: 235px;
+  font-size: 0.75rem;
 }
 .finalReport .date .end-date {
   top: 61px;
   left: 343px;
+  font-size: 0.75rem;
 }
 .finalReport .header-info .plate {
   top: 138px;
