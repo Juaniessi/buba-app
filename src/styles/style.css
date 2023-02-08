@@ -4,14 +4,14 @@
 }
 @media print {
   header,
-form,
-label,
-h2,
-h3,
-button,
-input,
-textarea,
-.quitar-col {
+  form,
+  label,
+  h2,
+  h3,
+  button,
+  input,
+  textarea,
+  .quitar-col {
     display: none;
   }
   #no-print {
@@ -200,7 +200,6 @@ td {
 
 .engine-and-size {
   color: black;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   border-radius: 5px;

@@ -382,22 +382,18 @@ function Report(props) {
 		return (
 			<div className="date">
 				<p className="start-date">
-					<b>
-						{startDate.getDate() +
-							'/' +
-							Number(startDate.getMonth() + 1) +
-							'/' +
-							startDate.getFullYear()}
-					</b>
+					{startDate.getDate() +
+						'/' +
+						Number(startDate.getMonth() + 1) +
+						'/' +
+						startDate.getFullYear()}
 				</p>
 				<p className="end-date">
-					<b>
-						{dueDate.getDate() +
-							'/' +
-							Number(dueDate.getMonth() + 1) +
-							'/' +
-							dueDate.getFullYear()}
-					</b>
+					{dueDate.getDate() +
+						'/' +
+						Number(dueDate.getMonth() + 1) +
+						'/' +
+						dueDate.getFullYear()}
 				</p>
 			</div>
 		);

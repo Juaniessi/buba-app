@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "RobotoBold";
+  src: local("RobotoBold"), url(../assets/Roboto-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "RobotoBlack";
+  src: local("RobotoBlack"), url(../assets/Roboto-Black.ttf) format("truetype");
+}
 .finalReport {
   position: relative;
 }
@@ -35,11 +43,13 @@
 .finalReport .date .start-date {
   top: 61px;
   left: 235px;
+  font-family: "RobotoBold";
   font-size: 0.75rem;
 }
 .finalReport .date .end-date {
   top: 61px;
   left: 343px;
+  font-family: "RobotoBlack";
   font-size: 0.75rem;
 }
 .finalReport .header-info .plate {
