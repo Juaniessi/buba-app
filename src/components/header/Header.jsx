@@ -3,7 +3,7 @@ import React from 'react';
 function Header() {
 	return (
 		<header>
-			<h1>Armador de informes</h1>
+			<h1>Informes Bubatec</h1>
 		</header>
 	);
 }
