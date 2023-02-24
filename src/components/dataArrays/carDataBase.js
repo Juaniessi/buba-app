@@ -883,11 +883,11 @@ const autoArray = {
 			rendDeFrenado: [
 				{
 					value: 'bajRendDel',
-					label: 'Bajo rendimiento de frenado en eje delantero.',
+					label: 'Bajo rendimiento en eje delantero.',
 				},
 				{
 					value: 'bajRendTra',
-					label: 'Bajo rendimiento de frenado en eje trasero.',
+					label: 'Bajo rendimiento en eje trasero.',
 				},
 				{
 					value: 'bajRendFrm',
@@ -897,33 +897,27 @@ const autoArray = {
 			difDeFrenado: [
 				{
 					value: 'difFreDelRi',
-					label:
-						'Diferencia de frenado eje delantero (frena menos rueda izquierda).',
+					label: 'Eje delantero. Rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreDelRd',
-					label:
-						'Diferencia de frenado eje delantero (frena menos rueda derecha).',
+					label: 'Eje delantero. Rueda derecha frena menos.',
 				},
 				{
 					value: 'difFreTraRi',
-					label:
-						'Diferencia de frenado eje trasero (frena menos rueda izquierda).',
+					label: 'Eje trasero. Rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreTraRd',
-					label:
-						'Diferencia de frenado eje trasero (frena menos rueda derecha).',
+					label: 'Eje trasero. Rueda derecha frena menos.',
 				},
 				{
 					value: 'difFreFdmRi',
-					label:
-						'Diferencia de frenado freno de mano (frena menos rueda izquierda).',
+					label: 'Freno de mano, eje trasero. Rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreFdmRd',
-					label:
-						'Diferencia de frenado freno de mano (frena menos rueda derecha).',
+					label: 'Freno de mano, eje trasero. Rueda derecha frena menos.',
 				},
 			],
 			ruedaFrenada: [
@@ -1086,13 +1080,11 @@ const autoArray = {
 			gases: [
 				{
 					value: 'altoNivO2',
-					label:
-						'Emisión de gases supera los límites permitidos de monóxido de carbono.',
+					label: 'Supera los límites permitidos de monóxido de carbono.',
 				},
 				{
 					value: 'altoNivHco',
-					label:
-						'Emisión de gases supera los límites permitidos de hidrocarburos.',
+					label: 'Supera los límites permitidos de hidrocarburos.',
 				},
 				{
 					value: 'altoNivOpa',
