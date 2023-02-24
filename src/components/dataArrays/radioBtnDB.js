@@ -87,12 +87,12 @@ const radioGeneratorArray = {
 	],
 	selectValidity: [
 		{
-			value: '1a',
-			label: '1 año',
-		},
-		{
 			value: '2a',
 			label: '2 años',
+		},
+		{
+			value: '1a',
+			label: '1 año',
 		},
 		{
 			value: '6m',

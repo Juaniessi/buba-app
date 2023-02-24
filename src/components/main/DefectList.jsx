@@ -64,7 +64,7 @@ function DefectList(props) {
 			descripcion.value !== ''
 		) {
 			setLista(lista.concat(itemLista));
-			
+
 			setGrupo({value: '', label: ''});
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
@@ -191,9 +191,7 @@ function DefectList(props) {
 							.map((item, i) => (
 								<label
 									className={
-										grupo.value === item.value
-											? 'radio-checked '
-											: 'focus'
+										grupo.value === item.value ? 'radio-checked ' : 'focus'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -220,9 +218,7 @@ function DefectList(props) {
 							.map((item, i) => (
 								<label
 									className={
-										seccion.value === item.value
-											? 'radio-checked'
-											: 'focus'
+										seccion.value === item.value ? 'radio-checked' : 'focus'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -249,9 +245,7 @@ function DefectList(props) {
 							.map((item, i) => (
 								<label
 									className={
-										descripcion.value === item.value
-											? 'radio-checked'
-											: 'focus'
+										descripcion.value === item.value ? 'radio-checked' : 'focus'
 									}
 									htmlFor={item.value}
 									key={i}>
@@ -270,9 +264,7 @@ function DefectList(props) {
 						{seccion.value.length > 0 && (
 							<label
 								className={
-									descripcion.value === 'otro'
-										? 'radio-checked'
-										: 'focus'
+									descripcion.value === 'otro' ? 'radio-checked' : 'focus'
 								}
 								htmlFor="otro">
 								<input
