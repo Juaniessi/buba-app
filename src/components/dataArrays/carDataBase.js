@@ -291,6 +291,10 @@ const autoArray = {
 				value: 'transmision',
 				label: 'Transmisión',
 			},
+			{
+				value: 'patasMotor',
+				label: 'Patas de motor',
+			},
 		],
 	},
 
@@ -342,17 +346,17 @@ const autoArray = {
 				{
 					value: 'luzFreTraIzqNoRes',
 					label:
-						'Luz de freno trasera izquierda no responde al accionamiento del pedal.',
+						'Trasera izquierda no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'luzFreTraDerNoRes',
 					label:
-						'Luz de freno trasera derecha no responde al accionamiento del pedal.',
+						'Trasera derecha no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'luzFreTraCenNoRes',
 					label:
-						'Luz de freno trasera central no responde al accionamiento del pedal.',
+						'Trasera central no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'bajIntIluTraIzq',
@@ -924,22 +928,22 @@ const autoArray = {
 				{
 					value: 'rueFreDelIzq',
 					label:
-						'Rueda frenada, sin accionamiento de frenos (freno delantero izquierdo defectuoso).',
+						'Freno delantero izquierdo defectuoso.',
 				},
 				{
 					value: 'rueFreDelDer',
 					label:
-						'Rueda frenada, sin accionamiento de frenos (freno delantero derecho defectuoso).',
+						'Freno delantero derecho defectuoso.',
 				},
 				{
 					value: 'rueFreTraIzq',
 					label:
-						'Rueda frenada, sin accionamiento de frenos (freno trasero izquierdo defectuoso).',
+						'Freno trasero izquierdo defectuoso.',
 				},
 				{
 					value: 'rueFreTraDer',
 					label:
-						'Rueda frenada, sin accionamiento de frenos (freno trasero derecho defectuoso).',
+						'Freno trasero derecho defectuoso.',
 				},
 			],
 			ovalAlab: [
@@ -1091,7 +1095,6 @@ const autoArray = {
 					label: 'Alto nivel de opacidad en emisiones.',
 				},
 			],
-
 			ruido: [
 				{
 					value: 'altoNivConSon',
@@ -1618,6 +1621,17 @@ const autoArray = {
 					value: 'fuelleMazaTraDer',
 					label: 'Fuelle de maza trasera derecha en mal estado.',
 				},
+			],
+			patasMotor: [
+				{
+					value: 'pataBlanda',
+					label: 'Blandas.',
+				},
+				{
+					value: 'pataMala',
+					label: 'Con holgura o en mal estado.',
+				},
+				
 			],
 		},
 	},
