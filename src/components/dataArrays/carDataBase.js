@@ -345,18 +345,15 @@ const autoArray = {
 			lucesDeFreno: [
 				{
 					value: 'luzFreTraIzqNoRes',
-					label:
-						'Trasera izquierda no responde al accionamiento del pedal.',
+					label: 'Trasera izquierda no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'luzFreTraDerNoRes',
-					label:
-						'Trasera derecha no responde al accionamiento del pedal.',
+					label: 'Trasera derecha no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'luzFreTraCenNoRes',
-					label:
-						'Trasera central no responde al accionamiento del pedal.',
+					label: 'Trasera central no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'bajIntIluTraIzq',
@@ -927,23 +924,19 @@ const autoArray = {
 			ruedaFrenada: [
 				{
 					value: 'rueFreDelIzq',
-					label:
-						'Freno delantero izquierdo defectuoso.',
+					label: 'Freno delantero izquierdo defectuoso.',
 				},
 				{
 					value: 'rueFreDelDer',
-					label:
-						'Freno delantero derecho defectuoso.',
+					label: 'Freno delantero derecho defectuoso.',
 				},
 				{
 					value: 'rueFreTraIzq',
-					label:
-						'Freno trasero izquierdo defectuoso.',
+					label: 'Freno trasero izquierdo defectuoso.',
 				},
 				{
 					value: 'rueFreTraDer',
-					label:
-						'Freno trasero derecho defectuoso.',
+					label: 'Freno trasero derecho defectuoso.',
 				},
 			],
 			ovalAlab: [
@@ -1631,7 +1624,6 @@ const autoArray = {
 					value: 'pataMala',
 					label: 'Con holgura o en mal estado.',
 				},
-				
 			],
 		},
 	},
