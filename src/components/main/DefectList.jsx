@@ -4,10 +4,12 @@ import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
 
+/*setSeveridad is passed from "Main" to "Report", ignore the warning */
 function DefectList(props) {
 	const {
 		tipo,
 		severidad,
+		setSeveridad,
 		handleSeveridad,
 		grupo,
 		setGrupo,
