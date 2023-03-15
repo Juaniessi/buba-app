@@ -213,7 +213,7 @@ function DefectList(props) {
 							htmlFor="note">
 							<input
 								type="radio"
-								name="note"
+								name="group"
 								id="note"
 								value="note"
 								checked={grupo.value === 'note'}
@@ -260,7 +260,7 @@ function DefectList(props) {
 								htmlFor="misc">
 								<input
 									type="radio"
-									name="misc"
+									name="section"
 									id="misc"
 									value="misc"
 									checked={seccion.value === 'misc'}
