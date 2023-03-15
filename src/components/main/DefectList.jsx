@@ -8,7 +8,6 @@ function DefectList(props) {
 	const {
 		tipo,
 		severidad,
-		setSeveridad,
 		handleSeveridad,
 		grupo,
 		setGrupo,
