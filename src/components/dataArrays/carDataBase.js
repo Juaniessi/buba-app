@@ -48,35 +48,35 @@ const autoArray = {
 		luces: [
 			{
 				value: 'lucesDePos',
-				label: 'Luces de posición',
+				label: 'De posición',
 			},
 			{
 				value: 'lucesDeFreno',
-				label: 'Luces de freno',
+				label: 'De freno',
 			},
 			{
 				value: 'luzBaja',
-				label: 'Luces bajas',
+				label: 'Bajas',
 			},
 			{
 				value: 'luzAlta',
-				label: 'Luces altas',
+				label: 'Altas',
 			},
 			{
 				value: 'balizas',
-				label: 'Balizas',
+				label: 'De balizas',
 			},
 			{
 				value: 'guines',
-				label: 'Guiñes',
+				label: 'De giro',
 			},
 			{
 				value: 'luzRevSec',
-				label: 'Luz de reversa',
+				label: 'De reversa',
 			},
 			{
 				value: 'luzPat',
-				label: 'Luz de patente',
+				label: 'De patente',
 			},
 		],
 		ruedas: [
@@ -303,39 +303,19 @@ const autoArray = {
 			lucesDePos: [
 				{
 					value: 'luzPosDelIzq',
-					label: 'Luz de posición delantera izquierda no enciende.',
+					label: 'Delantera izquierda no enciende.',
 				},
 				{
 					value: 'luzPosDelDer',
-					label: 'Luz de posición delantera derecha no enciende.',
+					label: 'Delantera derecha no enciende.',
 				},
 				{
 					value: 'luzPosTraIzq',
-					label: 'Luz de posición trasera izquierda no enciende.',
+					label: 'Trasera izquierda no enciende.',
 				},
 				{
 					value: 'luzPosTraDer',
-					label: 'Luz de posición trasera derecha no enciende.',
-				},
-				{
-					value: 'bajIntIluTraIzq',
-					label:
-						'Baja intensidad de iluminación en luz de posición trasera izquierda.',
-				},
-				{
-					value: 'bajIntIluTraDer',
-					label:
-						'Baja intensidad de iluminación en luz de posición trasera derecha.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label:
-						'Baja intensidad de iluminación en luz de posición delantera izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label:
-						'Baja intensidad de iluminación en luz de posición delantera derecha.',
+					label: 'Trasera derecha no enciende.',
 				},
 				{
 					value: 'ningunaPos',
@@ -356,45 +336,18 @@ const autoArray = {
 					label: 'Trasera central no responde al accionamiento del pedal.',
 				},
 				{
-					value: 'bajIntIluTraIzq',
-					label:
-						'Baja intensidad de iluminación en luz de freno trasera izquierda.',
-				},
-				{
-					value: 'bajIntIluTraDer',
-					label:
-						'Baja intensidad de iluminación en luz de freno trasera derecha.',
-				},
-				{
-					value: 'bajIntIluCenDer',
-					label:
-						'Baja intensidad de iluminación en luz de freno trasera central.',
-				},
-				{
 					value: 'ningunaFren',
 					label: 'Ninguna luz de freno funciona.',
 				},
 			],
 			luzBaja: [
 				{
-					value: 'luzBajSinPatron',
-					label: 'Luz baja no describe patrón reglamentario.',
-				},
-				{
 					value: 'luzBajIzq',
-					label: 'Luz baja izquierda no enciende.',
+					label: 'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'luzBajDer',
-					label: 'Luz baja derecha no enciende.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz baja izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz baja derecha.',
+					label: 'Derecha no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'ningunaBaja',
@@ -403,24 +356,12 @@ const autoArray = {
 			],
 			luzAlta: [
 				{
-					value: 'luzAltSinPatron',
-					label: 'Luz alta no describe patrón reglamentario.',
-				},
-				{
 					value: 'luzAltDelIzq',
-					label: 'Luz alta izquierda no enciende.',
+					label: 'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'luzAltDelDer',
-					label: 'Luz alta derecha no enciende.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz alta izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz alta derecha.',
+					label: 'Derecha no enciende, intensidad baja o patrón no reglamentario..',
 				},
 				{
 					value: 'ningunaAlta',
@@ -430,11 +371,11 @@ const autoArray = {
 			luzPat: [
 				{
 					value: 'luzPatDel',
-					label: 'Luz de patente delantera no enciende.',
+					label: 'Delantera no enciende.',
 				},
 				{
 					value: 'luzPatTra',
-					label: 'Luz de patente trasera no enciende.',
+					label: 'Trasera no enciende.',
 				},
 			],
 			balizas: [
@@ -448,47 +389,47 @@ const autoArray = {
 				},
 				{
 					value: 'luzBalizasLat',
-					label: 'Luces de balizas laterales no destellan correctamente.',
+					label: 'Laterales no destellan correctamente.',
 				},
 			],
 			guines: [
 				{
 					value: 'luzGirDelIzq',
-					label: 'Luz de giro delantera izquierda no destella correctamente.',
+					label: 'Delantera izquierda no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirDelDer',
-					label: 'Luz de giro delantera derecha no  destella correctamente.',
+					label: 'Delantera derecha no  destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirTraIzq',
-					label: 'Luz de giro trasera izquierda no destella correctamente.',
+					label: 'Trasera izquierda no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirTraDer',
-					label: 'Luz de giro trasera derecha no destella correctamente.',
+					label: 'Trasera derecha no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirLatIzq',
-					label: 'Luz de giro lateral izquiera no destella correctamente.',
+					label: 'Lateral izquiera no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirLatDer',
-					label: 'Luz de giro lateral derecha no destella correctamente.',
+					label: 'Lateral derecha no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'variosGuinDel',
-					label: 'Ambas luces de giro delanteras no destellan correctamente.',
+					label: 'Ambas delanteras no destellan correctamente o su color no es ambar.',
 				},
 				{
 					value: 'variosGuinTra',
-					label: 'Ambas luces de giro traseras no destellan correctamente.',
+					label: 'Ambas traseras no destellan correctamente o su color no es ambar.',
 				},
 			],
 			luzRevSec: [
 				{
 					value: 'luzRevDes',
-					label: 'Luz de reversa no funciona correctamente.',
+					label: 'No funciona correctamente.',
 				},
 			],
 		},
