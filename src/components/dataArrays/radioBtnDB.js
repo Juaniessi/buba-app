@@ -27,18 +27,21 @@ const radioGeneratorArray = {
 			label: 'Leve',
 			order: 1,
 			class: 'yellow',
+			modCol: "L",
 		},
 		{
 			value: 'Moderado',
 			label: 'Moderado',
 			order: 2,
 			class: 'orange',
+			modCol: "M",
 		},
 		{
 			value: 'Grave',
 			label: 'Grave',
 			order: 3,
 			class: 'black',
+			modCol: "G",
 		},
 	],
 	engineType: [

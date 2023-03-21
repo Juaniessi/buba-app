@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {autoArray} from '../dataArrays/carDataBase';
 import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
@@ -65,7 +65,6 @@ function DefectList(props) {
 			descripcion.value !== ''
 		) {
 			setLista(lista.concat(itemLista));
-
 			setGrupo({value: '', label: ''});
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
@@ -90,6 +89,32 @@ function DefectList(props) {
 			return index !== i ? true : false;
 		});
 		setLista(nuevaLista);
+	}
+
+	const [radioValue, setRadioValue] = useState('');
+
+	function handleRadioChange(event, i) {
+		setRadioValue(event.target.value);
+		let modifiedList = lista.map((item) => {
+			switch (event.target.value) {
+				case 'Leve':
+					return {...item, Sev: 'Leve', Ord: 1};
+				case 'Moderado':
+					return {...item, Sev: 'Moderado', Ord: 2};
+				case 'Grave':
+					return {...item, Sev: 'Grave', Ord: 3};
+				default:
+					return lista;
+			}
+		});
+		modifiedList.sort(function (a, b) {
+			if (a.Ord !== b.Ord) return b.Ord - a.Ord;
+			if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
+			if (a.seccion !== b.seccion) return a.seccion > b.seccion ? 1 : -1;
+			return a.desc > b.desc ? 1 : -1;
+		});
+		setLista(modifiedList);
+		console.log(lista)
 	}
 
 	/**
@@ -131,6 +156,24 @@ function DefectList(props) {
 						<img className="trash-can" src={trashCan} alt="Trash-can" />
 					</button>
 				</td>
+				{radioGeneratorArray.severity.map((item, i) => (
+					<td className="erase-btn" key={i}>
+						<label
+							className={`btn-inside ${item.class}`}
+							htmlFor={`${item.value}${i}`}>
+							<input
+								type="radio"
+								className="rad-c"
+								name={`${item.value}${i}`}
+								id={`${item.value}${i}`}
+								value={item.value}
+								checked={radioValue === item.value} //determines visual efect of checked
+								onChange={()=>handleRadioChange(i)}
+							/>
+							{item.label}
+						</label>
+					</td>
+				))}
 			</tr>
 		);
 	}
@@ -146,6 +189,11 @@ function DefectList(props) {
 						<th className="severidad-col">Severidad</th>
 						<th className="phantom-col"></th>
 						<th className="quitar-col">Quitar</th>
+						{radioGeneratorArray.severity.map((item, i) => (
+							<th className="quitar-col" key={i}>
+								{item.modCol}
+							</th>
+						))}
 					</tr>
 				</thead>
 				<tbody>
