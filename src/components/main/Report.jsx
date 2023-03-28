@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
@@ -40,6 +40,7 @@ function Report(props) {
 		severityOrder,
 		dateCalcBtn,
 		selectValidity,
+		txtRender,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -404,6 +405,28 @@ function Report(props) {
 		return false;
 	};
 
+/**
+	 * gets the licence plate and copies it to the clip board so when you save the PDF
+	 * you can simply paste the patent as name file
+	 */
+
+	useEffect(() => {
+		copyToClipboard();
+	}, [txtRender]);
+
+	function copyToClipboard() {
+		if (txtRender !== '') {
+			navigator.clipboard
+				.writeText(txtRender.header.patente)
+				.then(() => {
+					console.log(`Copied text to clipboard: ${txtRender.header.patente}`);
+				})
+				.catch((error) => {
+					console.error(`Could not copy text: ${error}`);
+				});
+		}
+	}
+
 	return (
 		<>
 			<div className="insert-btn-cont" id="no-print2">
@@ -443,7 +466,12 @@ function Report(props) {
 				<label className="wrap-label" htmlFor="print-btn">
 					{' '}
 					Imprimir informe:
-					<button className="print-btn" id="print-btn" onClick={printPage}>
+					<button
+						className="print-btn"
+						id="print-btn"
+						onClick={() => {
+							printPage();
+						}}>
 						<img src={printSolid} alt="printer" />
 					</button>
 				</label>
