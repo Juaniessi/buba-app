@@ -400,15 +400,10 @@ function Report(props) {
 		);
 	}
 
-	const printPage = () => {
-		window.print();
-		return false;
-	};
-
 	/**
 	 * gets the licence plate and copies it to the clip board so when you save the PDF
 	 * you can simply paste the patent as name file.
-	 * Uses primises .then() method to actualli send the print afther the text is copied.
+	 * Uses promises .then() method to actually send the print afther the text is copied.
 	 */
 
 	function copyThenPrint() {
@@ -416,15 +411,20 @@ function Report(props) {
 			navigator.clipboard
 				.writeText(txtRender.header.patente)
 				.then(() => {
-					window.print();
+					printPage();
 				})
 				.catch((error) => {
 					console.error(`Could not copy text: ${error}`);
 				});
 		} else {
-			window.print();
+			printPage();
 		}
 	}
+
+	const printPage = () => {
+		window.print();
+		return false;
+	};
 
 	return (
 		<>
