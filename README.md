@@ -5,21 +5,33 @@
 ### Modo de uso
 
 1. Seleccionar el tipo de vehículo.
+
 2. Cargar un archivo ".txt" devuelto por el equipo.
+
 3. Cargar la foto del vehículo.
+
 4. Seleccionar el estado de aptitud del vehículo.
+
 5. Si corresponde, varíe el período de vigencia.
+
 6. Proceder con la carga manual de la descripción de los defectos encontrados.
+
    1. Para ello seleccione la severidad del problema (Leve por defecto)
    2. Luego el grupo, la sección y la descripción.
       - Si el problema en cuestión no se encuentra listado seleccione "Otros" en la descripción y complete dentro del campo "Defecto no listado" con el texto personalizado que desee.
    3. Para finalizar presione el botón de "Agregar a la lista".
-7. Repita el paso 6 y sus incisos hasta haber terminado de cargar todas las descripciones.
-8. Cuando haya terminado, si desea imprimir el archivo, puede hacerlo tocando el botón "Imprimir Informe" en la esquina superior derecha. Para guardarlo como PDF Repita este paso, pero seleccione una impresora de PDF.
 
-9. Para comenzar con un vehículo nuevo, tiene dos caminos
-   1. puede o bien "Reiniciar todos los campos". Esto se puede hacer con el botón rojo grande destinado a tal fin, que se encuentra arriba a la derecha.
-   2. Puede simplemente cargar un archivo .txt nuevo y una foto nueva asegurándose que ambos pertenezcan a otro vehículo (si lo que quiere es cargar una versión actualizada de alguno de los dos archivos, primero debe ejecutar el paso de "Reiniciar todos los campos")
+7. Repita el paso 6 y sus incisos hasta haber terminado de cargar todas las descripciones.
+
+8. Cuando haya terminado, si desea imprimir el archivo, puede hacerlo tocando el botón "Imprimir Informe" en la esquina superior derecha.
+
+9. Para guardarlo como PDF Repita este paso, pero seleccione una impresora de PDF. Para un óptimo resultado, la impresora debe estar configurada para "mostrar gráficos de fondo" y no imprimir encabezado y pie de página. El sistema automaticamente copia al porta papeles la patente del vehiculo, de manera que al guardarlo, simplemente presinando crt+v se puede cambiar el fácilmente el nombre de archivo.
+
+   - Recuerde aceptar el permiso para acceder al porta papeles. En chrome el mismo se encuentra en la parte izquierda de la barra de navegación.
+
+10. Para comenzar con un vehículo nuevo, tiene dos caminos:
+    1. puede o bien "Reiniciar todos los campos". Esto se puede hacer con el botón rojo grande destinado a tal fin, que se encuentra arriba a la derecha.
+    2. Puede simplemente cargar un archivo .txt nuevo y una foto nueva asegurándose que ambos pertenezcan a otro vehículo (si lo que quiere es cargar una versión actualizada de alguno de los dos archivos, primero debe ejecutar el paso de "Reiniciar todos los campos")
 
 ### Modo de testeo
 

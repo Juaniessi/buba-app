@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
 import truckReport from '../../assets/informe-img/informe-camion.svg';
@@ -405,25 +405,24 @@ function Report(props) {
 		return false;
 	};
 
-/**
+	/**
 	 * gets the licence plate and copies it to the clip board so when you save the PDF
-	 * you can simply paste the patent as name file
+	 * you can simply paste the patent as name file.
+	 * Uses primises .then() method to actualli send the print afther the text is copied.
 	 */
 
-	useEffect(() => {
-		copyToClipboard();
-	}, [txtRender]);
-
-	function copyToClipboard() {
+	function copyThenPrint() {
 		if (txtRender !== '') {
 			navigator.clipboard
 				.writeText(txtRender.header.patente)
 				.then(() => {
-					console.log(`Copied text to clipboard: ${txtRender.header.patente}`);
+					window.print();
 				})
 				.catch((error) => {
 					console.error(`Could not copy text: ${error}`);
 				});
+		} else {
+			window.print();
 		}
 	}
 
@@ -470,7 +469,7 @@ function Report(props) {
 						className="print-btn"
 						id="print-btn"
 						onClick={() => {
-							printPage();
+							copyThenPrint();
 						}}>
 						<img src={printSolid} alt="printer" />
 					</button>
