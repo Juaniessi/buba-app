@@ -343,11 +343,13 @@ const autoArray = {
 			luzBaja: [
 				{
 					value: 'luzBajIzq',
-					label: 'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
+					label:
+						'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'luzBajDer',
-					label: 'Derecha no enciende, intensidad baja o patrón no reglamentario.',
+					label:
+						'Derecha no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'ningunaBaja',
@@ -357,11 +359,13 @@ const autoArray = {
 			luzAlta: [
 				{
 					value: 'luzAltDelIzq',
-					label: 'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
+					label:
+						'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'luzAltDelDer',
-					label: 'Derecha no enciende, intensidad baja o patrón no reglamentario..',
+					label:
+						'Derecha no enciende, intensidad baja o patrón no reglamentario..',
 				},
 				{
 					value: 'ningunaAlta',
@@ -395,35 +399,43 @@ const autoArray = {
 			guines: [
 				{
 					value: 'luzGirDelIzq',
-					label: 'Delantera izquierda no destella correctamente o su color no es ambar.',
+					label:
+						'Delantera izquierda no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirDelDer',
-					label: 'Delantera derecha no  destella correctamente o su color no es ambar.',
+					label:
+						'Delantera derecha no  destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirTraIzq',
-					label: 'Trasera izquierda no destella correctamente o su color no es ambar.',
+					label:
+						'Trasera izquierda no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirTraDer',
-					label: 'Trasera derecha no destella correctamente o su color no es ambar.',
+					label:
+						'Trasera derecha no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirLatIzq',
-					label: 'Lateral izquiera no destella correctamente o su color no es ambar.',
+					label:
+						'Lateral izquiera no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirLatDer',
-					label: 'Lateral derecha no destella correctamente o su color no es ambar.',
+					label:
+						'Lateral derecha no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'variosGuinDel',
-					label: 'Ambas delanteras no destellan correctamente o su color no es ambar.',
+					label:
+						'Ambas delanteras no destellan correctamente o su color no es ambar.',
 				},
 				{
 					value: 'variosGuinTra',
-					label: 'Ambas traseras no destellan correctamente o su color no es ambar.',
+					label:
+						'Ambas traseras no destellan correctamente o su color no es ambar.',
 				},
 			],
 			luzRevSec: [
@@ -648,6 +660,16 @@ const autoArray = {
 				},
 			],
 			parrillas: [
+				{
+					value: 'bujeSusDel',
+					label:
+						'Bujes de ambas parrillas de suspensión delanteras en mal estado.',
+				},
+				{
+					value: 'bujeSusTra',
+					label:
+						'Bujes de ambas parrillas de suspensión traseras en mal estado.',
+				},
 				{
 					value: 'bujeSusDelIzq',
 					label:
@@ -1158,27 +1180,34 @@ const autoArray = {
 			],
 			cintDeSeg: [
 				{
-					value: 'cinDelIzqDef',
+					value: 'cinDel2',
 					label:
-						'Cinturón de seguridad delantero izquierdo defectuoso o faltante.',
+						'Todos los cinturones de seguridad delanteros defectuosos o faltantes.',
+				},
+				{
+					value: 'cinTra2',
+					label:
+						'Todos los cinturones de seguridad traseros defectuosos o faltantes.',
+				},
+				{
+					value: 'cinDelIzqDef',
+					label: 'Delantero izquierdo defectuoso o faltante.',
 				},
 				{
 					value: 'cinDelDerDef',
-					label:
-						'Cinturón de seguridad delantero derecho defectuoso o faltante.',
+					label: 'Delantero derecho defectuoso o faltante.',
 				},
 				{
 					value: 'cinTraIzqDef',
-					label:
-						'Cinturón de seguridad trasero izquierdo defectuoso o faltante.',
+					label: 'Trasero izquierdo defectuoso o faltante.',
 				},
 				{
 					value: 'cinTraDerDef',
-					label: 'Cinturón de seguridad trasero derecho defectuoso o faltante.',
+					label: 'Trasero derecho defectuoso o faltante.',
 				},
 				{
 					value: 'cinTraCenDef',
-					label: 'Cinturón de seguridad trasero central defectuoso o faltante.',
+					label: 'Trasero central defectuoso o faltante.',
 				},
 				{
 					value: 'cint2Tra',
