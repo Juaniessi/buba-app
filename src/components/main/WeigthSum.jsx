@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 function WeightSum(props) {
 	const {tipo, txtRender} = props;
@@ -47,6 +47,10 @@ function WeightSum(props) {
 	let totalW = frontLW + frontRW + rearLW + rearRW;
 	let frontW = frontLW + frontRW;
 	let rearW = rearLW + rearRW;
+
+	useEffect(() => {
+		copyToClipboard(totalW);
+	}, [txtRender]);
 
 	return (
 		<main>
