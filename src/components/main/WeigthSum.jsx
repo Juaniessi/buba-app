@@ -44,92 +44,23 @@ function WeightSum(props) {
 			  )
 			: 0;
 
+	let totalW = frontLW + frontRW + rearLW + rearRW;
+	let frontW = frontLW + frontRW;
+	let rearW = rearLW + rearRW;
+
 	return (
 		<main>
-			{tipo === 'Moto' &&
-			window.fileAsObject !== undefined &&
-			txtRender !== '' ? (
+			{window.fileAsObject !== undefined && txtRender !== '' ? (
 				<div className="weightsTable">
-					<div>Combustible: Nafta</div>
 					<div>
-						Peso total:{' '}
-						{Math.round(
-							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
-							)
-						) +
-							Math.round(
-								Number(
-									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo
-								)
-							)}
+						Combustible:{' '}
+						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1
+							? 'Nafta o Gas'
+							: 'Diesel'}
 					</div>
-					<div>
-						Peso eje delantero:{' '}
-						{Math.round(
-							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
-							)
-						)}
-					</div>
-					<div>
-						Peso eje trasero:{' '}
-						{Math.round(
-							Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo)
-						)}
-					</div>
-				</div>
-			) : (
-				''
-			)}
-			{tipo !== 'Moto' &&
-			window.fileAsObject !== undefined &&
-			txtRender !== '' ? (
-				<div className="weightsTable">
-					<div>Combustible: {window.fileAsObject.header.subModelo}</div>
-					<div>
-						Peso total:{' '}
-						{Math.round(
-							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
-							)
-						) +
-							Math.round(
-								Number(
-									window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo
-								)
-							) +
-							Math.round(
-								Number(
-									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho
-								)
-							) +
-							Math.round(
-								Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho)
-							)}
-					</div>
-					<div>
-						Peso eje delantero:{' '}
-						{Math.round(
-							Number(
-								window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo
-							)
-						) +
-							Math.round(
-								Number(
-									window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho
-								)
-							)}
-					</div>
-					<div>
-						Peso eje trasero:{' '}
-						{Math.round(
-							Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo)
-						) +
-							Math.round(
-								Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho)
-							)}
-					</div>
+					<div>Peso total: {totalW}</div>
+					<div>Peso eje delantero: {frontW}</div>
+					<div>Peso eje trasero: {rearW}</div>
 				</div>
 			) : (
 				''
