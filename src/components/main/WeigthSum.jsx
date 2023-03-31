@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 function WeightSum(props) {
-	const {tipo, txtRender} = props;
+	const {txtRender} = props;
 
 	function copyToClipboard(text) {
 		if (txtRender !== '') {
