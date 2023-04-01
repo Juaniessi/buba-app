@@ -185,7 +185,7 @@ function Main() {
 								tipo === item.value ? 'radio-checked' : ''
 							}`}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className="rad-c"
@@ -201,7 +201,7 @@ function Main() {
 					<div className="engine-and-size-ctn">
 						{tipo === 'Moto'
 							? radioGeneratorArray.engineType.map((item, i) => (
-									<div className="engine-and-size" key={i}>
+									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
@@ -219,7 +219,7 @@ function Main() {
 							: ''}
 						{tipo === 'Camion'
 							? radioGeneratorArray.truckSize.map((item, i) => (
-									<div className="engine-and-size" key={i}>
+									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
@@ -237,7 +237,7 @@ function Main() {
 							: ''}
 						{tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Minibus'
 							? radioGeneratorArray.transmisionType.map((item, i) => (
-									<div className="engine-and-size" key={i}>
+									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
@@ -261,7 +261,7 @@ function Main() {
 						<label
 							className={`btn-inside ${item.value}`}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className={`rad-c`}
@@ -285,7 +285,7 @@ function Main() {
 									: 'focus btn-inside'
 							}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className={`rad-c`}

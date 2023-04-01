@@ -167,7 +167,7 @@ function DefectList(props) {
 						<label
 							className={`btn-inside ${item.class}`}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className="rad-c"
@@ -195,7 +195,7 @@ function DefectList(props) {
 										grupo.value === item.value ? 'radio-checked ' : 'focus'
 									}
 									htmlFor={item.value}
-									key={i}>
+									key={item.value}>
 									<input
 										type="radio"
 										className="rad-c"
@@ -241,7 +241,7 @@ function DefectList(props) {
 											seccion.value === item.value ? 'radio-checked' : 'focus'
 										}
 										htmlFor={item.value}
-										key={i}>
+										key={item.value}>
 										<input
 											type="radio"
 											className="rad-c"
@@ -289,7 +289,7 @@ function DefectList(props) {
 												: 'focus'
 										}
 										htmlFor={item.value}
-										key={i}>
+										key={item.value}>
 										<input
 											type="radio"
 											className="rad-c"
