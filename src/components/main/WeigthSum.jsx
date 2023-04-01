@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 
 function WeightSum(props) {
-	const {txtRender} = props;
+	const {tipo, txtRender} = props;
 
 	function copyToClipboard(text) {
 		if (txtRender !== '') {
@@ -58,7 +58,11 @@ function WeightSum(props) {
 				<div className="weightsTable">
 					<div>
 						Combustible:{' '}
-						{window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1
+						{tipo === 'Moto'
+							? 'Nafta'
+							: window.fileAsObject.header.subModelo === 'GAS'
+							? 'GAS'
+							: window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1
 							? 'Nafta o Gas'
 							: 'Diesel'}
 					</div>
