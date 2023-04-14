@@ -48,35 +48,35 @@ const autoArray = {
 		luces: [
 			{
 				value: 'lucesDePos',
-				label: 'Luces de posición',
+				label: 'De posición',
 			},
 			{
 				value: 'lucesDeFreno',
-				label: 'Luces de freno',
+				label: 'De freno',
 			},
 			{
 				value: 'luzBaja',
-				label: 'Luces bajas',
+				label: 'Bajas',
 			},
 			{
 				value: 'luzAlta',
-				label: 'Luces altas',
+				label: 'Altas',
 			},
 			{
 				value: 'balizas',
-				label: 'Balizas',
+				label: 'De balizas',
 			},
 			{
 				value: 'guines',
-				label: 'Guiñes',
+				label: 'De giro',
 			},
 			{
 				value: 'luzRevSec',
-				label: 'Luz de reversa',
+				label: 'De reversa',
 			},
 			{
 				value: 'luzPat',
-				label: 'Luz de patente',
+				label: 'De patente',
 			},
 		],
 		ruedas: [
@@ -291,6 +291,10 @@ const autoArray = {
 				value: 'transmision',
 				label: 'Transmisión',
 			},
+			{
+				value: 'patasMotor',
+				label: 'Patas de motor',
+			},
 		],
 	},
 
@@ -299,39 +303,19 @@ const autoArray = {
 			lucesDePos: [
 				{
 					value: 'luzPosDelIzq',
-					label: 'Luz de posición delantera izquierda no enciende.',
+					label: 'Delantera izquierda no enciende.',
 				},
 				{
 					value: 'luzPosDelDer',
-					label: 'Luz de posición delantera derecha no enciende.',
+					label: 'Delantera derecha no enciende.',
 				},
 				{
 					value: 'luzPosTraIzq',
-					label: 'Luz de posición trasera izquierda no enciende.',
+					label: 'Trasera izquierda no enciende.',
 				},
 				{
 					value: 'luzPosTraDer',
-					label: 'Luz de posición trasera derecha no enciende.',
-				},
-				{
-					value: 'bajIntIluTraIzq',
-					label:
-						'Baja intensidad de iluminación en luz de posición trasera izquierda.',
-				},
-				{
-					value: 'bajIntIluTraDer',
-					label:
-						'Baja intensidad de iluminación en luz de posición trasera derecha.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label:
-						'Baja intensidad de iluminación en luz de posición delantera izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label:
-						'Baja intensidad de iluminación en luz de posición delantera derecha.',
+					label: 'Trasera derecha no enciende.',
 				},
 				{
 					value: 'ningunaPos',
@@ -341,33 +325,15 @@ const autoArray = {
 			lucesDeFreno: [
 				{
 					value: 'luzFreTraIzqNoRes',
-					label:
-						'Luz de freno trasera izquierda no responde al accionamiento del pedal.',
+					label: 'Trasera izquierda no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'luzFreTraDerNoRes',
-					label:
-						'Luz de freno trasera derecha no responde al accionamiento del pedal.',
+					label: 'Trasera derecha no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'luzFreTraCenNoRes',
-					label:
-						'Luz de freno trasera central no responde al accionamiento del pedal.',
-				},
-				{
-					value: 'bajIntIluTraIzq',
-					label:
-						'Baja intensidad de iluminación en luz de freno trasera izquierda.',
-				},
-				{
-					value: 'bajIntIluTraDer',
-					label:
-						'Baja intensidad de iluminación en luz de freno trasera derecha.',
-				},
-				{
-					value: 'bajIntIluCenDer',
-					label:
-						'Baja intensidad de iluminación en luz de freno trasera central.',
+					label: 'Trasera central no responde al accionamiento del pedal.',
 				},
 				{
 					value: 'ningunaFren',
@@ -376,24 +342,14 @@ const autoArray = {
 			],
 			luzBaja: [
 				{
-					value: 'luzBajSinPatron',
-					label: 'Luz baja no describe patrón reglamentario.',
-				},
-				{
 					value: 'luzBajIzq',
-					label: 'Luz baja izquierda no enciende.',
+					label:
+						'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'luzBajDer',
-					label: 'Luz baja derecha no enciende.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz baja izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz baja derecha.',
+					label:
+						'Derecha no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'ningunaBaja',
@@ -402,24 +358,14 @@ const autoArray = {
 			],
 			luzAlta: [
 				{
-					value: 'luzAltSinPatron',
-					label: 'Luz alta no describe patrón reglamentario.',
-				},
-				{
 					value: 'luzAltDelIzq',
-					label: 'Luz alta izquierda no enciende.',
+					label:
+						'Izquierda no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'luzAltDelDer',
-					label: 'Luz alta derecha no enciende.',
-				},
-				{
-					value: 'bajIntIluDelIzq',
-					label: 'Baja intensidad de iluminación en luz alta izquierda.',
-				},
-				{
-					value: 'bajIntIluDelDer',
-					label: 'Baja intensidad de iluminación en luz alta derecha.',
+					label:
+						'Derecha no enciende, intensidad baja o patrón no reglamentario..',
 				},
 				{
 					value: 'ningunaAlta',
@@ -429,11 +375,11 @@ const autoArray = {
 			luzPat: [
 				{
 					value: 'luzPatDel',
-					label: 'Luz de patente delantera no enciende.',
+					label: 'Delantera no enciende.',
 				},
 				{
 					value: 'luzPatTra',
-					label: 'Luz de patente trasera no enciende.',
+					label: 'Trasera no enciende.',
 				},
 			],
 			balizas: [
@@ -447,47 +393,55 @@ const autoArray = {
 				},
 				{
 					value: 'luzBalizasLat',
-					label: 'Luces de balizas laterales no destellan correctamente.',
+					label: 'Laterales no destellan correctamente.',
 				},
 			],
 			guines: [
 				{
 					value: 'luzGirDelIzq',
-					label: 'Luz de giro delantera izquierda no destella correctamente.',
+					label:
+						'Delantera izquierda no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirDelDer',
-					label: 'Luz de giro delantera derecha no  destella correctamente.',
+					label:
+						'Delantera derecha no  destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirTraIzq',
-					label: 'Luz de giro trasera izquierda no destella correctamente.',
+					label:
+						'Trasera izquierda no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirTraDer',
-					label: 'Luz de giro trasera derecha no destella correctamente.',
+					label:
+						'Trasera derecha no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirLatIzq',
-					label: 'Luz de giro lateral izquiera no destella correctamente.',
+					label:
+						'Lateral izquiera no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'luzGirLatDer',
-					label: 'Luz de giro lateral derecha no destella correctamente.',
+					label:
+						'Lateral derecha no destella correctamente o su color no es ambar.',
 				},
 				{
 					value: 'variosGuinDel',
-					label: 'Ambas luces de giro delanteras no destellan correctamente.',
+					label:
+						'Ambas delanteras no destellan correctamente o su color no es ambar.',
 				},
 				{
 					value: 'variosGuinTra',
-					label: 'Ambas luces de giro traseras no destellan correctamente.',
+					label:
+						'Ambas traseras no destellan correctamente o su color no es ambar.',
 				},
 			],
 			luzRevSec: [
 				{
 					value: 'luzRevDes',
-					label: 'Luz de reversa no funciona correctamente.',
+					label: 'No funciona correctamente.',
 				},
 			],
 		},
@@ -707,6 +661,16 @@ const autoArray = {
 			],
 			parrillas: [
 				{
+					value: 'bujeSusDel',
+					label:
+						'Bujes de ambas parrillas de suspensión delanteras en mal estado.',
+				},
+				{
+					value: 'bujeSusTra',
+					label:
+						'Bujes de ambas parrillas de suspensión traseras en mal estado.',
+				},
+				{
 					value: 'bujeSusDelIzq',
 					label:
 						'Buje de parrilla de suspensión delantera izquierda en mal estado.',
@@ -883,11 +847,11 @@ const autoArray = {
 			rendDeFrenado: [
 				{
 					value: 'bajRendDel',
-					label: 'Bajo rendimiento de frenado en eje delantero.',
+					label: 'Bajo rendimiento en eje delantero.',
 				},
 				{
 					value: 'bajRendTra',
-					label: 'Bajo rendimiento de frenado en eje trasero.',
+					label: 'Bajo rendimiento en eje trasero.',
 				},
 				{
 					value: 'bajRendFrm',
@@ -897,55 +861,45 @@ const autoArray = {
 			difDeFrenado: [
 				{
 					value: 'difFreDelRi',
-					label:
-						'Diferencia de frenado eje delantero (frena menos rueda izquierda).',
+					label: 'Eje delantero. Rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreDelRd',
-					label:
-						'Diferencia de frenado eje delantero (frena menos rueda derecha).',
+					label: 'Eje delantero. Rueda derecha frena menos.',
 				},
 				{
 					value: 'difFreTraRi',
-					label:
-						'Diferencia de frenado eje trasero (frena menos rueda izquierda).',
+					label: 'Eje trasero. Rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreTraRd',
-					label:
-						'Diferencia de frenado eje trasero (frena menos rueda derecha).',
+					label: 'Eje trasero. Rueda derecha frena menos.',
 				},
 				{
 					value: 'difFreFdmRi',
-					label:
-						'Diferencia de frenado freno de mano (frena menos rueda izquierda).',
+					label: 'Freno de mano, eje trasero. Rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreFdmRd',
-					label:
-						'Diferencia de frenado freno de mano (frena menos rueda derecha).',
+					label: 'Freno de mano, eje trasero. Rueda derecha frena menos.',
 				},
 			],
 			ruedaFrenada: [
 				{
 					value: 'rueFreDelIzq',
-					label:
-						'Rueda frenada, sin accionamiento de frenos (freno delantero izquierdo defectuoso).',
+					label: 'Freno delantero izquierdo defectuoso.',
 				},
 				{
 					value: 'rueFreDelDer',
-					label:
-						'Rueda frenada, sin accionamiento de frenos (freno delantero derecho defectuoso).',
+					label: 'Freno delantero derecho defectuoso.',
 				},
 				{
 					value: 'rueFreTraIzq',
-					label:
-						'Rueda frenada, sin accionamiento de frenos (freno trasero izquierdo defectuoso).',
+					label: 'Freno trasero izquierdo defectuoso.',
 				},
 				{
 					value: 'rueFreTraDer',
-					label:
-						'Rueda frenada, sin accionamiento de frenos (freno trasero derecho defectuoso).',
+					label: 'Freno trasero derecho defectuoso.',
 				},
 			],
 			ovalAlab: [
@@ -1086,20 +1040,17 @@ const autoArray = {
 			gases: [
 				{
 					value: 'altoNivO2',
-					label:
-						'Emisión de gases supera los límites permitidos de monóxido de carbono.',
+					label: 'Supera los límites permitidos de monóxido de carbono.',
 				},
 				{
 					value: 'altoNivHco',
-					label:
-						'Emisión de gases supera los límites permitidos de hidrocarburos.',
+					label: 'Supera los límites permitidos de hidrocarburos.',
 				},
 				{
 					value: 'altoNivOpa',
 					label: 'Alto nivel de opacidad en emisiones.',
 				},
 			],
-
 			ruido: [
 				{
 					value: 'altoNivConSon',
@@ -1229,27 +1180,34 @@ const autoArray = {
 			],
 			cintDeSeg: [
 				{
-					value: 'cinDelIzqDef',
+					value: 'cinDel2',
 					label:
-						'Cinturón de seguridad delantero izquierdo defectuoso o faltante.',
+						'Todos los cinturones de seguridad delanteros defectuosos o faltantes.',
+				},
+				{
+					value: 'cinTra2',
+					label:
+						'Todos los cinturones de seguridad traseros defectuosos o faltantes.',
+				},
+				{
+					value: 'cinDelIzqDef',
+					label: 'Delantero izquierdo defectuoso o faltante.',
 				},
 				{
 					value: 'cinDelDerDef',
-					label:
-						'Cinturón de seguridad delantero derecho defectuoso o faltante.',
+					label: 'Delantero derecho defectuoso o faltante.',
 				},
 				{
 					value: 'cinTraIzqDef',
-					label:
-						'Cinturón de seguridad trasero izquierdo defectuoso o faltante.',
+					label: 'Trasero izquierdo defectuoso o faltante.',
 				},
 				{
 					value: 'cinTraDerDef',
-					label: 'Cinturón de seguridad trasero derecho defectuoso o faltante.',
+					label: 'Trasero derecho defectuoso o faltante.',
 				},
 				{
 					value: 'cinTraCenDef',
-					label: 'Cinturón de seguridad trasero central defectuoso o faltante.',
+					label: 'Trasero central defectuoso o faltante.',
 				},
 				{
 					value: 'cint2Tra',
@@ -1276,6 +1234,18 @@ const autoArray = {
 				{
 					value: 'bateriaConex',
 					label: 'Conexiones de batería con defectos.',
+				},
+				{
+					value: 'butacaDI',
+					label: 'Butaca delantera izqueirda mal anclada o en mal estado.',
+				},
+				{
+					value: 'butacaDD',
+					label: 'Butaca delantera derecha mal anclada o en mal estado.',
+				},
+				{
+					value: 'butacaT',
+					label: 'Butaca trasera mal anclada o en mal estado.',
 				},
 			],
 			vidrios: [
@@ -1444,6 +1414,23 @@ const autoArray = {
 					value: 'headTraNo',
 					label: 'Sin apoyacabezas traseros.',
 				},
+				{
+					value: 'doorPanelDI',
+					label:
+						'Panel de puerta delantero izquierdo en mal estado o faltante.',
+				},
+				{
+					value: 'doorPanelDD',
+					label: 'Panel de puerta delantero derecho en mal estado o faltante.',
+				},
+				{
+					value: 'doorPanelTI',
+					label: 'Panel de puerta trasero izquierdo en mal estado o faltante.',
+				},
+				{
+					value: 'doorPanelTD',
+					label: 'Panel de puerta trasero derecho en mal estado o faltante.',
+				},
 			],
 			airBag: [
 				{
@@ -1596,6 +1583,16 @@ const autoArray = {
 				{
 					value: 'fuelleMazaTraDer',
 					label: 'Fuelle de maza trasera derecha en mal estado.',
+				},
+			],
+			patasMotor: [
+				{
+					value: 'pataBlanda',
+					label: 'Blandas.',
+				},
+				{
+					value: 'pataMala',
+					label: 'Con holgura o en mal estado.',
 				},
 			],
 		},

@@ -101,12 +101,14 @@ function autoReportArrayFiller() {
 					classEval: 'hand-eval',
 				},
 			],
-			brakeDif: [
+			brakeDifDel: [
 				{
 					ruta: window.fileAsObject.frenosEje_1.diferenciaFzaFrenadoLadoALado,
 					class: 'front',
 					classEval: 'front-eval',
 				},
+			],
+			brakeDifTra: [
 				{
 					ruta: window.fileAsObject.frenosEje_2.diferenciaFzaFrenadoLadoALado,
 					class: 'rear',

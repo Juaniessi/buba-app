@@ -33,11 +33,14 @@ function Report(props) {
 		reportArray,
 		engineType,
 		truckSize,
+		transmisionType,
 		imgUpload,
 		onImageChange,
 		loadImgRef,
 		severityOrder,
 		dateCalcBtn,
+		selectValidity,
+		txtRender,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -78,7 +81,8 @@ function Report(props) {
 	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const majorOrEqArray = new Map([
-		['brakeDif', [90, 15.1, 10]],
+		['brakeDifDel', [80, 15.1, 10]],
+		['brakeDifTra', [95, 15.1, 12]],
 		['brakeResist', [4, 1, 0.7]],
 		['brakeOval', [80, 50, 30]],
 		['luxLow', [200, 27, 26]],
@@ -138,7 +142,7 @@ function Report(props) {
 	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
 	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
 	 */
-	function majorOrEqual(txtProp, paramSelector, truckSize) {
+	function majorOrEqual(txtProp, paramSelector, truckSize, transmisionType) {
 		let params = majorOrEqArray.get(paramSelector);
 		let severityEvaluation = '';
 		let severityLetter = '';
@@ -152,6 +156,11 @@ function Report(props) {
 			severityEvaluation = 'minor';
 			severityLetter = 'L';
 		} else {
+			severityEvaluation = '';
+			severityLetter = 'A';
+		}
+
+		if (transmisionType === '4x4') {
 			severityEvaluation = '';
 			severityLetter = 'A';
 		}
@@ -355,9 +364,14 @@ function Report(props) {
 			dueDate = new Date(startDate.getTime());
 		} else if (dateCalcBtn.value === 'Condicional') {
 			dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
-		} else if (dateCalcBtn.value === 'Apto') {
+		} else if (dateCalcBtn.value === 'Apto' && selectValidity.value === '1a') {
 			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
+		} else if (dateCalcBtn.value === 'Apto' && selectValidity.value === '2a') {
+			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 2));
+		} else if (dateCalcBtn.value === 'Apto' && selectValidity.value === '6m') {
+			dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
 		}
+
 		return dueDate;
 	}
 	/**
@@ -369,25 +383,42 @@ function Report(props) {
 		return (
 			<div className="date">
 				<p className="start-date">
-					<b>
-						{startDate.getDate() +
-							'/' +
-							Number(startDate.getMonth() + 1) +
-							'/' +
-							startDate.getFullYear()}
-					</b>
+					{startDate.getDate() +
+						'/' +
+						Number(startDate.getMonth() + 1) +
+						'/' +
+						startDate.getFullYear()}
 				</p>
 				<p className="end-date">
-					<b>
-						{dueDate.getDate() +
-							'/' +
-							Number(dueDate.getMonth() + 1) +
-							'/' +
-							dueDate.getFullYear()}
-					</b>
+					{dueDate.getDate() +
+						'/' +
+						Number(dueDate.getMonth() + 1) +
+						'/' +
+						dueDate.getFullYear()}
 				</p>
 			</div>
 		);
+	}
+
+	/**
+	 * gets the licence plate and copies it to the clip board so when you save the PDF
+	 * you can simply paste the patent as name file.
+	 * Uses promises .then() method to actually send the print afther the text is copied.
+	 */
+
+	function copyThenPrint() {
+		if (txtRender !== '') {
+			navigator.clipboard
+				.writeText(`${txtRender.header.patente}.pdf`)
+				.then(() => {
+					printPage();
+				})
+				.catch((error) => {
+					console.error(`Could not copy text: ${error}`);
+				});
+		} else {
+			printPage();
+		}
 	}
 
 	const printPage = () => {
@@ -434,7 +465,12 @@ function Report(props) {
 				<label className="wrap-label" htmlFor="print-btn">
 					{' '}
 					Imprimir informe:
-					<button className="print-btn" id="print-btn" onClick={printPage}>
+					<button
+						className="print-btn"
+						id="print-btn"
+						onClick={() => {
+							copyThenPrint();
+						}}>
 						<img src={printSolid} alt="printer" />
 					</button>
 				</label>
@@ -505,11 +541,19 @@ function Report(props) {
 									))}
 								</div>
 								<div className="difference">
-									{reportArray.brakeDif.map((item, i) => (
+									{reportArray.brakeDifDel.map((item, i) => (
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeDif')}
+												{majorOrEqual(item.ruta, 'brakeDifDel')}
+											</p>
+										</div>
+									))}
+									{reportArray.brakeDifTra.map((item, i) => (
+										<div key={i}>
+											<p className={item.class}>{item.ruta}</p>
+											<p className={item.classEval}>
+												{majorOrEqual(item.ruta, 'brakeDifTra')}
 											</p>
 										</div>
 									))}
@@ -540,7 +584,8 @@ function Report(props) {
 												{majorOrEqual(
 													item.ruta,
 													'brakeResist',
-													truckSize.value
+													truckSize.value,
+													transmisionType.value
 												)}
 											</p>
 										</div>

@@ -22,7 +22,9 @@ function Main() {
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
+		setTransmisionType({value: '4x2', label: 'Normal'});
 		setDateCalcBtn({value: 'Apto', label: 'Apto'});
+		setSelectValidity({value: '1a', label: '1 año'});
 		loadFileRef.current.value = null;
 		loadImgRef.current.value = [];
 	};
@@ -35,6 +37,7 @@ function Main() {
 		setTipo(item.value);
 		setEngineType({value: '4T', label: '4 Tiempos'});
 		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
+		setTransmisionType({value: '4x2', label: 'Normal'});
 	};
 
 	const [severidad, setSeveridad] = useState({
@@ -98,13 +101,35 @@ function Main() {
 		label: '4 Tiempos',
 	});
 	/**
-	 * created to manage truck sizes.
-	 * to use porpperly, add truckSize.value to evaluation functions.
+	 * manages truck sizes.
+	 * to use porpperly, add truckSize.value to evaluation functions and send it as param when nedded.
 	 */
 	const [truckSize, setTruckSize] = useState({
 		value: 'smallTruck',
 		label: 'Camión pequeño',
 	});
+	/**
+	 * manages transmision type.
+	 * to use porpperly, add transmisionType.value to evaluation functions and send it as param when nedded.
+	 */
+
+	const [transmisionType, setTransmisionType] = useState({
+		value: '4x2',
+		label: 'Normal',
+	});
+
+	/**
+	 * manages dueDate for the report.
+	 */
+
+	const [selectValidity, setSelectValidity] = useState({
+		value: '1a',
+		label: '1 año',
+	});
+
+	const handleDueDateExtend = (item) => {
+		setSelectValidity(item);
+	};
 
 	const [imgUpload, setImgUpload] = useState(null);
 
@@ -160,7 +185,7 @@ function Main() {
 								tipo === item.value ? 'radio-checked' : ''
 							}`}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className="rad-c"
@@ -176,7 +201,7 @@ function Main() {
 					<div className="engine-and-size-ctn">
 						{tipo === 'Moto'
 							? radioGeneratorArray.engineType.map((item, i) => (
-									<div className="engine-and-size" key={i}>
+									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
@@ -194,7 +219,7 @@ function Main() {
 							: ''}
 						{tipo === 'Camion'
 							? radioGeneratorArray.truckSize.map((item, i) => (
-									<div className="engine-and-size" key={i}>
+									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
 												type="radio"
@@ -210,6 +235,24 @@ function Main() {
 									</div>
 							  ))
 							: ''}
+						{tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Minibus'
+							? radioGeneratorArray.transmisionType.map((item, i) => (
+									<div className="engine-and-size" key={item.value}>
+										<label className="btn-inside" htmlFor={item.value}>
+											<input
+												type="radio"
+												className="rad-c"
+												name="transmisionType"
+												id={item.value}
+												value={item.value}
+												checked={transmisionType.value === item.value}
+												onChange={() => setTransmisionType(item)}
+											/>
+											{item.label}
+										</label>
+									</div>
+							  ))
+							: ''}
 					</div>
 				</div>
 				<h3>Calcular fecha</h3>
@@ -218,7 +261,7 @@ function Main() {
 						<label
 							className={`btn-inside ${item.value}`}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className={`rad-c`}
@@ -227,6 +270,31 @@ function Main() {
 								value={item.value}
 								checked={dateCalcBtn.value === item.value} //determina que visualmente se vea checked
 								onChange={() => handleDateCalcBtn(item)}
+							/>
+							{item.label}
+						</label>
+					))}{' '}
+					<span>Vigencia:</span>
+					{radioGeneratorArray.selectValidity.map((item, i) => (
+						<label
+							className={
+								dateCalcBtn.value !== 'Apto'
+									? 'btn-inside'
+									: selectValidity.value === item.value
+									? 'radio-checked btn-inside'
+									: 'focus btn-inside'
+							}
+							htmlFor={item.value}
+							key={item.value}>
+							<input
+								type="radio"
+								className={`rad-c`}
+								disabled={dateCalcBtn.value !== 'Apto'}
+								name="dueDateSelector"
+								id={item.value}
+								value={item.value}
+								checked={selectValidity.value === item.value} //determina que visualmente se vea checked
+								onChange={() => handleDueDateExtend(item)}
 							/>
 							{item.label}
 						</label>
@@ -259,10 +327,12 @@ function Main() {
 					reportArray={reportArray}
 					engineType={engineType}
 					truckSize={truckSize}
+					transmisionType={transmisionType}
 					imgUpload={imgUpload}
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
 					dateCalcBtn={dateCalcBtn}
+					selectValidity={selectValidity}
 				/>
 			</section>
 		</main>

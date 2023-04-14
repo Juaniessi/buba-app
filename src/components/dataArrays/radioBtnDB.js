@@ -26,19 +26,19 @@ const radioGeneratorArray = {
 			value: 'Leve',
 			label: 'Leve',
 			order: 1,
-			class: "yellow",
+			class: 'yellow',
 		},
 		{
 			value: 'Moderado',
 			label: 'Moderado',
 			order: 2,
-			class: "orange",
+			class: 'orange',
 		},
 		{
 			value: 'Grave',
 			label: 'Grave',
 			order: 3,
-			class: "black",
+			class: 'black',
 		},
 	],
 	engineType: [
@@ -61,6 +61,16 @@ const radioGeneratorArray = {
 			label: 'Camión grande (No susp. ni Rueda frenada)',
 		},
 	],
+	transmisionType: [
+		{
+			value: '4x2',
+			label: 'Normal',
+		},
+		{
+			value: '4x4',
+			label: 'Integral (ignora resistencia de F.)',
+		},
+	],
 	dateCalc: [
 		{
 			value: 'Apto',
@@ -75,7 +85,20 @@ const radioGeneratorArray = {
 			label: 'Rechazado',
 		},
 	],
-
+	selectValidity: [
+		{
+			value: '2a',
+			label: '2 años',
+		},
+		{
+			value: '1a',
+			label: '1 año',
+		},
+		{
+			value: '6m',
+			label: '6 meses',
+		},
+	],
 };
 
 export {radioGeneratorArray};

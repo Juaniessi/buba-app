@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Single page aplication para crear informes de archivos .txt devueltos por equipos de Revisión técnica Obligatoria
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tecnologías aplicadas: React.js y JavaScript
 
-## Available Scripts
+### Modo de uso
 
-In the project directory, you can run:
+1. Seleccionar el tipo de vehículo.
 
-### `npm start`
+2. Cargar un archivo ".txt" devuelto por el equipo.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. Cargar la foto del vehículo.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. Seleccionar el estado de aptitud del vehículo.
 
-### `npm test`
+5. Si corresponde, varíe el período de vigencia.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+6. Proceder con la carga manual de la descripción de los defectos encontrados.
 
-### `npm run build`
+   1. Para ello seleccione la severidad del problema (Leve por defecto)
+   2. Luego el grupo, la sección y la descripción.
+      - Si el problema en cuestión no se encuentra listado seleccione "Otros" en la descripción y complete dentro del campo "Defecto no listado" con el texto personalizado que desee.
+   3. Para finalizar presione el botón de "Agregar a la lista".
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+7. Repita el paso 6 y sus incisos hasta haber terminado de cargar todas las descripciones.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+8. Cuando haya terminado, si desea imprimir el archivo, puede hacerlo tocando el botón "Imprimir Informe" en la esquina superior derecha.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+9. Para guardarlo como PDF Repita este paso, pero seleccione una impresora de PDF. Para un óptimo resultado, la impresora debe estar configurada para "mostrar gráficos de fondo" y no imprimir encabezado y pie de página. El sistema automaticamente copia al porta papeles la patente del vehiculo, de manera que al guardarlo, simplemente presinando crt+v se puede cambiar el fácilmente el nombre de archivo.
 
-### `npm run eject`
+   - Recuerde aceptar el permiso para acceder al porta papeles. En chrome el mismo se encuentra en la parte izquierda de la barra de navegación.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+10. Para comenzar con un vehículo nuevo, tiene dos caminos:
+    1. puede o bien "Reiniciar todos los campos". Esto se puede hacer con el botón rojo grande destinado a tal fin, que se encuentra arriba a la derecha.
+    2. Puede simplemente cargar un archivo .txt nuevo y una foto nueva asegurándose que ambos pertenezcan a otro vehículo (si lo que quiere es cargar una versión actualizada de alguno de los dos archivos, primero debe ejecutar el paso de "Reiniciar todos los campos")
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Modo de testeo
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Para poder probar el funcionamiento del sistema, usted pude descargar los archivos adjuntos en el proyecto, que han sido formateados y cuya información no representa el estado real de ningún vehículo. Todos datos en dichos archivos han sido alterados para resguardar la identidad de las personas y sus vehículos.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+[Los archivos para probar Automóviles se encuentran aquí](src/assets/examples/Automovil)
 
-## Learn More
+[Los archivos para probar Motocicletas se encuentran aquí](src/assets/examples/Moto)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Simplemente descargue estos archivos y búsquelos en su computadora haciendo primero clic en el botón del paso 2 del apartado "Modo de uso".
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Adicionalmente usted pude editar estos archivos para verificar el comportamiento del sistema.
 
-### Code Splitting
+> Como el sistema utiliza la función "onChange" para verificar el archivo .txt si usted decide cambiar los valores dentro de un archivo, guardarlo y volver a seleccionar el mismo, si no cambia el nombre de archivo el sistema no se refrescará. Motivo por el cual usted debe primero "Reiniciar todos los campos". Esto se puede hacer con el botón rojo grande destinado a tal fin, que se encuentra arriba a la derecha.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+> Si decide cambiar entre vehículo de 4 ruedas y Motocicleta luego de haber analizado el archivo .txt puede que no se renderice adecuadamente. Idealmente primero debe "Reiniciar todos los campos"
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> Tenga en cuenta que si decide probar un archivo destinado a una Motocicleta en el formato para un automóvil puede que el resultado no sea el esperado. Lo mismo pasará en el caso contrario.

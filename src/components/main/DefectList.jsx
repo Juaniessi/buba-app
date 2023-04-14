@@ -4,6 +4,7 @@ import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
 
+/*setSeveridad is passed from "Main" to "Report", ignore the warning */
 function DefectList(props) {
 	const {
 		tipo,
@@ -33,7 +34,7 @@ function DefectList(props) {
 	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
 	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
 	let description =
-		seccion.value !== '' && grupo.value !== ''
+		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
 			? tipoArray.descripciones[grupo.value][seccion.value] || []
 			: [];
 
@@ -53,8 +54,8 @@ function DefectList(props) {
 			grupo: grupo.label,
 			seccion: seccion.label,
 			desc: descripcion.value === 'otro' ? unlistedDef : descripcion.label,
-			sev: severidad.value,
-			Ord: severidad.order,
+			sev: seccion.label === 'Varios' ? '' : severidad.value,
+			Ord: seccion.label === 'Varios' ? 0 : severidad.order,
 		};
 
 		if (
@@ -64,7 +65,7 @@ function DefectList(props) {
 			descripcion.value !== ''
 		) {
 			setLista(lista.concat(itemLista));
-			setSeveridad({value: 'Leve', label: 'Leve', order: 1});
+
 			setGrupo({value: '', label: ''});
 			setSeccion({value: '', label: ''});
 			setDescripcion({value: '', label: ''});
@@ -115,7 +116,7 @@ function DefectList(props) {
 				severityColour = 'black';
 				break;
 			default:
-				severityColour = '';
+				severityColour = 'varios';
 		}
 
 		return (
@@ -166,7 +167,7 @@ function DefectList(props) {
 						<label
 							className={`btn-inside ${item.class}`}
 							htmlFor={item.value}
-							key={i}>
+							key={item.value}>
 							<input
 								type="radio"
 								className="rad-c"
@@ -191,12 +192,10 @@ function DefectList(props) {
 							.map((item, i) => (
 								<label
 									className={
-										grupo.value === item.value
-											? 'radio-checked '
-											: 'focus'
+										grupo.value === item.value ? 'radio-checked ' : 'focus'
 									}
 									htmlFor={item.value}
-									key={i}>
+									key={item.value}>
 									<input
 										type="radio"
 										className="rad-c"
@@ -209,70 +208,104 @@ function DefectList(props) {
 									{item.label}
 								</label>
 							))}
+						<label
+							className={grupo.value === 'note' ? 'radio-checked' : 'focus'}
+							htmlFor="note">
+							<input
+								type="radio"
+								name="group"
+								id="note"
+								value="note"
+								checked={grupo.value === 'note'}
+								className="rad-c"
+								onChange={() => {
+									handleGrupo({value: 'note', label: 'Notas adcionales'});
+									handleSeccion({value: 'misc', label: 'Varios'});
+									handleDescripcion({value: 'otro', label: 'Otro'});
+								}}
+							/>
+							<b>*Notas adicionales</b>
+						</label>
 					</div>
 					<div className="btn-package col-class section-c">
 						<h3>Sección</h3>
-						{section
-							.sort(function (a, b) {
-								if (a.label !== b.label);
-								return a.label > b.label ? 1 : -1;
-							})
-							.map((item, i) => (
-								<label
-									className={
-										seccion.value === item.value
-											? 'radio-checked'
-											: 'focus'
+						{grupo.value !== 'note' ? (
+							section
+								.sort(function (a, b) {
+									if (a.label !== b.label);
+									return a.label > b.label ? 1 : -1;
+								})
+								.map((item, i) => (
+									<label
+										className={
+											seccion.value === item.value ? 'radio-checked' : 'focus'
+										}
+										htmlFor={item.value}
+										key={item.value}>
+										<input
+											type="radio"
+											className="rad-c"
+											name="section"
+											id={item.value}
+											value={item.value}
+											checked={seccion.value === item.value}
+											onChange={() => handleSeccion(item)}
+										/>
+										{item.label}
+									</label>
+								))
+						) : (
+							<label
+								className={seccion.value === 'misc' ? 'radio-checked' : 'focus'}
+								htmlFor="misc">
+								<input
+									type="radio"
+									name="section"
+									id="misc"
+									value="misc"
+									checked={seccion.value === 'misc'}
+									className="rad-c"
+									onChange={() =>
+										handleSeccion({value: 'misc', label: 'Varios'})
 									}
-									htmlFor={item.value}
-									key={i}>
-									<input
-										type="radio"
-										className="rad-c"
-										name="section"
-										id={item.value}
-										value={item.value}
-										checked={seccion.value === item.value}
-										onChange={() => handleSeccion(item)}
-									/>
-									{item.label}
-								</label>
-							))}
+								/>
+								<b>Varios</b>
+							</label>
+						)}
 					</div>
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
-						{description
-							.sort(function (a, b) {
-								if (a.label !== b.label);
-								return a.label > b.label ? 1 : -1;
-							})
-							.map((item, i) => (
-								<label
-									className={
-										descripcion.value === item.value
-											? 'radio-checked'
-											: 'focus'
-									}
-									htmlFor={item.value}
-									key={i}>
-									<input
-										type="radio"
-										className="rad-c"
-										name="description"
-										id={item.value}
-										value={item.value}
-										checked={descripcion.value === item.value}
-										onChange={() => handleDescripcion(item)}
-									/>
-									{item.label}
-								</label>
-							))}
+						{seccion.value !== 'misc' &&
+							description
+								.sort(function (a, b) {
+									if (a.label !== b.label);
+									return a.label > b.label ? 1 : -1;
+								})
+								.map((item, i) => (
+									<label
+										className={
+											descripcion.value === item.value
+												? 'radio-checked'
+												: 'focus'
+										}
+										htmlFor={item.value}
+										key={item.value}>
+										<input
+											type="radio"
+											className="rad-c"
+											name="description"
+											id={item.value}
+											value={item.value}
+											checked={descripcion.value === item.value}
+											onChange={() => handleDescripcion(item)}
+										/>
+										{item.label}
+									</label>
+								))}
 						{seccion.value.length > 0 && (
 							<label
 								className={
-									descripcion.value === 'otro'
-										? 'radio-checked'
-										: 'focus'
+									descripcion.value === 'otro' ? 'radio-checked' : 'focus'
 								}
 								htmlFor="otro">
 								<input

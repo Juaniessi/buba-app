@@ -4,14 +4,14 @@
 }
 @media print {
   header,
-form,
-label,
-h2,
-h3,
-button,
-input,
-textarea,
-.quitar-col {
+  form,
+  label,
+  h2,
+  h3,
+  button,
+  input,
+  textarea,
+  .quitar-col {
     display: none;
   }
   #no-print {
@@ -200,7 +200,6 @@ td {
 
 .engine-and-size {
   color: black;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   border-radius: 5px;
@@ -236,10 +235,14 @@ td {
   background-color: rgba(81, 209, 246, 0.75);
 }
 
+.varios {
+  background-color: rgb(255, 255, 255);
+}
+
 .weightsTable {
   position: absolute;
   left: 481px;
-  top: 130px;
+  top: 120px;
   border: 1px solid black;
   background-color: rgb(255, 255, 100);
   font-weight: 600;

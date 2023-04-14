@@ -37,31 +37,31 @@ const motoArray = {
 		luces: [
 			{
 				value: 'lucesDePos',
-				label: 'Luces de posición',
+				label: 'De posición',
 			},
 			{
 				value: 'lucesDeFreno',
-				label: 'Luces de freno',
+				label: 'De freno',
 			},
 			{
 				value: 'luzBaja',
-				label: 'Luces bajas',
+				label: 'Bajas',
 			},
 			{
 				value: 'luzAlta',
-				label: 'Luces altas',
+				label: 'Altas',
 			},
 			{
 				value: 'balizas',
-				label: 'Balizas',
+				label: 'De balizas',
 			},
 			{
 				value: 'guines',
-				label: 'Guiñes',
+				label: 'De giro',
 			},
 			{
 				value: 'luzPat',
-				label: 'Luz de patente',
+				label: 'De patente',
 			},
 		],
 		ruedas: [
@@ -272,27 +272,27 @@ const motoArray = {
 			guines: [
 				{
 					value: 'luzGirDelIzq',
-					label: 'Luz de giro delantera izquierda no destella correctamente.',
+					label: 'Delantera izquierda no destella correctamente.',
 				},
 				{
 					value: 'luzGirDelDer',
-					label: 'Luz de giro delantera derecha no  destella correctamente.',
+					label: 'Delantera derecha no  destella correctamente.',
 				},
 				{
 					value: 'luzGirTraIzq',
-					label: 'Luz de giro trasera izquierda no destella correctamente.',
+					label: 'Trasera izquierda no destella correctamente.',
 				},
 				{
 					value: 'luzGirTraDer',
-					label: 'Luz de giro trasera derecha no destella correctamente.',
+					label: 'Trasera derecha no destella correctamente.',
 				},
 				{
 					value: 'luzGirLatIzq',
-					label: 'Luz de giro lateral izquiera no destella correctamente.',
+					label: 'Lateral izquiera no destella correctamente.',
 				},
 				{
 					value: 'luzGirLatDer',
-					label: 'Luz de giro lateral derecha no destella correctamente.',
+					label: 'Lateral derecha no destella correctamente.',
 				},
 			],
 		},
