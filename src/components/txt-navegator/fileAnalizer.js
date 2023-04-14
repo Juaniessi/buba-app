@@ -96,7 +96,6 @@ import {
   TWO_INT,
   intprofundidaDeNeumaticos,
   intPruebas,
-
 } from './constantVariables.js';
 import { structureMap } from './globalVariables.js';
 
@@ -429,7 +428,7 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
     value,
     collectionOfMaps[intprofundidaDeNeumaticos]
   );
-  mapPruebas(key,value,collectionOfMaps[intPruebas])
+  mapPruebas(key, value, collectionOfMaps[intPruebas]);
 }
 
 /**
