@@ -974,6 +974,7 @@ function mapProfundidadDeNeumaticos(key, value, mappedObj) {
     }
   }
   return mappedObj;
+
 }
 
 /**
@@ -992,6 +993,7 @@ function mapPruebas(key, value, mappedObj) {
     }
   }
   return mappedObj;
+
 }
 
 /**
@@ -1278,6 +1280,107 @@ function fixStringsToDates(obj) {
   }
   obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2 =
     getDatesFromString(dateOut2);
+
+  /*
+   * New Dates
+   */
+
+  let dateIn3 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto3;
+  if (dateIn3 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto3 =
+      getDatesFromString(dateIn3);
+  }
+
+  let dateOut3 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto3;
+  if (dateOut3 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto3 =
+      getDatesFromString(dateOut3);
+  }
+
+  let dateIn4 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto4;
+  if (dateIn4 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto4 =
+      getDatesFromString(dateIn4);
+  }
+
+  let dateOut4 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto4;
+  if (dateOut4 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto4 =
+      getDatesFromString(dateOut4);
+  }
+
+  let dateIn5 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto5;
+  if (dateIn5 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto5 =
+      getDatesFromString(dateIn5);
+  }
+
+  let dateOut5 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto5;
+  if (dateOut5 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto5 =
+      getDatesFromString(dateOut5);
+  }
+
+  let dateIn6 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto6;
+  if (dateIn6 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto6 =
+      getDatesFromString(dateIn6);
+  }
+
+  let dateOut6 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto6;
+  if (dateOut6 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto6 =
+      getDatesFromString(dateOut6);
+  }
+
+  let dateIn7 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto7;
+  if (dateIn7 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto7 =
+      getDatesFromString(dateIn7);
+  }
+
+  let dateOut7 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto7;
+  if (dateOut7 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto7 =
+      getDatesFromString(dateOut7);
+  }
+
+  let dateIn8 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto8;
+  if (dateIn8 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto8 =
+      getDatesFromString(dateIn8);
+  }
+
+  let dateOut8 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto8;
+  if (dateOut8 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto8 =
+      getDatesFromString(dateOut8);
+  }
+
+  let dateIn9 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto9;
+  if (dateIn9 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto9 =
+      getDatesFromString(dateIn9);
+  }
+
+  let dateOut9 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto9;
+  if (dateOut9 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto9 =
+      getDatesFromString(dateOut9);
+  }
+
+  let dateIn10 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto10;
+  if (dateIn10 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeIngresoAlPuesto10 =
+      getDatesFromString(dateIn10);
+  }
+
+  let dateOut10 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto10;
+  if (dateOut10 !== undefined) {
+    obj.estadísticaDePuestos.fechaDeSalidaDelPuesto10 =
+      getDatesFromString(dateOut10);
+  }
+
 }
 
 /**
@@ -1329,7 +1432,18 @@ function getDatesFromString(value) {
   minutes = timeArray[1];
   seconds = timeArray[2];
 
+  /*
+  old way
   if (month - 1 !== NaN) {
+    month = month - 1;
+  }
+
+  resultDate = new Date(year, month, day, hours, minutes, seconds);
+  */
+
+  let monthMinusOne = month - 1;
+
+  if (!isNaN(monthMinusOne)) {
     month = month - 1;
   }
 
