@@ -61,6 +61,10 @@ import {
   pruebasMap,
   frenosTotalKeys,
   frenosTotalMap,
+  bancoDeRodaduraKeys,
+  banocoDeRodaduraMap,
+  ingenieriaKeys,
+  ingenieriaMap,
 } from './constantCollections.js';
 import {
   SEMICOLON,
@@ -1039,9 +1043,9 @@ function mapFrenosTotal(key, value, mappedObj) {
  * @returns the new constructed map with data from the mapSingleFile global variable
  */
 function mapBancoDeRodadura(key, value, mappedObj) {
-  for (let i = 0; i < frenosTotalKeys.length; i++) {
-    if (key === frenosTotalKeys[i]) {
-      mappedObj.set(frenosTotalMap.get(key), mapSingleFile.get(key));
+  for (let i = 0; i < bancoDeRodaduraKeys.length; i++) {
+    if (key === bancoDeRodaduraKeys[i]) {
+      mappedObj.set(banocoDeRodaduraMap.get(key), mapSingleFile.get(key));
     }
   }
   return mappedObj;
@@ -1058,9 +1062,9 @@ function mapBancoDeRodadura(key, value, mappedObj) {
  * @returns the new constructed map with data from the mapSingleFile global variable
  */
 function mapIngenieria(key, value, mappedObj) {
-  for (let i = 0; i < frenosTotalKeys.length; i++) {
-    if (key === frenosTotalKeys[i]) {
-      mappedObj.set(frenosTotalMap.get(key), mapSingleFile.get(key));
+  for (let i = 0; i < ingenieriaKeys.length; i++) {
+    if (key === bancoDeRodaduraKeys[i]) {
+      mappedObj.set(ingenieriaMap.get(key), mapSingleFile.get(key));
     }
   }
   return mappedObj;

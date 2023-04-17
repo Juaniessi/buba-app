@@ -28,6 +28,9 @@ import {
   FOTOVALIDACION,
   PROFUNDIDAD_DE_NEUMATICOS,
   PRUEBAS,
+  FRENOS_TOTAL,
+  BANCO_DE_RODADURA,
+  INGENIERIA,
 } from './constantVariables.js';
 
 import {
@@ -60,6 +63,9 @@ import {
   fotovalidacionMap,
   profundidaDeNeumaticosMap,
   pruebasMap,
+  frenosTotalMap,
+  banocoDeRodaduraMap,
+  ingenieriaMap,
 } from './constantCollections.js';
 
 /**
@@ -96,4 +102,7 @@ export let structureMap = new Map([
   [FOTOVALIDACION, fotovalidacionMap],
   [PROFUNDIDAD_DE_NEUMATICOS, profundidaDeNeumaticosMap],
   [PRUEBAS, pruebasMap],
+  [FRENOS_TOTAL, frenosTotalMap],
+  [BANCO_DE_RODADURA, banocoDeRodaduraMap],
+  [INGENIERIA, ingenieriaMap],
 ]);
