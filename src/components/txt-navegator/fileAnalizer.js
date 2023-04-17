@@ -1063,7 +1063,7 @@ function mapBancoDeRodadura(key, value, mappedObj) {
  */
 function mapIngenieria(key, value, mappedObj) {
   for (let i = 0; i < ingenieriaKeys.length; i++) {
-    if (key === bancoDeRodaduraKeys[i]) {
+    if (key === ingenieriaKeys[i]) {
       mappedObj.set(ingenieriaMap.get(key), mapSingleFile.get(key));
     }
   }
