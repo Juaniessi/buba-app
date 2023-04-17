@@ -337,14 +337,6 @@ import {
   N60000,
   N70000,
   N70001,
-  N70002,
-  N70003,
-  N70004,
-  N70005,
-  N70006,
-  N70007,
-  N70008,
-  N70009,
   N100001,
   N100002,
   N100003,
@@ -415,19 +407,8 @@ import {
   N100031,
   N100032,
   N100033,
-  nomProvN61000,
-  nomProvN61001,
-  nomProvN61002,
-  nomProvN61003,
-  nomProvN61004,
-  nomProvN61005,
-  nomProvN61006,
-  nomProvN61007,
-  nomProvN61008,
-  nomProvN61009,
   nomProvN610010,
   nomProvN610011,
-  nomProvN610012,
   N61000,
   N61001,
   N61002,
@@ -506,6 +487,77 @@ import {
   revision,
   numLineaAsignada,
   resultadoFinalRevision,
+  PRUEBAS,
+  N38501,
+  N70010,
+  N70011,
+  N70012,
+  N70013,
+  N70014,
+  N70015,
+  N70016,
+  N70017,
+  N100025,
+  N100026,
+  N100027,
+  N100028,
+  N100024,
+  N100023,
+  N100022,
+  N100021,
+  profundidadNeumaticoDelanteroIzq,
+  profundidadNeumaticoDelanteroDer,
+  profundidadNeumatico2_Eje_Izq_Izq,
+  profundidadNeumatico2_Eje_Izq_Der,
+  profundidadNeumatico2_Eje_Der_Der,
+  profundidadNeumatico2_Eje_Der_Izq,
+  profundidadNeumatico3_Eje_Izq_Izq,
+  profundidadNeumatico3_Eje_Izq_Der,
+  profundidadNeumatico3_Eje_Der_Izq,
+  profundidadNeumatico3_Eje_Der_Der,
+  profundidadNeumaticoDeEmergencia,
+  FRENOS_TOTAL,
+  eficaciaTotalDelVehiculo,
+  N56000,
+  BANCO_DE_RODADURA,
+  INGENIERIA,
+  N95000,
+  N90000,
+  N90001,
+  N90002,
+  N90003,
+  N90004,
+  N90005,
+  N90006,
+  N90007,
+  N90101,
+  N90102,
+  N90103,
+  N90104,
+  N90105,
+  N90106,
+  N90107,
+  N90108,
+  N90200,
+  N90201,
+  desviacionReferencia_1,
+  desviacionReferencia_2,
+  desviacionReferencia_3,
+  desviacionReferencia_4,
+  desviacionReferencia_5,
+  desviacionReferencia_6,
+  desviacionReferencia_7,
+  desviacionReferencia_8,
+  velocidadMedida_1,
+  velocidadMedida_2,
+  velocidadMedida_3,
+  velocidadMedida_4,
+  velocidadMedida_5,
+  velocidadMedida_6,
+  velocidadMedida_7,
+  velocidadMedida_8,
+  distanciaRecorrida,
+  duracionDeEnsayo,
 } from './constantVariables.js';
 
 /**
@@ -629,7 +681,7 @@ export const suspencionEjeTraseroKeys = [
 /**
  * All keys from the opacimetro category in the excel file.
  */
-export const opacimetroKeys = ['38500'];
+export const opacimetroKeys = [N38500, N38501];
 /**
  * All keys from the analizadorDeGases category in the excel file.
  */
@@ -825,14 +877,14 @@ export const sonometroKeys = ['60000'];
 export const luxometroKeys = [
   N70000,
   N70001,
-  N70002,
-  N70003,
-  N70004,
-  N70005,
-  N70006,
-  N70007,
-  N70008,
-  N70009,
+  N70010,
+  N70011,
+  N70012,
+  N70013,
+  N70014,
+  N70015,
+  N70016,
+  N70017,
 ];
 /**
  * All keys from the inspeccionVisual category in the excel file.
@@ -871,6 +923,15 @@ export const valoresCalibradosKeys = [
   N100018,
   N100019,
   N100020,
+  N100020,
+  N100021,
+  N100022,
+  N100023,
+  N100024,
+  N100025,
+  N100026,
+  N100027,
+  N100028,
 ];
 /**
  * All keys from the lineaDePrueba category in the excel file.
@@ -969,6 +1030,40 @@ export const pruebasKeys = [
 ];
 
 /**
+ * All keys and values from the frenosTotal category in the excel file.
+ */
+export const frenosTotalKeys = [N56000];
+
+/**
+ * All keys and values from the frenosTotal category in the excel file.
+ */
+export const bancoDeRodaduraKeys = [
+  N90000,
+  N90001,
+  N90002,
+  N90003,
+  N90004,
+  N90005,
+  N90006,
+  N90007,
+  N90101,
+  N90102,
+  N90103,
+  N90104,
+  N90105,
+  N90106,
+  N90107,
+  N90108,
+  N90200,
+  N90201,
+];
+
+/**
+ * All keys and values from the frenosTotal category in the excel file.
+ */
+export const ingenieriaKeys = [N95000];
+
+/**
  * All keys and values from the header category in the excel file.
  */
 export const headerMap = new Map([
@@ -983,46 +1078,44 @@ export const headerMap = new Map([
   [N10208, tipoVehiculo],
   [N10209, combustible],
   [N10210, cantidadDeEjes],
-  [N10211,colorPrimario], // nuevo codigosUltimate2020
-  [N10212,colorSecundario], // nuevo codigosUltimate2020
-  [N10213,clase], // nuevo codigosUltimate2020
-  [N10214,pasajeros], // nuevo codigosUltimate2020
-  [N10215,cilindrada], // nuevo codigosUltimate2020
-  [N10216,servicio], // nuevo codigosUltimate2020
-  [N10217,observaciones], // nuevo codigosUltimate2020
+  [N10211, colorPrimario],
+  [N10212, colorSecundario],
+  [N10213, clase],
+  [N10214, pasajeros],
+  [N10215, cilindrada],
+  [N10216, servicio],
+  [N10217, observaciones],
 
-  [N10300, apellidoPropietario], // renombrado codigosUltimate2020
-  [N10301, nombrePropietario], // renombrado codigosUltimate2020
-  [N10302, direccionPropietario], // renombrado codigosUltimate2020
-  [N10303, documentoDeIdentidadPropietario], // renombrado codigosUltimate2020
-  [N10304, emailConductor], // renombrado codigosUltimate2020
-  [N10305, telefonoConductor], // renombrado codigosUltimate2020
-  [N10306, localidadPropietario], // renombrado codigosUltimate2020
-  [N10307, provinciaPropietario], // renombrado codigosUltimate2020
+  [N10300, apellidoPropietario],
+  [N10301, nombrePropietario],
+  [N10302, direccionPropietario],
+  [N10303, documentoDeIdentidadPropietario],
+  [N10304, emailConductor],
+  [N10305, telefonoConductor],
+  [N10306, localidadPropietario],
+  [N10307, provinciaPropietario],
 
-  [N10308, nacionalidadConductor], //nuevo codigosUltimate2020
-  [N10309, apellidoConductor], //nuevo codigosUltimate2020
-  [N10310, nombreConductor], //nuevo codigosUltimate2020
-  [N10311, direccionConductor], //nuevo codigosUltimate2020
-  [N10312, localidadConductor], //nuevo codigosUltimate2020
-  [N10313, provinciaConductor], //nuevo codigosUltimate2020
-  [N10314, documentoDeIdentidadConductor], // nuevo codigosUltimate2020
-  [N10315, licenciaDeConducirConductor], // nuevo codigosUltimate2020
-  [N10316, categoriaLicenciaConductor], // nuevo codigosUltimate2020
-  [N10317, vigenciaLicenciaConductor], // nuevo codigosUltimate2020
-  [N10318, seguroCompañia], // nuevo codigosUltimate2020
-  [N10319, seguroPoliza], // nuevo codigosUltimate2020
-  [N10320, seguroVigencia], // nuevo codigosUltimate2020
-  [N10321, fotoDocumento_1], // nuevo codigosUltimate2020
-  [N10322, fotoDocumento_2], // nuevo codigosUltimate2020
-  [N10323, fotoDocumento_3], // nuevo codigosUltimate2020
-  [N10324, fotoDocumento_4], // nuevo codigosUltimate2020
-  [N10325, cantidadDeRuedas], // nuevo codigosUltimate2020
-  [N10326, cooperativa], // nuevo codigosUltimate2020
-  [N10327, ambito_O], // nuevo codigosUltimate2020
-  [N10328, discoNumero], // nuevo codigosUltimate2020
-
-
+  [N10308, nacionalidadConductor],
+  [N10309, apellidoConductor],
+  [N10310, nombreConductor],
+  [N10311, direccionConductor],
+  [N10312, localidadConductor],
+  [N10313, provinciaConductor],
+  [N10314, documentoDeIdentidadConductor],
+  [N10315, licenciaDeConducirConductor],
+  [N10316, categoriaLicenciaConductor],
+  [N10317, vigenciaLicenciaConductor],
+  [N10318, seguroCompañia],
+  [N10319, seguroPoliza],
+  [N10320, seguroVigencia],
+  [N10321, fotoDocumento_1],
+  [N10322, fotoDocumento_2],
+  [N10323, fotoDocumento_3],
+  [N10324, fotoDocumento_4],
+  [N10325, cantidadDeRuedas],
+  [N10326, cooperativa],
+  [N10327, ambito_O],
+  [N10328, discoNumero],
 ]);
 
 /**
@@ -1063,7 +1156,10 @@ export const suspencionEjeTraseroMap = new Map([
 /**
  * All keys and values from the opacimetro category in the excel file.
  */
-export const opacimetroMap = new Map([[N38500, resultadoMedicionOpacidad]]);
+export const opacimetroMap = new Map([
+  [N38500, resultadoMedicionOpacidad],
+  [N38501, observaciones],
+]);
 /**
  * All keys and values from the analizadorDeGases category in the excel file.
  */
@@ -1259,14 +1355,14 @@ export const sonometroMap = new Map([[N60000, valorDeMedicion]]);
 export const luxometroMap = new Map([
   [N70000, alineacionFaroDerechoHorizontal],
   [N70001, alineacionFaroIzquierdoHorizontal],
-  [N70002, intensidadAltaDerecha],
-  [N70003, intensidadAltaIzquierda],
-  [N70004, intensidadBajaDerecha],
-  [N70005, intensidadBajaIzquierda],
-  [N70006, intensidadAuxiliarDerecha],
-  [N70007, intensidadAuxiliarIzquierda],
-  [N70008, alineacionFaroDerechoVertical],
-  [N70009, alineacionFaroIzquierdoVertical],
+  [N70010, intensidadAltaDerecha],
+  [N70011, intensidadAltaIzquierda],
+  [N70012, intensidadBajaDerecha],
+  [N70013, intensidadBajaIzquierda],
+  [N70014, intensidadAuxiliarDerecha],
+  [N70015, intensidadAuxiliarIzquierda],
+  [N70016, alineacionFaroDerechoVertical],
+  [N70017, alineacionFaroIzquierdoVertical],
 ]);
 /**
  * All keys and values from the inspeccionVisual category in the excel file.
@@ -1305,6 +1401,14 @@ export const valoresCalibradosMap = new Map([
   [N100018, valorDeGananciaDeBFDerecho],
   [N100019, valorDeGananciaDeBalanzaIzquierda],
   [N100020, valorDeGananciaDeBalanzaDerecha],
+  [N100021, valorDeGananciaDeBalanzaDerecha],
+  [N100022, valorDeGananciaDeBalanzaDerecha],
+  [N100023, valorDeGananciaDeBalanzaDerecha],
+  [N100024, valorDeGananciaDeBalanzaDerecha],
+  [N100025, valorDeGananciaDeBalanzaDerecha],
+  [N100026, valorDeGananciaDeBalanzaDerecha],
+  [N100027, valorDeGananciaDeBalanzaDerecha],
+  [N100028, valorDeGananciaDeBalanzaDerecha],
 ]);
 /**
  * All keys and values from the lineaDePrueba category in the excel file.
@@ -1370,23 +1474,22 @@ export const fotovalidacionMap = new Map([
  * All keys and values from the profundidaDeNeumaticos category in the excel file.
  */
 export const profundidaDeNeumaticosMap = new Map([
-  [N61000, nomProvN61000],
-  [N61001, nomProvN61001],
-  [N61002, nomProvN61002],
-  [N61003, nomProvN61003],
-  [N61004, nomProvN61004],
-  [N61005, nomProvN61005],
-  [N61006, nomProvN61006],
-  [N61007, nomProvN61007],
-  [N61008, nomProvN61008],
-  [N61009, nomProvN61009],
+  [N61000, profundidadNeumaticoDelanteroIzq],
+  [N61001, profundidadNeumaticoDelanteroDer],
+  [N61002, profundidadNeumatico2_Eje_Izq_Izq],
+  [N61003, profundidadNeumatico2_Eje_Izq_Der],
+  [N61004, profundidadNeumatico2_Eje_Der_Izq],
+  [N61005, profundidadNeumatico2_Eje_Der_Der],
+  [N61006, profundidadNeumatico3_Eje_Izq_Izq],
+  [N61007, profundidadNeumatico3_Eje_Izq_Der],
+  [N61008, profundidadNeumatico3_Eje_Der_Izq],
+  [N61009, profundidadNeumatico3_Eje_Der_Der],
   [N610010, nomProvN610010],
   [N610011, nomProvN610011],
-  [N610012, nomProvN610012],
+  [N610012, profundidadNeumaticoDeEmergencia],
 ]);
 
 export const pruebasMap = new Map([
-  
   [N15000, pruebaDeAlineacion],
   [N15001, pruebaDeSuspension],
   [N15002, pruebaDeFrenos],
@@ -1396,15 +1499,39 @@ export const pruebasMap = new Map([
   [N15006, pruebaDeInspVisual],
   [N15007, pruebaDeInspFosa],
   [N15008, pruebaSonometro],
-  [N15009, pruebaRodadura], // nuevo codigosUltimate2020
+  [N15009, pruebaRodadura],
 
   [N16000, fechaHora],
   [N16001, idPruebaRefTramite],
-  [N16002, revision], // nuevo codigosUltimate2020
-  [N16003, numLineaAsignada], // nuevo codigosUltimate2020
-  [N16004, resultadoFinalRevision], // nuevo codigosUltimate2020
+  [N16002, revision],
+  [N16003, numLineaAsignada],
+  [N16004, resultadoFinalRevision],
+]);
 
-]) ;
+export const frenosTotalMap = new Map([[N56000, eficaciaTotalDelVehiculo]]);
+
+export const banocoDeRodaduraMap = new Map([
+  [N90000, desviacionReferencia_1],
+  [N90001, desviacionReferencia_2],
+  [N90002, desviacionReferencia_3],
+  [N90003, desviacionReferencia_4],
+  [N90004, desviacionReferencia_5],
+  [N90005, desviacionReferencia_6],
+  [N90006, desviacionReferencia_7],
+  [N90007, desviacionReferencia_8],
+  [N90101, velocidadMedida_1],
+  [N90102, velocidadMedida_2],
+  [N90103, velocidadMedida_3],
+  [N90104, velocidadMedida_4],
+  [N90105, velocidadMedida_5],
+  [N90106, velocidadMedida_6],
+  [N90107, velocidadMedida_7],
+  [N90108, velocidadMedida_8],
+  [N90200, distanciaRecorrida],
+  [N90201, duracionDeEnsayo],
+]);
+
+export const ingenieriaMap = new Map([[N95000, observaciones]]);
 
 /**
  *  Stores the map with the excel representation of data.
@@ -1439,6 +1566,10 @@ export const structureFinalMap = new Map([
   [ESTADISTICA_DE_PUESTOS, estadisticaDePuestosMap],
   [FOTOVALIDACION, fotovalidacionMap],
   [PROFUNDIDAD_DE_NEUMATICOS, profundidaDeNeumaticosMap],
+  [PRUEBAS, pruebasMap],
+  [FRENOS_TOTAL, frenosTotalMap],
+  [BANCO_DE_RODADURA, frenosTotalMap],
+  [INGENIERIA, frenosTotalMap],
 ]);
 
 /**
@@ -1473,4 +1604,8 @@ export const collectionOfVariables = [
   ESTADISTICA_DE_PUESTOS,
   FOTOVALIDACION,
   PROFUNDIDAD_DE_NEUMATICOS,
+  PRUEBAS,
+  FRENOS_TOTAL,
+  BANCO_DE_RODADURA,
+  INGENIERIA,
 ];

@@ -136,9 +136,22 @@ export const FOTOVALIDACION = 'fotovalidacion';
  */
 export const PROFUNDIDAD_DE_NEUMATICOS = 'profundidadDeNeumaticos';
 /**
- * Name of the key "profundidadDeNeumaticos" from the structureMap in file constantMaps.js
+ * Name of the key "pruebas" from the structureMap in file constantMaps.js
  */
 export const PRUEBAS = 'pruebas';
+
+/**
+ * Name of the key "frenosTotal" from the structureMap in file constantMaps.js
+ */
+export const FRENOS_TOTAL = 'frenosTotal';
+/**
+ * Name of the key "bancoDeRodadura" from the structureMap in file constantMaps.js
+ */
+export const BANCO_DE_RODADURA = 'bancoDeRodadura';
+/**
+ * Name of the key "ingenieria" from the structureMap in file constantMaps.js
+ */
+export const INGENIERIA = 'ingenieria';
 
 /**
  * Identifier for selecction of mapHeader in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
@@ -249,13 +262,25 @@ export const intEstadisticaDePuesto = 25;
  */
 export const intFotovalidacion = 26;
 /**
- * Identifier for selecction of intprofundidaDeNeumaticos in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ * Identifier for selecction of intProfundidaDeNeumaticos in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
  */
-export const intprofundidaDeNeumaticos = 27;
+export const intProfundidaDeNeumaticos = 27;
 /**
- * Identifier for selecction of intprofundidaDeNeumaticos in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ * Identifier for selecction of intPruebas in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
  */
 export const intPruebas = 28;
+/**
+ * Identifier for selecction of intFrenosTotal in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ */
+export const intFrenosTotal = 29;
+/**
+ * Identifier for selecction of intBancoDeRodadura in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ */
+export const intBancoDeRodadura = 30;
+/**
+ * Identifier for selecction of intIngenieria in collection of Arrays (collectionOfMaps) in fileAnalizer.js Around line 355
+ */
+export const intIngenieria = 31;
 
 /**
  * Normalization of name patente for the key in the final JSON structure.
@@ -802,6 +827,46 @@ export const valorDeGananciaDeBalanzaIzquierda =
 export const valorDeGananciaDeBalanzaDerecha =
   'valorDeGananciaDeBalanzaDerecha';
 /**
+ * Normalization of name valorDeGananciaAlineador for the key in the final JSON structure.
+ */
+export const valorDeGananciaAlineador =
+  'valorDeGananciaAlineador';
+/**
+ * Normalization of name valorDeCeroDeAlineador for the key in the final JSON structure.
+ */
+export const valorDeCeroDeAlineador =
+  'valorDeCeroDeAlineador';
+/**
+ * Normalization of name largoCamaraOpacimetro for the key in the final JSON structure.
+ */
+export const largoCamaraOpacimetro =
+  'largoCamaraOpacimetro';
+/**
+ * Normalization of name constanteResbalamiento for the key in the final JSON structure.
+ */
+export const constanteResbalamiento =
+  'constanteResbalamiento';
+/**
+ * Normalization of name valorDeCeroDeBS_Derecho for the key in the final JSON structure.
+ */
+export const valorDeCeroDeBS_Derecho =
+  'valorDeCeroDeBS_Derecho';
+/**
+ * Normalization of name valorDeCeroDeBS_Izquierdo for the key in the final JSON structure.
+ */
+export const valorDeCeroDeBS_Izquierdo =
+  'valorDeCeroDeBS_Izquierdo';
+/**
+ * Normalization of name valorDeGananciaDeBS_Derecho for the key in the final JSON structure.
+ */
+export const valorDeGananciaDeBS_Derecho =
+  'valorDeGananciaDeBS_Derecho';
+/**
+ * Normalization of name valorDeGananciaDeBS_Izquierdo for the key in the final JSON structure.
+ */
+export const valorDeGananciaDeBS_Izquierdo =
+  'valorDeGananciaDeBS_Izquierdo';
+/**
  * Normalization of name numeroDeLinea for the key in the final JSON structure.
  */
 export const numeroDeLinea = 'numeroDeLinea';
@@ -987,45 +1052,45 @@ export const fotovalidacion_4 = 'fotovalidacion_4';
  */
 export const profundidaDeNeumaticos = 'profundidaDeNeumaticos';
 /**
- * Normalization of name nomProvN61000 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumaticoDelanteroIzq for the key in the final JSON structure.
  */
-export const nomProvN61000 = 'nomProvN61000';
+export const profundidadNeumaticoDelanteroIzq = 'profundidadNeumaticoDelanteroIzq';
 /**
- * Normalization of name nomProvN61001 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumaticoDelanteroDer for the key in the final JSON structure.
  */
-export const nomProvN61001 = 'nomProvN61001';
+export const profundidadNeumaticoDelanteroDer = 'profundidadNeumaticoDelanteroDer';
 /**
- * Normalization of name nomProvN61002 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico2_Eje_Izq_Izq for the key in the final JSON structure.
  */
-export const nomProvN61002 = 'nomProvN61002';
+export const profundidadNeumatico2_Eje_Izq_Izq = 'profundidadNeumatico2_Eje_Izq_Izq';
 /**
- * Normalization of name nomProvN61003 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico2_Eje_Izq_Der for the key in the final JSON structure.
  */
-export const nomProvN61003 = 'nomProvN61003';
+export const profundidadNeumatico2_Eje_Izq_Der = 'profundidadNeumatico2_Eje_Izq_Der';
 /**
- * Normalization of name nomProvN61004 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico2_Eje_Der_Izq for the key in the final JSON structure.
  */
-export const nomProvN61004 = 'nomProvN61004';
+export const profundidadNeumatico2_Eje_Der_Izq = 'profundidadNeumatico2_Eje_Der_Izq';
 /**
- * Normalization of name nomProvN61005 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico2_Eje_Der_Der for the key in the final JSON structure.
  */
-export const nomProvN61005 = 'nomProvN61005';
+export const profundidadNeumatico2_Eje_Der_Der = 'profundidadNeumatico2_Eje_Der_Der';
 /**
- * Normalization of name nomProvN61006 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico3_Eje_Izq_Izq for the key in the final JSON structure.
  */
-export const nomProvN61006 = 'nomProvN61006';
+export const profundidadNeumatico3_Eje_Izq_Izq = 'profundidadNeumatico3_Eje_Izq_Izq';
 /**
- * Normalization of name nomProvN61007 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico3_Eje_Izq_Der for the key in the final JSON structure.
  */
-export const nomProvN61007 = 'nomProvN61007';
+export const profundidadNeumatico3_Eje_Izq_Der = 'profundidadNeumatico3_Eje_Izq_Der';
 /**
- * Normalization of name nomProvN61008 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico3_Eje_Der_Izq for the key in the final JSON structure.
  */
-export const nomProvN61008 = 'nomProvN61008';
+export const profundidadNeumatico3_Eje_Der_Izq = 'profundidadNeumatico3_Eje_Der_Izq';
 /**
- * Normalization of name nomProvN61009 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumatico3_Eje_Der_Der for the key in the final JSON structure.
  */
-export const nomProvN61009 = 'nomProvN61009';
+export const profundidadNeumatico3_Eje_Der_Der = 'profundidadNeumatico3_Eje_Der_Der';
 /**
  * Normalization of name nomProvN610010 for the key in the final JSON structure.
  */
@@ -1035,9 +1100,87 @@ export const nomProvN610010 = 'nomProvN610010';
  */
 export const nomProvN610011 = 'nomProvN610011';
 /**
- * Normalization of name nomProvN610012	 for the key in the final JSON structure.
+ * Normalization of name profundidadNeumaticoDeEmergencia	 for the key in the final JSON structure.
  */
-export const nomProvN610012 = 'nomProvN610012';
+export const profundidadNeumaticoDeEmergencia = 'profundidadNeumaticoDeEmergencia';
+/**
+ * Normalization of name eficaciaTotalDelVehiculo	 for the key in the final JSON structure.
+ */
+export const eficaciaTotalDelVehiculo = 'eficaciaTotalDelVehiculo';
+
+/**
+ * Normalization of name desviacionReferencia_1	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_1 = 'desviacionReferencia_1';
+/**
+ * Normalization of name desviacionReferencia_2	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_2 = 'desviacionReferencia_2';
+/**
+ * Normalization of name desviacionReferencia_3	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_3 = 'desviacionReferencia_3';
+/**
+ * Normalization of name desviacionReferencia_4	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_4 = 'desviacionReferencia_4';
+/**
+ * Normalization of name desviacionReferencia_5	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_5 = 'desviacionReferencia_5';
+/**
+ * Normalization of name desviacionReferencia_6	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_6 = 'desviacionReferencia_6';
+/**
+ * Normalization of name desviacionReferencia_7	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_7 = 'desviacionReferencia_7';
+/**
+ * Normalization of name desviacionReferencia_8	 for the key in the final JSON structure.
+ */
+export const desviacionReferencia_8 = 'desviacionReferencia_8';
+/**
+ * Normalization of name velocidadMedida_1	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_1 = 'velocidadMedida_1';
+/**
+ * Normalization of name velocidadMedida_2	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_2 = 'velocidadMedida_2';
+/**
+ * Normalization of name velocidadMedida_3	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_3 = 'velocidadMedida_3';
+/**
+ * Normalization of name velocidadMedida_4	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_4 = 'velocidadMedida_4';
+/**
+ * Normalization of name velocidadMedida_5	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_5 = 'velocidadMedida_5';
+/**
+ * Normalization of name velocidadMedida_6	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_6 = 'velocidadMedida_6';
+/**
+ * Normalization of name velocidadMedida_7	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_7 = 'velocidadMedida_7';
+/**
+ * Normalization of name velocidadMedida_8	 for the key in the final JSON structure.
+ */
+export const velocidadMedida_8 = 'velocidadMedida_8';
+/**
+ * Normalization of name distanciaRecorrida	 for the key in the final JSON structure.
+ */
+export const distanciaRecorrida = 'distanciaRecorrida';
+/**
+ * Normalization of name duracionDeEnsayo	 for the key in the final JSON structure.
+ */
+export const duracionDeEnsayo = 'duracionDeEnsayo';
+
 
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
@@ -1374,6 +1517,10 @@ export const N31122 = '31122';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N38500 = '38500';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N38501 = 'N38501'; 
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
@@ -1869,35 +2016,35 @@ export const N70001 = '70001';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70002 = '70002';
+export const N70010 = '70010';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70003 = '70003';
+export const N70011 = '70011';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70004 = '70004';
+export const N70012 = '70012';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70005 = '70005';
+export const N70013 = '70013';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70006 = '70006';
+export const N70014 = '70014';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70007 = '70007';
+export const N70015 = '70015';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70008 = '70008';
+export const N70016 = '70016';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
-export const N70009 = '70009';
+export const N70017 = '70017';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
@@ -1978,6 +2125,38 @@ export const N100019 = '100019';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N100020 = '100020';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100021 = '100021';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100022 = '100022';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100023 = '100023';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100024 = '100024';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100025 = '100025';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100026 = '100026';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100027 = '100027';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N100028 = '100028';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
@@ -2211,6 +2390,106 @@ export const N610011 = '610011';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N610012 = '610012';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N56000 = '56000';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N95000 = '95000';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90000 = '90000';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90001 = '90001';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90002 = '90002';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90003 = '90003';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90004 = '90004';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90005 = '90005';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90006 = '90006';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90007 = '90007';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90101 = '90101';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90102 = '90102';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90103 = '90103';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90104 = '90104';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90105 = '90105';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90106 = '90106';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90107 = '90107';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90108 = '90108';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90200 = '90200';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N90201 = '90201';
+
 
 /**
  * Amount of decimal values used to round a number
