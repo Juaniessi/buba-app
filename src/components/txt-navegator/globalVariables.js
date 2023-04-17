@@ -27,7 +27,11 @@ import {
   ESTADISTICA_DE_PUESTOS,
   FOTOVALIDACION,
   PROFUNDIDAD_DE_NEUMATICOS,
-} from "./constantVariables.js";
+  PRUEBAS,
+  FRENOS_TOTAL,
+  BANCO_DE_RODADURA,
+  INGENIERIA,
+} from './constantVariables.js';
 
 import {
   headerMap,
@@ -58,7 +62,11 @@ import {
   estadisticaDePuestosMap,
   fotovalidacionMap,
   profundidaDeNeumaticosMap,
-} from "./constantCollections.js";
+  pruebasMap,
+  frenosTotalMap,
+  banocoDeRodaduraMap,
+  ingenieriaMap,
+} from './constantCollections.js';
 
 /**
  *  Global Variable stores the map with the excel representation of data
@@ -93,4 +101,8 @@ export let structureMap = new Map([
   [ESTADISTICA_DE_PUESTOS, estadisticaDePuestosMap],
   [FOTOVALIDACION, fotovalidacionMap],
   [PROFUNDIDAD_DE_NEUMATICOS, profundidaDeNeumaticosMap],
+  [PRUEBAS, pruebasMap],
+  [FRENOS_TOTAL, frenosTotalMap],
+  [BANCO_DE_RODADURA, banocoDeRodaduraMap],
+  [INGENIERIA, ingenieriaMap],
 ]);

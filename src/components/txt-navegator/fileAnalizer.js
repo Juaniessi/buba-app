@@ -57,6 +57,14 @@ import {
   profundidaDeNeumaticosKeys,
   collectionOfVariables,
   profundidaDeNeumaticosMap,
+  pruebasKeys,
+  pruebasMap,
+  frenosTotalKeys,
+  frenosTotalMap,
+  bancoDeRodaduraKeys,
+  banocoDeRodaduraMap,
+  ingenieriaKeys,
+  ingenieriaMap,
 } from './constantCollections.js';
 import {
   SEMICOLON,
@@ -92,7 +100,11 @@ import {
   intEstadisticaDePuesto,
   intFotovalidacion,
   TWO_INT,
-  intprofundidaDeNeumaticos,
+  intPruebas,
+  intFrenosTotal,
+  intProfundidaDeNeumaticos,
+  intBancoDeRodadura,
+  intIngenieria,
 } from './constantVariables.js';
 import { structureMap } from './globalVariables.js';
 
@@ -324,6 +336,10 @@ function populateStructure() {
   let mappedEstadisticaDePuestos = new Map();
   let mappedFotovalidacion = new Map();
   let mappedProfundidaDeNeumaticos = new Map();
+  let mappedPrueba = new Map();
+  let mappedFrenosTotal = new Map();
+  let mappedBancoDeRodadura = new Map();
+  let mappedIngenieria = new Map();
 
   let collectionOfMaps = [
     mappedHeader,
@@ -354,6 +370,10 @@ function populateStructure() {
     mappedEstadisticaDePuestos,
     mappedFotovalidacion,
     mappedProfundidaDeNeumaticos,
+    mappedPrueba,
+    mappedFrenosTotal,
+    mappedBancoDeRodadura,
+    mappedIngenieria,
   ];
 
   /** Generates structure elements to be replaced on the model map */
@@ -421,8 +441,12 @@ function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
   mapProfundidadDeNeumaticos(
     key,
     value,
-    collectionOfMaps[intprofundidaDeNeumaticos]
+    collectionOfMaps[intProfundidaDeNeumaticos]
   );
+  mapPruebas(key, value, collectionOfMaps[intPruebas]);
+  mapFrenosTotal(key, value, collectionOfMaps[intFrenosTotal]);
+  mapBancoDeRodadura(key, value, collectionOfMaps[intBancoDeRodadura]);
+  mapIngenieria(key, value, collectionOfMaps[intIngenieria]);
 }
 
 /**
@@ -968,6 +992,83 @@ function mapProfundidadDeNeumaticos(key, value, mappedObj) {
     }
   }
   return mappedObj;
+
+}
+
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the Pruebas structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+function mapPruebas(key, value, mappedObj) {
+  for (let i = 0; i < pruebasKeys.length; i++) {
+    if (key === pruebasKeys[i]) {
+      mappedObj.set(pruebasMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+
+}
+
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the FrenosTotal structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+function mapFrenosTotal(key, value, mappedObj) {
+  for (let i = 0; i < frenosTotalKeys.length; i++) {
+    if (key === frenosTotalKeys[i]) {
+      mappedObj.set(frenosTotalMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+
+}
+
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the FrenosTotal structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+function mapBancoDeRodadura(key, value, mappedObj) {
+  for (let i = 0; i < bancoDeRodaduraKeys.length; i++) {
+    if (key === bancoDeRodaduraKeys[i]) {
+      mappedObj.set(banocoDeRodaduraMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+
+}
+
+/**
+ * Function to be called in a for each loop of the global variable mapSingleFile
+ * Function that maps the FrenosTotal structure
+ *
+ * @param {*} key current key from mapSingleFile
+ * @param {*} value current value from mapSingleFile
+ * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
+ * @returns the new constructed map with data from the mapSingleFile global variable
+ */
+function mapIngenieria(key, value, mappedObj) {
+  for (let i = 0; i < ingenieriaKeys.length; i++) {
+    if (key === ingenieriaKeys[i]) {
+      mappedObj.set(ingenieriaMap.get(key), mapSingleFile.get(key));
+    }
+  }
+  return mappedObj;
+
 }
 
 /**
@@ -1354,6 +1455,7 @@ function fixStringsToDates(obj) {
     obj.estadísticaDePuestos.fechaDeSalidaDelPuesto10 =
       getDatesFromString(dateOut10);
   }
+
 }
 
 /**
@@ -1404,6 +1506,15 @@ function getDatesFromString(value) {
   hours = timeArray[0];
   minutes = timeArray[1];
   seconds = timeArray[2];
+
+  /*
+  old way
+  if (month - 1 !== NaN) {
+    month = month - 1;
+  }
+
+  resultDate = new Date(year, month, day, hours, minutes, seconds);
+  */
 
   let monthMinusOne = month - 1;
 
