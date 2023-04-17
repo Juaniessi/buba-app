@@ -558,6 +558,14 @@ import {
   velocidadMedida_8,
   distanciaRecorrida,
   duracionDeEnsayo,
+  N70002,
+  N70003,
+  N70004,
+  N70005,
+  N70006,
+  N70007,
+  N70008,
+  N70009,
 } from './constantVariables.js';
 
 /**
@@ -877,6 +885,14 @@ export const sonometroKeys = ['60000'];
 export const luxometroKeys = [
   N70000,
   N70001,
+  N70002,
+  N70003,
+  N70004,
+  N70005,
+  N70006,
+  N70007,
+  N70008,
+  N70009,
   N70010,
   N70011,
   N70012,
@@ -1355,6 +1371,17 @@ export const sonometroMap = new Map([[N60000, valorDeMedicion]]);
 export const luxometroMap = new Map([
   [N70000, alineacionFaroDerechoHorizontal],
   [N70001, alineacionFaroIzquierdoHorizontal],
+  [N70002, intensidadAltaDerecha],
+  [N70003, intensidadAltaIzquierda],
+  [N70004, intensidadBajaDerecha],
+  [N70005, intensidadBajaIzquierda],
+  [N70006, intensidadAuxiliarDerecha],
+  [N70007, intensidadAuxiliarIzquierda],
+  [N70008, alineacionFaroDerechoVertical],
+  [N70009, alineacionFaroIzquierdoVertical],
+
+  /*Cambios Presentes en el Exel pero no en el programa*/
+  /*
   [N70010, intensidadAltaDerecha],
   [N70011, intensidadAltaIzquierda],
   [N70012, intensidadBajaDerecha],
@@ -1363,6 +1390,7 @@ export const luxometroMap = new Map([
   [N70015, intensidadAuxiliarIzquierda],
   [N70016, alineacionFaroDerechoVertical],
   [N70017, alineacionFaroIzquierdoVertical],
+  */
 ]);
 /**
  * All keys and values from the inspeccionVisual category in the excel file.

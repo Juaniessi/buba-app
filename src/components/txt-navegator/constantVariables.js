@@ -2013,6 +2013,39 @@ export const N70000 = '70000';
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
 export const N70001 = '70001';
+
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70002 = '70002';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70003 = '70003';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70004 = '70004';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70005 = '70005';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70006 = '70006';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70007 = '70007';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70008 = '70008';
+/**
+ * Constant with the key for identifing a value  in the structures used to map or print a json
+ */
+export const N70009 = '70009';
 /**
  * Constant with the key for identifing a value  in the structures used to map or print a json
  */
