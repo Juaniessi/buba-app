@@ -566,6 +566,14 @@ import {
   N70007,
   N70008,
   N70009,
+  valorDeGananciaAlineador,
+  valorDeCeroDeAlineador,
+  largoCamaraOpacimetro,
+  constanteResbalamiento,
+  valorDeCeroDeBS_Derecho,
+  valorDeCeroDeBS_Izquierdo,
+  valorDeGananciaDeBS_Derecho,
+  valorDeGananciaDeBS_Izquierdo,
 } from './constantVariables.js';
 
 /**
@@ -1429,14 +1437,14 @@ export const valoresCalibradosMap = new Map([
   [N100018, valorDeGananciaDeBFDerecho],
   [N100019, valorDeGananciaDeBalanzaIzquierda],
   [N100020, valorDeGananciaDeBalanzaDerecha],
-  [N100021, valorDeGananciaDeBalanzaDerecha],
-  [N100022, valorDeGananciaDeBalanzaDerecha],
-  [N100023, valorDeGananciaDeBalanzaDerecha],
-  [N100024, valorDeGananciaDeBalanzaDerecha],
-  [N100025, valorDeGananciaDeBalanzaDerecha],
-  [N100026, valorDeGananciaDeBalanzaDerecha],
-  [N100027, valorDeGananciaDeBalanzaDerecha],
-  [N100028, valorDeGananciaDeBalanzaDerecha],
+  [N100021, valorDeGananciaAlineador],
+  [N100022, valorDeCeroDeAlineador],
+  [N100023, largoCamaraOpacimetro],
+  [N100024, constanteResbalamiento],
+  [N100025, valorDeCeroDeBS_Derecho],
+  [N100026, valorDeCeroDeBS_Izquierdo],
+  [N100027, valorDeGananciaDeBS_Derecho],
+  [N100028, valorDeGananciaDeBS_Izquierdo],
 ]);
 /**
  * All keys and values from the lineaDePrueba category in the excel file.
