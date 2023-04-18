@@ -347,6 +347,9 @@ function Report(props) {
 	 * like in the txt of Motocicles, fechaDeSalidaDelPuesto2 = fechaDeSalidaDelPuesto1
 	 * and fechaDeIngresoAlPuesto2 = fechaDeIngresoAlPuesto1,
 	 * this is all solved in the "fileAnalizer.js".
+	 *
+	 * We have now switched to use fechaDeIngresoAlPuesto1 as it is more acurate for the customer.
+	 *
 	 */
 	let startDate =
 		window.fileAsObject === undefined
