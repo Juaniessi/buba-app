@@ -351,8 +351,7 @@ function Report(props) {
 	let startDate =
 		window.fileAsObject === undefined
 			? ''
-			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto3;
-
+			: window.fileAsObject.estadísticaDePuestos.fechaDeIngresoAlPuesto1;
 	/**
 	 * Calculates the due date for this report.
 	 * @returns The calculated due date.
