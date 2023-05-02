@@ -1448,6 +1448,31 @@ const autoArray = {
 					label:
 						'Aditamento en el vehículo fuera de la línea de los paragolpes.',
 				},
+				{
+					value: 'cintaRefFront',
+					label:
+						'Cinta reflectiva frontal color blanco, bajo ópticas faltante o en mal estado (camionetas).',
+				},
+				{
+					value: 'cintaRefLat',
+					label:
+						'Cinta reflectiva lateral color blanco, dos partes de 50cm adelante y atrás faltante o en mal estado.',
+				},
+				{
+					value: 'cintaRefTra',
+					label:
+						'Cinta reflectiva trasera color rojo (camionetas), dos partes de 50cm a cada lado faltante o en mal estado.',
+				},
+				{
+					value: 'cintaRefTraCamiones',
+					label:
+						'Cinta reflectiva trasera cebrada a 45° R/B (camiones), dos partes de 50cm a cada lado faltante o en mal estado.',
+				},
+				{
+					value: 'discoVelMax',
+					label:
+						'Disco de velocidad máxima faltante o en mal estado. Camionetas (110), combi carga (90), camiones (80).',
+				},
 			],
 			opennings: [
 				{
