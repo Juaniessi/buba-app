@@ -1454,6 +1454,7 @@ function fixStringsToDates(obj) {
 
 /**
  * Parses a string with the format [dd/mm/yyyy HH:mm:ss] or [dd/m/yyyy HH:mm:ss]  into a date
+ * value.length === 17 && value[3] === '0' case for single digit hour that comes without 0 befor the number
  *
  * @param {*} value a date in string format. Example: [25/2/2021 09:32:49]
  * @returns A date or undefined if undefined
