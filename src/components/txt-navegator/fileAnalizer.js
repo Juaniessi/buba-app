@@ -1485,10 +1485,17 @@ function getDatesFromString(value) {
 		time = value.substring(9, 17);
 	}
 
-	if (value.length === 17 && value[3] === '0') {
-		date = value.substring(0, 10);
-		time = value.substring(10, 17);
-	}
+  if (value.length === 17 
+    && value[2] === "/" && value[5] === "/"
+    && value[11] === ":" && value[14] === ":" ) {
+    date = value.substring(0, 10);
+    time = value.substring(10, 17);
+  } else if (value.length === 17 
+    && value[2] === "/" && value[4] === "/"
+    && value[11] === ":" && value[14] === ":" ) {
+    date = value.substring(0, 9);
+    time = value.substring(9, 17);
+  }
 
 	if (value.length === 18) {
 		date = value.substring(0, 10);
