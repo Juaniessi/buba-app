@@ -272,27 +272,27 @@ const motoArray = {
 			guines: [
 				{
 					value: 'luzGirDelIzq',
-					label: 'Delantera izquierda no destella correctamente.',
+					label: 'Luz de gito delantera izquierda no destella correctamente.',
 				},
 				{
 					value: 'luzGirDelDer',
-					label: 'Delantera derecha no  destella correctamente.',
+					label: 'Luz de gito delantera derecha no  destella correctamente.',
 				},
 				{
 					value: 'luzGirTraIzq',
-					label: 'Trasera izquierda no destella correctamente.',
+					label: 'Luz de gito trasera izquierda no destella correctamente.',
 				},
 				{
 					value: 'luzGirTraDer',
-					label: 'Trasera derecha no destella correctamente.',
+					label: 'Luz de gito trasera derecha no destella correctamente.',
 				},
 				{
 					value: 'luzGirLatIzq',
-					label: 'Lateral izquiera no destella correctamente.',
+					label: 'Luz de gito lateral izquiera no destella correctamente.',
 				},
 				{
 					value: 'luzGirLatDer',
-					label: 'Lateral derecha no destella correctamente.',
+					label: 'Luz de gito lateral derecha no destella correctamente.',
 				},
 			],
 		},
@@ -341,12 +341,12 @@ const motoArray = {
 				{
 					value: 'bajoRendAmortDel',
 					label:
-						'Bajo rendimiento de amortiguación (amortiguador delantero defectuoso).',
+						'Bajo rendimiento de amortiguador delantero.',
 				},
 				{
 					value: 'bajoRendAmortTra',
 					label:
-						'Bajo rendimiento de amortiguación (amortiguador trasero defectuoso).',
+						'Bajo rendimiento de amortiguador trasero.',
 				},
 				{
 					value: 'perdFluAmortDel',
@@ -383,12 +383,12 @@ const motoArray = {
 				{
 					value: 'ruedaFrenDel',
 					label:
-						'Rueda frenada, sin accionamiento de frenos (freno delantero defectuoso).',
+						'Rueda frenada, sin accionamiento de frenos.',
 				},
 				{
 					value: 'RuedaFrenTra',
 					label:
-						'Rueda frenada, sin accionamiento de frenos (freno trasero defectuoso).',
+						'Rueda frenada, sin accionamiento de frenos.',
 				},
 			],
 			ovalAlab: [
