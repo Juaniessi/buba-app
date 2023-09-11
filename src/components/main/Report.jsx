@@ -414,7 +414,7 @@ function Report(props) {
 	function copyThenPrint() {
 		if (txtRender !== '') {
 			navigator.clipboard
-				.writeText(`${txtRender.header.patente}.pdf`)
+				.writeText(`${txtRender.header.patente}`)
 				.then(() => {
 					printPage();
 				})

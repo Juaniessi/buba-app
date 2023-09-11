@@ -518,4 +518,13 @@
 .def-col {
   padding-left: 2px;
   background-color: white;
+}
+
+.copyDesc-btn {
+  position: absolute;
+  left: 470px;
+  top: 1010px;
+  background-color: rgb(0, 180, 70);
+  color: white;
+  font-weight: 500;
 }/*# sourceMappingURL=informeStyle.css.map */

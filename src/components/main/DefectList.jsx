@@ -3,6 +3,7 @@ import {autoArray} from '../dataArrays/carDataBase';
 import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
+import copySolid from '../../assets/copy-solid.svg';
 
 /*setSeveridad is passed from "Main" to "Report", ignore the warning */
 function DefectList(props) {
@@ -90,6 +91,18 @@ function DefectList(props) {
 			return index !== i ? true : false;
 		});
 		setLista(nuevaLista);
+	}
+
+	function copyListDesc() {
+		const listaDeDesc = lista
+			.filter((item, i) => {
+				return item.sev === 'Grave' || item.sev === 'Moderado' ? true : false;
+			})
+			.map((item) => item.desc);
+		const superString = listaDeDesc.join(' ');
+		if (superString !== '') {
+			navigator.clipboard.writeText(`${superString}`);
+		}
 	}
 
 	/**
@@ -181,6 +194,14 @@ function DefectList(props) {
 						</label>
 					))}
 				</div>
+				<label
+					id="copyDesc-btn"
+					className="wrap-label copyDesc-btn"
+					htmlFor="copyDesc-btn"
+					onClick={copyListDesc}>
+					Copiar descripciones
+					<img className="reset-img" src={copySolid} alt="copy description" />
+				</label>
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
