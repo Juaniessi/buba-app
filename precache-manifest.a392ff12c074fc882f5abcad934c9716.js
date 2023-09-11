@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "9f1c0083ec99de1b6250",
+    "revision": "8cbf77f07c3366072951",
     "url": "/buba-app/static/css/main.14f6f1df.chunk.css"
   },
   {
-    "revision": "9f1c0083ec99de1b6250",
-    "url": "/buba-app/static/js/main.fe47a192.chunk.js"
+    "revision": "8cbf77f07c3366072951",
+    "url": "/buba-app/static/js/main.44cfefbd.chunk.js"
   },
   {
     "revision": "505e43fb4fcb4670e0d8",
@@ -64,15 +64,15 @@ self.__precacheManifest = [
     "url": "/buba-app/static/media/arrow-rotate-left-solid.efae2287.svg"
   },
   {
-    "revision": "301fe70f8f0f41c236317504ec05f820",
-    "url": "/buba-app/static/media/Roboto-Black.301fe70f.ttf"
-  },
-  {
     "revision": "9ece5b48963bbc96309220952cda38aa",
     "url": "/buba-app/static/media/Roboto-Bold.9ece5b48.ttf"
   },
   {
-    "revision": "fcf90e2d41314b868220096a6dda50e0",
+    "revision": "301fe70f8f0f41c236317504ec05f820",
+    "url": "/buba-app/static/media/Roboto-Black.301fe70f.ttf"
+  },
+  {
+    "revision": "550c228e557ac5e5c30dcee5da00d66b",
     "url": "/buba-app/index.html"
   }
 ];
