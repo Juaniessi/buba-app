@@ -454,19 +454,19 @@ const autoArray = {
 			falloGen: [
 				{
 					value: 'optTraIzq',
-					label: 'Problemas de masa en optica trasera izquierda.',
+					label: 'Problemas de masa en óptica trasera izquierda.',
 				},
 				{
 					value: 'optTraDer',
-					label: 'Problemas de masa en optica trasera derecha.',
+					label: 'Problemas de masa en óptica trasera derecha.',
 				},
 				{
 					value: 'optDelIzq',
-					label: 'Problemas de masa en optica delantera izquierda.',
+					label: 'Problemas de masa en óptica delantera izquierda.',
 				},
 				{
 					value: 'optDelDer',
-					label: 'Problemas de masa en optica delantera derecha.',
+					label: 'Problemas de masa en óptica delantera derecha.',
 				},
 			],
 		},
@@ -886,19 +886,19 @@ const autoArray = {
 			difDeFrenado: [
 				{
 					value: 'difFreDelRi',
-					label: 'Rueda izquierda eje delantero frena menos.',
+					label: 'Eje delantero rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreDelRd',
-					label: 'Rueda derecha eje delantero frena menos.',
+					label: 'Eje delantero Rueda derecha frena menos.',
 				},
 				{
 					value: 'difFreTraRi',
-					label: 'Rueda izquierda eje trasero frena menos.',
+					label: 'Eje trasero rueda izquierda frena menos.',
 				},
 				{
 					value: 'difFreTraRd',
-					label: 'Rueda derecha eje trasero frena menos.',
+					label: 'Eje trasero rueda derecha frena menos.',
 				},
 				{
 					value: 'difFreFdmRi',
