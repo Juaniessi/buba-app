@@ -3,7 +3,7 @@ import {autoArray} from '../dataArrays/carDataBase';
 import {motoArray} from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
-import copySolid from '../../assets/copy-solid.svg';
+import copyBtn from '../../assets/copy-regular.svg';
 
 /*setSeveridad is passed from "Main" to "Report", ignore the warning */
 function DefectList(props) {
@@ -199,8 +199,8 @@ function DefectList(props) {
 					className="wrap-label copyDesc-btn"
 					htmlFor="copyDesc-btn"
 					onClick={copyListDesc}>
-					Copiar descripciones
-					<img className="reset-img" src={copySolid} alt="copy description" />
+					Copiar descripciones para SIRTO
+					<img className="reset-img" src={copyBtn} alt="copy description" />
 				</label>
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">
