@@ -108,7 +108,7 @@ function Report(props) {
 	 * @constant minorAndMajorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorAndMajorOrEqArray = new Map([
-		['susp', [-1, 102, 39.9, 100, 65, 99.5]],
+		['susp', [-1, 102, 39.9, 100, 55, 99.5]],
 		['alin', [-26, 26, -5, 5, -4, 4]],
 	]);
 
