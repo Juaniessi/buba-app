@@ -10,7 +10,6 @@ function DefectList(props) {
 	const {
 		tipo,
 		severidad,
-		setSeveridad,
 		handleSeveridad,
 		grupo,
 		setGrupo,
@@ -194,14 +193,10 @@ function DefectList(props) {
 						</label>
 					))}
 				</div>
-				<label
-					id="copyDesc-btn"
-					className="wrap-label copyDesc-btn"
-					htmlFor="copyDesc-btn"
-					onClick={copyListDesc}>
+				<div className="wrap-label copyDesc-btn" onClick={copyListDesc}>
 					Copiar descripciones para SIRTO
 					<img className="reset-img" src={copyBtn} alt="copy description" />
-				</label>
+				</div>
 				<div className="variable-btn">
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
@@ -240,7 +235,7 @@ function DefectList(props) {
 								checked={grupo.value === 'note'}
 								className="rad-c"
 								onChange={() => {
-									handleGrupo({value: 'note', label: 'Notas adcionales'});
+									handleGrupo({value: 'note', label: 'Notas adicionales'});
 									handleSeccion({value: 'misc', label: 'Varios'});
 									handleDescripcion({value: 'otro', label: 'Otro'});
 								}}

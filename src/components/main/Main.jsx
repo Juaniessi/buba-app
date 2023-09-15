@@ -87,7 +87,7 @@ function Main() {
 			}
 		}, 70);
 
-		console.log(txtRender)
+		console.log(txtRender);
 	};
 
 	/*
@@ -167,20 +167,18 @@ function Main() {
 	const loadFileRef = useRef(null);
 	const loadImgRef = useRef([]);
 
-
-
 	return (
 		<main>
 			<form className="form-radio" id="no-print">
 				<WeightSum tipo={tipo} txtRender={txtRender} />
-				<label
+				<div
 					id="reset-btn"
 					className="wrap-label reset-btn"
 					htmlFor="reset-btn"
 					onClick={resetBtn}>
 					Reiniciar todos los campos:
 					<img className="reset-img" src={resetBtnImg} alt="reset" />
-				</label>
+				</div>
 				<h2>Tipo de vehículo</h2>
 				<div className="btn-package">
 					{radioGeneratorArray.type.map((item, i) => (
@@ -311,7 +309,6 @@ function Main() {
 					tipo={tipo}
 					loadFileRef={loadFileRef}
 					severidad={severidad}
-					setSeveridad={setSeveridad}
 					handleSeveridad={handleSeveridad}
 					grupo={grupo}
 					handleGrupo={handleGrupo}

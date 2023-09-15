@@ -15,7 +15,6 @@ function Report(props) {
 		tipo,
 		loadFileRef,
 		severidad,
-		setSeveridad,
 		handleSeveridad,
 		grupo,
 		setGrupo,
@@ -831,7 +830,6 @@ function Report(props) {
 				<DefectList
 					tipo={tipo}
 					severidad={severidad}
-					setSeveridad={setSeveridad}
 					handleSeveridad={handleSeveridad}
 					grupo={grupo}
 					handleGrupo={handleGrupo}
