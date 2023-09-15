@@ -1,0 +1,45 @@
+@media print {
+  #no-print4 {
+    display: none;
+  }
+}
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto"), url(../assets/Roboto-Regular.ttf) format("truetype");
+}
+.visible {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.marker {
+  color: white;
+  position: absolute;
+  font-size: 1.5rem;
+  font-family: "Roboto";
+  background-color: black;
+  height: 20px;
+}
+
+.front-brake {
+  top: 350px;
+}
+
+.rear-brake {
+  top: 517px;
+}
+
+.hand-brake {
+  top: 615px;
+}
+
+.left-brake {
+  left: 208px;
+}
+
+.right-brake {
+  left: 400px;
+}/*# sourceMappingURL=majorMarkerStyle.css.map */

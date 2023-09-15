@@ -8,6 +8,7 @@ import DefectList from './DefectList';
 import printSolid from '../../assets/print-solid.svg';
 import fileArrow from '../../assets/file-arrow-up-solid.svg';
 import fileImage from '../../assets/file-image-solid.svg';
+import MajorMarker from './MajorMarker';
 
 function Report(props) {
 	const {
@@ -826,6 +827,7 @@ function Report(props) {
 				<p className={`result-rto ${dateCalcBtn.value}`}>
 					Resultado RTO: {dateCalcBtn.label}
 				</p>
+				<MajorMarker txtRender={txtRender} />
 				<DefectList
 					tipo={tipo}
 					severidad={severidad}

@@ -17,7 +17,7 @@ function Main() {
 		setSeccion({value: '', label: ''});
 		setDescripcion({value: '', label: ''});
 		setLista([]);
-		setTxtRender('');
+		setTxtRender(null);
 		setImgUpload('');
 		setReportArray('');
 		setEngineType({value: '4T', label: '4 Tiempos'});
@@ -66,7 +66,7 @@ function Main() {
 	const [unlistedDef, setUnlistedDef] = useState('');
 	const [lista, setLista] = useState([]);
 
-	const [txtRender, setTxtRender] = useState('');
+	const [txtRender, setTxtRender] = useState(null);
 	/**  handles all the process that must ocurr when the txt is read.
 	 * @param {*} e the txt file.
 	 * @function reportArrayFiller called to fill the object in order to read ir latter.
@@ -86,6 +86,8 @@ function Main() {
 				setReportArray(autoReportArrayFiller());
 			}
 		}, 70);
+
+		console.log(txtRender)
 	};
 
 	/*
