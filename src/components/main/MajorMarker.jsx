@@ -1,6 +1,9 @@
 import React from 'react';
 import '../../styles/majorMarkerStyle.css';
 
+/*Este modulo muesta un asterisco en la menor de las fuerzas de cada eje, siempre y cuando
+la diferencia entre dichas fuerzas sea mayor a 15%*/
+
 function MajorMarker(props) {
 	const {txtRender} = props;
 	return (
