@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../styles/majorMarkerStyle.css';
 
-
 function MajorMarker(props) {
 	const {txtRender} = props;
 	return (
@@ -10,6 +9,8 @@ function MajorMarker(props) {
 				className={`marker ${
 					txtRender === null
 						? ''
+						: txtRender.frenosEje_1.diferenciaFzaFrenadoLadoALado < 16
+						? 'hidden'
 						: txtRender.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo <
 						  txtRender.frenosEje_1.fuerzaDeFrenadoLadoDerecho
 						? 'visible'
@@ -21,6 +22,8 @@ function MajorMarker(props) {
 				className={`marker ${
 					txtRender === null
 						? ''
+						: txtRender.frenosEje_1.diferenciaFzaFrenadoLadoALado < 16
+						? 'hidden'
 						: txtRender.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo >
 						  txtRender.frenosEje_1.fuerzaDeFrenadoLadoDerecho
 						? 'visible'
@@ -32,6 +35,8 @@ function MajorMarker(props) {
 				className={`marker ${
 					txtRender === null
 						? ''
+						: txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado < 16
+						? 'hidden'
 						: txtRender.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo <
 						  txtRender.frenosEje_2.fuerzaDeFrenadoLadoDerecho
 						? 'visible'
@@ -43,6 +48,8 @@ function MajorMarker(props) {
 				className={`marker ${
 					txtRender === null
 						? ''
+						: txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado < 16
+						? 'hidden'
 						: txtRender.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo >
 						  txtRender.frenosEje_2.fuerzaDeFrenadoLadoDerecho
 						? 'visible'
@@ -54,6 +61,8 @@ function MajorMarker(props) {
 				className={`marker ${
 					txtRender === null
 						? ''
+						: txtRender.frenoDeManoEje_2.diferenciaFzaFrenadoLadoALado < 16
+						? 'hidden'
 						: txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoIzquierdo <
 						  txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoDerecho
 						? 'visible'
@@ -65,6 +74,8 @@ function MajorMarker(props) {
 				className={`marker ${
 					txtRender === null
 						? ''
+						: txtRender.frenoDeManoEje_2.diferenciaFzaFrenadoLadoALado < 16
+						? 'hidden'
 						: txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoIzquierdo >
 						  txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoDerecho
 						? 'visible'
