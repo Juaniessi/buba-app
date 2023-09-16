@@ -69,7 +69,7 @@ function Main() {
 	const [txtRender, setTxtRender] = useState(null);
 	/**  handles all the process that must ocurr when the txt is read.
 	 * @param {*} e the txt file.
-	 * @function reportArrayFiller called to fill the object in order to read ir latter.
+	 * @function reportArrayFiller called to fill the object in order to read it latter.
 	 */
 	const handleTxtRender = (e) => {
 		setLista([]);
@@ -87,7 +87,6 @@ function Main() {
 			}
 		}, 70);
 
-		console.log(txtRender);
 	};
 
 	/*
