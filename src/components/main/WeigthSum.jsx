@@ -4,7 +4,7 @@ function WeightSum(props) {
 	const {tipo, txtRender} = props;
 
 	function copyToClipboard(text) {
-		if (txtRender !== '') {
+		if (txtRender !== null) {
 			navigator.clipboard
 				.writeText(text)
 				.then(() => {
@@ -17,31 +17,23 @@ function WeightSum(props) {
 	}
 
 	let frontLW =
-		window.fileAsObject !== undefined && txtRender !== ''
-			? Math.round(
-					Number(window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo)
-			  )
+		window.fileAsObject !== undefined && txtRender !== null
+			? Math.round(Number(txtRender.suspensionEjeDelantero.pesoLadoIzquierdo))
 			: 0;
 
 	let frontRW =
-		window.fileAsObject !== undefined && txtRender !== ''
-			? Math.round(
-					Number(window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho)
-			  )
+		window.fileAsObject !== undefined && txtRender !== null
+			? Math.round(Number(txtRender.suspensionEjeDelantero.pesoLadoDerecho))
 			: 0;
 
 	let rearLW =
-		window.fileAsObject !== undefined && txtRender !== ''
-			? Math.round(
-					Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo)
-			  )
+		window.fileAsObject !== undefined && txtRender !== null
+			? Math.round(Number(txtRender.suspensionEjeTrasero.pesoLadoIzquierdo))
 			: 0;
 
 	let rearRW =
-		window.fileAsObject !== undefined && txtRender !== ''
-			? Math.round(
-					Number(window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho)
-			  )
+		window.fileAsObject !== undefined && txtRender !== null
+			? Math.round(Number(txtRender.suspensionEjeTrasero.pesoLadoDerecho))
 			: 0;
 
 	let totalW = frontLW + frontRW + rearLW + rearRW;
@@ -54,15 +46,15 @@ function WeightSum(props) {
 
 	return (
 		<main>
-			{window.fileAsObject !== undefined && txtRender !== '' ? (
+			{window.fileAsObject !== undefined && txtRender !== null ? (
 				<div className="weightsTable">
 					<div>
 						Combustible:{' '}
 						{tipo === 'Moto'
 							? 'Nafta'
-							: window.fileAsObject.header.subModelo === 'GAS'
+							: txtRender.header.subModelo === 'GAS'
 							? 'GAS'
-							: window.fileAsObject.opacimetro.resultadoMedicionOpacidad === -1
+							: txtRender.opacimetro.resultadoMedicionOpacidad === -1
 							? 'Nafta o Gas'
 							: 'Diesel'}
 					</div>
