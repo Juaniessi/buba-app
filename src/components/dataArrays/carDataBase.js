@@ -372,7 +372,7 @@ const autoArray = {
 				{
 					value: 'luzAltDelDer',
 					label:
-						'Luz de alta Derecha no enciende, intensidad baja o patrón no reglamentario..',
+						'Luz de alta derecha no enciende, intensidad baja o patrón no reglamentario.',
 				},
 				{
 					value: 'ningunaAlta',
