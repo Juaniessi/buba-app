@@ -52,10 +52,10 @@ function WeightSum(props) {
 						Combustible:{' '}
 						{tipo === 'Moto'
 							? 'Nafta'
-							: txtRender.header.subModelo === 'GAS'
-							? 'GAS'
+							: txtRender.header.subModelo === 'GNC'
+							? 'GNC'
 							: txtRender.opacimetro.resultadoMedicionOpacidad === -1
-							? 'Nafta o Gas'
+							? 'Nafta'
 							: 'Diesel'}
 					</div>
 					<div>Peso total: {totalW}</div>
