@@ -352,12 +352,11 @@ function Report(props) {
 	 *
 	 */
 	let startDate =
-		window.fileAsObject === undefined
+		txtRender === null
 			? ''
-			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto3 ===
-			  undefined
-			? window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto2
-			: window.fileAsObject.estadísticaDePuestos.fechaDeSalidaDelPuesto3;
+			: txtRender.estadísticaDePuestos.fechaDeSalidaDelPuesto3 === undefined
+			? txtRender.estadísticaDePuestos.fechaDeSalidaDelPuesto2
+			: txtRender.estadísticaDePuestos.fechaDeSalidaDelPuesto3;
 	/**
 	 * Calculates the due date for this report.
 	 * @returns The calculated due date.

@@ -17,22 +17,22 @@ function WeightSum(props) {
 	}
 
 	let frontLW =
-		window.fileAsObject !== undefined && txtRender !== null
+		txtRender !== null
 			? Math.round(Number(txtRender.suspensionEjeDelantero.pesoLadoIzquierdo))
 			: 0;
 
 	let frontRW =
-		window.fileAsObject !== undefined && txtRender !== null
+		txtRender !== null
 			? Math.round(Number(txtRender.suspensionEjeDelantero.pesoLadoDerecho))
 			: 0;
 
 	let rearLW =
-		window.fileAsObject !== undefined && txtRender !== null
+		txtRender !== null
 			? Math.round(Number(txtRender.suspensionEjeTrasero.pesoLadoIzquierdo))
 			: 0;
 
 	let rearRW =
-		window.fileAsObject !== undefined && txtRender !== null
+		txtRender !== null
 			? Math.round(Number(txtRender.suspensionEjeTrasero.pesoLadoDerecho))
 			: 0;
 
