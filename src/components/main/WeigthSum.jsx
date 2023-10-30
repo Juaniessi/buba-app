@@ -46,7 +46,7 @@ function WeightSum(props) {
 
 	return (
 		<main>
-			{window.fileAsObject !== undefined && txtRender !== null ? (
+			{txtRender !== null ? (
 				<div className="weightsTable">
 					<div>
 						Combustible:{' '}
