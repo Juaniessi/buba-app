@@ -6,9 +6,13 @@ la diferencia entre dichas fuerzas sea mayor a 10% en caso del eje delantero y 1
 en el caso del eje trasero*/
 
 function MajorMarker(props) {
-	const {txtRender} = props;
+	const {txtRender, tipo} = props;
 	return (
-		<main id="no-print4" className={txtRender === null ? 'hidden' : 'visible'}>
+		<main
+			id="no-print4"
+			className={
+				txtRender === null ? 'hidden' : tipo === 'Moto' ? 'hidden' : 'visible'
+			}>
 			<div
 				className={`marker ${
 					txtRender === null

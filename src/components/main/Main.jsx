@@ -86,7 +86,6 @@ function Main() {
 				setReportArray(autoReportArrayFiller());
 			}
 		}, 70);
-
 	};
 
 	/*
