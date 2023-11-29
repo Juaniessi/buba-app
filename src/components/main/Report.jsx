@@ -364,7 +364,10 @@ function Report(props) {
 	function dueDateCalculator() {
 		let dueDate = new Date(startDate.getTime());
 
-		if (dateCalcBtn.value === 'Rechazado') {
+		if (
+			dateCalcBtn.value === 'Rechazado' ||
+			dateCalcBtn.value === 'SoloInforme'
+		) {
 			dueDate = new Date(startDate.getTime());
 		} else if (dateCalcBtn.value === 'Condicional') {
 			dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
