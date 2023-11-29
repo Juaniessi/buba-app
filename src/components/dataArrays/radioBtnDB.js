@@ -83,6 +83,9 @@ const radioGeneratorArray = {
 		{
 			value: 'Rechazado',
 			label: 'Rechazado',
+		},{
+			value: 'SoloInforme',
+			label: 'Solo informe',
 		},
 	],
 	selectValidity: [
