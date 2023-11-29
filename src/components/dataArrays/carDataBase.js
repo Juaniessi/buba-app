@@ -894,11 +894,11 @@ const autoArray = {
 				},
 				{
 					value: 'difFreTraRi',
-					label: 'Eje trasero rueda izquierda frena menos.',
+					label: 'Eje trasero rueda izquierda frena menos (pedal).',
 				},
 				{
 					value: 'difFreTraRd',
-					label: 'Eje trasero rueda derecha frena menos.',
+					label: 'Eje trasero rueda derecha frena menos (pedal).',
 				},
 				{
 					value: 'difFreFdmRi',
@@ -1262,7 +1262,7 @@ const autoArray = {
 				},
 				{
 					value: 'butacaDI',
-					label: 'Butaca delantera izqueirda mal anclada o en mal estado.',
+					label: 'Butaca delantera izquierda mal anclada o en mal estado.',
 				},
 				{
 					value: 'butacaDD',
@@ -1349,7 +1349,7 @@ const autoArray = {
 				},
 				{
 					value: 'espExtDelNoFun',
-					label: 'Espejo exterior dercho no funcional.',
+					label: 'Espejo exterior derecho no funcional.',
 				},
 				{
 					value: 'espIntCenNoFun',
@@ -1588,7 +1588,7 @@ const autoArray = {
 			transmision: [
 				{
 					value: 'homoIzq',
-					label: 'Homocinética delantera izqueirda con holgura.',
+					label: 'Homocinética delantera izquierda con holgura.',
 				},
 				{
 					value: 'homoDer',

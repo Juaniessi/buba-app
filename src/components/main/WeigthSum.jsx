@@ -44,11 +44,8 @@ function WeightSum(props) {
 		copyToClipboard(totalW);
 	}, [txtRender]);
 
-	return (
-		<main>
-			{txtRender !== null ? (
-				<div className="weightsTable">
-					<div>
+	/* old implementation
+	<div>
 						Combustible:{' '}
 						{tipo === 'Moto'
 							? 'Nafta'
@@ -57,7 +54,13 @@ function WeightSum(props) {
 							: txtRender.opacimetro.resultadoMedicionOpacidad === -1
 							? 'Nafta'
 							: 'Diesel'}
-					</div>
+					</div> */
+
+	return (
+		<main>
+			{txtRender !== null ? (
+				<div className="weightsTable">
+					<div>Combustible: {txtRender.header.combustible}</div>
 					<div>Peso total: {totalW}</div>
 					<div>Peso eje delantero: {frontW}</div>
 					<div>Peso eje trasero: {rearW}</div>
