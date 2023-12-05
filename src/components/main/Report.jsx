@@ -70,19 +70,19 @@ function Report(props) {
 	 * @constant minorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorOrEqArray = new Map([
-		['brakePerf', [5, 40, 48]],
-		['handBrakePerf', [3, 14.4, 17]],
-		['brakeStrenghtFront', [0.15, 0.3, 0.46]],
-		['brakeStrenghtRear', [0.05, 0.3, 0.46]],
-		['brakeStrenghtMoto', [0.05, 0.15, 0.3]],
+		['brakePerf', [5, 40, 44]],
+		['handBrakePerf', [3, 14.4, 16]],
+		['brakeStrenghtFront', [0.15, 0.3, 0.42]],
+		['brakeStrenghtRear', [0.05, 0.3, 0.42]],
+		['brakeStrenghtMoto', [0.05, 0.15, 0.26]],
 	]);
 
 	/**
 	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const majorOrEqArray = new Map([
-		['brakeDifDel', [80, 15.1, 10]],
-		['brakeDifTra', [95, 15.1, 12]],
+		['brakeDifDel', [80, 15.1, 13]],
+		['brakeDifTra', [95, 15.1, 14]],
 		['brakeResist', [4, 1, 0.85]],
 		['brakeOval', [80, 50, 35]],
 		['luxLow', [200, 27, 26]],
@@ -108,7 +108,7 @@ function Report(props) {
 	 * @constant minorAndMajorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const minorAndMajorOrEqArray = new Map([
-		['susp', [-1, 102, 39.9, 100, 55, 99.5]],
+		['susp', [-1, 102, 39.9, 100, 45, 99.5]],
 		['alin', [-26, 26, -5, 5, -4, 4]],
 	]);
 
