@@ -223,6 +223,10 @@ const autoArray = {
 				value: 'testigos',
 				label: 'Testigos',
 			},
+			{
+				value: 'comandos',
+				label: 'Comandos',
+			},
 		],
 		inspVisual: [
 			{
@@ -1084,6 +1088,38 @@ const autoArray = {
 			],
 		},
 		sistemaElectrico: {
+			comandos: [
+				{
+					value: 'comGiro',
+					label:
+						'Comando de luces de giro faltante o su funcionamiento es incorrecto.',
+				},
+				{
+					value: 'comBal',
+					label:
+						'Comando de balizas faltante o su funcionamiento es incorrecto.',
+				},
+				{
+					value: 'comLimp',
+					label:
+						'Comando de limpia parabrisas faltante o su funcionamiento es incorrecto.',
+				},
+				{
+					value: 'comLuzBaja',
+					label:
+						'Comando de luces bajas faltante o su funcionamiento es incorrecto.',
+				},
+				{
+					value: 'comLuzAlta',
+					label:
+						'Comando de luces altas faltante o su funcionamiento es incorrecto.',
+				},
+				{
+					value: 'comLuzPos',
+					label:
+						'Comando de luces de posición faltante o su funcionamiento es incorrecto.',
+				},
+			],
 			bocina: [
 				{
 					value: 'bocinaNo',
@@ -1564,11 +1600,15 @@ const autoArray = {
 			sistEscape: [
 				{
 					value: 'sisEscDef',
-					label: 'Sistema de escape con defectos.',
+					label: 'Cañería de escape pinchada, rajada o con defectos.',
+				},
+				{
+					value: 'sisEscFalt',
+					label: 'Cañería de escape con algún tacho faltante.',
 				},
 				{
 					value: 'sisEscRot',
-					label: 'Sistema de escape con roturas o faltantes en sus soportes.',
+					label: 'Cañería de escape con roturas o faltantes en sus soportes.',
 				},
 			],
 			chasis: [
@@ -1638,11 +1678,11 @@ const autoArray = {
 			patasMotor: [
 				{
 					value: 'pataBlanda',
-					label: 'Blandas.',
+					label: 'Patas de motor blandas.',
 				},
 				{
 					value: 'pataMala',
-					label: 'Con holgura o en mal estado.',
+					label: 'Una o más patas de motor con holgura o en mal estado.',
 				},
 			],
 		},

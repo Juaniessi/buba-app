@@ -81,11 +81,11 @@ function Report(props) {
 	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
 	 */
 	const majorOrEqArray = new Map([
-		['brakeDifDel', [80, 15.1, 13]],
+		['brakeDifDel', [90, 15.1, 13]],
 		['brakeDifTra', [95, 15.1, 14]],
 		['brakeResist', [4, 1, 0.85]],
-		['brakeOval', [80, 50, 35]],
-		['luxLow', [200, 27, 26]],
+		['brakeOval', [90, 50, 35]],
+		['luxLow', [200, 60, 40]],
 		['luxHigh', [200, 150, 85]],
 		['luxAng', [15, 7, 3]],
 		['opacity', [5, 0.25, 0.2]],
@@ -109,7 +109,7 @@ function Report(props) {
 	 */
 	const minorAndMajorOrEqArray = new Map([
 		['susp', [-1, 102, 39.9, 100, 45, 99.5]],
-		['alin', [-26, 26, -5, 5, -4, 4]],
+		['alin', [-256, 256, -5, 5, -4, 4]],
 	]);
 
 	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
