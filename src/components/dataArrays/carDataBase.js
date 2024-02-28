@@ -826,6 +826,11 @@ const autoArray = {
 					label:
 						'Bujes y/o bieletas de barra estabilizadora trasera con defectos.',
 				},
+				{
+					value: 'puntBarEstDel',
+					label:
+						'Puntera izquierda y/o derecha de barra estabilizadora delantera con defectos.',
+				},
 			],
 			barraDir: [
 				{
@@ -1681,8 +1686,18 @@ const autoArray = {
 					label: 'Patas de motor blandas.',
 				},
 				{
-					value: 'pataMala',
-					label: 'Una o más patas de motor con holgura o en mal estado.',
+					value: 'pataInf',
+					label:
+						'Pata de motor inferior en mal estado. Se recomienda también revisar y cambiar las demas.',
+				},
+				{
+					value: 'pataSup',
+					label:
+						'Patas de motor superiores en mal estado. Se recomienda también revisar y cambiar la inferior.',
+				},
+				{
+					value: 'pataTodas',
+					label: 'Todas las patas de motor en mal estado.',
 				},
 			],
 		},
