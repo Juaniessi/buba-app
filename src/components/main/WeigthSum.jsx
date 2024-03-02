@@ -4,7 +4,6 @@ function WeightSum(props) {
 	const {tipo, txtRender} = props;
 
 	/* we are not coping the wheigth to the clipboard any more.
-	
 	function copyToClipboard(text) {
 		if (txtRender !== null) {
 			navigator.clipboard
@@ -43,9 +42,10 @@ function WeightSum(props) {
 	let frontW = frontLW + frontRW;
 	let rearW = rearLW + rearRW;
 
+	/* we are not coping the wheigth to the clipboard any more.
 	useEffect(() => {
 		copyToClipboard(totalW);
-	}, [txtRender]);
+	}, [txtRender]); */
 
 	/* old implementation
 	<div>
