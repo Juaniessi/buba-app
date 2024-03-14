@@ -71,6 +71,16 @@ const radioGeneratorArray = {
 			label: 'Integral (ignora resistencia de F.)',
 		},
 	],
+	rtoType: [
+		{
+			value: 'normal',
+			label: 'Normal',
+		},
+		{
+			value: 'traPas',
+			label: 'Transporte de Pasajeros',
+		},
+	],
 	dateCalc: [
 		{
 			value: 'Apto',
@@ -91,15 +101,29 @@ const radioGeneratorArray = {
 	selectValidity: [
 		{
 			value: '2a',
-			label: '2 años',
+			label: '2 Años',
 		},
 		{
 			value: '1a',
-			label: '1 año',
+			label: '1 Año',
 		},
 		{
 			value: '6m',
-			label: '6 meses',
+			label: '6 Meses',
+		}
+	],
+	selectValidityTra: [
+		{
+			value: '1a',
+			label: '1 Año',
+		},
+		{
+			value: '6m',
+			label: '6 Meses',
+		},
+		{
+			value: '3m',
+			label: '3 Meses',
 		},
 	],
 };

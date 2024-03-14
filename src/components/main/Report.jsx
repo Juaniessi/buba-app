@@ -41,6 +41,7 @@ function Report(props) {
 		dateCalcBtn,
 		selectValidity,
 		txtRender,
+		rtoType,
 	} = props;
 
 	let imgSelector; // this varaible sets te img to show
@@ -364,19 +365,70 @@ function Report(props) {
 	function dueDateCalculator() {
 		let dueDate = new Date(startDate.getTime());
 
-		if (
-			dateCalcBtn.value === 'Rechazado' ||
-			dateCalcBtn.value === 'SoloInforme'
-		) {
-			dueDate = new Date(startDate.getTime());
-		} else if (dateCalcBtn.value === 'Condicional') {
-			dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
-		} else if (dateCalcBtn.value === 'Apto' && selectValidity.value === '1a') {
-			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
-		} else if (dateCalcBtn.value === 'Apto' && selectValidity.value === '2a') {
-			dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 2));
-		} else if (dateCalcBtn.value === 'Apto' && selectValidity.value === '6m') {
-			dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
+		if (rtoType.value === 'normal') {
+			if (
+				dateCalcBtn.value === 'Rechazado' ||
+				dateCalcBtn.value === 'SoloInforme'
+			) {
+				dueDate = new Date(startDate.getTime());
+			} else if (dateCalcBtn.value === 'Condicional') {
+				dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
+			} else if (
+				dateCalcBtn.value === 'Apto' &&
+				selectValidity.value === '1a'
+			) {
+				dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
+			} else if (
+				dateCalcBtn.value === 'Apto' &&
+				selectValidity.value === '2a'
+			) {
+				dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 2));
+			} else if (
+				dateCalcBtn.value === 'Apto' &&
+				selectValidity.value === '6m'
+			) {
+				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
+			}
+		}
+
+		if (rtoType.value === 'traPas') {
+			if (dateCalcBtn.value === 'SoloInforme') {
+				dueDate = new Date(startDate.getTime());
+			}
+			if (dateCalcBtn.value === 'Rechazado') {
+				dueDate = new Date(dueDate.setDate(startDate.getDate() + 12));
+			}
+			if (dateCalcBtn.value === 'Condicional') {
+				dueDate = new Date(dueDate.setDate(startDate.getDate() + 15));
+			}
+			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '3m') {
+				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 3));
+			}
+			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '6m') {
+				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
+			}
+			dueDateExtender(dueDate);
+		}
+
+		return dueDate;
+	}
+
+	/**
+	 * Extends the dueDate in the cases that the fininshing day is saturday or sunday and only for "Transporte de pasajeros".
+	 * @returns The calculated due date.
+	 */
+
+	function dueDateExtender(dueDate) {
+		const sabado = 6;
+		const domingo = 0;
+
+		/* console.log('fecha en extensor' + dueDate);
+		console.log('día en extensor' + dueDate.getDay()); */
+
+		if (dueDate.getDay() === sabado) {
+			dueDate = new Date(dueDate.setDate(dueDate.getDate() + 2));
+		} else if (dueDate.getDay() === domingo) {
+			dueDate = new Date(dueDate.setDate(dueDate.getDate() + 1));
 		}
 
 		return dueDate;
