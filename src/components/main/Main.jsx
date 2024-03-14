@@ -232,7 +232,7 @@ function Main() {
 						tipo === 'Camion'
 							? radioGeneratorArray.rtoType.map((item, i) => (
 									<div className="engine-and-size" key={item.value}>
-										<label className="btn-inside" htmlFor={item.value}>
+										<label className="btn-inside transp-color" htmlFor={item.value}>
 											<input
 												type="radio"
 												className="rad-c"
