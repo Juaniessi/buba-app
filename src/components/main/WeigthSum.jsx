@@ -131,7 +131,7 @@ function WeightSum(props) {
 							</td>
 						</tr>
 						<tr>
-							<td className="report-table even">Deseq TRA</td>
+							<td className="report-table even">Deseq Tra</td>
 							<td className="report-table even">
 								{txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado}
 							</td>
