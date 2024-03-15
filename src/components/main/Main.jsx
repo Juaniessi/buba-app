@@ -131,7 +131,7 @@ function Main() {
 	/**
 	 * Switches between the most used value for the Validity period
 	 */
-	
+
 	const handleSetRtoType = (item) => {
 		if (rtoType.value === 'normal') {
 			setSelectValidity({value: '3m', label: '3 Meses'});
@@ -232,7 +232,9 @@ function Main() {
 						tipo === 'Camion'
 							? radioGeneratorArray.rtoType.map((item, i) => (
 									<div className="engine-and-size" key={item.value}>
-										<label className="btn-inside transp-color" htmlFor={item.value}>
+										<label
+											className="btn-inside transp-color"
+											htmlFor={item.value}>
 											<input
 												type="radio"
 												className="rad-c"
@@ -330,13 +332,15 @@ function Main() {
 								<label
 									className={
 										dateCalcBtn.value !== 'Apto'
-											? 'btn-inside'
+											? 'btn-inside tooltip'
 											: selectValidity.value === item.value
-											? 'radio-checked btn-inside'
-											: 'focus btn-inside'
+											? 'radio-checked btn-inside tooltip'
+											: 'focus btn-inside tooltip'
 									}
 									htmlFor={item.value}
 									key={item.value}>
+									<span className="tooltiptext">{item.tooltip}</span>
+
 									<input
 										type="radio"
 										className={`rad-c`}
@@ -354,13 +358,15 @@ function Main() {
 								<label
 									className={
 										dateCalcBtn.value !== 'Apto'
-											? 'btn-inside'
+											? 'btn-inside tooltip'
 											: selectValidity.value === item.value
-											? 'radio-checked btn-inside'
-											: 'focus btn-inside'
+											? 'radio-checked btn-inside tooltip'
+											: 'focus btn-inside tooltip'
 									}
 									htmlFor={item.value}
 									key={item.value}>
+									<span className="tooltiptext">{item.tooltip}</span>
+
 									<input
 										type="radio"
 										className={`rad-c`}

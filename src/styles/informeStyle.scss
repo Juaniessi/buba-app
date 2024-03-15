@@ -563,3 +563,29 @@
 	color: white;
 	font-weight: 500;
 }
+
+/* Contenedor del tooltip */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+/* Texto del tooltip */
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 160px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	padding: 5px 0;
+	border-radius: 6px;
+	/* Posiciona el texto del tooltip - ver ejemplos a continuación */
+	position: absolute;
+	z-index: 1;
+	top: -32px;
+}
+
+/* Muestra el texto del tooltip al pasar el ratón sobre el contenedor del tooltip */
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}

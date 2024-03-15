@@ -102,33 +102,40 @@ const radioGeneratorArray = {
 	selectValidity: [
 		{
 			value: '2a',
-			label: '2 Añ',
+			label: '2 A',
+			tooltip: '7 Años o menos',
 		},
 		{
 			value: '1a',
 			label: '1 A',
+			tooltip: 'APTO',
 		},
 		{
 			value: '6m',
 			label: '6 M',
+			tooltip: 'Plataforma digital',
 		},
 	],
 	selectValidityTra: [
 		{
 			value: '1a',
 			label: '1 A',
+			tooltip: '1era revisión y 0km',
 		},
 		{
 			value: '6m',
 			label: '6 M',
+			tooltip: 'Colectivo de línea',
 		},
 		{
 			value: '3m',
 			label: '3 M',
+			tooltip: 'APTO',
 		},
 		{
 			value: '2m',
 			label: '2 M',
+			tooltip: 'Más de 10 años',
 		},
 	],
 };
