@@ -66,16 +66,16 @@ function WeightSum(props) {
 		<main>
 			{txtRender !== null ? (
 				<div className="weightsTable">
-					<table>
+					<table className="subgroup">
 						<tr>
-							<td className="report-table odd">Alineción</td>
-							<td className="report-table odd">
+							<td className="report-table table-cat">Alineción (m/km)</td>
+							<td className="report-table table-info">
 								{txtRender.alineacion.resultadoAlineacionEje1}
 							</td>
 						</tr>
 						<tr>
-							<td className="report-table even">Gases</td>
-							<td className="report-table even">
+							<td className="report-table table-cat">Gases (%)</td>
+							<td className="report-table table-info">
 								{txtRender.opacimetro.resultadoMedicionOpacidad === -1 ? (
 									<div>
 										{
@@ -89,70 +89,80 @@ function WeightSum(props) {
 							</td>
 						</tr>
 						<tr>
-							<td className="report-table odd">Susp DIzq</td>
-							<td className="report-table odd">
+							<td className="report-table table-cat">Combustible</td>
+							<td className="report-table table-info">
+								{txtRender.header.combustible}
+							</td>
+						</tr>
+					</table>
+
+					<table className="subgroup">
+						<tr>
+							<td className="report-table table-cat" rowSpan={2}>
+								Suspensión (%)
+							</td>
+							<td className="report-table table-name">D Izq</td>
+							<td className="report-table table-name">D Der</td>
+							<td className="report-table table-name">T Izq</td>
+							<td className="report-table table-name">T Der</td>
+						</tr>
+						<tr>
+							<td className="report-table table-info">
 								{txtRender.suspensionEjeDelantero.rendimientoDelanteroIzquierdo}
 							</td>
-						</tr>
-						<tr>
-							<td className="report-table even">Susp DDer</td>
-							<td className="report-table even">
+							<td className="report-table table-info">
 								{txtRender.suspensionEjeDelantero.rendimientoDelanteroDerecho}
 							</td>
-						</tr>
-						<tr>
-							<td className="report-table odd">Susp TIzq</td>
-							<td className="report-table odd">
+
+							<td className="report-table table-info">
 								{txtRender.suspensionEjeTrasero.rendimientoTraseroIzquierdo}
 							</td>
-						</tr>
-						<tr>
-							<td className="report-table even">Susp TDer</td>
-							<td className="report-table even">
+
+							<td className="report-table table-info">
 								{txtRender.suspensionEjeTrasero.rendimientoTraseroDerecho}
 							</td>
 						</tr>
+					</table>
+
+					<table className="subgroup">
 						<tr>
-							<td className="report-table odd">Efic Del</td>
-							<td className="report-table odd">
+							<td className="report-table table-cat" rowSpan={2}>
+								Frenos (%)
+							</td>
+							<td className="report-table table-name">Ren Del</td>
+							<td className="report-table table-name">Ren Tra</td>
+							<td className="report-table table-name">Dif Del</td>
+							<td className="report-table table-name">Dif Tra</td>
+						</tr>
+						<tr>
+							<td className="report-table table-info">
 								{txtRender.frenosEje_1.rendimientoDelEje}
 							</td>
-						</tr>
-						<tr>
-							<td className="report-table even">Efic Tra</td>
-							<td className="report-table even">
+							<td className="report-table table-info">
 								{txtRender.frenosEje_2.rendimientoDelEje}
 							</td>
-						</tr>
-						<tr>
-							<td className="report-table odd">Deseq Del</td>
-							<td className="report-table odd">
+							<td className="report-table table-info">
 								{txtRender.frenosEje_1.diferenciaFzaFrenadoLadoALado}
 							</td>
-						</tr>
-						<tr>
-							<td className="report-table even">Deseq Tra</td>
-							<td className="report-table even">
+							<td className="report-table table-info">
 								{txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado}
 							</td>
 						</tr>
+					</table>
+
+					<table className="subgroup">
 						<tr>
-							<td className="report-table odd">Peso total</td>
-							<td className="report-table odd">{totalW}</td>
-						</tr>
-						<tr>
-							<td className="report-table even">Peso eje delantero</td>
-							<td className="report-table even">{frontW}</td>
-						</tr>
-						<tr>
-							<td className="report-table odd">Peso eje trasero</td>
-							<td className="report-table odd">{rearW}</td>
-						</tr>
-						<tr>
-							<td className="report-table even">Combustible</td>
-							<td className="report-table even">
-								{txtRender.header.combustible}
+							<td className="report-table table-cat" rowSpan={2}>
+								Peso (kg)
 							</td>
+							<td className="report-table table-name">Total</td>
+							<td className="report-table table-name">Eje del</td>
+							<td className="report-table table-name">Eje tra</td>
+						</tr>
+						<tr>
+							<td className="report-table table-info">{totalW}</td>
+							<td className="report-table table-info">{frontW}</td>
+							<td className="report-table table-info">{rearW}</td>
 						</tr>
 					</table>
 				</div>
