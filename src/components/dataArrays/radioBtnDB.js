@@ -93,7 +93,8 @@ const radioGeneratorArray = {
 		{
 			value: 'Rechazado',
 			label: 'Rechazado',
-		},{
+		},
+		{
 			value: 'SoloInforme',
 			label: 'Solo informe',
 		},
@@ -101,29 +102,33 @@ const radioGeneratorArray = {
 	selectValidity: [
 		{
 			value: '2a',
-			label: '2 Años',
+			label: '2 Añ',
 		},
 		{
 			value: '1a',
-			label: '1 Año',
+			label: '1 A',
 		},
 		{
 			value: '6m',
-			label: '6 Meses',
-		}
+			label: '6 M',
+		},
 	],
 	selectValidityTra: [
 		{
 			value: '1a',
-			label: '1 Año',
+			label: '1 A',
 		},
 		{
 			value: '6m',
-			label: '6 Meses',
+			label: '6 M',
 		},
 		{
 			value: '3m',
-			label: '3 Meses',
+			label: '3 M',
+		},
+		{
+			value: '2m',
+			label: '2 M',
 		},
 	],
 };
