@@ -67,6 +67,12 @@ function WeightSum(props) {
 			{txtRender !== null ? (
 				<div className="weightsTable">
 					<table className="subgroup">
+					<tr>
+							<td className="report-table table-cat">Fecha de fab</td>
+							<td className="report-table table-info">
+								{txtRender.header.añoDeFabricacion}
+							</td>
+						</tr>
 						<tr>
 							<td className="report-table table-cat">Alineción (m/km)</td>
 							<td className="report-table table-info">
