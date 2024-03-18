@@ -62,14 +62,25 @@ function WeightSum(props) {
 							: 'Diesel'}
 					</div> */
 
+	let antiguedad =
+		txtRender != null
+			? new Date().getFullYear() - txtRender.header.añoDeFabricacion
+			: 0;
+	console.log('la antigüedad es' + antiguedad);
+
 	return (
 		<main>
 			{txtRender !== null ? (
 				<div className="weightsTable">
 					<table className="subgroup">
-					<tr>
+						<tr>
 							<td className="report-table table-cat">Fecha de fab</td>
-							<td className="report-table table-info">
+							<td
+								className={
+									antiguedad <= 10
+										? 'report-table table-info'
+										: 'report-table peligro'
+								}>
 								{txtRender.header.añoDeFabricacion}
 							</td>
 						</tr>
