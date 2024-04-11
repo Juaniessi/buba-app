@@ -14,7 +14,7 @@ const radioGeneratorArray = {
 		},
 		{
 			value: 'Minibus',
-			label: 'Minibus',
+			label: 'Colectivo',
 		},
 		{
 			value: 'Moto',
@@ -54,11 +54,11 @@ const radioGeneratorArray = {
 	truckSize: [
 		{
 			value: 'smallTruck',
-			label: 'Camión pequeño',
+			label: 'Normal',
 		},
 		{
 			value: 'bigTruck',
-			label: 'Camión grande (No susp. ni Rueda frenada)',
+			label: 'No susp. ni Rueda frenada',
 		},
 	],
 	transmisionType: [
@@ -125,12 +125,12 @@ const radioGeneratorArray = {
 		{
 			value: '6m',
 			label: '6 M',
-			tooltip: 'Colectivo de línea',
+			tooltip: 'Col. Urbano',
 		},
 		{
 			value: '3m',
 			label: '3 M',
-			tooltip: 'APTO',
+			tooltip: 'APTO o Col. >10 años',
 		},
 		{
 			value: '2m',

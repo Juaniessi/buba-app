@@ -269,7 +269,7 @@ function Main() {
 									</div>
 							  ))
 							: ''}
-						{tipo === 'Camion'
+						{tipo === 'Camion'|| tipo === 'Minibus'
 							? radioGeneratorArray.truckSize.map((item, i) => (
 									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
@@ -287,7 +287,7 @@ function Main() {
 									</div>
 							  ))
 							: ''}
-						{tipo === 'Auto' || tipo === 'Camioneta' || tipo === 'Minibus'
+						{tipo === 'Auto' || tipo === 'Camioneta' 
 							? radioGeneratorArray.transmisionType.map((item, i) => (
 									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>

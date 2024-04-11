@@ -74,7 +74,7 @@ function WeightSum(props) {
 				<div className="weightsTable">
 					<table className="subgroup">
 						<tr>
-							<td className="report-table table-cat">Fecha de fab</td>
+							<td className="report-table table-cat">Año de fab</td>
 							<td
 								className={
 									antiguedad <= 10
