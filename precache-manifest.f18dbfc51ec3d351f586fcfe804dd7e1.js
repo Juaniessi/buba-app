@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "ad488f01ddbb74afc0df",
+    "revision": "f24467b86d1c31ce4537",
     "url": "/buba-app/static/css/main.f8a5511f.chunk.css"
   },
   {
-    "revision": "ad488f01ddbb74afc0df",
-    "url": "/buba-app/static/js/main.fb501cb0.chunk.js"
+    "revision": "f24467b86d1c31ce4537",
+    "url": "/buba-app/static/js/main.5fa93c15.chunk.js"
   },
   {
     "revision": "505e43fb4fcb4670e0d8",
@@ -72,7 +72,7 @@ self.__precacheManifest = [
     "url": "/buba-app/static/media/Roboto-Bold.9ece5b48.ttf"
   },
   {
-    "revision": "7a060865584d4e5594d4823814bb2cf5",
+    "revision": "6dfd5bdf646582520d123c1351fcd6d5",
     "url": "/buba-app/index.html"
   }
 ];
