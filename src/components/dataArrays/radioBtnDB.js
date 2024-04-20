@@ -130,7 +130,7 @@ const radioGeneratorArray = {
 		{
 			value: '3m',
 			label: '3 M',
-			tooltip: 'APTO o Col. >10 años',
+			tooltip: 'APTO o Col. Urbano >10 años',
 		},
 		{
 			value: '2m',

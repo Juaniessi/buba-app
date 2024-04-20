@@ -410,6 +410,9 @@ function Report(props) {
 			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '2m') {
 				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 2));
 			}
+			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '1a') {
+				dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
+			}
 
 			/* not using it any more for now 
 			dueDateExtender(dueDate); */
