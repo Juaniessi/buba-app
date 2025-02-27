@@ -466,6 +466,9 @@
 		font-size: 0.8rem;
 		font-weight: bold;
 	}
+
+	
+	
 }
 
 .insert-btn-cont {
@@ -588,4 +591,14 @@
 /* Muestra el texto del tooltip al pasar el ratón sobre el contenedor del tooltip */
 .tooltip:hover .tooltiptext {
 	visibility: visible;
+}
+
+.marca-de-agua{
+	position: absolute;
+	top: 450px;
+	left: -50px;
+	font-size: 4.5rem;
+	rotate: 45deg;
+	color: rgba(0, 0, 0, 0.15); /* Cambia el color y el nivel de transparencia aquí */
+	font-weight: bold;
 }

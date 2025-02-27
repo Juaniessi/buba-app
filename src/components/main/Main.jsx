@@ -379,7 +379,8 @@ function Main() {
 									/>
 									{item.label}
 								</label>
-						  ))}
+						  ))
+							}
 				</div>
 				<h3>Carga de archivos e impresión</h3>
 			</form>

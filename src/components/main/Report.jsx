@@ -951,6 +951,7 @@ function Report(props) {
 					</tfoot>
 				</table>
 			</section>
+			{rtoType.value === 'traPas' ? <div className='marca-de-agua'>Transporte de pasajeros</div> : ""}
 		</>
 	);
 }
