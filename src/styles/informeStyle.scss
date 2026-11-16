@@ -598,6 +598,66 @@
 	background-color: white;
 }
 
+// --- Hojas (ver hojas.js y DefectList.jsx) ------------------------------------
+// "Hoja 1 de N", arriba de las referencias, a la derecha. Si se mueve, hay
+// que actualizar ESPACIO_HOJA_1 en hojas.js.
+.hoja-numero {
+	position: absolute;
+	top: 908px;
+	left: 15px;
+	width: 660px;
+	text-align: right;
+	font-size: 0.6rem;
+	font-weight: bold;
+}
+
+// Título "Observaciones que no entran en la hoja 1" (solo en pantalla).
+.hojas-extra-titulo {
+	margin: 1.5rem 0 0.5rem;
+}
+
+// Hoja extra con las observaciones que no entran en la hoja 1: del mismo
+// tamaño que la hoja 1 (el dibujo mide 700 x 990 px) y, al imprimir, en una
+// página aparte. Si se mueven la tabla o las referencias, hay que actualizar
+// ESPACIO_OTRAS_HOJAS en hojas.js.
+.hoja-extra {
+	position: relative;
+	width: 700px;
+	height: 990px;
+	margin: 10px 0;
+	border: solid black 1px;
+	background-color: white;
+	break-before: page;
+	page-break-before: always; // lo mismo, para navegadores viejos
+	break-inside: avoid;
+	// Patente, fecha y número de hoja, en una franja azul como la de la hoja 1.
+	.hoja-encabezado {
+		display: flex;
+		justify-content: space-between;
+		margin: 15px 15px 0;
+		padding: 6px 10px;
+		background-color: rgb(34, 64, 120);
+		color: white;
+		font-size: 0.8rem;
+	}
+	.hoja-titulo {
+		margin: 6px 15px 0;
+		font-size: 0.8rem;
+		font-weight: bold;
+	}
+	// La tabla y las referencias, en el mismo lugar en todas las hojas extra.
+	// max-content: que las columnas midan lo mismo que en la hoja 1 (si no, en
+	// pantalla la columna "Editar" la achica para que entre en la hoja, las
+	// descripciones ocupan más renglones y el reparto en hojas sale distinto).
+	.lista-final {
+		top: 70px;
+		width: max-content;
+	}
+	.references {
+		top: 905px;
+	}
+}
+
 // Botón "Copiar descripciones para SIRTO" (no se imprime).
 .copyDesc-btn {
 	position: absolute;

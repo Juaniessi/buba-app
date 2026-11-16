@@ -24,6 +24,7 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
+import Referencias from './Referencias';
 import printSolid from '../../assets/print-solid.svg';
 import fileArrow from '../../assets/file-arrow-up-solid.svg';
 import fileImage from '../../assets/file-image-solid.svg';
@@ -593,50 +594,13 @@ function Report(props) {
 					hayTxt={txtRender !== null}
 					filtrarFrasesAutomaticas={filtrarFrasesAutomaticas}
 					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
+					// Para el encabezado de la hoja 2 (si las observaciones no entran)
+					patente={txtRender ? txtRender.header.patente : ''}
+					fecha={startDate ? formatearFecha(startDate) : ''}
+					transportePasajeros={rtoType.value === 'traPas'}
 				/>
-				{/* Referencias: qué significa cada severidad */}
-				<table className="references print">
-					<thead>
-						<tr className="reference-headers"></tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td className="def-name minor">Leve</td>
-							<td className="def-col">
-								Son defectos que no exigen una nueva inspección, pero que
-								deberán subsanarse antes de la siguiente revisión.
-							</td>
-						</tr>
-						<tr>
-							<td className="def-name orange">Moderado</td>
-							<td className="def-col">
-								Exigen una nueva inspección sin cargo dentro de los sesenta (60)
-								días corridos a partir de la verificación. Pasando el tiempo
-								estipulado de “circulación originaria”, repetirá el pago
-								original.
-								<br />
-								<b>
-									(*) Si el vencimiento coincide con domingo o feriado, el mismo
-									se traslada al día habil inmediato anterior.
-								</b>
-							</td>
-						</tr>
-						<tr>
-							<td className="def-name black">
-								<b>Grave</b>
-							</td>
-							<td className="def-col">
-								Exigen una nueva inspección atento a la gravedad que registra la
-								unidad. Repetirá el pago original. Esta calificación no permite
-								la circulación del vehículo. Una vez reparada la unidad se
-								someterá a la segunda inspección.
-							</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr></tr>
-					</tfoot>
-				</table>
+				{/* Referencias: qué significa cada severidad (ver Referencias.jsx) */}
+				<Referencias />
 			</section>
 			{/* Marca de agua "Transporte de pasajeros" sobre todo el informe */}
 			{rtoType.value === 'traPas' ? (
