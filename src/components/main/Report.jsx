@@ -101,7 +101,7 @@ function Report(props) {
 		txtRender,
 		rtoType,
 		inicioVigencia,
-		segundaRevision,
+		primeraRevision,
 	} = props;
 
 	// -------------------------------------------------------------------------
@@ -117,9 +117,16 @@ function Report(props) {
 	const startDate = fechaDeInicio(txtRender);
 
 	/**
-	 * Las dos fechas del informe: el inicio de la vigencia y el vencimiento.
-	 * El inicio es el día de la revisión, salvo en una segunda revisión Apto,
-	 * que se cuenta desde la primera (lo decide Main.jsx: inicioVigencia).
+	 * Las fechas de la franja de arriba: INICIO y FIN.
+	 *
+	 * En una revisión normal, INICIO es el día de la revisión. En una segunda
+	 * revisión, en el lugar de INICIO van las dos fechas, una debajo de la
+	 * otra: arriba, más chica, la de la primera ("1ª 6/11/2026") y abajo la de
+	 * la segunda ("2ª 16/11/2026"). Entran justo en el hueco del dibujo: si se
+	 * agrandan, se pisan con el título o con la "/" de FIN.
+	 *
+	 * El vencimiento (FIN) se cuenta desde inicioVigencia (lo decide Main.jsx:
+	 * en una segunda revisión Apto, desde la primera).
 	 * @returns {JSX.Element}
 	 */
 	function dateStamper() {
@@ -133,7 +140,14 @@ function Report(props) {
 			: calcularVencimiento(inicioVigencia, rtoType.value, dateCalcBtn.value, selectValidity?.value);
 		return (
 			<div className="date">
-				<p className="start-date">{formatearFecha(inicioVigencia)}</p>
+				{primeraRevision ? (
+					<>
+						<p className="start-date primera">1ª {formatearFecha(primeraRevision)}</p>
+						<p className="start-date segunda">2ª {formatearFecha(startDate)}</p>
+					</>
+				) : (
+					<p className="start-date">{formatearFecha(inicioVigencia)}</p>
+				)}
 				<p className="end-date">{dueDate ? formatearFecha(dueDate) : ''}</p>
 			</div>
 		);
@@ -165,7 +179,7 @@ function Report(props) {
 		}
 		const { patente, patenteDelArchivo } = txtRender.header;
 		const nombreDelPdf =
-			patenteDelArchivo !== patente || !segundaRevision ? patenteDelArchivo : `${patente}_2`;
+			patenteDelArchivo !== patente || !primeraRevision ? patenteDelArchivo : `${patente}_2`;
 		navigator.clipboard
 			.writeText(nombreDelPdf)
 			.catch((error) => {

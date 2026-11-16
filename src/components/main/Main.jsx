@@ -93,12 +93,6 @@ const ESTADO_INICIAL = {
 	 * Pasa a false al elegir una vigencia a mano.
 	 */
 	vigenciaAutomatica: true,
-	/**
-	 * Segunda revisión (ver fechaDePrimeraRevision en evaluaciones.js): si está
-	 * en true y el resultado es Apto, la vigencia se cuenta desde la fecha de
-	 * la primera revisión. Se puede destildar si la detección se equivocó.
-	 */
-	contarDesdePrimera: true,
 
 	// --- Defecto que se está cargando ----------------------------------------
 	//  (se arma eligiendo severidad → grupo → sección → descripción, y se suma
@@ -169,7 +163,6 @@ function Main() {
 		resultadoAutomatico,
 		selectValidity,
 		vigenciaAutomatica,
-		contarDesdePrimera,
 		severidad,
 		grupo,
 		seccion,
@@ -201,12 +194,13 @@ function Main() {
 	const primeraRevision = fechaDePrimeraRevision(txtRender);
 
 	/**
-	 * Desde cuándo se cuenta la vigencia: en una segunda revisión con
-	 * resultado Apto, desde la primera revisión; si no, desde el día de la
-	 * revisión. Es la fecha de "INICIO" del informe.
+	 * Desde cuándo se cuenta la vigencia (y el vencimiento): en una segunda
+	 * revisión con resultado Apto, desde la primera revisión; si no, desde el
+	 * día de la revisión. Se decide solo, sin casillas: la segunda revisión se
+	 * detecta con las fechas del .txt.
 	 */
 	const inicioVigencia =
-		primeraRevision && contarDesdePrimera && resultado.value === 'Apto'
+		primeraRevision && resultado.value === 'Apto'
 			? primeraRevision
 			: fechaDeInicio(txtRender);
 
@@ -378,7 +372,6 @@ function Main() {
 
 		actualizar({
 			lista: automaticasDe(datos),
-			contarDesdePrimera: true,
 			txtRender: datos,
 			reportArray:
 				tipo === 'Moto' ? motoReportArrayFiller(datos) : autoReportArrayFiller(datos),
@@ -621,22 +614,13 @@ function Main() {
 				{/* Segunda revisión: desde cuándo se cuenta la vigencia */}
 				{primeraRevision && (
 					<div id="aviso-segunda" className="aviso-vigencia segunda">
-						<label htmlFor="contar-desde-primera">
-							<input
-								type="checkbox"
-								id="contar-desde-primera"
-								checked={contarDesdePrimera}
-								onChange={(e) => actualizar({ contarDesdePrimera: e.target.checked })}
-							/>{' '}
-							<b>Segunda revisión</b>: la primera fue el {formatearFecha(primeraRevision)}. Contar
-							la vigencia desde esa fecha.
-						</label>
-						{resultado.value !== 'Apto' && (
-							<div className="aviso-nota">
-								Solo se aplica si el resultado es Apto. Ahora el vencimiento se cuenta desde la
-								revisión de hoy.
-							</div>
-						)}
+						<b>Segunda revisión</b>: la primera fue el {formatearFecha(primeraRevision)}. En el
+						informe salen las dos fechas.
+						<div className="aviso-nota">
+							{resultado.value === 'Apto'
+								? 'Como es Apto, la vigencia se cuenta desde la primera revisión.'
+								: 'Como no es Apto, el vencimiento se cuenta desde la revisión de hoy.'}
+						</div>
 					</div>
 				)}
 				{/* Por qué la vigencia tiene el valor que tiene (solo si hay que elegirla) */}
@@ -700,7 +684,7 @@ function Main() {
 					selectValidity={vigencia}
 					rtoType={rtoType}
 					inicioVigencia={inicioVigencia}
-					segundaRevision={primeraRevision !== null}
+					primeraRevision={primeraRevision}
 				/>
 			</section>
 		</main>

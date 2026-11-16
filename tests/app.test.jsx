@@ -340,7 +340,8 @@ describe('resultado de la RTO automático', () => {
 });
 
 describe('segunda revisión', () => {
-	const inicio = (app) => app.querySelector('.start-date').textContent;
+	/** Lo que dice el hueco de INICIO (una fecha, o las dos apiladas). */
+	const inicio = (app) => [...app.querySelectorAll('.start-date')].map((p) => p.textContent);
 	const fin = (app) => app.querySelector('.end-date').textContent;
 
 	test('primera revisión: no hay aviso y la vigencia se cuenta desde hoy', async () => {
@@ -348,26 +349,25 @@ describe('segunda revisión', () => {
 		await cargarTxt(app, 'OMC542.txt', 'OMC542');
 		expect(app.querySelector('#aviso-segunda')).toBeNull();
 		elegir(app, 'Apto');
-		expect(inicio(app)).toBe('6/11/2026');
+		expect(inicio(app)).toEqual(['6/11/2026']);
 		expect(fin(app)).toBe('6/11/2027'); // patentada en 2014 → 1 año
 	});
 
-	test('Apto: la vigencia se cuenta desde la primera revisión', async () => {
+	test('Apto: salen las dos fechas y la vigencia se cuenta desde la primera', async () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'OMC542_2.txt', 'OMC542');
 		// En el informe sale la patente sin el "_2".
 		expect(app.querySelector('.plate').textContent).toBe('OMC542');
 		expect(app.querySelector('#aviso-segunda').textContent).toContain('la primera fue el 6/11/2026');
-		expect(app.querySelector('#contar-desde-primera').checked).toBe(true);
+		// Se detecta solo: no hay casillas.
+		expect(app.querySelector('#aviso-segunda input')).toBeNull();
 
 		elegir(app, 'Apto');
-		expect(inicio(app)).toBe('6/11/2026');
+		expect(inicio(app)).toEqual(['1ª 6/11/2026', '2ª 16/11/2026']);
+		expect(app.querySelector('.start-date.primera').textContent).toBe('1ª 6/11/2026');
+		expect(app.querySelector('.start-date.segunda').textContent).toBe('2ª 16/11/2026');
 		expect(fin(app)).toBe('6/11/2027');
-
-		// Destildado, se cuenta desde la revisión de hoy.
-		fireEvent.click(app.querySelector('#contar-desde-primera'));
-		expect(inicio(app)).toBe('16/11/2026');
-		expect(fin(app)).toBe('16/11/2027');
+		expect(app.querySelector('#aviso-segunda').textContent).toContain('desde la primera revisión');
 	});
 
 	test('un .txt sin las fechas de los puestos no rompe el informe', async () => {
@@ -380,7 +380,7 @@ describe('segunda revisión', () => {
 			target: { files: [new File([sinFechas], 'sin-fechas.txt', { type: 'text/plain' })] },
 		});
 		await waitFor(() => expect(app.textContent).toContain('OMC542'));
-		expect(inicio(app)).toBe('');
+		expect(inicio(app)).toEqual(['']);
 		expect(fin(app)).toBe('');
 		expect(app.querySelector('#aviso-segunda')).toBeNull();
 	});
@@ -389,8 +389,9 @@ describe('segunda revisión', () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'OMC542_2.txt', 'OMC542');
 		elegir(app, 'Condicional');
-		expect(app.querySelector('#aviso-segunda').textContent).toContain('Solo se aplica si el resultado es Apto');
-		expect(inicio(app)).toBe('16/11/2026');
+		expect(app.querySelector('#aviso-segunda').textContent).toContain('desde la revisión de hoy');
+		// Las dos fechas salen igual: es una segunda revisión.
+		expect(inicio(app)).toEqual(['1ª 6/11/2026', '2ª 16/11/2026']);
 		expect(fin(app)).toBe('15/1/2027'); // 60 días
 	});
 });

@@ -71,6 +71,18 @@
 			left: 235px;
 			font-family: 'RobotoBold';
 			font-size: 0.75rem;
+			// Segunda revisión: las dos fechas apiladas en el hueco de INICIO.
+			// Arriba la primera, más chica; abajo la segunda, sobre la línea.
+			// Están al límite del espacio: más grandes se pisan con el título
+			// "VIGENCIA DE LA RTO" o con la "/" de FIN.
+			&.primera {
+				top: 54px;
+				font-size: 0.5rem;
+			}
+			&.segunda {
+				top: 63px;
+				font-size: 0.6rem;
+			}
 		}
 		.end-date {
 			top: 61px;
