@@ -21,6 +21,8 @@ import Report from './Report';
 import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
 import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
 import { resultadoSegunDefectos } from './observaciones';
+import { calcularVigenciaParticular } from './vigencia';
+import { fechaDeInicio } from './evaluaciones';
 
 /** Aviso que se muestra antes de regenerar las observaciones automáticas. */
 const AVISO_REGENERAR =
@@ -85,6 +87,12 @@ const ESTADO_INICIAL = {
 	dateCalcBtn: { value: 'Apto', label: 'Apto' },
 	/** Vigencia elegida (solo se puede cambiar cuando el resultado es Apto). */
 	selectValidity: { value: '1a', label: '1 año' },
+	/**
+	 * RTO particular: si está en true, la vigencia se calcula sola según la
+	 * antigüedad del vehículo, que sale de la patente (ver vigencia.js).
+	 * Pasa a false al elegir una vigencia a mano.
+	 */
+	vigenciaAutomatica: true,
 
 	// --- Defecto que se está cargando ----------------------------------------
 	//  (se arma eligiendo severidad → grupo → sección → descripción, y se suma
@@ -154,6 +162,7 @@ function Main() {
 		dateCalcBtn,
 		resultadoAutomatico,
 		selectValidity,
+		vigenciaAutomatica,
 		severidad,
 		grupo,
 		seccion,
@@ -177,6 +186,28 @@ function Main() {
 	const resultado = resultadoAutomatico
 		? radioGeneratorArray.dateCalc.find((o) => o.value === resultadoSegunDefectos(listaDelInforme))
 		: dateCalcBtn;
+
+	/**
+	 * Vigencia automática (solo RTO particular con un .txt cargado): qué
+	 * corresponde según la patente, o por qué no se puede calcular.
+	 */
+	const infoVigencia =
+		rtoType.value === 'particular' && txtRender
+			? calcularVigenciaParticular(txtRender.header.patente, fechaDeInicio(txtRender))
+			: null;
+
+	/**
+	 * La vigencia que vale: la calculada (en automático) o la elegida a mano.
+	 * Es null cuando está en automático pero no se pudo calcular: no queda
+	 * ninguna marcada y el vencimiento sale en blanco hasta que se elija una.
+	 */
+	const vigencia =
+		infoVigencia && vigenciaAutomatica
+			? radioGeneratorArray.selectValidity.find((o) => o.value === infoVigencia.vigencia) ?? null
+			: selectValidity;
+
+	/** Falta elegir la vigencia a mano (en automático no se pudo calcular). */
+	const faltaVigencia = resultado.value === 'Apto' && vigencia === null;
 
 	/**
 	 * Referencias a los dos `<input type="file">` (el del .txt y el de la
@@ -518,8 +549,10 @@ function Main() {
 							className={
 								resultado.value !== 'Apto'
 									? 'btn-inside tooltip'
-									: selectValidity.value === item.value
+									: vigencia?.value === item.value
 									? 'radio-checked btn-inside tooltip'
+									: faltaVigencia
+									? 'focus btn-inside tooltip falta-elegir'
 									: 'focus btn-inside tooltip'
 							}
 							htmlFor={item.value}
@@ -533,13 +566,52 @@ function Main() {
 								name="dueDateSelector"
 								id={item.value}
 								value={item.value}
-								checked={selectValidity.value === item.value} // marca visualmente la opción elegida
-								onChange={() => actualizar({ selectValidity: item })}
+								checked={vigencia?.value === item.value} // marca visualmente la opción elegida
+								// Elegir una vigencia a mano pasa a modo manual.
+								onChange={() => actualizar({ selectValidity: item, vigenciaAutomatica: false })}
 							/>
 							{item.label}
 						</label>
 					))}
+					{/* Automática (solo RTO particular): la vigencia sigue a la patente */}
+					{rtoType.value === 'particular' && (
+						<label className="btn-inside resultado-auto" htmlFor="vigencia-automatica">
+							<input
+								type="checkbox"
+								id="vigencia-automatica"
+								checked={vigenciaAutomatica}
+								onChange={(e) =>
+									actualizar(
+										e.target.checked
+											? { vigenciaAutomatica: true }
+											: { vigenciaAutomatica: false, selectValidity: vigencia ?? selectValidity }
+									)
+								}
+							/>
+							Automática
+						</label>
+					)}
 				</div>
+
+				{/* Por qué la vigencia tiene el valor que tiene (solo si hay que elegirla) */}
+				{infoVigencia && resultado.value === 'Apto' && (
+					<p
+						id="aviso-vigencia"
+						className={
+							!vigenciaAutomatica
+								? 'aviso-vigencia manual'
+								: infoVigencia.estado === 'automatica'
+								? 'aviso-vigencia info'
+								: 'aviso-vigencia alerta'
+						}>
+						{!vigenciaAutomatica
+							? 'Vigencia elegida a mano.' +
+							  (infoVigencia.vigencia
+									? ` La automática daba ${infoVigencia.vigencia === '2a' ? '2 años' : '1 año'}.`
+									: '')
+							: infoVigencia.explicacion}
+					</p>
+				)}
 				<h3>Carga de archivos e impresión</h3>
 			</form>
 
@@ -579,7 +651,7 @@ function Main() {
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
 					dateCalcBtn={resultado}
-					selectValidity={selectValidity}
+					selectValidity={vigencia}
 					rtoType={rtoType}
 				/>
 			</section>

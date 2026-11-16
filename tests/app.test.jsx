@@ -331,6 +331,67 @@ describe('resultado de la RTO automático', () => {
 	});
 });
 
+describe('vigencia automática (RTO particular)', () => {
+	const vigenciaMarcada = (app) => app.querySelector('input[name="dueDateSelector"]:checked')?.id ?? null;
+	const aviso = (app) => app.querySelector('#aviso-vigencia');
+	const vence = (app) => app.querySelector('.end-date').textContent;
+
+	test('se calcula por la patente: KMX-653 (2011) tiene más de 7 años → 1 año', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		elegir(app, 'Apto'); // KMX-653 sale Condicional por sus defectos; lo pasamos a Apto
+		expect(vigenciaMarcada(app)).toBe('1a');
+		expect(app.querySelector('#vigencia-automatica').checked).toBe(true);
+		expect(aviso(app).className).toContain('info');
+		expect(aviso(app).textContent).toContain('más de 7 años');
+		expect(vence(app)).toBe('8/7/2023');
+	});
+
+	test('patente que no está en la tabla: aviso, ninguna marcada y sin vencimiento', async () => {
+		const app = abrirApp();
+		elegir(app, 'Moto');
+		await cargarTxt(app, 'VCW-112.txt', 'VCW-112'); // sale Apto; "VC" no está en la tabla
+		expect(vigenciaMarcada(app)).toBeNull();
+		expect(aviso(app).className).toContain('alerta');
+		expect(aviso(app).textContent).toContain('no está en la tabla de patentes');
+		expect(app.querySelectorAll('.falta-elegir')).toHaveLength(3);
+		expect(vence(app)).toBe('');
+
+		// Al elegirla a mano, pasa a manual y aparece el vencimiento.
+		elegir(app, '2a');
+		expect(vigenciaMarcada(app)).toBe('2a');
+		expect(app.querySelector('#vigencia-automatica').checked).toBe(false);
+		expect(aviso(app).textContent).toBe('Vigencia elegida a mano.');
+		expect(vence(app)).toBe('13/9/2024');
+	});
+
+	test('destildar "Automática" la deja fija y avisa qué daba la automática', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		elegir(app, 'Apto');
+		fireEvent.click(app.querySelector('#vigencia-automatica'));
+		expect(vigenciaMarcada(app)).toBe('1a');
+		expect(aviso(app).className).toContain('manual');
+		expect(aviso(app).textContent).toBe('Vigencia elegida a mano. La automática daba 1 año.');
+	});
+
+	test('en transporte de pasajeros no hay vigencia automática', async () => {
+		const app = abrirApp();
+		elegir(app, 'traPas');
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		elegir(app, 'Apto');
+		expect(app.querySelector('#vigencia-automatica')).toBeNull();
+		expect(aviso(app)).toBeNull();
+		expect(vigenciaMarcada(app)).toBe('3m');
+	});
+
+	test('sin resultado Apto, no hay aviso de vigencia', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653'); // Condicional
+		expect(aviso(app)).toBeNull();
+	});
+});
+
 describe('observaciones automáticas', () => {
 	const AUTO = '.lista-final tr[data-automatica="si"]';
 	const MANUAL = '.lista-final tr[data-automatica="no"]';

@@ -287,6 +287,30 @@ td {
 	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
 }
+// Aviso debajo de la vigencia (RTO particular): por qué tiene ese valor.
+.aviso-vigencia {
+	margin: 0 0.5rem 0.5rem;
+	padding: 4px 8px;
+	width: max-content;
+	max-width: 700px;
+	border-radius: 3px;
+	font-size: 0.85rem;
+	&.info {
+		background-color: rgb(204, 240, 245);
+	}
+	&.alerta {
+		background-color: rgb(255, 225, 150);
+		font-weight: 500;
+	}
+	&.manual {
+		background-color: lightgray;
+	}
+}
+// Vigencia sin elegir cuando no se pudo calcular sola: borde naranja.
+.falta-elegir {
+	outline: 2px solid rgb(230, 140, 0);
+}
+
 // Casilla "Automático" del resultado.
 .resultado-auto {
 	background-color: rgb(204, 240, 245);

@@ -117,16 +117,16 @@ function Report(props) {
 	 * @returns {JSX.Element}
 	 */
 	function dateStamper() {
-		const dueDate = calcularVencimiento(
-			startDate,
-			rtoType.value,
-			dateCalcBtn.value,
-			selectValidity.value
-		);
+		// Sin vigencia elegida (no se pudo calcular sola), un Apto no tiene
+		// vencimiento todavía: queda en blanco hasta que se elija.
+		const sinVigencia = dateCalcBtn.value === 'Apto' && !selectValidity;
+		const dueDate = sinVigencia
+			? null
+			: calcularVencimiento(startDate, rtoType.value, dateCalcBtn.value, selectValidity?.value);
 		return (
 			<div className="date">
 				<p className="start-date">{formatearFecha(startDate)}</p>
-				<p className="end-date">{formatearFecha(dueDate)}</p>
+				<p className="end-date">{dueDate ? formatearFecha(dueDate) : ''}</p>
 			</div>
 		);
 	}
