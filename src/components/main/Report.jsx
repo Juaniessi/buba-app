@@ -256,6 +256,10 @@ function Report(props) {
 						alt="Report background mold"
 					/>
 					<img className="car-photo" src={imgUpload} alt="Foto del vehiculo" />
+					{/* Mail de la franja de arriba. En el dibujo decía "info@bubatec.com"
+					    (estaba mal); se borró del dibujo y se escribe acá, con la misma
+					    letra (Roboto) y tamaño. */}
+					<p className="mail-turnos">turnos@bubatec.com</p>
 
 					{/* Mediciones: sin .txt no se muestra nada. Cada casillero tiene
 					    el valor medido (item.ruta) y, al lado, su calificación

@@ -75,6 +75,10 @@
 			// Arriba la primera, más chica; abajo la segunda, sobre la línea.
 			// Están al límite del espacio: más grandes se pisan con el título
 			// "VIGENCIA DE LA RTO" o con la "/" de FIN.
+			&.primera,
+			&.segunda {
+				white-space: nowrap; // "1ª 6/11/2026" nunca en dos renglones
+			}
 			&.primera {
 				top: 54px;
 				font-size: 0.5rem;
@@ -90,6 +94,18 @@
 			font-family: 'RobotoBlack';
 			font-size: 0.75rem;
 		}
+	}
+	// Mail de la franja azul ("Tel: ... - Mail: turnos@bubatec.com"). El
+	// dibujo tenía "info@bubatec.com" en curvas; se borró y va como texto,
+	// en Roboto de 10,4 px como el resto de esa línea. En los SVG, "Tel: ...
+	// Mail:" se corrió 5,9 px a la izquierda para que la línea siga centrada.
+	.mail-turnos {
+		top: 95.6px;
+		left: 325.1px;
+		font-family: 'Roboto';
+		font-size: 10.4px;
+		color: white;
+		white-space: nowrap;
 	}
 	// Patente, marca, modelo y kilómetros.
 	.header-info {
