@@ -45,6 +45,14 @@
 	.print {
 		visibility: visible;
 	}
+	// Que se impriman los colores de fondo (calificaciones G/M/L, cartel de
+	// resultado, filas de la tabla de defectos) aunque en el diálogo de
+	// impresión no esté tildado "Gráficos de fondo" (Chrome) o "Imprimir
+	// fondos" (Firefox). La versión con -webkit- es para Chrome.
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
 }
 
 // --- Base ---------------------------------------------------------------------
