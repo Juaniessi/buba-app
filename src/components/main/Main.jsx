@@ -55,8 +55,8 @@ const ESTADO_INICIAL = {
 	// --- Vehículo -------------------------------------------------------------
 	/** Tipo de vehículo: 'Auto', 'Camioneta', 'Camion', 'Minibus' o 'Moto'. */
 	tipo: 'Auto',
-	/** RTO normal o de transporte de pasajeros (cambia las vigencias posibles). */
-	rtoType: { value: 'normal', label: 'Normal' },
+	/** RTO particular o de transporte de pasajeros (cambia las vigencias posibles). */
+	rtoType: { value: 'particular', label: 'Particular' },
 	/** Solo motos: motor de 4 o 2 tiempos (cambia el límite de HC). */
 	engineType: { value: '4T', label: '4 Tiempos' },
 	/**
@@ -225,14 +225,14 @@ function Main() {
 	};
 
 	/**
-	 * Cambio entre RTO normal y transporte de pasajeros. Además pone la
+	 * Cambio entre RTO particular y transporte de pasajeros. Además pone la
 	 * vigencia más usada en cada caso: 3 meses para transporte de pasajeros y
-	 * 1 año para la normal.
+	 * 1 año para la particular.
 	 *
 	 * @param {{value: string, label: string}} item La opción elegida.
 	 */
 	const handleSetRtoType = (item) => {
-		if (rtoType.value === 'normal') {
+		if (rtoType.value === 'particular') {
 			actualizar({ rtoType: item, selectValidity: { value: '3m', label: '3 Meses' } });
 		}
 		if (rtoType.value === 'traPas') {
@@ -381,7 +381,7 @@ function Main() {
 						</label>
 					))}
 
-					{/* RTO normal / transporte de pasajeros (todos los tipos) */}
+					{/* RTO particular / transporte de pasajeros (todos los tipos) */}
 					<div className="engine-and-size-ctn">
 						{tipo === 'Moto' ||
 						tipo === 'Auto' ||
@@ -510,7 +510,7 @@ function Main() {
 					<span>Vigencia:</span>
 					{/* Las vigencias posibles cambian según el tipo de RTO.
 					    Solo se pueden elegir si el resultado es Apto. */}
-					{(rtoType.value === 'normal'
+					{(rtoType.value === 'particular'
 						? radioGeneratorArray.selectValidity
 						: radioGeneratorArray.selectValidityTra
 					).map((item) => (

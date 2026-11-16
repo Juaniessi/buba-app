@@ -15,9 +15,9 @@
  *    engineType         motor de moto (4 o 2 tiempos)
  *    truckSize          tamaño de camión / colectivo
  *    transmisionType    tracción de auto / camioneta (4x2 o 4x4)
- *    rtoType            RTO normal o transporte de pasajeros
+ *    rtoType            RTO particular o transporte de pasajeros
  *    dateCalc           resultado (Apto, Condicional, Rechazado, Solo informe)
- *    selectValidity     vigencias posibles en RTO normal
+ *    selectValidity     vigencias posibles en RTO particular
  *    selectValidityTra  vigencias posibles en transporte de pasajeros
  *
  *  Ojo: los value se usan también como id de los botones en la página, así que
@@ -100,8 +100,8 @@ const radioGeneratorArray = {
 	],
 	rtoType: [
 		{
-			value: 'normal',
-			label: 'Normal',
+			value: 'particular',
+			label: 'Particular',
 		},
 		{
 			value: 'traPas',

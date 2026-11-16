@@ -149,7 +149,7 @@ describe('informe con .txt cargado', () => {
 });
 
 describe('opciones del formulario', () => {
-	test('transporte de pasajeros propone 3 meses de vigencia, y la normal 1 año', () => {
+	test('transporte de pasajeros propone 3 meses de vigencia, y la particular 1 año', () => {
 		const app = abrirApp();
 		const vigenciaElegida = () =>
 			app.querySelector('input[name="dueDateSelector"]:checked')?.id;
@@ -157,7 +157,7 @@ describe('opciones del formulario', () => {
 		expect(vigenciaElegida()).toBe('1a');
 		elegir(app, 'traPas');
 		expect(vigenciaElegida()).toBe('3m');
-		elegir(app, 'normal');
+		elegir(app, 'particular');
 		expect(vigenciaElegida()).toBe('1a');
 	});
 

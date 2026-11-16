@@ -316,7 +316,7 @@ export function fechaDeInicio(datos) {
 /**
  * Calcula la fecha de vencimiento de la revisión.
  *
- * RTO normal:
+ * RTO particular:
  *   - Rechazado o Solo informe: vence el mismo día.
  *   - Condicional: 60 días.
  *   - Apto: según la vigencia elegida: 2 años, 1 año o 6 meses.
@@ -332,7 +332,7 @@ export function fechaDeInicio(datos) {
  * funcionaba desde siempre.
  *
  * @param {Date} inicio Fecha de la revisión (ver fechaDeInicio).
- * @param {string} rtoType 'normal' o 'traPas'.
+ * @param {string} rtoType 'particular' o 'traPas'.
  * @param {string} resultado 'Apto', 'Condicional', 'Rechazado' o 'SoloInforme'.
  * @param {string} vigencia '2a', '1a', '6m', '3m' o '2m'.
  * @returns {Date} El vencimiento (si la combinación no está prevista, el
@@ -345,7 +345,7 @@ export function calcularVencimiento(inicio, rtoType, resultado, vigencia) {
 	const sumarMeses = (meses) => vence.setMonth(inicio.getMonth() + meses);
 	const sumarAños = (años) => vence.setFullYear(inicio.getFullYear() + años);
 
-	if (rtoType === 'normal') {
+	if (rtoType === 'particular') {
 		if (resultado === 'Condicional') sumarDias(60);
 		if (resultado === 'Apto' && vigencia === '2a') sumarAños(2);
 		if (resultado === 'Apto' && vigencia === '1a') sumarAños(1);
