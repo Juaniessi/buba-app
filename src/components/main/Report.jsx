@@ -40,6 +40,7 @@ import {
 	fechaDeInicio,
 	calcularVencimiento,
 	formatearFecha,
+	esFechaValida,
 } from './evaluaciones';
 
 /** Imagen de fondo del informe según el tipo de vehículo. */
@@ -99,6 +100,8 @@ function Report(props) {
 		selectValidity,
 		txtRender,
 		rtoType,
+		inicioVigencia,
+		segundaRevision,
 	} = props;
 
 	// -------------------------------------------------------------------------
@@ -114,19 +117,23 @@ function Report(props) {
 	const startDate = fechaDeInicio(txtRender);
 
 	/**
-	 * Las dos fechas del informe: la de la revisión y la de vencimiento.
+	 * Las dos fechas del informe: el inicio de la vigencia y el vencimiento.
+	 * El inicio es el día de la revisión, salvo en una segunda revisión Apto,
+	 * que se cuenta desde la primera (lo decide Main.jsx: inicioVigencia).
 	 * @returns {JSX.Element}
 	 */
 	function dateStamper() {
 		// Sin vigencia elegida (no se pudo calcular sola), un Apto no tiene
 		// vencimiento todavía: queda en blanco hasta que se elija.
-		const sinVigencia = dateCalcBtn.value === 'Apto' && !selectValidity;
+		// Sin fecha de revisión en el .txt, tampoco hay vencimiento.
+		const sinVigencia =
+			(dateCalcBtn.value === 'Apto' && !selectValidity) || !esFechaValida(inicioVigencia);
 		const dueDate = sinVigencia
 			? null
-			: calcularVencimiento(startDate, rtoType.value, dateCalcBtn.value, selectValidity?.value);
+			: calcularVencimiento(inicioVigencia, rtoType.value, dateCalcBtn.value, selectValidity?.value);
 		return (
 			<div className="date">
-				<p className="start-date">{formatearFecha(startDate)}</p>
+				<p className="start-date">{formatearFecha(inicioVigencia)}</p>
 				<p className="end-date">{dueDate ? formatearFecha(dueDate) : ''}</p>
 			</div>
 		);
@@ -143,6 +150,10 @@ function Report(props) {
 	 * guardar el PDF, alcanza con Ctrl+V para ponerle la patente como nombre
 	 * de archivo. Después abre el diálogo de impresión del navegador.
 	 *
+	 * Se copia la patente con el "_2" si el .txt lo traía ("OMC542_2"), o
+	 * agregándoselo si la app detectó una segunda revisión: así el PDF de la
+	 * segunda revisión no pisa al de la primera.
+	 *
 	 * Si no se puede copiar (por ejemplo, porque el navegador no dio permiso),
 	 * igual imprime. Antes, en ese caso, no imprimía; y sin .txt cargado el
 	 * botón no hacía nada.
@@ -152,8 +163,11 @@ function Report(props) {
 			window.print();
 			return;
 		}
+		const { patente, patenteDelArchivo } = txtRender.header;
+		const nombreDelPdf =
+			patenteDelArchivo !== patente || !segundaRevision ? patenteDelArchivo : `${patente}_2`;
 		navigator.clipboard
-			.writeText(`${txtRender.header.patente}`)
+			.writeText(nombreDelPdf)
 			.catch((error) => {
 				console.error(`No se pudo copiar la patente: ${error}`);
 			})
@@ -596,7 +610,7 @@ function Report(props) {
 					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
 					// Para el encabezado de la hoja 2 (si las observaciones no entran)
 					patente={txtRender ? txtRender.header.patente : ''}
-					fecha={startDate ? formatearFecha(startDate) : ''}
+					fecha={formatearFecha(startDate)}
 					transportePasajeros={rtoType.value === 'traPas'}
 				/>
 				{/* Referencias: qué significa cada severidad (ver Referencias.jsx) */}

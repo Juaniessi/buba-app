@@ -22,7 +22,7 @@ import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
 import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
 import { resultadoSegunDefectos } from './observaciones';
 import { calcularVigenciaParticular } from './vigencia';
-import { fechaDeInicio } from './evaluaciones';
+import { fechaDeInicio, fechaDePrimeraRevision, formatearFecha } from './evaluaciones';
 
 /** Aviso que se muestra antes de regenerar las observaciones automáticas. */
 const AVISO_REGENERAR =
@@ -93,6 +93,12 @@ const ESTADO_INICIAL = {
 	 * Pasa a false al elegir una vigencia a mano.
 	 */
 	vigenciaAutomatica: true,
+	/**
+	 * Segunda revisión (ver fechaDePrimeraRevision en evaluaciones.js): si está
+	 * en true y el resultado es Apto, la vigencia se cuenta desde la fecha de
+	 * la primera revisión. Se puede destildar si la detección se equivocó.
+	 */
+	contarDesdePrimera: true,
 
 	// --- Defecto que se está cargando ----------------------------------------
 	//  (se arma eligiendo severidad → grupo → sección → descripción, y se suma
@@ -163,6 +169,7 @@ function Main() {
 		resultadoAutomatico,
 		selectValidity,
 		vigenciaAutomatica,
+		contarDesdePrimera,
 		severidad,
 		grupo,
 		seccion,
@@ -188,12 +195,29 @@ function Main() {
 		: dateCalcBtn;
 
 	/**
+	 * Si el .txt es de una segunda revisión, la fecha de la primera (si no,
+	 * null). Ver fechaDePrimeraRevision en evaluaciones.js.
+	 */
+	const primeraRevision = fechaDePrimeraRevision(txtRender);
+
+	/**
+	 * Desde cuándo se cuenta la vigencia: en una segunda revisión con
+	 * resultado Apto, desde la primera revisión; si no, desde el día de la
+	 * revisión. Es la fecha de "INICIO" del informe.
+	 */
+	const inicioVigencia =
+		primeraRevision && contarDesdePrimera && resultado.value === 'Apto'
+			? primeraRevision
+			: fechaDeInicio(txtRender);
+
+	/**
 	 * Vigencia automática (solo RTO particular con un .txt cargado): qué
-	 * corresponde según la patente, o por qué no se puede calcular.
+	 * corresponde según la patente, o por qué no se puede calcular. La
+	 * antigüedad se mide al inicio de la vigencia.
 	 */
 	const infoVigencia =
 		rtoType.value === 'particular' && txtRender
-			? calcularVigenciaParticular(txtRender.header.patente, fechaDeInicio(txtRender))
+			? calcularVigenciaParticular(txtRender.header.patente, inicioVigencia)
 			: null;
 
 	/**
@@ -354,6 +378,7 @@ function Main() {
 
 		actualizar({
 			lista: automaticasDe(datos),
+			contarDesdePrimera: true,
 			txtRender: datos,
 			reportArray:
 				tipo === 'Moto' ? motoReportArrayFiller(datos) : autoReportArrayFiller(datos),
@@ -593,6 +618,27 @@ function Main() {
 					)}
 				</div>
 
+				{/* Segunda revisión: desde cuándo se cuenta la vigencia */}
+				{primeraRevision && (
+					<div id="aviso-segunda" className="aviso-vigencia segunda">
+						<label htmlFor="contar-desde-primera">
+							<input
+								type="checkbox"
+								id="contar-desde-primera"
+								checked={contarDesdePrimera}
+								onChange={(e) => actualizar({ contarDesdePrimera: e.target.checked })}
+							/>{' '}
+							<b>Segunda revisión</b>: la primera fue el {formatearFecha(primeraRevision)}. Contar
+							la vigencia desde esa fecha.
+						</label>
+						{resultado.value !== 'Apto' && (
+							<div className="aviso-nota">
+								Solo se aplica si el resultado es Apto. Ahora el vencimiento se cuenta desde la
+								revisión de hoy.
+							</div>
+						)}
+					</div>
+				)}
 				{/* Por qué la vigencia tiene el valor que tiene (solo si hay que elegirla) */}
 				{infoVigencia && resultado.value === 'Apto' && (
 					<p
@@ -653,6 +699,8 @@ function Main() {
 					dateCalcBtn={resultado}
 					selectValidity={vigencia}
 					rtoType={rtoType}
+					inicioVigencia={inicioVigencia}
+					segundaRevision={primeraRevision !== null}
 				/>
 			</section>
 		</main>
