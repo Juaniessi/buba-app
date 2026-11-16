@@ -5,7 +5,8 @@
  *
  *  Dibuja dos cosas:
  *    1. La tabla de defectos que sale en el informe impreso, ordenada de más
- *       grave a más leve, con un botón para quitar cada uno.
+ *       grave a más leve. Cada fila tiene, solo en pantalla, un selector
+ *       para cambiar la severidad y un botón para quitarla.
  *    2. El formulario (no se imprime) para agregar defectos, en cuatro pasos:
  *         Severidad → Grupo → Sección → Descripción → "Agregar a la lista"
  *       Las opciones de grupo, sección y descripción salen de
@@ -24,6 +25,7 @@ import { motoArray } from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import copyBtn from '../../assets/copy-regular.svg';
+import { SEVERIDADES, cambiarSeveridad, nuevaObservacion } from './observaciones';
 
 /** Opción "nada elegido" para grupo, sección y descripción. */
 const SIN_ELEGIR = { value: '', label: '' };
@@ -102,14 +104,14 @@ function DefectList(props) {
 			return;
 		}
 
-		const esNota = seccion.label === 'Varios';
-		const itemLista = {
+		const itemLista = nuevaObservacion({
 			grupo: grupo.label,
 			seccion: seccion.label,
 			desc: descripcion.value === 'otro' ? unlistedDef : descripcion.label,
-			sev: esNota ? '' : severidad.value,
-			Ord: esNota ? 0 : severidad.order,
-		};
+			severidad: severidad.value,
+			esNota: seccion.label === 'Varios',
+			automatica: false, // la cargó una persona
+		});
 
 		setLista(lista.concat(itemLista));
 		setGrupo(SIN_ELEGIR);
@@ -129,6 +131,17 @@ function DefectList(props) {
 	 */
 	function eraseDefect(defecto) {
 		setLista(lista.filter((item) => item !== defecto));
+	}
+
+	/**
+	 * Selector de severidad de una fila: cambia la severidad de ese defecto.
+	 * La tabla se reordena sola (de más grave a más leve).
+	 *
+	 * @param {object} defecto El defecto a cambiar.
+	 * @param {string} severidad La severidad elegida.
+	 */
+	function cambiarSeveridadDe(defecto, severidad) {
+		setLista(cambiarSeveridad(lista, defecto, severidad));
 	}
 
 	/**
@@ -164,6 +177,21 @@ function DefectList(props) {
 				<td className={`severidad-col ${color}`}>{sev}</td>
 				<td className="phantom-col"></td>
 				<td className="erase-btn-ctn">
+					{/* Cambiar severidad (no se imprime; las notas no tienen) */}
+					{sev !== '' && (
+						<select
+							className="severidad-select"
+							aria-label="Cambiar severidad"
+							title="Cambiar severidad"
+							value={sev}
+							onChange={(e) => cambiarSeveridadDe(defecto, e.target.value)}>
+							{SEVERIDADES.map((s) => (
+								<option key={s.value} value={s.value}>
+									{s.label}
+								</option>
+							))}
+						</select>
+					)}
 					<button className="erase-btn" onClick={() => eraseDefect(defecto)}>
 						<img className="trash-can" src={trashCan} alt="Trash-can" />
 					</button>
@@ -183,7 +211,7 @@ function DefectList(props) {
 						<th className="descripcion-col">Descripción</th>
 						<th className="severidad-col">Severidad</th>
 						<th className="phantom-col"></th>
-						<th className="quitar-col">Quitar</th>
+						<th className="quitar-col">Editar</th>
 					</tr>
 				</thead>
 				{/* Se ordena una copia: `sort` modifica el array, y el estado de

@@ -289,6 +289,35 @@ describe('lista de defectos', () => {
 		expect(severidades()).toEqual(['Leve']);
 	});
 
+	test('el selector cambia la severidad de esa fila y la tabla se reordena', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarDefecto(app, { severidad: 0, grupo: 0, seccion: 0, descripcion: 0 }); // Leve
+		agregarDefecto(app, { severidad: 1, grupo: 1, seccion: 0, descripcion: 0 }); // Moderado
+		const severidades = () =>
+			[...app.querySelectorAll('.lista-final .severidad-col')].slice(1).map((td) => td.textContent);
+		expect(severidades()).toEqual(['Moderado', 'Leve']);
+
+		// La segunda fila (la leve) pasa a grave: tiene que subir al primer lugar.
+		const selectores = app.querySelectorAll('.severidad-select');
+		expect(selectores[1].value).toBe('Leve');
+		fireEvent.change(selectores[1], { target: { value: 'Grave' } });
+
+		expect(severidades()).toEqual(['Grave', 'Moderado']);
+		expect(app.querySelectorAll('.severidad-select')[0].value).toBe('Grave');
+	});
+
+	test('las notas adicionales no tienen selector de severidad', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		fireEvent.click(app.querySelector('#note'));
+		fireEvent.change(app.querySelector('#unlisted-defect'), { target: { value: 'Una nota' } });
+		fireEvent.click(app.querySelector('.send-btn'));
+
+		expect(app.querySelectorAll('.erase-btn')).toHaveLength(1);
+		expect(app.querySelectorAll('.severidad-select')).toHaveLength(0);
+	});
+
 	test('pasar de auto a moto borra el informe y los defectos', async () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
