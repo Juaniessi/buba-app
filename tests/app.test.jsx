@@ -106,7 +106,7 @@ describe('pantalla inicial', () => {
 });
 
 describe('informe con .txt cargado', () => {
-	test('auto con KMX-653, apto (snapshot)', async () => {
+	test('auto con KMX-653, resultado automático (snapshot)', async () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
 		expect(app.innerHTML).toMatchSnapshot();
@@ -245,6 +245,89 @@ describe('botón "Reiniciar todos los campos"', () => {
 		// (Antes de este cambio, "Reiniciar" no lo borraba.)
 		expect(app.querySelector('#unlisted-defect').value).toBe('');
 		expect(app.querySelector('#file-input').value).toBe('');
+	});
+});
+
+describe('resultado de la RTO automático', () => {
+	/** El resultado que está marcado y el que sale impreso. */
+	const marcado = (app) => app.querySelector('input[name="dateCalcBtn"]:checked')?.id;
+	const impreso = (app) => app.querySelector('.result-rto').textContent;
+
+	test('sigue a los defectos: Moderado → Condicional, Grave → Rechazado', async () => {
+		const app = abrirApp();
+		expect(app.querySelector('#resultado-automatico').checked).toBe(true);
+		expect(marcado(app)).toBe('Apto'); // sin defectos
+
+		// VCW-112 como moto: solo una observación Leve → sigue Apto.
+		elegir(app, 'Moto');
+		await cargarTxt(app, 'VCW-112.txt', 'VCW-112');
+		expect(marcado(app)).toBe('Apto');
+
+		agregarDefecto(app, { severidad: 1, grupo: 0, seccion: 0, descripcion: 0 }); // Moderado
+		expect(marcado(app)).toBe('Condicional');
+		expect(impreso(app)).toBe('Resultado RTO: Condicional');
+
+		agregarDefecto(app, { severidad: 2, grupo: 1, seccion: 0, descripcion: 0 }); // Grave
+		expect(marcado(app)).toBe('Rechazado');
+
+		// Al quitar el grave vuelve a Condicional.
+		const filas = [...app.querySelectorAll('.lista-final tr.item-lista')];
+		const grave = filas.find((tr) => tr.querySelector('.severidad-col').textContent === 'Grave');
+		fireEvent.click(grave.querySelector('.erase-btn'));
+		expect(marcado(app)).toBe('Condicional');
+	});
+
+	test('cambiar la severidad de un defecto también cambia el resultado', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653'); // trae dos Moderado automáticos
+		expect(marcado(app)).toBe('Condicional');
+		// La tabla se reordena después de cada cambio: se busca de nuevo cada vez.
+		const moderado = () => [...app.querySelectorAll('.severidad-select')].find((s) => s.value === 'Moderado');
+		while (moderado()) fireEvent.change(moderado(), { target: { value: 'Leve' } });
+		expect(marcado(app)).toBe('Apto');
+	});
+
+	test('elegir un resultado a mano lo pasa a manual, y ahí queda fijo', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		elegir(app, 'SoloInforme');
+		expect(app.querySelector('#resultado-automatico').checked).toBe(false);
+		expect(marcado(app)).toBe('SoloInforme');
+
+		// Agregar un Grave ya no lo mueve.
+		agregarDefecto(app, { severidad: 2, grupo: 0, seccion: 0, descripcion: 0 });
+		expect(marcado(app)).toBe('SoloInforme');
+
+		// Volver a tildar "Automático" recalcula.
+		fireEvent.click(app.querySelector('#resultado-automatico'));
+		expect(marcado(app)).toBe('Rechazado');
+	});
+
+	test('destildar "Automático" deja fijo el resultado que había', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		fireEvent.click(app.querySelector('#resultado-automatico'));
+		expect(marcado(app)).toBe('Condicional');
+		// La tabla se reordena después de cada cambio: se busca de nuevo cada vez.
+		const moderado = () => [...app.querySelectorAll('.severidad-select')].find((s) => s.value === 'Moderado');
+		while (moderado()) fireEvent.change(moderado(), { target: { value: 'Leve' } });
+		expect(marcado(app)).toBe('Condicional'); // no se movió
+	});
+
+	test('las automáticas ocultas con el filtro no cuentan', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		expect(marcado(app)).toBe('Condicional');
+		fireEvent.click(app.querySelector('#mostrar-automaticas'));
+		expect(marcado(app)).toBe('Apto');
+	});
+
+	test('Reiniciar vuelve a automático', async () => {
+		const app = abrirApp();
+		elegir(app, 'Rechazado');
+		fireEvent.click(app.querySelector('#reset-btn'));
+		expect(app.querySelector('#resultado-automatico').checked).toBe(true);
+		expect(marcado(app)).toBe('Apto');
 	});
 });
 

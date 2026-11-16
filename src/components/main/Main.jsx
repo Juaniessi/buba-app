@@ -20,6 +20,7 @@ import React, { useState, useRef } from 'react';
 import Report from './Report';
 import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
 import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
+import { resultadoSegunDefectos } from './observaciones';
 
 /** Aviso que se muestra antes de regenerar las observaciones automáticas. */
 const AVISO_REGENERAR =
@@ -70,7 +71,17 @@ const ESTADO_INICIAL = {
 	transmisionType: { value: '4x2', label: 'Normal' },
 
 	// --- Resultado y vencimiento ---------------------------------------------
-	/** Resultado de la revisión: Apto, Condicional, Rechazado o Solo informe. */
+	/**
+	 * Si está en true, el resultado se calcula solo según los defectos del
+	 * informe: con alguno Grave → Rechazado; con alguno Moderado →
+	 * Condicional; si no → Apto (ver resultadoSegunDefectos en
+	 * observaciones.js). Pasa a false al elegir un resultado a mano.
+	 */
+	resultadoAutomatico: true,
+	/**
+	 * Resultado elegido a mano: Apto, Condicional, Rechazado o Solo informe.
+	 * Solo se usa cuando resultadoAutomatico es false.
+	 */
 	dateCalcBtn: { value: 'Apto', label: 'Apto' },
 	/** Vigencia elegida (solo se puede cambiar cuando el resultado es Apto). */
 	selectValidity: { value: '1a', label: '1 año' },
@@ -141,6 +152,7 @@ function Main() {
 		truckSize,
 		transmisionType,
 		dateCalcBtn,
+		resultadoAutomatico,
 		selectValidity,
 		severidad,
 		grupo,
@@ -154,6 +166,17 @@ function Main() {
 		reportArray,
 		imgUpload,
 	} = estado;
+
+	/** Los defectos que van en el informe (respeta el filtro "Observaciones automáticas"). */
+	const listaDelInforme = mostrarAutomaticas ? lista : lista.filter((item) => !item.automatica);
+
+	/**
+	 * El resultado que vale: el calculado según los defectos (en automático)
+	 * o el elegido a mano. Es el que se muestra marcado y el que sale impreso.
+	 */
+	const resultado = resultadoAutomatico
+		? radioGeneratorArray.dateCalc.find((o) => o.value === resultadoSegunDefectos(listaDelInforme))
+		: dateCalcBtn;
 
 	/**
 	 * Referencias a los dos `<input type="file">` (el del .txt y el de la
@@ -457,12 +480,33 @@ function Main() {
 								name="dateCalcBtn"
 								id={item.value}
 								value={item.value}
-								checked={dateCalcBtn.value === item.value} // marca visualmente la opción elegida
-								onChange={() => actualizar({ dateCalcBtn: item })}
+								checked={resultado.value === item.value} // marca visualmente la opción elegida
+								// Elegir un resultado a mano pasa a modo manual.
+								onChange={() => actualizar({ dateCalcBtn: item, resultadoAutomatico: false })}
 							/>
 							{item.label}
 						</label>
-					))}{' '}
+					))}
+					{/* Automático: el resultado sigue a los defectos. Destildado (o al
+					    elegir un resultado a mano) queda fijo en lo que se elija. */}
+					<label
+						className="btn-inside resultado-auto"
+						htmlFor="resultado-automatico"
+						title="Con algún defecto Grave: Rechazado. Con alguno Moderado: Condicional. Si no: Apto.">
+						<input
+							type="checkbox"
+							id="resultado-automatico"
+							checked={resultadoAutomatico}
+							onChange={(e) =>
+								actualizar(
+									e.target.checked
+										? { resultadoAutomatico: true }
+										: { resultadoAutomatico: false, dateCalcBtn: resultado }
+								)
+							}
+						/>
+						Automático
+					</label>{' '}
 					<span>Vigencia:</span>
 					{/* Las vigencias posibles cambian según el tipo de RTO.
 					    Solo se pueden elegir si el resultado es Apto. */}
@@ -472,7 +516,7 @@ function Main() {
 					).map((item) => (
 						<label
 							className={
-								dateCalcBtn.value !== 'Apto'
+								resultado.value !== 'Apto'
 									? 'btn-inside tooltip'
 									: selectValidity.value === item.value
 									? 'radio-checked btn-inside tooltip'
@@ -485,7 +529,7 @@ function Main() {
 							<input
 								type="radio"
 								className={`rad-c`}
-								disabled={dateCalcBtn.value !== 'Apto'}
+								disabled={resultado.value !== 'Apto'}
 								name="dueDateSelector"
 								id={item.value}
 								value={item.value}
@@ -534,7 +578,7 @@ function Main() {
 					imgUpload={imgUpload}
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
-					dateCalcBtn={dateCalcBtn}
+					dateCalcBtn={resultado}
 					selectValidity={selectValidity}
 					rtoType={rtoType}
 				/>
