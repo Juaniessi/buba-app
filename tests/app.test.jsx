@@ -419,7 +419,7 @@ describe('vigencia automática (RTO particular)', () => {
 		expect(vigenciaMarcada(app)).toBeNull();
 		expect(aviso(app).className).toContain('alerta');
 		expect(aviso(app).textContent).toContain('no está en la tabla de patentes');
-		expect(app.querySelectorAll('.falta-elegir')).toHaveLength(3);
+		expect(app.querySelectorAll('.falta-elegir')).toHaveLength(2); // 2 A y 1 A
 		expect(vence(app)).toBe('');
 
 		// Al elegirla a mano, pasa a manual y aparece el vencimiento.
@@ -440,14 +440,49 @@ describe('vigencia automática (RTO particular)', () => {
 		expect(aviso(app).textContent).toBe('Vigencia elegida a mano. La automática daba 1 año.');
 	});
 
-	test('en transporte de pasajeros no hay vigencia automática', async () => {
+	const opciones = (app) => [...app.querySelectorAll('input[name="dueDateSelector"]')].map((i) => i.id);
+
+	test('particular: solo 2 A y 1 A (6 M es de plataforma)', async () => {
+		const app = abrirApp();
+		expect(opciones(app)).toEqual(['2a', '1a']);
+	});
+
+	test('transporte de pasajeros: solo 3 M y 2 M, y se calcula por antigüedad', async () => {
 		const app = abrirApp();
 		elegir(app, 'traPas');
+		expect(opciones(app)).toEqual(['3m', '2m']);
+		expect(app.querySelector('#plataforma')).toBeNull(); // plataforma es solo de particular
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
 		elegir(app, 'Apto');
+		// KMX-653 (patentada en 2011) tiene más de 10 años → 2 meses.
+		expect(vigenciaMarcada(app)).toBe('2m');
+		expect(app.querySelector('#vigencia-automatica').checked).toBe(true);
+		expect(aviso(app).textContent).toContain('más de 10 años');
+		expect(vence(app)).toBe('8/9/2022');
+	});
+
+	test('plataforma: 1 A (0 km) o 6 M, siempre a mano', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		elegir(app, 'Apto');
+		fireEvent.click(app.querySelector('#plataforma'));
+
+		expect(opciones(app)).toEqual(['1a', '6m']);
+		expect(vigenciaMarcada(app)).toBeNull(); // no se puede saber si es 0 km
 		expect(app.querySelector('#vigencia-automatica')).toBeNull();
-		expect(aviso(app)).toBeNull();
-		expect(vigenciaMarcada(app)).toBe('3m');
+		expect(aviso(app).className).toContain('alerta');
+		expect(aviso(app).textContent).toContain('1 año si el vehículo es 0 km; 6 meses si no es 0 km');
+		expect(app.querySelectorAll('.falta-elegir')).toHaveLength(2);
+		expect(vence(app)).toBe('');
+
+		elegir(app, '6m');
+		expect(vigenciaMarcada(app)).toBe('6m');
+		expect(vence(app)).toBe('8/1/2023');
+
+		// Destildando plataforma vuelve la vigencia automática por antigüedad.
+		fireEvent.click(app.querySelector('#plataforma'));
+		expect(opciones(app)).toEqual(['2a', '1a']);
+		expect(vigenciaMarcada(app)).toBe('1a');
 	});
 
 	test('sin resultado Apto, no hay aviso de vigencia', async () => {
@@ -719,6 +754,22 @@ describe('hoja 2 (observaciones que no entran en la hoja 1)', () => {
 			'Hoja 3 de 3',
 		]);
 		expect(hojasExtra(app).map((h) => h.querySelectorAll('tr.item-lista').length)).toEqual([42, 1]);
+	});
+
+	test('si una fila mide distinto en cada hoja, el reparto no se cuelga', async () => {
+		// En la hoja 1 cada fila mide 19 px y en la hoja 2, 5 px: con 12 filas,
+		// el reparto iría y vendría para siempre (11+1 → 12 → 11+1 …).
+		vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function () {
+			const enHojaExtra = this.closest?.('.hoja-extra');
+			const alto = this.tagName === 'TR' ? (enHojaExtra ? 5 : 19) : this.tagName === 'THEAD' ? 16 : 0;
+			return { x: 0, y: 0, top: 0, left: 0, right: 0, width: 0, bottom: alto, height: alto, toJSON() {} };
+		});
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarLeves(app, 10);
+		// No tira "Maximum update depth exceeded" y todas las filas siguen ahí.
+		expect(app.querySelectorAll('tr.item-lista')).toHaveLength(12);
+		expect(numero(app)).toMatch(/^Hoja 1 de [12]/);
 	});
 
 	test('en transporte de pasajeros, la hoja 2 también lleva la marca de agua', async () => {

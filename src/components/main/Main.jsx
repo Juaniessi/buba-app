@@ -21,7 +21,7 @@ import Report from './Report';
 import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
 import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
 import { resultadoSegunDefectos } from './observaciones';
-import { calcularVigenciaParticular } from './vigencia';
+import { calcularVigenciaParticular, calcularVigenciaTransporte, vigenciaPlataforma } from './vigencia';
 import { fechaDeInicio, fechaDePrimeraRevision, formatearFecha } from './evaluaciones';
 
 /** Aviso que se muestra antes de regenerar las observaciones automáticas. */
@@ -93,6 +93,11 @@ const ESTADO_INICIAL = {
 	 * Pasa a false al elegir una vigencia a mano.
 	 */
 	vigenciaAutomatica: true,
+	/**
+	 * RTO particular de un vehículo de plataforma (Uber, Cabify, Maxim): la
+	 * vigencia es 1 año si es 0 km o 6 meses si no, y se elige a mano.
+	 */
+	plataforma: false,
 
 	// --- Defecto que se está cargando ----------------------------------------
 	//  (se arma eligiendo severidad → grupo → sección → descripción, y se suma
@@ -132,6 +137,15 @@ const ESTADO_INICIAL = {
 	imgUpload: null,
 };
 
+/** Cómo se lee cada vigencia en los avisos. */
+const TEXTO_DE_VIGENCIA = {
+	'2a': '2 años',
+	'1a': '1 año',
+	'6m': '6 meses',
+	'3m': '3 meses',
+	'2m': '2 meses',
+};
+
 function Main() {
 	/** Todo el estado de la app, en un solo objeto (ver ESTADO_INICIAL). */
 	const [estado, setEstado] = useState(ESTADO_INICIAL);
@@ -163,6 +177,7 @@ function Main() {
 		resultadoAutomatico,
 		selectValidity,
 		vigenciaAutomatica,
+		plataforma,
 		severidad,
 		grupo,
 		seccion,
@@ -204,25 +219,45 @@ function Main() {
 			? primeraRevision
 			: fechaDeInicio(txtRender);
 
+	/** Es una RTO particular de plataforma (la casilla solo vale en particular). */
+	const esPlataforma = rtoType.value === 'particular' && plataforma;
+
+	/** Las vigencias que se pueden elegir (ver radioBtnDB.js). */
+	const opcionesDeVigencia =
+		rtoType.value === 'traPas'
+			? radioGeneratorArray.selectValidityTra
+			: esPlataforma
+			? radioGeneratorArray.selectValidityPlataforma
+			: radioGeneratorArray.selectValidity;
+
 	/**
-	 * Vigencia automática (solo RTO particular con un .txt cargado): qué
-	 * corresponde según la patente, o por qué no se puede calcular. La
-	 * antigüedad se mide al inicio de la vigencia.
+	 * Vigencia automática (con un .txt cargado): qué corresponde según la
+	 * patente, o por qué no se puede calcular (ver vigencia.js). La antigüedad
+	 * se mide al inicio de la vigencia.
+	 *   - Particular: 2 años de 3 a 7 años de antigüedad; 1 año, más de 7.
+	 *   - Plataforma: no se calcula; 1 año (0 km) o 6 meses, a mano.
+	 *   - Transporte de pasajeros: 3 meses hasta 10 años; 2 meses, más de 10.
 	 */
-	const infoVigencia =
-		rtoType.value === 'particular' && txtRender
-			? calcularVigenciaParticular(txtRender.header.patente, inicioVigencia)
-			: null;
+	const infoVigencia = !txtRender
+		? null
+		: rtoType.value === 'traPas'
+		? calcularVigenciaTransporte(txtRender.header.patente, inicioVigencia)
+		: esPlataforma
+		? vigenciaPlataforma()
+		: calcularVigenciaParticular(txtRender.header.patente, inicioVigencia);
 
 	/**
 	 * La vigencia que vale: la calculada (en automático) o la elegida a mano.
-	 * Es null cuando está en automático pero no se pudo calcular: no queda
-	 * ninguna marcada y el vencimiento sale en blanco hasta que se elija una.
+	 * Es null cuando está en automático pero no se pudo calcular, o cuando la
+	 * elegida no es una de las opciones de ahora (por ejemplo, después de
+	 * cambiar de particular a transporte de pasajeros): no queda ninguna
+	 * marcada y el vencimiento sale en blanco hasta que se elija una.
 	 */
-	const vigencia =
+	const vigenciaElegida =
 		infoVigencia && vigenciaAutomatica
-			? radioGeneratorArray.selectValidity.find((o) => o.value === infoVigencia.vigencia) ?? null
+			? opcionesDeVigencia.find((o) => o.value === infoVigencia.vigencia) ?? null
 			: selectValidity;
+	const vigencia = opcionesDeVigencia.find((o) => o.value === vigenciaElegida?.value) ?? null;
 
 	/** Falta elegir la vigencia a mano (en automático no se pudo calcular). */
 	const faltaVigencia = resultado.value === 'Apto' && vigencia === null;
@@ -274,19 +309,22 @@ function Main() {
 	};
 
 	/**
-	 * Cambio entre RTO particular y transporte de pasajeros. Además pone la
-	 * vigencia más usada en cada caso: 3 meses para transporte de pasajeros y
-	 * 1 año para la particular.
+	 * Cambio entre RTO particular y transporte de pasajeros. Vuelve la vigencia
+	 * a automática y, para cuando no se puede calcular, deja elegida la más
+	 * usada en cada caso: 3 meses en transporte de pasajeros y 1 año en la
+	 * particular.
 	 *
 	 * @param {{value: string, label: string}} item La opción elegida.
 	 */
 	const handleSetRtoType = (item) => {
-		if (rtoType.value === 'particular') {
-			actualizar({ rtoType: item, selectValidity: { value: '3m', label: '3 Meses' } });
-		}
-		if (rtoType.value === 'traPas') {
-			actualizar({ rtoType: item, selectValidity: { value: '1a', label: '1 Año' } });
-		}
+		actualizar({
+			rtoType: item,
+			vigenciaAutomatica: true,
+			selectValidity:
+				item.value === 'traPas'
+					? radioGeneratorArray.selectValidityTra[0]
+					: radioGeneratorArray.selectValidity[1],
+		});
 	};
 
 	// --- Defecto que se está cargando (los usa DefectList) ----------------------
@@ -454,6 +492,25 @@ function Main() {
 									</div>
 							  ))
 							: ''}
+						{/* Plataforma (solo RTO particular): cambia las vigencias */}
+						{rtoType.value === 'particular' && (
+							<div className="engine-and-size">
+								<label
+									className="btn-inside transp-color"
+									htmlFor="plataforma"
+									title="Uber, Cabify, Maxim: 1 año si es 0 km; 6 meses si no es 0 km.">
+									<input
+										type="checkbox"
+										id="plataforma"
+										checked={plataforma}
+										onChange={(e) =>
+											actualizar({ plataforma: e.target.checked, vigenciaAutomatica: true })
+										}
+									/>
+									Plataforma (Uber, Cabify, Maxim)
+								</label>
+							</div>
+						)}
 					</div>
 
 					{/* Opciones que dependen del tipo de vehículo */}
@@ -559,10 +616,7 @@ function Main() {
 					<span>Vigencia:</span>
 					{/* Las vigencias posibles cambian según el tipo de RTO.
 					    Solo se pueden elegir si el resultado es Apto. */}
-					{(rtoType.value === 'particular'
-						? radioGeneratorArray.selectValidity
-						: radioGeneratorArray.selectValidityTra
-					).map((item) => (
+					{opcionesDeVigencia.map((item) => (
 						<label
 							className={
 								resultado.value !== 'Apto'
@@ -591,8 +645,9 @@ function Main() {
 							{item.label}
 						</label>
 					))}
-					{/* Automática (solo RTO particular): la vigencia sigue a la patente */}
-					{rtoType.value === 'particular' && (
+					{/* Automática: la vigencia sigue a la patente (no en plataforma,
+					    que siempre se elige a mano) */}
+					{!esPlataforma && (
 						<label className="btn-inside resultado-auto" htmlFor="vigencia-automatica">
 							<input
 								type="checkbox"
@@ -637,7 +692,7 @@ function Main() {
 						{!vigenciaAutomatica
 							? 'Vigencia elegida a mano.' +
 							  (infoVigencia.vigencia
-									? ` La automática daba ${infoVigencia.vigencia === '2a' ? '2 años' : '1 año'}.`
+									? ` La automática daba ${TEXTO_DE_VIGENCIA[infoVigencia.vigencia]}.`
 									: '')
 							: infoVigencia.explicacion}
 					</p>
