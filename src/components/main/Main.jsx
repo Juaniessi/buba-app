@@ -492,11 +492,14 @@ function Main() {
 									</div>
 							  ))
 							: ''}
-						{/* Plataforma (solo RTO particular): cambia las vigencias */}
-						{rtoType.value === 'particular' && (
-							<div className="engine-and-size">
+					</div>
+					{/* Plataforma: en su propia fila, debajo de "Particular" y en verde
+					    más claro (solo con RTO particular; cambia las vigencias) */}
+					{rtoType.value === 'particular' && (
+						<div className="engine-and-size-ctn">
+							<div className="engine-and-size plataforma-fila">
 								<label
-									className="btn-inside transp-color"
+									className="btn-inside plataforma-color"
 									htmlFor="plataforma"
 									title="Uber, Cabify, Maxim: 1 año si es 0 km; 6 meses si no es 0 km.">
 									<input
@@ -510,8 +513,8 @@ function Main() {
 									Plataforma (Uber, Cabify, Maxim)
 								</label>
 							</div>
-						)}
-					</div>
+						</div>
+					)}
 
 					{/* Opciones que dependen del tipo de vehículo */}
 					<div className="engine-and-size-ctn">
