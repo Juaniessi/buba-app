@@ -70,10 +70,17 @@ export const LIMITES_MENOR_O_IGUAL = {
  * Ejemplo con opacity [5, 0.25, 0.2]: 6 → G, 0.3 → M, 0.22 → L, 0.1 → A.
  */
 export const LIMITES_MAYOR_O_IGUAL = {
-	/** Diferencia de frenado entre ruedas, eje delantero (%). */
-	brakeDifDel: [90, 15.1, 13],
-	/** Diferencia de frenado entre ruedas, eje trasero (%). */
-	brakeDifTra: [95, 15.1, 14],
+	/**
+	 * Diferencia de frenado entre ruedas, eje delantero (%).
+	 * El leve (10) es también desde dónde se marca con asterisco la rueda que
+	 * frena menos (ver MajorMarker.jsx). Antes era 13.
+	 */
+	brakeDifDel: [90, 15.1, 10],
+	/**
+	 * Diferencia de frenado entre ruedas, eje trasero y freno de mano (%).
+	 * El leve (12) es también desde dónde se marca con asterisco. Antes era 14.
+	 */
+	brakeDifTra: [95, 15.1, 12],
 	/** Resistencia a la rodadura de cada rueda. */
 	brakeResist: [4, 1, 0.85],
 	/** Ovalidad de los discos o tambores. */

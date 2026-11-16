@@ -80,8 +80,8 @@ describe('evaluarMayorOIgual (un valor alto es malo)', () => {
 	});
 
 	test.each([
-		['brakeDifDel', 90, 15.1, 13],
-		['brakeDifTra', 95, 15.1, 14],
+		['brakeDifDel', 90, 15.1, 10], // leve = desde el asterisco
+		['brakeDifTra', 95, 15.1, 12], // leve = desde el asterisco
 		['brakeResist', 4, 1, 0.85],
 		['brakeOval', 90, 50, 35],
 		['luxLow', 200, 60, 40],
