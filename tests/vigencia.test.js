@@ -6,7 +6,11 @@
  */
 import { describe, expect, test } from 'vitest';
 import { fechaDePatentamiento } from '../src/components/dataArrays/patentes.js';
-import { calcularVigenciaParticular } from '../src/components/main/vigencia.js';
+import {
+	calcularVigenciaParticular,
+	calcularVigenciaTransporte,
+	vigenciaPlataforma,
+} from '../src/components/main/vigencia.js';
 
 const fecha = (año, mes, dia = 1) => new Date(año, mes - 1, dia);
 const mesAño = (d) => `${d.getMonth() + 1}/${d.getFullYear()}`;
@@ -78,5 +82,32 @@ describe('calcularVigenciaParticular', () => {
 		const r = calcularVigenciaParticular('AG 450 AA', fecha(2027, 3, 1));
 		expect(r).toMatchObject({ estado: 'sinDatos', vigencia: null });
 		expect(r.explicacion).toContain('más o menos de 3 años');
+	});
+});
+
+describe('calcularVigenciaTransporte', () => {
+	test('hasta 10 años → 3 meses', () => {
+		const r = calcularVigenciaTransporte('AE 300 AA', fecha(2026, 11, 16)); // 2020
+		expect(r).toMatchObject({ estado: 'automatica', vigencia: '3m' });
+		expect(r.explicacion).toContain('hasta 10 años');
+	});
+
+	test('más de 10 años → 2 meses', () => {
+		const r = calcularVigenciaTransporte('OMC542', fecha(2026, 11, 16)); // 2014
+		expect(r).toMatchObject({ estado: 'automatica', vigencia: '2m' });
+	});
+
+	test('si el rango cruza los 10 años o la patente no está, se elige a mano', () => {
+		// KMX: entre ene. 2011 y ene. 2012. A julio de 2021 puede tener 9,5 o 10,5.
+		expect(calcularVigenciaTransporte('KMX-653', fecha(2021, 7, 1))).toMatchObject({ estado: 'sinDatos', vigencia: null });
+		expect(calcularVigenciaTransporte('VCW-112', fecha(2022, 9, 13))).toMatchObject({ estado: 'sinDatos', vigencia: null });
+	});
+});
+
+describe('vigenciaPlataforma', () => {
+	test('siempre a mano, con la regla en el aviso', () => {
+		const r = vigenciaPlataforma();
+		expect(r).toMatchObject({ estado: 'plataforma', vigencia: null });
+		expect(r.explicacion).toContain('0 km');
 	});
 });

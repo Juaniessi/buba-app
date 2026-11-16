@@ -46,6 +46,9 @@ const COLOR_DE_SEVERIDAD = {
 	Grave: 'black',
 };
 
+/** Ver el freno de seguridad del reparto en hojas, más abajo. */
+const MAX_REPARTOS_SEGUIDOS = 5;
+
 /** Para ordenar opciones alfabéticamente por su texto. */
 const porEtiqueta = (a, b) => (a.label > b.label ? 1 : -1);
 
@@ -131,6 +134,8 @@ function DefectList(props) {
 	 *  copia: `sort` modifica el array, y el estado de React no se debe
 	 *  modificar directamente. */
 	const ordenadas = [...visibles].sort(ordenDeLaLista);
+	/** Identifica la lista dibujada (cambia al agregar, borrar o editar una fila). */
+	const ordenadasClave = ordenadas.map((d) => `${d.sev}|${d.grupo}|${d.seccion}|${d.desc}`).join('\n');
 
 	/** Cuántas filas van en cada hoja (ver repartirEnHojas). */
 	const [filasPorHoja, setFilasPorHoja] = useState([0]);
@@ -142,10 +147,21 @@ function DefectList(props) {
 	const tablaRef = useRef(null);
 	const hojasExtraRef = useRef(null);
 
+	/**
+	 * Freno de seguridad: cuántas veces seguidas cambió el reparto sin que
+	 * cambiara la lista. Normalmente cambia una vez y se estabiliza; si una
+	 * fila midiera distinto en cada hoja, podría ir y venir para siempre y
+	 * colgar la página. Pasadas MAX_REPARTOS_SEGUIDOS veces, se deja como está.
+	 */
+	const repartos = useRef({ lista: null, veces: 0 });
+
 	// Mide las filas después de cada dibujo y, si hace falta, reparte de nuevo.
 	useLayoutEffect(() => {
 		const tabla = tablaRef.current;
 		if (!tabla) return;
+		if (repartos.current.lista !== ordenadasClave) {
+			repartos.current = { lista: ordenadasClave, veces: 0 };
+		}
 		const filas = [
 			...tabla.querySelectorAll('tbody tr'),
 			...(hojasExtraRef.current?.querySelectorAll('table.lista-final tbody tr') ?? []),
@@ -153,7 +169,10 @@ function DefectList(props) {
 		const alturas = filas.map((fila) => fila.getBoundingClientRect().height);
 		const encabezado = tabla.tHead ? tabla.tHead.getBoundingClientRect().height : 0;
 		const nuevo = repartirEnHojas(alturas, { encabezado });
-		if (nuevo.join() !== filasPorHoja.join()) setFilasPorHoja(nuevo);
+		if (nuevo.join() !== filasPorHoja.join() && repartos.current.veces < MAX_REPARTOS_SEGUIDOS) {
+			repartos.current.veces++;
+			setFilasPorHoja(nuevo);
+		}
 	});
 
 	// Cuando terminan de cargar las fuentes, las filas pueden cambiar de

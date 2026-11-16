@@ -17,11 +17,14 @@
  *    transmisionType    tracción de auto / camioneta (4x2 o 4x4)
  *    rtoType            RTO particular o transporte de pasajeros
  *    dateCalc           resultado (Apto, Condicional, Rechazado, Solo informe)
- *    selectValidity     vigencias posibles en RTO particular
- *    selectValidityTra  vigencias posibles en transporte de pasajeros
+ *    selectValidity           vigencias de la RTO particular (según antigüedad)
+ *    selectValidityPlataforma vigencias de la RTO particular de un vehículo de
+ *                             plataforma (Uber, Cabify, Maxim)
+ *    selectValidityTra        vigencias de transporte de pasajeros
  *
- *  Ojo: los value se usan también como id de los botones en la página, así que
- *  no conviene repetirlos entre listas distintas.
+ *  Ojo: los value se usan también como id de los botones en la página. Las
+ *  tres listas de vigencias comparten algunos ('1a'), pero nunca se muestran
+ *  dos a la vez.
  *
  * =============================================================================
  */
@@ -126,38 +129,41 @@ const radioGeneratorArray = {
 			label: 'Solo informe',
 		},
 	],
+	// RTO particular: 2 años de 3 a 7 años de antigüedad; 1 año, más de 7
+	// (ver vigencia.js).
 	selectValidity: [
 		{
 			value: '2a',
 			label: '2 A',
-			tooltip: '7 Años o menos',
+			tooltip: '7 años o menos',
 		},
 		{
 			value: '1a',
 			label: '1 A',
-			tooltip: 'APTO',
-		},
-		{
-			value: '6m',
-			label: '6 M',
-			tooltip: 'Plataforma digital',
+			tooltip: 'Más de 7 años',
 		},
 	],
-	selectValidityTra: [
+	// RTO particular de plataforma (Uber, Cabify, Maxim): 1 año si es 0 km;
+	// 6 meses si no es 0 km. Siempre se elige a mano.
+	selectValidityPlataforma: [
 		{
 			value: '1a',
 			label: '1 A',
-			tooltip: '1era revisión y 0km',
+			tooltip: 'Plataforma 0 km',
 		},
 		{
 			value: '6m',
 			label: '6 M',
-			tooltip: 'Col. Urbano',
+			tooltip: 'Plataforma, no 0 km',
 		},
+	],
+	// Transporte de pasajeros: 3 meses hasta 10 años de antigüedad; 2 meses,
+	// más de 10 (ver vigencia.js). Ya no hay 1 año ni 6 meses.
+	selectValidityTra: [
 		{
 			value: '3m',
 			label: '3 M',
-			tooltip: 'APTO o Col. Urbano >10 años',
+			tooltip: '10 años o menos',
 		},
 		{
 			value: '2m',

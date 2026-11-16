@@ -263,6 +263,14 @@ td {
 	.transp-color {
 		background-color: rgb(138, 164, 91);
 	}
+	// Casilla "Plataforma", debajo de "Particular": el mismo verde, más claro.
+	.plataforma-color {
+		background-color: rgb(196, 214, 160);
+	}
+	// Su fila va pegada a la de Particular / Transporte de pasajeros.
+	&.plataforma-fila {
+		margin-top: 0.3rem;
+	}
 }
 // --- Colores ------------------------------------------------------------------
 // De severidad (filas de la tabla de defectos, ver DefectList.jsx) y de
