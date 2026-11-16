@@ -451,19 +451,23 @@ describe('observaciones automáticas', () => {
 		expect(app.querySelectorAll(MANUAL)).toHaveLength(1); // la manual sigue
 	});
 
-	test('"Filtrar frases automáticas" (tildado por defecto) achica el panel de selección', () => {
+	test('"Filtrar frases automáticas" (tildado por defecto) saca solo las frases, no grupos ni secciones', () => {
 		const app = abrirApp();
 		const opciones = (name) =>
 			[...app.querySelectorAll(`input[name="${name}"]`)].map((i) => i.parentElement.textContent.trim());
 		const filtro = app.querySelector('#filtrar-frases-automaticas');
 		expect(filtro.checked).toBe(true);
 
-		// Emisiones no aparece: todas sus frases son automáticas.
-		expect(opciones('group')).not.toContain('Emisiones');
-		// En Frenos no aparecen las secciones 100% automáticas...
+		// Emisiones sigue estando aunque todas sus frases sean automáticas:
+		// en Ruido queda "Otros" para informar cualquier otra cosa.
+		expect(opciones('group')).toContain('Emisiones');
+		fireEvent.click(app.querySelector('input[id="emisiones"]'));
+		expect(opciones('section')).toEqual(expect.arrayContaining(['Gases', 'Ruido']));
+		fireEvent.click(app.querySelector('input[id="ruido"]'));
+		expect(opciones('description')).toEqual(['Otros']);
+		// En Frenos están todas las secciones, sin las frases automáticas.
 		fireEvent.click(app.querySelector('input[id="freno"]'));
-		expect(opciones('section')).not.toContain('Diferencia de frenado');
-		// ...pero sí las que tienen frases manuales, sin las automáticas.
+		expect(opciones('section')).toContain('Diferencia de frenado');
 		expect(opciones('section')).toContain('Ovalidad o Alabebeo');
 		fireEvent.click(app.querySelector('input[id="ovalAlab"]'));
 		expect(opciones('description')).toContain('Disco de freno delantero izquierdo alabeado.');
@@ -471,7 +475,6 @@ describe('observaciones automáticas', () => {
 
 		// Destildado, aparece todo.
 		fireEvent.click(filtro);
-		expect(opciones('group')).toContain('Emisiones');
 		expect(opciones('description')).toContain('Ovalidad o alabeo en freno delantero izquierdo.');
 	});
 
@@ -480,7 +483,6 @@ describe('observaciones automáticas', () => {
 		elegir(app, 'Moto');
 		fireEvent.click(app.querySelector('input[id="frenos"]'));
 		const secciones = [...app.querySelectorAll('input[name="section"]')].map((i) => i.parentElement.textContent.trim());
-		expect(secciones).not.toContain('Rendimiento de frenado');
 		expect(secciones.some((s) => /fuerza/i.test(s))).toBe(true);
 	});
 
@@ -499,7 +501,8 @@ describe('lista de defectos', () => {
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
 
 		agregarDefecto(app, { severidad: 1, grupo: 0, seccion: 0, descripcion: 0 });
-		agregarDefecto(app, { severidad: 2, grupo: 2, seccion: 1, descripcion: 1 });
+		// Emisiones › Ruido › "Otros" (la frase de ruido es automática y no se ofrece).
+		agregarDefecto(app, { severidad: 2, grupo: 2, seccion: 1, descripcion: 0 });
 		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(2);
 
 		// Un defecto "no listado": último grupo + texto libre.

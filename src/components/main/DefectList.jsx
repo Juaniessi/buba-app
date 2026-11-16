@@ -81,10 +81,10 @@ function DefectList(props) {
 	// --- Opciones del panel Grupo / Sección / Descripción ---------------------
 	const tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
 
-	// Con "Filtrar frases automáticas" tildado, se ocultan las descripciones
-	// que la app ya agrega sola; una sección que se queda sin ninguna, se
-	// oculta; y un grupo que se queda sin secciones, también. Las secciones
-	// que no tienen frases (se usa "Otros") se muestran siempre.
+	// Con "Filtrar frases automáticas" tildado, se ocultan solo las
+	// descripciones que la app ya agrega sola. Los grupos y las secciones se
+	// muestran siempre (aunque se queden sin frases), porque con "Otros" se
+	// puede informar cualquier otra cosa (por ejemplo, algo del ruido).
 
 	/** Descripciones de una sección que se ofrecen en el panel. */
 	const descripcionesDe = (g, s) => {
@@ -92,18 +92,10 @@ function DefectList(props) {
 		if (!filtrarFrasesAutomaticas) return todas;
 		return todas.filter((d) => !esFraseAutomatica(tipo, g, s, d.value));
 	};
-	/** Secciones de un grupo que se ofrecen en el panel. */
-	const seccionesDe = (g) =>
-		(tipoArray.seccion[g] || []).filter((s) => {
-			const tieneFrases = (tipoArray.descripciones[g]?.[s.value] || []).length > 0;
-			return !tieneFrases || descripcionesDe(g, s.value).length > 0;
-		});
-	/** Grupos que se ofrecen en el panel. */
-	const grupos = tipoArray.grupo.filter(
-		(g) => (tipoArray.seccion[g.value] || []).length === 0 || seccionesDe(g.value).length > 0
-	);
+	/** Grupos que se ofrecen en el panel (todos). */
+	const grupos = tipoArray.grupo;
 	/** Secciones del grupo elegido (vacío si no hay grupo). */
-	const secciones = grupo.value !== '' ? seccionesDe(grupo.value) : [];
+	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] || [] : [];
 	/** Descripciones de la sección elegida ('misc' = notas: no tiene). */
 	const descripciones =
 		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
