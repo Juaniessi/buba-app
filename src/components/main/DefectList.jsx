@@ -26,6 +26,7 @@ import trashCan from '../../assets/trash-can-solid.svg';
 import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import copyBtn from '../../assets/copy-regular.svg';
 import { SEVERIDADES, cambiarSeveridad, nuevaObservacion } from './observaciones';
+import { esFraseAutomatica } from './observacionesAutomaticas';
 
 /** Opción "nada elegido" para grupo, sección y descripción. */
 const SIN_ELEGIR = { value: '', label: '' };
@@ -73,16 +74,40 @@ function DefectList(props) {
 		setMostrarAutomaticas,
 		regenerarAutomaticas,
 		hayTxt,
+		filtrarFrasesAutomaticas,
+		setFiltrarFrasesAutomaticas,
 	} = props;
 
-	// Opciones disponibles según lo elegido hasta ahora.
+	// --- Opciones del panel Grupo / Sección / Descripción ---------------------
 	const tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
+
+	// Con "Filtrar frases automáticas" tildado, se ocultan las descripciones
+	// que la app ya agrega sola; una sección que se queda sin ninguna, se
+	// oculta; y un grupo que se queda sin secciones, también. Las secciones
+	// que no tienen frases (se usa "Otros") se muestran siempre.
+
+	/** Descripciones de una sección que se ofrecen en el panel. */
+	const descripcionesDe = (g, s) => {
+		const todas = tipoArray.descripciones[g]?.[s] || [];
+		if (!filtrarFrasesAutomaticas) return todas;
+		return todas.filter((d) => !esFraseAutomatica(tipo, g, s, d.value));
+	};
+	/** Secciones de un grupo que se ofrecen en el panel. */
+	const seccionesDe = (g) =>
+		(tipoArray.seccion[g] || []).filter((s) => {
+			const tieneFrases = (tipoArray.descripciones[g]?.[s.value] || []).length > 0;
+			return !tieneFrases || descripcionesDe(g, s.value).length > 0;
+		});
+	/** Grupos que se ofrecen en el panel. */
+	const grupos = tipoArray.grupo.filter(
+		(g) => (tipoArray.seccion[g.value] || []).length === 0 || seccionesDe(g.value).length > 0
+	);
 	/** Secciones del grupo elegido (vacío si no hay grupo). */
-	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
+	const secciones = grupo.value !== '' ? seccionesDe(grupo.value) : [];
 	/** Descripciones de la sección elegida ('misc' = notas: no tiene). */
 	const descripciones =
 		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
-			? tipoArray.descripciones[grupo.value][seccion.value] || []
+			? descripcionesDe(grupo.value, seccion.value)
 			: [];
 
 	/**
@@ -280,11 +305,26 @@ function DefectList(props) {
 					Regenerar observaciones automáticas
 				</button>
 
+				{/* Filtro del panel de abajo: no ofrecer las frases automáticas */}
+				<label className="filtro-frases" htmlFor="filtrar-frases-automaticas">
+					<input
+						type="checkbox"
+						id="filtrar-frases-automaticas"
+						checked={filtrarFrasesAutomaticas}
+						onChange={(e) => setFiltrarFrasesAutomaticas(e.target.checked)}
+					/>
+					Filtrar frases automáticas
+					<small>
+						{' '}
+						(en Grupo, Sección y Descripción no aparecen las frases que la app ya agrega sola)
+					</small>
+				</label>
+
 				<div className="variable-btn">
 					{/* 2. Grupo (más la opción especial "*Notas adicionales") */}
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{[...tipoArray.grupo].sort(porEtiqueta).map((item) => (
+						{[...grupos].sort(porEtiqueta).map((item) => (
 							<label
 								className={grupo.value === item.value ? 'radio-checked ' : 'focus'}
 								htmlFor={item.value}

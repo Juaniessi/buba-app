@@ -307,6 +307,39 @@ describe('observaciones automáticas', () => {
 		expect(app.querySelectorAll(MANUAL)).toHaveLength(1); // la manual sigue
 	});
 
+	test('"Filtrar frases automáticas" (tildado por defecto) achica el panel de selección', () => {
+		const app = abrirApp();
+		const opciones = (name) =>
+			[...app.querySelectorAll(`input[name="${name}"]`)].map((i) => i.parentElement.textContent.trim());
+		const filtro = app.querySelector('#filtrar-frases-automaticas');
+		expect(filtro.checked).toBe(true);
+
+		// Emisiones no aparece: todas sus frases son automáticas.
+		expect(opciones('group')).not.toContain('Emisiones');
+		// En Frenos no aparecen las secciones 100% automáticas...
+		fireEvent.click(app.querySelector('input[id="freno"]'));
+		expect(opciones('section')).not.toContain('Diferencia de frenado');
+		// ...pero sí las que tienen frases manuales, sin las automáticas.
+		expect(opciones('section')).toContain('Ovalidad o Alabebeo');
+		fireEvent.click(app.querySelector('input[id="ovalAlab"]'));
+		expect(opciones('description')).toContain('Disco de freno delantero izquierdo alabeado.');
+		expect(opciones('description')).not.toContain('Ovalidad o alabeo en freno delantero izquierdo.');
+
+		// Destildado, aparece todo.
+		fireEvent.click(filtro);
+		expect(opciones('group')).toContain('Emisiones');
+		expect(opciones('description')).toContain('Ovalidad o alabeo en freno delantero izquierdo.');
+	});
+
+	test('en motos, la fuerza mínima no es automática: se sigue ofreciendo', () => {
+		const app = abrirApp();
+		elegir(app, 'Moto');
+		fireEvent.click(app.querySelector('input[id="frenos"]'));
+		const secciones = [...app.querySelectorAll('input[name="section"]')].map((i) => i.parentElement.textContent.trim());
+		expect(secciones).not.toContain('Rendimiento de frenado');
+		expect(secciones.some((s) => /fuerza/i.test(s))).toBe(true);
+	});
+
 	test('sin .txt, el botón Regenerar está deshabilitado', () => {
 		const app = abrirApp();
 		expect(app.querySelector('#regenerar-btn').disabled).toBe(true);

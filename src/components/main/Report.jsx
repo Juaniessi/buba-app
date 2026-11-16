@@ -84,6 +84,8 @@ function Report(props) {
 		mostrarAutomaticas,
 		setMostrarAutomaticas,
 		regenerarAutomaticas,
+		filtrarFrasesAutomaticas,
+		setFiltrarFrasesAutomaticas,
 		handleTxtRender,
 		reportArray,
 		engineType,
@@ -589,6 +591,8 @@ function Report(props) {
 					setMostrarAutomaticas={setMostrarAutomaticas}
 					regenerarAutomaticas={regenerarAutomaticas}
 					hayTxt={txtRender !== null}
+					filtrarFrasesAutomaticas={filtrarFrasesAutomaticas}
+					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
 				/>
 				{/* Referencias: qué significa cada severidad */}
 				<table className="references print">

@@ -94,6 +94,12 @@ const ESTADO_INICIAL = {
 	 * se muestran ni se imprimen (pero no se borran).
 	 */
 	mostrarAutomaticas: true,
+	/**
+	 * Filtro "Filtrar frases automáticas" del panel para agregar defectos: si
+	 * está tildado, Grupo / Sección / Descripción no ofrecen las frases que la
+	 * app ya agrega sola (así es más fácil encontrar las demás).
+	 */
+	filtrarFrasesAutomaticas: true,
 
 	// --- Archivos cargados ---------------------------------------------------
 	/** Datos del .txt ya procesados (null si todavía no se cargó ninguno). */
@@ -143,6 +149,7 @@ function Main() {
 		unlistedDef,
 		lista,
 		mostrarAutomaticas,
+		filtrarFrasesAutomaticas,
 		txtRender,
 		reportArray,
 		imgUpload,
@@ -231,6 +238,7 @@ function Main() {
 	const setUnlistedDef = (valor) => actualizar({ unlistedDef: valor });
 	const setLista = (valor) => actualizar({ lista: valor });
 	const setMostrarAutomaticas = (valor) => actualizar({ mostrarAutomaticas: valor });
+	const setFiltrarFrasesAutomaticas = (valor) => actualizar({ filtrarFrasesAutomaticas: valor });
 
 	// --- Observaciones automáticas ------------------------------------------------
 
@@ -515,6 +523,8 @@ function Main() {
 					setMostrarAutomaticas={setMostrarAutomaticas}
 					regenerarAutomaticas={regenerarAutomaticas}
 					hayTxt={txtRender !== null}
+					filtrarFrasesAutomaticas={filtrarFrasesAutomaticas}
+					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
 					txtRender={txtRender}
 					handleTxtRender={handleTxtRender}
 					reportArray={reportArray}

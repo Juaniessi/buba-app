@@ -49,6 +49,75 @@ import { nuevaObservacion } from './observaciones';
 /** Fuerza mínima por eje (suma de las dos ruedas), en kN. */
 export const FUERZA_MINIMA_KN = 1;
 
+/**
+ * Todas las frases que la app puede agregar sola, por tipo de lista
+ * (grupo → sección → descripciones). Las usa:
+ *   - el filtro "Filtrar frases automáticas" del panel de selección de
+ *     defectos (DefectList.jsx), para no ofrecerlas a mano;
+ *   - las reglas de este archivo, como control: si una regla usa una frase
+ *     que no está acá, da error (y los tests lo detectan).
+ *
+ * Si se agrega una regla nueva, sumar su frase acá.
+ */
+export const FRASES_AUTOMATICAS = {
+	auto: {
+		direccion: { alineacion: ['trenDelDesalin', 'trenTraDesalin'] },
+		suspension: {
+			amortiguadores: [
+				'ambosEjeDel', 'ambosEjeTra',
+				'bajoRendAmortDelIzq', 'bajoRendAmortDelDer', 'bajoRendAmortTraIzq', 'bajoRendAmortTraDer',
+			],
+		},
+		freno: {
+			rendDeFrenado: ['bajRendDel', 'bajRendTra', 'bajRendFrm'],
+			difDeFrenado: ['difFreDelRi', 'difFreDelRd', 'difFreTraRi', 'difFreTraRd', 'difFreFdmRi', 'difFreFdmRd'],
+			fuerzaFren: ['freDelFueMin', 'freTraFueMin', 'freManFueMin'],
+			ovalAlab: ['ovalAlabDelIzq', 'ovalAlabDelDer', 'ovalAlabTraIzq', 'ovalAlabTraDer'],
+			resistRod: ['resistRodDelIzq', 'resistRodDelDer', 'resistRodTraIzq', 'resistRodTraDer'],
+		},
+		luces: {
+			luzBaja: ['luzBajIzq', 'luzBajDer', 'ningunaBaja'],
+			luzAlta: ['luzAltDelIzq', 'luzAltDelDer', 'ningunaAlta'],
+			alinFaros: ['faroIzqVert', 'faroDerVert', 'faroIzqHor', 'faroDerHor'],
+		},
+		emisiones: {
+			gases: ['altoNivO2', 'altoNivHco', 'altoNivOpa'],
+			ruido: ['altoNivConSon'],
+		},
+	},
+	moto: {
+		suspension: { amortiguadores: ['bajoRendAmortDel', 'bajoRendAmortTra'] },
+		frenos: {
+			rendDeFrenado: ['bajoRendFrenadoDel', 'bajoRendFrenadoTra'],
+			resistRod: ['resistRodDel', 'resistRodTra'],
+			ovalAlab: ['ovalAlabDel', 'ovalAlabTra'],
+		},
+		luces: {
+			luzBaja: ['luzBaj'],
+			luzAlta: ['luzAltDel'],
+			alinFaros: ['faroVert', 'faroHor'],
+		},
+		emisiones: {
+			gases: ['gasCO', 'gasHC'],
+			ruido: ['ruidoAlto'],
+		},
+	},
+};
+
+/**
+ * ¿Esta frase la agrega la app sola?
+ *
+ * @param {string} tipo Tipo de vehículo ('Moto' usa la lista de motos).
+ * @param {string} grupo value del grupo.
+ * @param {string} seccion value de la sección.
+ * @param {string} descripcion value de la descripción.
+ * @returns {boolean}
+ */
+export function esFraseAutomatica(tipo, grupo, seccion, descripcion) {
+	const frases = FRASES_AUTOMATICAS[tipo === 'Moto' ? 'moto' : 'auto'];
+	return (frases[grupo]?.[seccion] ?? []).includes(descripcion);
+}
+
 /** Letra de la calificación → severidad de la observación. */
 const SEVERIDAD_DE_LETRA = { L: 'Leve', M: 'Moderado', G: 'Grave' };
 
@@ -74,6 +143,9 @@ function observacion(base, grupo, seccion, descripcion, severidad) {
 	const d = ((base.descripciones[grupo] || {})[seccion] || []).find((x) => x.value === descripcion);
 	if (!g || !s || !d) {
 		throw new Error(`No existe la frase ${grupo} > ${seccion} > ${descripcion}`);
+	}
+	if (!esFraseAutomatica(base === motoArray ? 'Moto' : 'Auto', grupo, seccion, descripcion)) {
+		throw new Error(`Falta ${grupo} > ${seccion} > ${descripcion} en FRASES_AUTOMATICAS`);
 	}
 	return nuevaObservacion({
 		grupo: g.label,
