@@ -1,96 +1,77 @@
+/*
+ * =============================================================================
+ *  MajorMarker.jsx — Asterisco sobre la rueda que frena menos
+ * =============================================================================
+ *
+ *  En el informe se dibuja un "*" sobre la rueda que frena menos de cada eje
+ *  (freno delantero, trasero y de mano), pero solo cuando la diferencia de
+ *  frenado entre los dos lados es grande:
+ *
+ *    - Eje delantero: diferencia de 10% o más.
+ *    - Eje trasero y freno de mano: diferencia de 12% o más.
+ *
+ *  No se muestra en motos ni cuando todavía no se cargó un .txt.
+ *  La posición de cada asterisco sobre el dibujo está en
+ *  styles/majorMarkerStyle.scss.
+ * =============================================================================
+ */
 import React from 'react';
 import '../../styles/majorMarkerStyle.css';
 
-/*Este modulo muesta un asterisco en la menor de las fuerzas de cada eje, siempre y cuando
-la diferencia entre dichas fuerzas sea mayor a 10% en caso del eje delantero y 12%
-en el caso del eje trasero*/
+/** Diferencia mínima (%) entre lados para marcar el eje. */
+const DIFERENCIA_MINIMA = {
+	delantero: 10,
+	trasero: 12,
+	deMano: 12,
+};
 
-function MajorMarker(props) {
-	const {txtRender, tipo} = props;
+/**
+ * Decide si se ve el asterisco de una rueda.
+ *
+ * @param {object|null} txtRender Los datos del .txt, o null.
+ * @param {(datos: object) => object} eje Función que, dados los datos del
+ *   .txt, devuelve los del eje (por ejemplo `d => d.frenosEje_1`). Es una
+ *   función para no intentar leer el eje cuando todavía no hay .txt.
+ * @param {number} diferenciaMinima Ver DIFERENCIA_MINIMA.
+ * @param {'izquierdo'|'derecho'} lado La rueda del asterisco.
+ * @returns {''|'hidden'|'visible'} La clase CSS: '' sin .txt.
+ */
+function claseAsterisco(txtRender, eje, diferenciaMinima, lado) {
+	if (txtRender === null) return '';
+	const datos = eje(txtRender);
+	if (datos.diferenciaFzaFrenadoLadoALado < diferenciaMinima) return 'hidden';
+
+	const izquierdo = datos.fuerzaDeFrenadoLadoIzquierdo;
+	const derecho = datos.fuerzaDeFrenadoLadoDerecho;
+	const frenaMenos = lado === 'izquierdo' ? izquierdo < derecho : izquierdo > derecho;
+	return frenaMenos ? 'visible' : 'hidden';
+}
+
+/** Las 6 ruedas con asterisco posible: [qué eje, diferencia mínima, clases de posición]. */
+const RUEDAS = [
+	[(d) => d.frenosEje_1, DIFERENCIA_MINIMA.delantero, 'izquierdo', 'front-brake left-brake'],
+	[(d) => d.frenosEje_1, DIFERENCIA_MINIMA.delantero, 'derecho', 'front-brake right-brake'],
+	[(d) => d.frenosEje_2, DIFERENCIA_MINIMA.trasero, 'izquierdo', 'rear-brake left-brake'],
+	[(d) => d.frenosEje_2, DIFERENCIA_MINIMA.trasero, 'derecho', 'rear-brake right-brake'],
+	[(d) => d.frenoDeManoEje_2, DIFERENCIA_MINIMA.deMano, 'izquierdo', 'hand-brake left-brake'],
+	[(d) => d.frenoDeManoEje_2, DIFERENCIA_MINIMA.deMano, 'derecho', 'hand-brake right-brake'],
+];
+
+/**
+ * @param {{txtRender: object|null, tipo: string}} props
+ */
+function MajorMarker({ txtRender, tipo }) {
+	const visible = txtRender !== null && tipo !== 'Moto';
+
 	return (
-		<main
-			id="no-print4"
-			className={
-				txtRender === null ? 'hidden' : tipo === 'Moto' ? 'hidden' : 'visible'
-			}>
-			<div
-				className={`marker ${
-					txtRender === null
-						? ''
-						: txtRender.frenosEje_1.diferenciaFzaFrenadoLadoALado < 10
-						? 'hidden'
-						: txtRender.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo <
-						  txtRender.frenosEje_1.fuerzaDeFrenadoLadoDerecho
-						? 'visible'
-						: 'hidden'
-				} front-brake left-brake`}>
-				*
-			</div>
-			<div
-				className={`marker ${
-					txtRender === null
-						? ''
-						: txtRender.frenosEje_1.diferenciaFzaFrenadoLadoALado < 10
-						? 'hidden'
-						: txtRender.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo >
-						  txtRender.frenosEje_1.fuerzaDeFrenadoLadoDerecho
-						? 'visible'
-						: 'hidden'
-				} front-brake right-brake`}>
-				*
-			</div>
-			<div
-				className={`marker ${
-					txtRender === null
-						? ''
-						: txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado < 12
-						? 'hidden'
-						: txtRender.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo <
-						  txtRender.frenosEje_2.fuerzaDeFrenadoLadoDerecho
-						? 'visible'
-						: 'hidden'
-				} rear-brake left-brake`}>
-				*
-			</div>
-			<div
-				className={`marker ${
-					txtRender === null
-						? ''
-						: txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado < 12
-						? 'hidden'
-						: txtRender.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo >
-						  txtRender.frenosEje_2.fuerzaDeFrenadoLadoDerecho
-						? 'visible'
-						: 'hidden'
-				} rear-brake right-brake`}>
-				*
-			</div>
-			<div
-				className={`marker ${
-					txtRender === null
-						? ''
-						: txtRender.frenoDeManoEje_2.diferenciaFzaFrenadoLadoALado < 12
-						? 'hidden'
-						: txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoIzquierdo <
-						  txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoDerecho
-						? 'visible'
-						: 'hidden'
-				} hand-brake left-brake`}>
-				*
-			</div>
-			<div
-				className={`marker ${
-					txtRender === null
-						? ''
-						: txtRender.frenoDeManoEje_2.diferenciaFzaFrenadoLadoALado < 12
-						? 'hidden'
-						: txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoIzquierdo >
-						  txtRender.frenoDeManoEje_2.fuerzaDeFrenadoLadoDerecho
-						? 'visible'
-						: 'hidden'
-				} hand-brake right-brake`}>
-				*
-			</div>
+		<main id="no-print4" className={visible ? 'visible' : 'hidden'}>
+			{RUEDAS.map(([eje, diferenciaMinima, lado, posicion]) => (
+				<div
+					key={posicion}
+					className={`marker ${claseAsterisco(txtRender, eje, diferenciaMinima, lado)} ${posicion}`}>
+					*
+				</div>
+			))}
 		</main>
 	);
 }

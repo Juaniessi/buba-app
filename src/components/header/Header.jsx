@@ -1,3 +1,4 @@
+/** Título de la página ("Informes Bubatec"). No se imprime. */
 import React from 'react';
 
 function Header() {

@@ -273,6 +273,22 @@ describe('lista de defectos', () => {
 		expect(app.innerHTML).toMatchSnapshot('después de borrar uno');
 	});
 
+	test('la papelera borra el defecto de esa fila (la tabla va de grave a leve)', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		// Se cargan primero uno leve y después uno grave...
+		agregarDefecto(app, { severidad: 0, grupo: 0, seccion: 0, descripcion: 0 });
+		agregarDefecto(app, { severidad: 2, grupo: 1, seccion: 0, descripcion: 0 });
+		const severidades = () =>
+			[...app.querySelectorAll('.lista-final .severidad-col')].slice(1).map((td) => td.textContent);
+		// ...pero la tabla muestra primero el grave.
+		expect(severidades()).toEqual(['Grave', 'Leve']);
+
+		// Borrar la primera fila tiene que borrar el grave, no el primero cargado.
+		fireEvent.click(app.querySelector('.erase-btn'));
+		expect(severidades()).toEqual(['Leve']);
+	});
+
 	test('pasar de auto a moto borra el informe y los defectos', async () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
