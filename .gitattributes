@@ -1,0 +1,3 @@
+# Los .txt de ejemplo son salidas reales de la línea de RTO, con finales de
+# línea de Windows (CRLF). El lector depende de eso: Git los guarda tal cual.
+tests/fixtures/*.txt -text
