@@ -148,6 +148,59 @@ describe('informe con .txt cargado', () => {
 	});
 });
 
+describe('opciones del formulario', () => {
+	test('transporte de pasajeros propone 3 meses de vigencia, y la normal 1 año', () => {
+		const app = abrirApp();
+		const vigenciaElegida = () =>
+			app.querySelector('input[name="dueDateSelector"]:checked')?.id;
+
+		expect(vigenciaElegida()).toBe('1a');
+		elegir(app, 'traPas');
+		expect(vigenciaElegida()).toBe('3m');
+		elegir(app, 'normal');
+		expect(vigenciaElegida()).toBe('1a');
+	});
+
+	test('la vigencia solo se puede elegir si el resultado es Apto', () => {
+		const app = abrirApp();
+		const vigencias = () => [...app.querySelectorAll('input[name="dueDateSelector"]')];
+
+		expect(vigencias().every((v) => !v.disabled)).toBe(true);
+		elegir(app, 'Condicional');
+		expect(vigencias().every((v) => v.disabled)).toBe(true);
+	});
+});
+
+describe('botón "Reiniciar todos los campos"', () => {
+	test('deja la pantalla exactamente como al abrir la app', async () => {
+		// Cómo se ve la app recién abierta, para comparar.
+		const pantallaInicial = abrirApp().innerHTML;
+		cleanup();
+
+		// Cambiamos todo lo que se puede cambiar...
+		const app = abrirApp();
+		elegir(app, 'Camioneta');
+		elegir(app, '4x4');
+		elegir(app, 'traPas');
+		elegir(app, 'Rechazado');
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarDefecto(app, { severidad: 2, grupo: 0, seccion: 0, descripcion: 0 });
+		fireEvent.click(app.querySelectorAll('input[name="severity"]')[1]);
+		fireEvent.change(app.querySelector('#unlisted-defect'), {
+			target: { value: 'Texto a medio escribir' },
+		});
+
+		// ...y reiniciamos.
+		fireEvent.click(app.querySelector('#reset-btn'));
+
+		expect(app.innerHTML).toBe(pantallaInicial);
+		// El texto de un <textarea> no aparece en innerHTML: lo revisamos aparte.
+		// (Antes de este cambio, "Reiniciar" no lo borraba.)
+		expect(app.querySelector('#unlisted-defect').value).toBe('');
+		expect(app.querySelector('#file-input').value).toBe('');
+	});
+});
+
 describe('lista de defectos', () => {
 	test('agregar tres defectos y borrar uno (snapshot)', async () => {
 		const app = abrirApp();
@@ -171,6 +224,17 @@ describe('lista de defectos', () => {
 		fireEvent.click(app.querySelector('.erase-btn'));
 		expect(app.querySelectorAll('.erase-btn')).toHaveLength(2);
 		expect(app.innerHTML).toMatchSnapshot('después de borrar uno');
+	});
+
+	test('pasar de auto a moto borra el informe y los defectos', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarDefecto(app, { severidad: 1, grupo: 0, seccion: 0, descripcion: 0 });
+
+		elegir(app, 'Moto');
+
+		expect(app.querySelectorAll('.erase-btn')).toHaveLength(0);
+		expect(app.querySelector('.txtRenderAuto')).toBeNull();
 	});
 
 	test('cargar un .txt nuevo vacía la lista de defectos', async () => {
