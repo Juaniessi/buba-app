@@ -81,6 +81,9 @@ function Report(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		mostrarAutomaticas,
+		setMostrarAutomaticas,
+		regenerarAutomaticas,
 		handleTxtRender,
 		reportArray,
 		engineType,
@@ -582,6 +585,10 @@ function Report(props) {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
+					mostrarAutomaticas={mostrarAutomaticas}
+					setMostrarAutomaticas={setMostrarAutomaticas}
+					regenerarAutomaticas={regenerarAutomaticas}
+					hayTxt={txtRender !== null}
 				/>
 				{/* Referencias: qué significa cada severidad */}
 				<table className="references print">

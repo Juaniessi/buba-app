@@ -69,6 +69,10 @@ function DefectList(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		mostrarAutomaticas,
+		setMostrarAutomaticas,
+		regenerarAutomaticas,
+		hayTxt,
 	} = props;
 
 	// Opciones disponibles según lo elegido hasta ahora.
@@ -80,6 +84,12 @@ function DefectList(props) {
 		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
 			? tipoArray.descripciones[grupo.value][seccion.value] || []
 			: [];
+
+	/**
+	 * Los defectos que se ven (y se imprimen): todos, o solo los manuales si
+	 * se destildó el filtro "Observaciones automáticas".
+	 */
+	const visibles = mostrarAutomaticas ? lista : lista.filter((item) => !item.automatica);
 
 	/**
 	 * Botón "Agregar a la lista": suma el defecto elegido a la lista y limpia
@@ -146,11 +156,11 @@ function DefectList(props) {
 
 	/**
 	 * Botón "Copiar descripciones para SIRTO": copia al portapapeles, en una
-	 * sola línea, las descripciones de los defectos graves y moderados, para
-	 * pegarlas en el sistema SIRTO.
+	 * sola línea, las descripciones de los defectos graves y moderados que se
+	 * ven en la tabla, para pegarlas en el sistema SIRTO.
 	 */
 	function copyListDesc() {
-		const texto = lista
+		const texto = visibles
 			.filter((item) => item.sev === 'Grave' || item.sev === 'Moderado')
 			.map((item) => item.desc)
 			.join(' ');
@@ -162,21 +172,27 @@ function DefectList(props) {
 	/**
 	 * Una fila de la tabla de defectos.
 	 *
-	 * @param {object} defecto { grupo, seccion, desc, sev, Ord }
+	 * @param {object} defecto { grupo, seccion, desc, sev, Ord, automatica }
 	 * @param {number} i Posición en la tabla (la usa React como `key`).
 	 */
 	function filaDeDefecto(defecto, i) {
-		const { grupo, seccion, desc, sev } = defecto;
+		const { grupo, seccion, desc, sev, automatica } = defecto;
 		const color = COLOR_DE_SEVERIDAD[sev] ?? 'varios'; // 'varios' = notas
 
 		return (
-			<tr className={`item-lista`} key={i}>
+			<tr className={`item-lista`} key={i} data-automatica={automatica ? 'si' : 'no'}>
 				<td className={`grupo-col ${color}`}>{grupo}</td>
 				<td className={`seccion-col ${color}`}>{seccion}</td>
 				<td className={`descripcion-col ${color}`}>{desc}</td>
 				<td className={`severidad-col ${color}`}>{sev}</td>
 				<td className="phantom-col"></td>
 				<td className="erase-btn-ctn">
+					{/* Marca de observación automática (no se imprime) */}
+					{automatica && (
+						<small className="marca-auto" title="Observación automática: se calcula a partir del .txt">
+							auto
+						</small>
+					)}
 					{/* Cambiar severidad (no se imprime; las notas no tienen) */}
 					{sev !== '' && (
 						<select
@@ -216,7 +232,7 @@ function DefectList(props) {
 				</thead>
 				{/* Se ordena una copia: `sort` modifica el array, y el estado de
 				    React no se debe modificar directamente. */}
-				<tbody>{[...lista].sort(ordenDeLaLista).map(filaDeDefecto)}</tbody>
+				<tbody>{[...visibles].sort(ordenDeLaLista).map(filaDeDefecto)}</tbody>
 			</table>
 
 			{/* --- Formulario para agregar defectos (no se imprime) -------- */}
@@ -238,11 +254,31 @@ function DefectList(props) {
 							{item.label}
 						</label>
 					))}
+					{/* Filtro: mostrar (e imprimir) o no las observaciones automáticas */}
+					<label className="btn-inside filtro-auto" htmlFor="mostrar-automaticas">
+						<input
+							type="checkbox"
+							id="mostrar-automaticas"
+							checked={mostrarAutomaticas}
+							onChange={(e) => setMostrarAutomaticas(e.target.checked)}
+						/>
+						Observaciones automáticas
+					</label>
 				</div>
 				<div className="wrap-label copyDesc-btn" onClick={copyListDesc}>
 					Copiar descripciones para SIRTO
 					<img className="reset-img" src={copyBtn} alt="copy description" />
 				</div>
+				{/* Regenerar: borra y vuelve a calcular solo las automáticas
+				    (pide confirmación; ver Main.jsx). Sin .txt no hace nada. */}
+				<button
+					type="button"
+					className="regenerar-btn"
+					id="regenerar-btn"
+					disabled={!hayTxt}
+					onClick={regenerarAutomaticas}>
+					Regenerar observaciones automáticas
+				</button>
 
 				<div className="variable-btn">
 					{/* 2. Grupo (más la opción especial "*Notas adicionales") */}

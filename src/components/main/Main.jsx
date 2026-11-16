@@ -19,6 +19,14 @@
 import React, { useState, useRef } from 'react';
 import Report from './Report';
 import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
+import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
+
+/** Aviso que se muestra antes de regenerar las observaciones automáticas. */
+const AVISO_REGENERAR =
+	'Se van a regenerar por completo las observaciones automáticas.\n\n' +
+	'Las que cargaste a mano no se tocan, pero si cambiaste la severidad de ' +
+	'alguna automática, ese cambio se pierde. Por favor, revisá las severidades.\n\n' +
+	'¿Continuar?';
 import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import {
 	autoReportArrayFiller,
@@ -76,8 +84,16 @@ const ESTADO_INICIAL = {
 	descripcion: SIN_ELEGIR,
 	/** Texto libre cuando la descripción elegida es "Otros". */
 	unlistedDef: '',
-	/** Defectos ya agregados al informe. */
+	/**
+	 * Defectos del informe: los que cargó la persona y los automáticos (los
+	 * genera la app a partir del .txt; ver observacionesAutomaticas.js).
+	 */
 	lista: [],
+	/**
+	 * Filtro "Observaciones automáticas": si se destilda, las automáticas no
+	 * se muestran ni se imprimen (pero no se borran).
+	 */
+	mostrarAutomaticas: true,
 
 	// --- Archivos cargados ---------------------------------------------------
 	/** Datos del .txt ya procesados (null si todavía no se cargó ninguno). */
@@ -126,6 +142,7 @@ function Main() {
 		descripcion,
 		unlistedDef,
 		lista,
+		mostrarAutomaticas,
 		txtRender,
 		reportArray,
 		imgUpload,
@@ -213,6 +230,38 @@ function Main() {
 	const setDescripcion = (valor) => actualizar({ descripcion: valor });
 	const setUnlistedDef = (valor) => actualizar({ unlistedDef: valor });
 	const setLista = (valor) => actualizar({ lista: valor });
+	const setMostrarAutomaticas = (valor) => actualizar({ mostrarAutomaticas: valor });
+
+	// --- Observaciones automáticas ------------------------------------------------
+
+	/**
+	 * Calcula las observaciones automáticas de un .txt con las opciones que
+	 * están elegidas ahora (tipo de vehículo, tamaño de camión, tracción, motor).
+	 *
+	 * @param {object} datos Los datos del .txt.
+	 * @returns {object[]}
+	 */
+	const automaticasDe = (datos) =>
+		generarObservacionesAutomaticas(datos, {
+			tipo,
+			truckSize: truckSize.value,
+			transmisionType: transmisionType.value,
+			engineType: engineType.value,
+		});
+
+	/**
+	 * Botón "Regenerar observaciones automáticas": después de confirmar el
+	 * aviso, borra las automáticas y las vuelve a calcular. Las que cargó la
+	 * persona no se tocan. Sirve para recuperar una borrada por error, o si
+	 * se cambió algo que afecta la calificación (camión grande, 4x4, motor).
+	 */
+	const regenerarAutomaticas = () => {
+		if (!txtRender) return;
+		if (!window.confirm(AVISO_REGENERAR)) return;
+		actualizar({
+			lista: lista.filter((item) => !item.automatica).concat(automaticasDe(txtRender)),
+		});
+	};
 
 	// --- Archivos ----------------------------------------------------------------
 
@@ -222,8 +271,9 @@ function Main() {
 	 * Pasos:
 	 *   1. Toma el archivo elegido. Si canceló el diálogo, no hace nada.
 	 *   2. Espera (`await`) a que se lea y se procese completo.
-	 *   3. Recién ahí borra la lista de defectos anterior, guarda los datos
-	 *      nuevos y arma el informe (versión moto o versión auto).
+	 *   3. Recién ahí reemplaza la lista de defectos anterior por las
+	 *      observaciones automáticas del archivo nuevo, guarda los datos y
+	 *      arma el informe (versión moto o versión auto).
 	 *
 	 * @param {Event} e El evento `change` del `<input type="file">`.
 	 */
@@ -241,7 +291,7 @@ function Main() {
 		}
 
 		actualizar({
-			lista: [],
+			lista: automaticasDe(datos),
 			txtRender: datos,
 			reportArray:
 				tipo === 'Moto' ? motoReportArrayFiller(datos) : autoReportArrayFiller(datos),
@@ -461,6 +511,10 @@ function Main() {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
+					mostrarAutomaticas={mostrarAutomaticas}
+					setMostrarAutomaticas={setMostrarAutomaticas}
+					regenerarAutomaticas={regenerarAutomaticas}
+					hayTxt={txtRender !== null}
 					txtRender={txtRender}
 					handleTxtRender={handleTxtRender}
 					reportArray={reportArray}

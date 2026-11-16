@@ -248,14 +248,82 @@ describe('botón "Reiniciar todos los campos"', () => {
 	});
 });
 
+describe('observaciones automáticas', () => {
+	const AUTO = '.lista-final tr[data-automatica="si"]';
+	const MANUAL = '.lista-final tr[data-automatica="no"]';
+	const descripciones = (app, filas) =>
+		[...app.querySelectorAll(`${filas} .descripcion-col`)].map((td) => td.textContent);
+
+	test('al cargar el .txt aparecen solas, con la marca "auto"', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		expect(descripciones(app, AUTO)).toEqual([
+			'Eje trasero rueda derecha frena menos (pedal).',
+			'Freno de mano, eje trasero. Rueda derecha frena menos.',
+		]);
+		expect(app.querySelectorAll(`${AUTO} .marca-auto`)).toHaveLength(2);
+		expect(app.querySelectorAll(`${MANUAL} .marca-auto`)).toHaveLength(0);
+	});
+
+	test('el filtro las oculta sin borrarlas, y las manuales siguen', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarDefecto(app, { severidad: 0, grupo: 0, seccion: 0, descripcion: 0 });
+		const filtro = app.querySelector('#mostrar-automaticas');
+		expect(filtro.checked).toBe(true); // tildado por defecto
+
+		fireEvent.click(filtro);
+		expect(app.querySelectorAll(AUTO)).toHaveLength(0);
+		expect(app.querySelectorAll(MANUAL)).toHaveLength(1);
+
+		fireEvent.click(filtro);
+		expect(app.querySelectorAll(AUTO)).toHaveLength(2);
+	});
+
+	test('Regenerar: pide confirmación y recupera las automáticas, sin tocar las manuales', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarDefecto(app, { severidad: 0, grupo: 0, seccion: 0, descripcion: 0 });
+		// Se borra una automática por error y a otra se le cambia la severidad.
+		fireEvent.click(app.querySelector(`${AUTO} .erase-btn`));
+		fireEvent.change(app.querySelector(`${AUTO} .severidad-select`), { target: { value: 'Leve' } });
+		expect(app.querySelectorAll(AUTO)).toHaveLength(1);
+
+		// Si se cancela el aviso, no cambia nada.
+		const confirmar = vi.spyOn(window, 'confirm').mockReturnValue(false);
+		fireEvent.click(app.querySelector('#regenerar-btn'));
+		expect(confirmar).toHaveBeenCalledTimes(1);
+		expect(confirmar.mock.calls[0][0]).toContain('revisá las severidades');
+		expect(app.querySelectorAll(AUTO)).toHaveLength(1);
+
+		// Si se acepta, vuelven las dos, con su severidad calculada.
+		confirmar.mockReturnValue(true);
+		fireEvent.click(app.querySelector('#regenerar-btn'));
+		expect(app.querySelectorAll(AUTO)).toHaveLength(2);
+		expect([...app.querySelectorAll(`${AUTO} .severidad-col`)].map((td) => td.textContent)).toEqual([
+			'Moderado',
+			'Moderado',
+		]);
+		expect(app.querySelectorAll(MANUAL)).toHaveLength(1); // la manual sigue
+	});
+
+	test('sin .txt, el botón Regenerar está deshabilitado', () => {
+		const app = abrirApp();
+		expect(app.querySelector('#regenerar-btn').disabled).toBe(true);
+	});
+});
+
 describe('lista de defectos', () => {
+	// Al cargar un .txt aparecen también observaciones automáticas. Estos tests
+	// prueban la carga manual, así que miran solo las filas manuales.
+	const M = '.lista-final tr[data-automatica="no"]';
 	test('agregar tres defectos y borrar uno (snapshot)', async () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
 
 		agregarDefecto(app, { severidad: 1, grupo: 0, seccion: 0, descripcion: 0 });
 		agregarDefecto(app, { severidad: 2, grupo: 2, seccion: 1, descripcion: 1 });
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(2);
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(2);
 
 		// Un defecto "no listado": último grupo + texto libre.
 		const grupos = app.querySelectorAll('input[name="group"]');
@@ -264,12 +332,12 @@ describe('lista de defectos', () => {
 			target: { value: 'Defecto de prueba' },
 		});
 		fireEvent.click(app.querySelector('.send-btn'));
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(3);
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(3);
 		expect(app.textContent).toContain('Defecto de prueba');
 		expect(app.innerHTML).toMatchSnapshot('con 3 defectos');
 
-		fireEvent.click(app.querySelector('.erase-btn'));
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(2);
+		fireEvent.click(app.querySelector(`${M} .erase-btn`));
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(2);
 		expect(app.innerHTML).toMatchSnapshot('después de borrar uno');
 	});
 
@@ -280,12 +348,12 @@ describe('lista de defectos', () => {
 		agregarDefecto(app, { severidad: 0, grupo: 0, seccion: 0, descripcion: 0 });
 		agregarDefecto(app, { severidad: 2, grupo: 1, seccion: 0, descripcion: 0 });
 		const severidades = () =>
-			[...app.querySelectorAll('.lista-final .severidad-col')].slice(1).map((td) => td.textContent);
+			[...app.querySelectorAll(`${M} .severidad-col`)].map((td) => td.textContent);
 		// ...pero la tabla muestra primero el grave.
 		expect(severidades()).toEqual(['Grave', 'Leve']);
 
 		// Borrar la primera fila tiene que borrar el grave, no el primero cargado.
-		fireEvent.click(app.querySelector('.erase-btn'));
+		fireEvent.click(app.querySelector(`${M} .erase-btn`));
 		expect(severidades()).toEqual(['Leve']);
 	});
 
@@ -295,16 +363,16 @@ describe('lista de defectos', () => {
 		agregarDefecto(app, { severidad: 0, grupo: 0, seccion: 0, descripcion: 0 }); // Leve
 		agregarDefecto(app, { severidad: 1, grupo: 1, seccion: 0, descripcion: 0 }); // Moderado
 		const severidades = () =>
-			[...app.querySelectorAll('.lista-final .severidad-col')].slice(1).map((td) => td.textContent);
+			[...app.querySelectorAll(`${M} .severidad-col`)].map((td) => td.textContent);
 		expect(severidades()).toEqual(['Moderado', 'Leve']);
 
 		// La segunda fila (la leve) pasa a grave: tiene que subir al primer lugar.
-		const selectores = app.querySelectorAll('.severidad-select');
+		const selectores = app.querySelectorAll(`${M} .severidad-select`);
 		expect(selectores[1].value).toBe('Leve');
 		fireEvent.change(selectores[1], { target: { value: 'Grave' } });
 
 		expect(severidades()).toEqual(['Grave', 'Moderado']);
-		expect(app.querySelectorAll('.severidad-select')[0].value).toBe('Grave');
+		expect(app.querySelectorAll(`${M} .severidad-select`)[0].value).toBe('Grave');
 	});
 
 	test('las notas adicionales no tienen selector de severidad', async () => {
@@ -314,8 +382,8 @@ describe('lista de defectos', () => {
 		fireEvent.change(app.querySelector('#unlisted-defect'), { target: { value: 'Una nota' } });
 		fireEvent.click(app.querySelector('.send-btn'));
 
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(1);
-		expect(app.querySelectorAll('.severidad-select')).toHaveLength(0);
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(1);
+		expect(app.querySelectorAll(`${M} .severidad-select`)).toHaveLength(0);
 	});
 
 	test('pasar de auto a moto borra el informe y los defectos', async () => {
@@ -325,17 +393,17 @@ describe('lista de defectos', () => {
 
 		elegir(app, 'Moto');
 
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(0);
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(0);
 		expect(app.querySelector('.txtRenderAuto')).toBeNull();
 	});
 
-	test('cargar un .txt nuevo vacía la lista de defectos', async () => {
+	test('cargar un .txt nuevo borra los defectos cargados a mano', async () => {
 		const app = abrirApp();
 		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
 		agregarDefecto(app, { severidad: 1, grupo: 0, seccion: 0, descripcion: 0 });
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(1);
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(1);
 
 		await cargarTxt(app, 'VCW-112.txt', 'VCW-112');
-		expect(app.querySelectorAll('.erase-btn')).toHaveLength(0);
+		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(0);
 	});
 });

@@ -23,12 +23,14 @@
  *      homologados: en ese caso, se borra a mano.
  *    - Suspensión (autos): si fallan las dos ruedas de un eje, va una sola
  *      frase "Ambos amortiguadores…" con la severidad más alta de las dos.
+ *    - Luces baja y alta: una intensidad de 0 significa luz quemada, y con
+ *      una sola quemada el resultado ya es Condicional, así que va como
+ *      Moderado. Si están quemadas las dos, una sola frase "Ninguna luz…".
+ *      Los valores altos de intensidad no generan observación automática, y
+ *      las luces auxiliares quedan manuales (muchos vehículos no tienen, y
+ *      también darían 0).
  *    - Las mediciones que no vienen en el .txt (casillero vacío) no generan
  *      observación.
- *
- *  Pendiente: la intensidad de las luces (baja, alta y auxiliares) todavía no
- *  genera observaciones, hasta definir qué indica el valor que da el
- *  luxómetro.
  * =============================================================================
  */
 import { autoArray } from '../dataArrays/carDataBase';
@@ -204,6 +206,19 @@ function reglasAuto(datos, { tipo, truckSize, transmisionType }) {
 	obs.push(...porRueda('brakeOval', 'ovalAlab', ['ovalAlabDelIzq', 'ovalAlabDelDer', 'ovalAlabTraIzq', 'ovalAlabTraDer']));
 	obs.push(...porRueda('brakeResist', 'resistRod', ['resistRodDelIzq', 'resistRodDelDer', 'resistRodTraIzq', 'resistRodTraDer'], { truckSize, transmisionType }));
 
+	// --- Luces baja y alta quemadas (intensidad 0) ---------------------------
+	const quemadas = (izq, der, seccion, frasIzq, frasDer, ninguna) => {
+		const quemadaIzq = izq === 0;
+		const quemadaDer = der === 0;
+		if (quemadaIzq && quemadaDer) return [siempre('luces', seccion, ninguna, 'Moderado')];
+		return [
+			quemadaIzq ? siempre('luces', seccion, frasIzq, 'Moderado') : null,
+			quemadaDer ? siempre('luces', seccion, frasDer, 'Moderado') : null,
+		];
+	};
+	obs.push(...quemadas(lux.intensidadBajaIzquierda, lux.intensidadBajaDerecha, 'luzBaja', 'luzBajIzq', 'luzBajDer', 'ningunaBaja'));
+	obs.push(...quemadas(lux.intensidadAltaIzquierda, lux.intensidadAltaDerecha, 'luzAlta', 'luzAltDelIzq', 'luzAltDelDer', 'ningunaAlta'));
+
 	// --- Alineación de faros -------------------------------------------------
 	obs.push(siFalla(si(lux.alineacionFaroIzquierdoVertical, (v) => evaluarMayorOIgual(v, 'luxAng')), 'luces', 'alinFaros', 'faroIzqVert'));
 	obs.push(siFalla(si(lux.alineacionFaroDerechoVertical, (v) => evaluarMayorOIgual(v, 'luxAng')), 'luces', 'alinFaros', 'faroDerVert'));
@@ -241,7 +256,7 @@ function valorDe(eje, limite, lado) {
 // =============================================================================
 
 function reglasMoto(datos, { tipo, engineType }) {
-	const { siFalla } = crearReglas(motoArray);
+	const { siFalla, siempre } = crearReglas(motoArray);
 	const año = datos.header.añoDeFabricacion;
 	const del = datos.frenosEje_1;
 	const tra = datos.frenosEje_2;
@@ -260,6 +275,9 @@ function reglasMoto(datos, { tipo, engineType }) {
 		siFalla(si(tra.resistenciaALaRodaduraLadoIzquierdo, (v) => evaluarMayorOIgual(v, 'brakeResist')), 'frenos', 'resistRod', 'resistRodTra'),
 		siFalla(si(del.ovalidadLadoIzquierdo, (v) => evaluarMayorOIgual(v, 'brakeOval')), 'frenos', 'ovalAlab', 'ovalAlabDel'),
 		siFalla(si(tra.ovalidadLadoIzquierdo, (v) => evaluarMayorOIgual(v, 'brakeOval')), 'frenos', 'ovalAlab', 'ovalAlabTra'),
+		// Luces baja y alta quemadas (intensidad 0): Moderado
+		lux.intensidadBajaIzquierda === 0 ? siempre('luces', 'luzBaja', 'luzBaj', 'Moderado') : null,
+		lux.intensidadAltaIzquierda === 0 ? siempre('luces', 'luzAlta', 'luzAltDel', 'Moderado') : null,
 		// Alineación del faro
 		siFalla(si(lux.alineacionFaroIzquierdoVertical, (v) => evaluarMayorOIgual(v, 'luxAng')), 'luces', 'alinFaros', 'faroVert'),
 		siFalla(si(lux.alineacionFaroIzquierdoHorizontal, (v) => evaluarMayorOIgual(v, 'luxAng')), 'luces', 'alinFaros', 'faroHor'),

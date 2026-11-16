@@ -31,6 +31,7 @@
 	input,
 	select,
 	textarea,
+	.marca-auto,
 	.quitar-col {
 		display: none;
 	}
@@ -226,6 +227,15 @@ td {
 			font-size: 0.65rem;
 			margin-right: 4px;
 			cursor: pointer;
+		}
+		// Marca "auto" de las observaciones automáticas.
+		.marca-auto {
+			font-size: 0.6rem;
+			margin-right: 4px;
+			padding: 0 3px;
+			border-radius: 3px;
+			background-color: rgb(0, 170, 190);
+			color: white;
 		}
 		.erase-btn {
 			width: 12px;
