@@ -1,8 +1,26 @@
+// =============================================================================
+//  style.scss — Estilos generales de la página
+//
+//  - La fuente Roboto, para toda la página.
+//  - Qué se oculta al imprimir.
+//  - El formulario: botones de opciones, grupos de botones y colores de
+//    severidad y de resultado.
+//  - La tabla de defectos del informe (.lista-final) y la tablita de resumen
+//    de arriba a la derecha (.weightsTable).
+//
+//  Vite compila este archivo a CSS solo (npm start / npm run build); no hace
+//  falta ninguna extensión de VS Code. Los comentarios con // no llegan al CSS
+//  final.
+// =============================================================================
 @font-face {
 	font-family: 'Roboto';
 	src: local('Roboto'), url(../assets/Roboto-Regular.ttf) format('truetype');
 }
 
+// --- Impresión ----------------------------------------------------------------
+// Al imprimir se oculta todo lo que es formulario (botones, opciones,
+// títulos...). Los id "no-print", "no-print2" y "no-print3" marcan bloques
+// enteros del formulario. Lo que tiene la clase "print" sí sale.
 @media print {
 	header,
 	form,
@@ -27,8 +45,17 @@
 	.print {
 		visibility: visible;
 	}
+	// Que se impriman los colores de fondo (calificaciones G/M/L, cartel de
+	// resultado, filas de la tabla de defectos) aunque en el diálogo de
+	// impresión no esté tildado "Gráficos de fondo" (Chrome) o "Imprimir
+	// fondos" (Firefox). La versión con -webkit- es para Chrome.
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
 }
 
+// --- Base ---------------------------------------------------------------------
 * {
 	font-family: 'Roboto', 'Courier New', Courier, monospace;
 	margin: 0;
@@ -53,11 +80,14 @@ label {
 	cursor: pointer;
 	margin: 0.5px 0;
 }
+// --- Formulario ---------------------------------------------------------------
+// Columnas de Grupo / Sección / Descripción del formulario de defectos.
 .variable-btn {
 	display: flex;
 	flex-flow: row nowrap;
 	min-height: 300px;
 }
+// Parte de arriba del formulario (Main.jsx) y formulario de defectos.
 .form-radio {
 	display: flex;
 	flex-flow: column nowrap;
@@ -68,6 +98,7 @@ label {
 	flex-flow: column nowrap;
 }
 
+// Grupo de botones de opciones.
 .btn-package {
 	margin: 0.5rem;
 }
@@ -85,6 +116,7 @@ label {
 	min-width: 190px;
 }
 
+// Opción no elegida: se resalta al pasar el mouse.
 .focus:hover {
 	cursor: pointer;
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
@@ -92,6 +124,7 @@ label {
 	background-color: rgb(255, 100, 100);
 }
 
+// Botón de opción con sombra (tipo de vehículo, resultado, vigencia...).
 .btn-inside {
 	margin: 0 0.25rem;
 	cursor: pointer;
@@ -109,6 +142,7 @@ label {
 	cursor: pointer;
 }
 
+// "Defecto no listado": texto libre y botón "Agregar a la lista".
 .unlisted-ctn {
 	display: flex;
 	flex-flow: column nowrap;
@@ -133,6 +167,7 @@ label {
 	}
 }
 
+// --- Tablas -------------------------------------------------------------------
 table,
 th,
 td {
@@ -141,6 +176,8 @@ td {
 	max-height: 16px;
 }
 
+// Tabla de defectos del informe. Va con posición fija debajo del dibujo
+// (top: 670px), así que también se imprime en su lugar.
 .lista-final {
 	position: absolute;
 	top: 670px;
@@ -191,6 +228,7 @@ td {
 	}
 }
 
+// Opciones que dependen del tipo de vehículo (amarillo) y tipo de RTO (verde).
 .engine-and-size-ctn {
 	display: flex;
 	flex-flow: row wrap;
@@ -208,6 +246,9 @@ td {
 		background-color: rgb(138, 164, 91);
 	}
 }
+// --- Colores ------------------------------------------------------------------
+// De severidad (filas de la tabla de defectos, ver DefectList.jsx) y de
+// resultado (cartel "Resultado RTO", ver Report.jsx).
 .orange {
 	background-color: rgba(255, 160, 0, 0.75);
 }
@@ -234,10 +275,12 @@ td {
 .varios {
 	background-color: rgb(255, 255, 255);
 }
+// Año de fabricación de más de 10 años en el resumen (WeigthSum.jsx).
 .peligro{
 	background-color: red;
 }
 
+// --- Resumen rápido (WeigthSum.jsx), arriba a la derecha; no se imprime -----
 .weightsTable {
 	position: absolute;
 	left: 480px;

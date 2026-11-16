@@ -25,7 +25,7 @@
 
 8. Cuando haya terminado, si desea imprimir el archivo, puede hacerlo tocando el botón "Imprimir Informe" en la esquina superior derecha.
 
-9. Para guardarlo como PDF Repita este paso, pero seleccione una impresora de PDF. Para un óptimo resultado, la impresora debe estar configurada para "mostrar gráficos de fondo" y no imprimir encabezado y pie de página. El sistema automaticamente copia al porta papeles la patente del vehiculo, de manera que al guardarlo, simplemente presinando crt+v se puede cambiar el fácilmente el nombre de archivo.
+9. Para guardarlo como PDF Repita este paso, pero seleccione una impresora de PDF. Para un óptimo resultado, conviene desactivar el encabezado y pie de página en el diálogo de impresión. Los colores del informe se imprimen solos: ya no hace falta tildar "gráficos de fondo". El sistema automaticamente copia al porta papeles la patente del vehiculo, de manera que al guardarlo, simplemente presinando crt+v se puede cambiar el fácilmente el nombre de archivo.
 
    - Recuerde aceptar el permiso para acceder al porta papeles. En chrome el mismo se encuentra en la parte izquierda de la barra de navegación.
 

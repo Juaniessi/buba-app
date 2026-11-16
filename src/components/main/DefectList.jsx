@@ -1,11 +1,54 @@
+/*
+ * =============================================================================
+ *  DefectList.jsx — Lista de defectos del informe y formulario para cargarlos
+ * =============================================================================
+ *
+ *  Dibuja dos cosas:
+ *    1. La tabla de defectos que sale en el informe impreso, ordenada de más
+ *       grave a más leve, con un botón para quitar cada uno.
+ *    2. El formulario (no se imprime) para agregar defectos, en cuatro pasos:
+ *         Severidad → Grupo → Sección → Descripción → "Agregar a la lista"
+ *       Las opciones de grupo, sección y descripción salen de
+ *       dataArrays/carDataBase.js (o motoDataBase.js para motos).
+ *       Si el defecto no está en la lista, se elige "Otros" y se escribe a
+ *       mano en "Defecto no listado". "*Notas adicionales" sirve para agregar
+ *       texto libre sin severidad.
+ *
+ *  No guarda estado propio: lo que se va eligiendo vive en Main.jsx y llega
+ *  por props, junto con las funciones para cambiarlo.
+ * =============================================================================
+ */
 import React from 'react';
-import {autoArray} from '../dataArrays/carDataBase';
-import {motoArray} from '../dataArrays/motoDataBase';
+import { autoArray } from '../dataArrays/carDataBase';
+import { motoArray } from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
-import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
+import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import copyBtn from '../../assets/copy-regular.svg';
 
-/*setSeveridad is passed from "Main" to "Report", ignore the warning */
+/** Opción "nada elegido" para grupo, sección y descripción. */
+const SIN_ELEGIR = { value: '', label: '' };
+
+/** Color (clase CSS) de cada fila de la tabla según la severidad. */
+const COLOR_DE_SEVERIDAD = {
+	Leve: 'yellow',
+	Moderado: 'orange',
+	Grave: 'black',
+};
+
+/** Para ordenar opciones alfabéticamente por su texto. */
+const porEtiqueta = (a, b) => (a.label > b.label ? 1 : -1);
+
+/**
+ * Orden de la tabla de defectos: primero los más graves (Ord más alto), y a
+ * igual severidad, alfabético por grupo, sección y descripción.
+ */
+function ordenDeLaLista(a, b) {
+	if (a.Ord !== b.Ord) return b.Ord - a.Ord;
+	if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
+	if (a.seccion !== b.seccion) return a.seccion > b.seccion ? 1 : -1;
+	return a.desc > b.desc ? 1 : -1;
+}
+
 function DefectList(props) {
 	const {
 		tipo,
@@ -26,120 +69,102 @@ function DefectList(props) {
 		setLista,
 	} = props;
 
-	/**
-	 * @param tipoArray swithces between the array of CAR and Moto.
-	 * @param section stores the array to be maped in the "section" submenu.
-	 * @param description stores the array to be maped in the "description" submenu.
-	 */
-	let tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
-	let section = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
-	let description =
+	// Opciones disponibles según lo elegido hasta ahora.
+	const tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
+	/** Secciones del grupo elegido (vacío si no hay grupo). */
+	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
+	/** Descripciones de la sección elegida ('misc' = notas: no tiene). */
+	const descripciones =
 		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
 			? tipoArray.descripciones[grupo.value][seccion.value] || []
 			: [];
 
 	/**
-	 * added severeFlag and moderate flag in order to rerender the Date currently not working.
-	 * @param {*} e the event is the
-	 * @returns creates and sets the object "itemLista" in the array "lista" via setLista()
-	 * taking in cosideration some conditions and then refreshing the radio buttons.
-	 * *Also preventDefault() is used to prevent the submit button to erase everything
-	 * as it is inside a <Form>
+	 * Botón "Agregar a la lista": suma el defecto elegido a la lista y limpia
+	 * grupo, sección, descripción y texto libre para cargar el siguiente.
+	 *
+	 * Las "Notas adicionales" (sección 'Varios') van sin severidad y quedan al
+	 * final de la lista (Ord 0).
+	 *
+	 * @param {Event} e El clic. Se usa preventDefault() porque el botón está
+	 *   dentro de un <form>, y sin eso el navegador recargaría la página.
 	 */
-
-	let addToList = (e) => {
+	const addToList = (e) => {
 		e.preventDefault();
 
-		let itemLista = {
-			grupo: grupo.label,
-			seccion: seccion.label,
-			desc: descripcion.value === 'otro' ? unlistedDef : descripcion.label,
-			sev: seccion.label === 'Varios' ? '' : severidad.value,
-			Ord: seccion.label === 'Varios' ? 0 : severidad.order,
-		};
-
-		if (
+		const completo =
 			severidad.value !== '' &&
 			grupo.value !== '' &&
 			seccion.value !== '' &&
-			descripcion.value !== ''
-		) {
-			setLista(lista.concat(itemLista));
-
-			setGrupo({value: '', label: ''});
-			setSeccion({value: '', label: ''});
-			setDescripcion({value: '', label: ''});
-			setUnlistedDef('');
-		} else {
+			descripcion.value !== '';
+		if (!completo) {
 			alert('Todos los campos deben estar completos');
+			return;
 		}
 
-		return;
+		const esNota = seccion.label === 'Varios';
+		const itemLista = {
+			grupo: grupo.label,
+			seccion: seccion.label,
+			desc: descripcion.value === 'otro' ? unlistedDef : descripcion.label,
+			sev: esNota ? '' : severidad.value,
+			Ord: esNota ? 0 : severidad.order,
+		};
+
+		setLista(lista.concat(itemLista));
+		setGrupo(SIN_ELEGIR);
+		setSeccion(SIN_ELEGIR);
+		setDescripcion(SIN_ELEGIR);
+		setUnlistedDef('');
 	};
 
 	/**
-	 * Erases items from the defect list. Creates nuevaLista and then filters it
-	 * recibing the "props" (we don´t use them, just need the param to be there
-	 * so ".filter" understands that "i" is the index),
-	 * and the index "i" in the array.
-	 * @param {*} index the list without the item choosen by index.
+	 * Quita un defecto de la lista.
+	 *
+	 * Se busca por el objeto en sí (no por su posición), porque la tabla
+	 * muestra la lista ordenada y la posición en pantalla puede no coincidir
+	 * con la posición en `lista`.
+	 *
+	 * @param {object} defecto El defecto a quitar.
 	 */
-
-	function eraseDefect(index) {
-		const nuevaLista = lista.filter((props, i) => {
-			return index !== i ? true : false;
-		});
-		setLista(nuevaLista);
+	function eraseDefect(defecto) {
+		setLista(lista.filter((item) => item !== defecto));
 	}
 
+	/**
+	 * Botón "Copiar descripciones para SIRTO": copia al portapapeles, en una
+	 * sola línea, las descripciones de los defectos graves y moderados, para
+	 * pegarlas en el sistema SIRTO.
+	 */
 	function copyListDesc() {
-		const listaDeDesc = lista
-			.filter((item, i) => {
-				return item.sev === 'Grave' || item.sev === 'Moderado' ? true : false;
-			})
-			.map((item) => item.desc);
-		const superString = listaDeDesc.join(' ');
-		if (superString !== '') {
-			navigator.clipboard.writeText(`${superString}`);
+		const texto = lista
+			.filter((item) => item.sev === 'Grave' || item.sev === 'Moderado')
+			.map((item) => item.desc)
+			.join(' ');
+		if (texto !== '') {
+			navigator.clipboard?.writeText(texto);
 		}
 	}
 
 	/**
-	 * Selects between the diferent styles to be added to each item and then creats the list.
-	 * *"seccion" is not being used because ther is no need to display it right now.
-	 * @param severityColour stores the clase to be added to the defect list item.
-	 * @param i the index value of the array.
-	 * @param props the values of the state variables to create the list.
-	 * @returns the HTML code with clases to be inserted.
+	 * Una fila de la tabla de defectos.
+	 *
+	 * @param {object} defecto { grupo, seccion, desc, sev, Ord }
+	 * @param {number} i Posición en la tabla (la usa React como `key`).
 	 */
-	function defectList(props, i) {
-		/* no estoy usando seccion porque de momento no lo quiero en el render, 
-		pero lo dejo por si algún día pinta que aparezca */
-		const {grupo, seccion, desc, sev} = props;
-		let severityColour;
-		switch (sev) {
-			case 'Leve':
-				severityColour = 'yellow';
-				break;
-			case 'Moderado':
-				severityColour = 'orange';
-				break;
-			case 'Grave':
-				severityColour = 'black';
-				break;
-			default:
-				severityColour = 'varios';
-		}
+	function filaDeDefecto(defecto, i) {
+		const { grupo, seccion, desc, sev } = defecto;
+		const color = COLOR_DE_SEVERIDAD[sev] ?? 'varios'; // 'varios' = notas
 
 		return (
 			<tr className={`item-lista`} key={i}>
-				<td className={`grupo-col ${severityColour}`}>{grupo}</td>
-				<td className={`seccion-col ${severityColour}`}>{seccion}</td>
-				<td className={`descripcion-col ${severityColour}`}>{desc}</td>
-				<td className={`severidad-col ${severityColour}`}>{sev}</td>
+				<td className={`grupo-col ${color}`}>{grupo}</td>
+				<td className={`seccion-col ${color}`}>{seccion}</td>
+				<td className={`descripcion-col ${color}`}>{desc}</td>
+				<td className={`severidad-col ${color}`}>{sev}</td>
 				<td className="phantom-col"></td>
 				<td className="erase-btn-ctn">
-					<button className="erase-btn" onClick={() => eraseDefect(i)}>
+					<button className="erase-btn" onClick={() => eraseDefect(defecto)}>
 						<img className="trash-can" src={trashCan} alt="Trash-can" />
 					</button>
 				</td>
@@ -149,6 +174,7 @@ function DefectList(props) {
 
 	return (
 		<>
+			{/* --- Tabla de defectos (se imprime) -------------------------- */}
 			<table className="lista-final print">
 				<thead>
 					<tr className="lista-headers">
@@ -160,33 +186,25 @@ function DefectList(props) {
 						<th className="quitar-col">Quitar</th>
 					</tr>
 				</thead>
-				<tbody>
-					{lista
-						.sort(function (a, b) {
-							if (a.Ord !== b.Ord) return b.Ord - a.Ord;
-							if (a.grupo !== b.grupo) return a.grupo > b.grupo ? 1 : -1;
-							if (a.seccion !== b.seccion)
-								return a.seccion > b.seccion ? 1 : -1;
-							return a.desc > b.desc ? 1 : -1;
-						}) //tertiary operators used to compare numbers instead of string lenght
-						.map(defectList)}
-				</tbody>
+				{/* Se ordena una copia: `sort` modifica el array, y el estado de
+				    React no se debe modificar directamente. */}
+				<tbody>{[...lista].sort(ordenDeLaLista).map(filaDeDefecto)}</tbody>
 			</table>
+
+			{/* --- Formulario para agregar defectos (no se imprime) -------- */}
 			<form className="form-radio-ext" id="no-print3">
+				{/* 1. Severidad */}
 				<h2>Severidad</h2>
 				<div className="btn-package severity-c">
-					{radioGeneratorArray.severity.map((item, i) => (
-						<label
-							className={`btn-inside ${item.class}`}
-							htmlFor={item.value}
-							key={item.value}>
+					{radioGeneratorArray.severity.map((item) => (
+						<label className={`btn-inside ${item.class}`} htmlFor={item.value} key={item.value}>
 							<input
 								type="radio"
 								className="rad-c"
 								name="severity"
 								id={item.value}
 								value={item.value}
-								checked={severidad.value === item.value} //determines visual efect of checked
+								checked={severidad.value === item.value} // marca visualmente la opción elegida
 								onChange={() => handleSeveridad(item)}
 							/>
 							{item.label}
@@ -197,36 +215,31 @@ function DefectList(props) {
 					Copiar descripciones para SIRTO
 					<img className="reset-img" src={copyBtn} alt="copy description" />
 				</div>
+
 				<div className="variable-btn">
+					{/* 2. Grupo (más la opción especial "*Notas adicionales") */}
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{tipoArray.grupo
-							.sort(function (a, b) {
-								if (a.label !== b.label);
-								return a.label > b.label ? 1 : -1;
-							})
-							.map((item, i) => (
-								<label
-									className={
-										grupo.value === item.value ? 'radio-checked ' : 'focus'
-									}
-									htmlFor={item.value}
-									key={item.value}>
-									<input
-										type="radio"
-										className="rad-c"
-										name="group"
-										id={item.value}
-										value={item.value}
-										checked={grupo.value === item.value}
-										onChange={() => handleGrupo(item)}
-									/>
-									{item.label}
-								</label>
-							))}
-						<label
-							className={grupo.value === 'note' ? 'radio-checked' : 'focus'}
-							htmlFor="note">
+						{[...tipoArray.grupo].sort(porEtiqueta).map((item) => (
+							<label
+								className={grupo.value === item.value ? 'radio-checked ' : 'focus'}
+								htmlFor={item.value}
+								key={item.value}>
+								<input
+									type="radio"
+									className="rad-c"
+									name="group"
+									id={item.value}
+									value={item.value}
+									checked={grupo.value === item.value}
+									onChange={() => handleGrupo(item)}
+								/>
+								{item.label}
+							</label>
+						))}
+						{/* Notas: elige de una vez grupo, sección 'Varios' y
+						    descripción 'Otro', y se escribe en "Defecto no listado". */}
+						<label className={grupo.value === 'note' ? 'radio-checked' : 'focus'} htmlFor="note">
 							<input
 								type="radio"
 								name="group"
@@ -235,45 +248,38 @@ function DefectList(props) {
 								checked={grupo.value === 'note'}
 								className="rad-c"
 								onChange={() => {
-									handleGrupo({value: 'note', label: 'Notas adicionales'});
-									handleSeccion({value: 'misc', label: 'Varios'});
-									handleDescripcion({value: 'otro', label: 'Otro'});
+									handleGrupo({ value: 'note', label: 'Notas adicionales' });
+									handleSeccion({ value: 'misc', label: 'Varios' });
+									handleDescripcion({ value: 'otro', label: 'Otro' });
 								}}
 							/>
 							<b>*Notas adicionales</b>
 						</label>
 					</div>
+
+					{/* 3. Sección del grupo elegido */}
 					<div className="btn-package col-class section-c">
 						<h3>Sección</h3>
 						{grupo.value !== 'note' ? (
-							section
-								.sort(function (a, b) {
-									if (a.label !== b.label);
-									return a.label > b.label ? 1 : -1;
-								})
-								.map((item, i) => (
-									<label
-										className={
-											seccion.value === item.value ? 'radio-checked' : 'focus'
-										}
-										htmlFor={item.value}
-										key={item.value}>
-										<input
-											type="radio"
-											className="rad-c"
-											name="section"
-											id={item.value}
-											value={item.value}
-											checked={seccion.value === item.value}
-											onChange={() => handleSeccion(item)}
-										/>
-										{item.label}
-									</label>
-								))
+							[...secciones].sort(porEtiqueta).map((item) => (
+								<label
+									className={seccion.value === item.value ? 'radio-checked' : 'focus'}
+									htmlFor={item.value}
+									key={item.value}>
+									<input
+										type="radio"
+										className="rad-c"
+										name="section"
+										id={item.value}
+										value={item.value}
+										checked={seccion.value === item.value}
+										onChange={() => handleSeccion(item)}
+									/>
+									{item.label}
+								</label>
+							))
 						) : (
-							<label
-								className={seccion.value === 'misc' ? 'radio-checked' : 'focus'}
-								htmlFor="misc">
+							<label className={seccion.value === 'misc' ? 'radio-checked' : 'focus'} htmlFor="misc">
 								<input
 									type="radio"
 									name="section"
@@ -281,49 +287,36 @@ function DefectList(props) {
 									value="misc"
 									checked={seccion.value === 'misc'}
 									className="rad-c"
-									onChange={() =>
-										handleSeccion({value: 'misc', label: 'Varios'})
-									}
+									onChange={() => handleSeccion({ value: 'misc', label: 'Varios' })}
 								/>
 								<b>Varios</b>
 							</label>
 						)}
 					</div>
+
+					{/* 4. Descripción de la sección elegida, más "Otros" */}
 					<div className="btn-package col-class description-c">
 						<h3>Descripción</h3>
 						{seccion.value !== 'misc' &&
-							description
-								.sort(function (a, b) {
-									if (a.label !== b.label);
-									return a.label > b.label ? 1 : -1;
-								})
-								.map((item, i) => (
-									<label
-										className={
-											descripcion.value === item.value
-												? 'radio-checked'
-												: 'focus'
-										}
-										htmlFor={item.value}
-										key={item.value}>
-										<input
-											type="radio"
-											className="rad-c"
-											name="description"
-											id={item.value}
-											value={item.value}
-											checked={descripcion.value === item.value}
-											onChange={() => handleDescripcion(item)}
-										/>
-										{item.label}
-									</label>
-								))}
+							[...descripciones].sort(porEtiqueta).map((item) => (
+								<label
+									className={descripcion.value === item.value ? 'radio-checked' : 'focus'}
+									htmlFor={item.value}
+									key={item.value}>
+									<input
+										type="radio"
+										className="rad-c"
+										name="description"
+										id={item.value}
+										value={item.value}
+										checked={descripcion.value === item.value}
+										onChange={() => handleDescripcion(item)}
+									/>
+									{item.label}
+								</label>
+							))}
 						{seccion.value.length > 0 && (
-							<label
-								className={
-									descripcion.value === 'otro' ? 'radio-checked' : 'focus'
-								}
-								htmlFor="otro">
+							<label className={descripcion.value === 'otro' ? 'radio-checked' : 'focus'} htmlFor="otro">
 								<input
 									type="radio"
 									name="description"
@@ -331,20 +324,20 @@ function DefectList(props) {
 									value="otro"
 									checked={descripcion.value === 'otro'}
 									className="rad-c"
-									onChange={() =>
-										handleDescripcion({value: 'otro', label: 'Otro'})
-									}
+									onChange={() => handleDescripcion({ value: 'otro', label: 'Otro' })}
 								/>
 								<b>Otros</b>
 							</label>
 						)}
 					</div>
 				</div>
+
+				{/* Texto libre para "Otros" y para las notas */}
 				<h2 className="unlisted-defect"> Defecto no listado</h2>
 				<div className="unlisted-ctn">
 					<label htmlFor="unlisted-defect" className="unlisted-defect">
-						Seleccióne grupo al que pertenece la falla, luego el seleccione la
-						opción "Otros" y finalmente escriba el defecto:
+						Seleccióne grupo al que pertenece la falla, luego el seleccione la opción "Otros" y
+						finalmente escriba el defecto:
 					</label>
 					<textarea
 						name="unlisted-defect"

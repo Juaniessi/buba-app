@@ -21,7 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-src/components/compareFiles/.~lock.codigos Ultimate2020 (1).xlsx\#
+# CSS que genera la extensión "Live Sass Compiler" de VS Code. Ya no hacen
+# falta: Vite compila los .scss directamente.
+src/styles/*.css
+src/styles/*.css.map
+
+# Archivos temporales de LibreOffice al abrir una planilla (por ejemplo en docs/)
+.~lock.*#
 
 # Claude Code (worktrees y config local)
 .claude/

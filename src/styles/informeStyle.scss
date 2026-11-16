@@ -1,3 +1,23 @@
+// =============================================================================
+//  informeStyle.scss — El informe impreso
+//
+//  El informe es una imagen (src/assets/informe-img/*.svg, de 700 px de ancho)
+//  con los casilleros ya dibujados. Cada valor se ubica ENCIMA de su casillero
+//  con position: absolute y coordenadas en píxeles:
+//      top  = distancia desde el borde de arriba del informe
+//      left = distancia desde el borde izquierdo
+//  medidas desde la esquina del informe (.finalReport).
+//
+//  Para mover un valor: buscar su clase (la que figura en reportArrays.js, por
+//  ejemplo 'front-left' dentro de '.suspention') y cambiar top/left. Las
+//  clases que terminan en -eval son el cuadradito con la calificación
+//  (A/L/M/G) que va al lado de cada valor.
+//
+//  Si algún día se cambia el dibujo de fondo, hay que revisar todas estas
+//  coordenadas.
+// =============================================================================
+//
+// Fuentes en negrita para las fechas. La normal (Roboto) está en style.scss.
 @font-face {
 	font-family: 'RobotoBold';
 	src: local('RobotoBold'), url(../assets/Roboto-Bold.ttf) format('truetype');
@@ -8,14 +28,17 @@
 	src: local('RobotoBlack'), url(../assets/Roboto-Black.ttf) format('truetype');
 }
 
+// --- El informe ---------------------------------------------------------------
 .finalReport {
 	position: relative;
+	// Dibujo de fondo (detrás de todo).
 	.report-img {
 		margin: 10px 0;
 		border: solid black 1px;
 		width: 700px;
 		z-index: -1;
 	}
+	// Foto del vehículo, en el recuadro de arriba a la derecha.
 	.car-photo {
 		position: absolute;
 		width: 188px;
@@ -23,6 +46,7 @@
 		left: 495px;
 	}
 
+	// Todos los valores (<p>) y calificaciones (<span>) van con posición fija.
 	p {
 		position: absolute;
 		font-size: 0.7rem;
@@ -38,6 +62,7 @@
 		border: 0.5px black solid;
 		border-radius: 2.5px;
 	}
+	// Fecha de la revisión y de vencimiento, en la franja de arriba.
 	.date {
 		width: auto;
 		color: white;
@@ -54,6 +79,7 @@
 			font-size: 0.75rem;
 		}
 	}
+	// Patente, marca, modelo y kilómetros.
 	.header-info {
 		.plate {
 			top: 138px;
@@ -72,6 +98,7 @@
 			left: 433px;
 		}
 	}
+	// Alineación de cada eje.
 	.alineation {
 		.front-al {
 			top: 226px;
@@ -90,6 +117,7 @@
 			left: 355px;
 		}
 	}
+	// Peso de cada rueda.
 	.weight {
 		.front-left {
 			top: 285px;
@@ -108,6 +136,7 @@
 			left: 379px;
 		}
 	}
+	// Rendimiento de la suspensión de cada rueda.
 	.suspention {
 		.front-left {
 			top: 305px;
@@ -142,6 +171,9 @@
 			left: 410px;
 		}
 	}
+	// Frenos: rendimiento, diferencia entre lados, fuerza de cada rueda,
+	// resistencia a la rodadura y ovalidad. Filas: front = eje delantero,
+	// rear = trasero, hand = freno de mano.
 	.brake {
 		.performance {
 			.front {
@@ -314,6 +346,7 @@
 			}
 		}
 	}
+	// Luces: intensidad (baja, alta, auxiliar) y alineación de los faros.
 	.lux-meter {
 		.intensity {
 			.left-low {
@@ -400,6 +433,7 @@
 			}
 		}
 	}
+	// Ruido.
 	.decibel-meter {
 		.sound-int {
 			top: 472px;
@@ -410,6 +444,7 @@
 			left: 607px;
 		}
 	}
+	// Gases (motores nafteros): CO, HC y NOx (este último no se muestra hoy).
 	.gases {
 		.CO {
 			top: 534px;
@@ -436,6 +471,7 @@
 			left: 607px;
 		}
 	}
+	// Opacidad (motores diésel).
 	.opacimeter {
 		.opacity {
 			top: 620px;
@@ -447,6 +483,8 @@
 		}
 	}
 
+	// Colores de las calificaciones: G (grave), M (moderado), L (leve).
+	// La A (apto) va sin color.
 	.severe {
 		background-color: rgba(0, 0, 0, 0.5);
 		color: white;
@@ -458,6 +496,7 @@
 	.minor {
 		background-color: rgba(255, 240, 0, 0.5);
 	}
+	// Cartel "Resultado RTO: ..." (su color sale de style.scss: .Apto, etc.).
 	.result-rto {
 		top: 240px;
 		left: 20px;
@@ -467,10 +506,9 @@
 		font-weight: bold;
 	}
 
-	
-	
 }
 
+// --- Botones de arriba del informe (no se imprimen) --------------------------
 .insert-btn-cont {
 	display: flex;
 	width: 700px;
@@ -484,6 +522,7 @@
 	cursor: pointer;
 }
 
+// Botón rojo "Reiniciar todos los campos".
 .reset-btn {
 	position: absolute;
 	left: 270px;
@@ -505,10 +544,8 @@
 	font-size: large;
 }
 
-/* .insert-btn-cont{
-	border: solid 1px black;
-} */
-
+// Botones con borde y sombra (cargar .txt, cargar foto, imprimir...).
+// Al hacer clic se "hunden" (:active).
 .wrap-label {
 	display: flex;
 	align-items: center;
@@ -526,6 +563,7 @@
 	transform: translateY(4px);
 }
 
+// Los <input type="file"> reales se ocultan: se usa el botón de arriba.
 .btn-input {
 	display: none;
 }
@@ -534,6 +572,7 @@
 	width: 50px;
 }
 
+// Opción elegida (fondo verde claro).
 .radio-checked {
 	cursor: pointer;
 	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
@@ -541,6 +580,7 @@
 	background-color: rgb(204, 255, 204);
 }
 
+// Tabla de referencias de severidades, al pie del informe.
 .references {
 	width: 660px;
 	position: absolute;
@@ -558,6 +598,7 @@
 	background-color: white;
 }
 
+// Botón "Copiar descripciones para SIRTO" (no se imprime).
 .copyDesc-btn {
 	position: absolute;
 	left: 515px;
@@ -567,6 +608,7 @@
 	font-weight: 500;
 }
 
+// Ayuda que aparece al pasar el mouse sobre las vigencias.
 /* Contenedor del tooltip */
 .tooltip {
 	position: relative;
@@ -593,6 +635,7 @@
 	visibility: visible;
 }
 
+// Marca de agua "Transporte de pasajeros", en diagonal sobre el informe.
 .marca-de-agua{
 	position: absolute;
 	top: 450px;

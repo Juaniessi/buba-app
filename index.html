@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  Página base de la app. Vite la usa como punto de partida: al compilar
+  (npm run build) agrega acá los archivos de la app y deja todo en build/.
+  React dibuja la app entera dentro de <div id="root"> (ver src/index.jsx).
+-->
+<html lang="es">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="/favicon.ico" />
@@ -7,18 +12,15 @@
 		<meta name="theme-color" content="#000000" />
 		<meta
 			name="description"
-			content="Web site created using create-react-app"
+			content="Generador de informes de Revisión Técnica Obligatoria a partir del .txt de la línea"
 		/>
 		<link rel="apple-touch-icon" href="/logo192.png" />
-		<!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+		<!-- Datos para instalar la página como app en el celular o la PC -->
 		<link rel="manifest" href="/manifest.json" />
 		<title>Informes Bubatec</title>
 	</head>
 	<body>
-		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<noscript>Para usar esta página hay que activar JavaScript en el navegador.</noscript>
 		<div id="root"></div>
 		<script type="module" src="/src/index.jsx"></script>
 	</body>

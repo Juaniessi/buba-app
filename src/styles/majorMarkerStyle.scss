@@ -1,14 +1,21 @@
+// =============================================================================
+//  majorMarkerStyle.scss — Asteriscos sobre la rueda que frena menos
+// =============================================================================
+//  Los dibuja MajorMarker.jsx. Igual que los valores del informe (ver
+//  informeStyle.scss), se ubican con position: absolute en píxeles sobre el
+//  dibujo del vehículo.
+//
+//  La fuente Roboto se declara una sola vez, en style.scss.
+// =============================================================================
+
+// Los asteriscos son solo una ayuda en pantalla: no se imprimen.
 @media print {
 	#no-print4 {
 		display: none;
 	}
 }
 
-@font-face {
-	font-family: 'Roboto';
-	src: local('Roboto'), url(../assets/Roboto-Regular.ttf) format('truetype');
-}
-
+// Mostrar u ocultar. MajorMarker.jsx pone una u otra clase en cada asterisco.
 .visible {
 	display: flex;
 }
@@ -26,6 +33,7 @@
 	height: 20px;
 }
 
+// --- Posición: fila (eje) ----------------------------------------------------
 .front-brake {
 	top: 365px;
 }
@@ -36,6 +44,7 @@
 	top: 615px;
 }
 
+// --- Posición: columna (lado) ------------------------------------------------
 .left-brake {
 	left: 208px;
 }

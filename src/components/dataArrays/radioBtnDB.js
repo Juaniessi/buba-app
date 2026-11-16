@@ -1,3 +1,30 @@
+/*
+ * =============================================================================
+ *  radioBtnDB.js — Opciones de los botones del formulario
+ * =============================================================================
+ *
+ *  Cada lista tiene las opciones de un grupo de botones (radio buttons):
+ *    - value:   el valor que usa el código (por ejemplo 'Camion').
+ *    - label:   el texto que se ve en pantalla (por ejemplo 'Camión').
+ *    - tooltip: (solo vigencias) la ayuda que aparece al pasar el mouse.
+ *    - order / class: (solo severidades) orden en la lista de defectos y color.
+ *
+ *  Listas:
+ *    type               tipo de vehículo
+ *    severity           severidad del defecto (Leve, Moderado, Grave)
+ *    engineType         motor de moto (4 o 2 tiempos)
+ *    truckSize          tamaño de camión / colectivo
+ *    transmisionType    tracción de auto / camioneta (4x2 o 4x4)
+ *    rtoType            RTO normal o transporte de pasajeros
+ *    dateCalc           resultado (Apto, Condicional, Rechazado, Solo informe)
+ *    selectValidity     vigencias posibles en RTO normal
+ *    selectValidityTra  vigencias posibles en transporte de pasajeros
+ *
+ *  Ojo: los value se usan también como id de los botones en la página, así que
+ *  no conviene repetirlos entre listas distintas.
+ *
+ * =============================================================================
+ */
 const radioGeneratorArray = {
 	type: [
 		{

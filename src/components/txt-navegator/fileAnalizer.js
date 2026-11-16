@@ -1,3 +1,38 @@
+/*
+ * =============================================================================
+ *  fileAnalizer.js — Lector del archivo .txt que devuelve la línea de RTO
+ * =============================================================================
+ *
+ *  Los equipos de la línea de revisión generan un .txt con una línea por
+ *  medición, del estilo "código=valor". Por ejemplo:
+ *
+ *      [HEADER]
+ *      ; Datos Vehículo
+ *      10100=KMX-653        ← patente
+ *      10200=TOYOTA         ← marca
+ *      50040=57,2763942345  ← rendimiento del freno del eje delantero
+ *
+ *  Este archivo convierte ese texto en un objeto de JavaScript agrupado por
+ *  equipo / sección, fácil de usar desde React:
+ *
+ *      datos.header.patente                → "KMX-653"
+ *      datos.frenosEje_1.rendimientoDelEje → 57.28
+ *
+ *  Puntos de entrada:
+ *    - leerArchivoTxt(archivo): la usa la app; recibe el archivo elegido.
+ *    - procesarTextoTxt(texto): la usan los tests; recibe el texto ya leído.
+ *
+ *  El proceso tiene cuatro pasos, cada uno en su propia función más abajo:
+ *    1. separarCodigosYValores: limpia el texto y arma la lista código → valor.
+ *    2. agruparPorSeccion:      reparte los códigos en secciones (header,
+ *                               frenos, luxómetro...) con nombres legibles.
+ *    3. redondearOvalidades y año de fabricación: ajustes de números.
+ *    4. convertirFechas:        pasa las fechas de texto a objetos Date.
+ *
+ *  Qué código corresponde a qué nombre está en constantCollections.js
+ *  (por ejemplo, headerMap dice que "10100" es "patente").
+ * =============================================================================
+ */
 import {
 	categories,
 	headerMap,
@@ -27,1509 +62,422 @@ import {
 	lineaDePruebaMap,
 	estadisticaDePuestosMap,
 	fotovalidacionMap,
-	headerKeys,
-	alineacionKeys,
-	suspencionEjeDelanteroKeys,
-	suspencionEjeTraseroKeys,
-	opacimetroKeys,
-	analizadorDeGasesKeys,
-	frenosEje_1Keys,
-	frenosEje_2Keys,
-	frenosEje_3Keys,
-	frenosEje_4Keys,
-	frenosEje_5Keys,
-	frenosEje_6Keys,
-	frenoDeManoEje_1Keys,
-	frenoDeManoEje_2Keys,
-	frenoDeManoEje_3Keys,
-	frenoDeManoEje_4Keys,
-	frenoDeManoEje_5Keys,
-	frenoDeManoEje_6Keys,
-	sonometroKeys,
-	luxometroKeys,
-	inspeccionVisualKeys,
-	inspeccionDHKeys,
-	frenosKeys,
-	valoresCalibradosKeys,
-	lineaDePruebaKeys,
-	estadisticaDePuestosKeys,
-	fotovalidacionKeys,
-	profundidaDeNeumaticosKeys,
-	collectionOfVariables,
 	profundidaDeNeumaticosMap,
-	pruebasKeys,
 	pruebasMap,
-	frenosTotalKeys,
 	frenosTotalMap,
-	bancoDeRodaduraKeys,
 	banocoDeRodaduraMap,
-	ingenieriaKeys,
 	ingenieriaMap,
 } from './constantCollections.js';
 import {
-	SEMICOLON,
 	EMPTY,
 	EMPTY_SPACE,
 	NEW_LINE,
-	TABS,
-	intHeader,
-	intAlineacion,
-	intSuspencionEjeDelantero,
-	intSuspencionEjeTrasero,
-	intOpacimetro,
-	intAnalizadorDeGases,
-	intFrenosEje_1,
-	intFrenosEje_2,
-	intFrenosEje_3,
-	intFrenosEje_4,
-	intFrenosEje_5,
-	intFrenosEje_6,
-	intFrenoDeManoEje_1,
-	intFrenoDeManoEje_2,
-	intFrenoDeManoEje_3,
-	intFrenoDeManoEje_4,
-	intFrenoDeManoEje_5,
-	intFrenoDeManoEje_6,
-	intSonometro,
-	intLuxometro,
-	intInspeccionVisual,
-	intInspeccionDH,
-	intFrenos,
-	intValoresCalibrados,
-	intLineaDePrueba,
-	intEstadisticaDePuesto,
-	intFotovalidacion,
-	TWO_INT,
-	intPruebas,
-	intFrenosTotal,
-	intProfundidaDeNeumaticos,
-	intBancoDeRodadura,
-	intIngenieria,
+	SEMICOLON,
+	HEADER,
+	ALINEACION,
+	SUSPENSION_EJE_DELANTERO,
+	SUSPENSION_EJE_TRASERO,
+	OPACIMETRO,
+	ANALIZADOR_DE_GASES,
+	FRENOS_EJE_1,
+	FRENOS_EJE_2,
+	FRENOS_EJE_3,
+	FRENOS_EJE_4,
+	FRENOS_EJE_5,
+	FRENOS_EJE_6,
+	FRENO_DE_MANO_EJE_1,
+	FRENO_DE_MANO_EJE_2,
+	FRENO_DE_MANO_EJE_3,
+	FRENO_DE_MANO_EJE_4,
+	FRENO_DE_MANO_EJE_5,
+	FRENO_DE_MANO_EJE_6,
+	SONOMETRO,
+	LUXOMETRO,
+	INSPECCION_VISUAL,
+	INSPECCION_DH,
+	FRENOS,
+	VALORES_CALIBRADOS,
+	LINEA_DE_PRUEBA,
+	ESTADISTICA_DE_PUESTOS,
+	FOTOVALIDACION,
+	PROFUNDIDAD_DE_NEUMATICOS,
+	PRUEBAS,
+	FRENOS_TOTAL,
+	BANCO_DE_RODADURA,
+	INGENIERIA,
 } from './constantVariables.js';
-import {structureMap} from './globalVariables.js';
+
+// =============================================================================
+//  Conversiones de valores
+// =============================================================================
+//  En el .txt todo es texto y los decimales vienen con coma ("57,27").
+//  Estas funciones lo pasan a número. Si el valor no es un número (por
+//  ejemplo, viene vacío), devuelven '' (EMPTY) para que en el informe quede
+//  el casillero en blanco en lugar de "NaN".
 
 /**
- *   Global Variable scopped to this file only
- *   Is used to store the value of the read file.
- *   While it's cleaned trimed parsed and deconstructed
- */
-let singleFileData = [];
-
-/**
- *  Global Variable scopped to this file only
- *  Will hold data from the txt file
- *  already parsed, cleaned and deconstructed.
- */
-let mapSingleFile = new Map();
-
-/**
- *  Global Variable scopped to this file only
- *  Will hold data from the txt file as object
- */
-let fileAsObject;
-
-// Handle multiple fileuploads
-/* document.getElementById('file-input').addEventListener(
-	'change', */
-export function procesTxt(ev) {
-	let files = ev.currentTarget.files;
-	let readers = [];
-
-	// Abort if there were no files selected
-	if (!files.length) return;
-
-	// Store promises in array
-	for (let i = 0; i < files.length; i++) {
-		readers.push(readFileAsText(files[i]));
-	}
-
-	singleFileData = [];
-
-	// Trigger Promises
-	Promise.all(readers).then((values) => {
-		// Values will be an array that contains an item
-		// with the text of every selected file
-		// ["File1 Content", "File2 Content" ... "FileN Content"]
-		singleFileData.push(values.toString());
-	});
-
-	setTimeout(function () {
-		proccesFileGetJson(true);
-		fileAsObject = proccesFileGetObject();
-
-		window.fileAsObject = fileAsObject;
-		window.fileAsMap = structureMap;
-		return fileAsObject;
-	}, 50);
-}
-
-/**
- * Calls the functions that will process any files stored in singleFileData
- * @returns retrieves the json object
- */
-export function proccesFileGetJson(stringify) {
-	returnSetOfDataSF();
-	populateStructure();
-	return transformMapToJson(stringify);
-}
-
-/**
- * Calls the functions that will process any files stored in singleFileData
- * @returns retrieves the object
- */
-export function proccesFileGetObject() {
-	returnSetOfDataSF();
-	populateStructure();
-	return transformMapToObject();
-}
-
-/**
- * Simple JavaScript Promise that reads a file as text.
+ * Deja el valor tal cual viene en el .txt (para patentes, marcas, fechas...).
  *
- * @param {*} file A file to read
- * @returns returns a promise with the file read
+ * @param {string} valor
+ * @returns {string}
  */
-function readFileAsText(file) {
+function comoTexto(valor) {
+	return valor;
+}
+
+/**
+ * Pasa un texto con coma decimal a número, sin redondear.
+ *
+ * @param {string} valor Por ejemplo "0,04277875".
+ * @returns {number|''} Por ejemplo 0.04277875, o '' si no es un número.
+ */
+function textoANumero(valor) {
+	const numero = parseFloat(String(valor ?? '').replace(',', '.'));
+	return isNaN(numero) ? EMPTY : numero;
+}
+
+/**
+ * Devuelve una función que pasa un texto a número redondeado.
+ *
+ * Se usa así en la tabla de secciones: `comoNumero(2)` significa "convertir
+ * a número con 2 decimales".
+ *
+ * @param {number} decimales Cantidad de decimales a dejar.
+ * @returns {(valor: string) => number|''}
+ */
+function comoNumero(decimales) {
+	return function (valor) {
+		const numero = textoANumero(valor);
+		return numero === EMPTY ? EMPTY : Number(numero.toFixed(decimales));
+	};
+}
+
+// =============================================================================
+//  Tabla de secciones
+// =============================================================================
+
+/**
+ * Cómo se lee cada sección del .txt.
+ *
+ *   - seccion:   nombre de la propiedad en el objeto final (datos.header, ...).
+ *   - nombres:   tabla código → nombre legible (de constantCollections.js).
+ *   - convertir: qué hacer con el valor (dejarlo como texto o pasarlo a número).
+ *
+ * El orden de esta lista es el orden de las propiedades en el objeto final.
+ *
+ * Antes había una función casi idéntica por cada fila de esta tabla
+ * (mapHeader, mapFrenosEje_1, ..., mapIngenieria: unas 30). Ahora todas las
+ * filas las procesa la misma función, agruparPorSeccion.
+ */
+const SECCIONES = [
+	{ seccion: HEADER, nombres: headerMap, convertir: comoTexto },
+	{ seccion: ALINEACION, nombres: alineacionMap, convertir: comoNumero(2) },
+	{ seccion: SUSPENSION_EJE_DELANTERO, nombres: suspencionEjeDelanteroMap, convertir: comoNumero(1) },
+	{ seccion: SUSPENSION_EJE_TRASERO, nombres: suspencionEjeTraseroMap, convertir: comoNumero(1) },
+	{ seccion: OPACIMETRO, nombres: opacimetroMap, convertir: comoNumero(2) },
+	{ seccion: ANALIZADOR_DE_GASES, nombres: analizadorDeGasesMap, convertir: comoNumero(2) },
+	{ seccion: FRENOS_EJE_1, nombres: frenosEje_1Map, convertir: comoNumero(2) },
+	{ seccion: FRENOS_EJE_2, nombres: frenosEje_2Map, convertir: comoNumero(2) },
+	{ seccion: FRENOS_EJE_3, nombres: frenosEje_3Map, convertir: comoNumero(2) },
+	{ seccion: FRENOS_EJE_4, nombres: frenosEje_4Map, convertir: comoNumero(2) },
+	{ seccion: FRENOS_EJE_5, nombres: frenosEje_5Map, convertir: comoNumero(2) },
+	{ seccion: FRENOS_EJE_6, nombres: frenosEje_6Map, convertir: comoNumero(2) },
+	{ seccion: FRENO_DE_MANO_EJE_1, nombres: frenoDeManoEje_1Map, convertir: comoNumero(2) },
+	{ seccion: FRENO_DE_MANO_EJE_2, nombres: frenoDeManoEje_2Map, convertir: comoNumero(2) },
+	{ seccion: FRENO_DE_MANO_EJE_3, nombres: frenoDeManoEje_3Map, convertir: comoNumero(2) },
+	{ seccion: FRENO_DE_MANO_EJE_4, nombres: frenoDeManoEje_4Map, convertir: comoNumero(2) },
+	{ seccion: FRENO_DE_MANO_EJE_5, nombres: frenoDeManoEje_5Map, convertir: comoNumero(2) },
+	{ seccion: FRENO_DE_MANO_EJE_6, nombres: frenoDeManoEje_6Map, convertir: comoNumero(2) },
+	{ seccion: SONOMETRO, nombres: sonometroMap, convertir: comoNumero(2) },
+	{ seccion: LUXOMETRO, nombres: luxometroMap, convertir: comoNumero(2) },
+	{ seccion: INSPECCION_VISUAL, nombres: inspeccionVisualMap, convertir: comoTexto },
+	{ seccion: INSPECCION_DH, nombres: inspeccionDHMap, convertir: comoTexto },
+	{ seccion: FRENOS, nombres: frenosMap, convertir: comoTexto },
+	{ seccion: VALORES_CALIBRADOS, nombres: valoresCalibradosMap, convertir: textoANumero },
+	{ seccion: LINEA_DE_PRUEBA, nombres: lineaDePruebaMap, convertir: comoTexto },
+	{ seccion: ESTADISTICA_DE_PUESTOS, nombres: estadisticaDePuestosMap, convertir: comoTexto },
+	{ seccion: FOTOVALIDACION, nombres: fotovalidacionMap, convertir: comoTexto },
+	{ seccion: PROFUNDIDAD_DE_NEUMATICOS, nombres: profundidaDeNeumaticosMap, convertir: comoTexto },
+	{ seccion: PRUEBAS, nombres: pruebasMap, convertir: comoTexto },
+	{ seccion: FRENOS_TOTAL, nombres: frenosTotalMap, convertir: comoTexto },
+	{ seccion: BANCO_DE_RODADURA, nombres: banocoDeRodaduraMap, convertir: comoTexto },
+	{ seccion: INGENIERIA, nombres: ingenieriaMap, convertir: comoTexto },
+];
+
+/** Secciones de frenos que traen ovalidad (ver redondearOvalidades). */
+const SECCIONES_CON_OVALIDAD = [
+	FRENOS_EJE_1,
+	FRENOS_EJE_2,
+	FRENOS_EJE_3,
+	FRENOS_EJE_4,
+	FRENOS_EJE_5,
+	FRENOS_EJE_6,
+	FRENO_DE_MANO_EJE_1,
+	FRENO_DE_MANO_EJE_2,
+	FRENO_DE_MANO_EJE_3,
+	FRENO_DE_MANO_EJE_4,
+	FRENO_DE_MANO_EJE_5,
+	FRENO_DE_MANO_EJE_6,
+];
+
+/** Cantidad máxima de puestos de la línea que trae el .txt (ver convertirFechas). */
+const CANTIDAD_DE_PUESTOS = 10;
+
+// =============================================================================
+//  Puntos de entrada
+// =============================================================================
+
+/**
+ * Lee un archivo .txt de la línea de RTO y devuelve sus datos como objeto.
+ *
+ * Es una función `async`: quien la llama tiene que usar `await` (o `.then`)
+ * para recibir el resultado. Así el resto de la app espera exactamente lo que
+ * tarda en leerse el archivo, ni más ni menos.
+ *
+ * @param {File} archivo El archivo elegido en el `<input type="file">`.
+ * @returns {Promise<object>} Los datos del .txt agrupados por sección
+ *   (header, alineacion, frenosEje_1, luxometro, etc.).
+ */
+export async function leerArchivoTxt(archivo) {
+	const texto = await leerComoTexto(archivo);
+	return procesarTextoTxt(texto);
+}
+
+/**
+ * Convierte el contenido de un .txt de la línea de RTO en un objeto.
+ *
+ * Es la parte de `leerArchivoTxt` que no depende del navegador: recibe el
+ * texto ya leído. Está separada para poder probarla con tests automáticos
+ * (ver tests/fileAnalizer.test.js).
+ *
+ * No guarda nada entre una llamada y otra: cada archivo se procesa de cero.
+ *
+ * @param {string} texto El contenido completo del .txt.
+ * @returns {object} Los datos agrupados por sección.
+ */
+export function procesarTextoTxt(texto) {
+	const valoresPorCodigo = separarCodigosYValores(texto);
+	const datos = agruparPorSeccion(valoresPorCodigo);
+
+	redondearOvalidades(datos);
+	datos.header.añoDeFabricacion = textoANumero(datos.header.añoDeFabricacion);
+	convertirFechas(datos);
+
+	return datos;
+}
+
+// =============================================================================
+//  Paso 0: leer el archivo
+// =============================================================================
+
+/**
+ * Lee un archivo y devuelve su contenido como texto.
+ *
+ * El navegador lee los archivos de forma asíncrona (no al instante), así que
+ * envolvemos el `FileReader` en una Promesa para poder usarlo con `await`.
+ *
+ * @param {File} archivo El archivo a leer.
+ * @returns {Promise<string>} El contenido. Si falla la lectura, la promesa se
+ *   rechaza (y `leerArchivoTxt` también, para que Main.jsx muestre un aviso).
+ */
+function leerComoTexto(archivo) {
 	return new Promise(function (resolve, reject) {
-		let fr = new FileReader();
-
-		fr.onload = function () {
-			resolve(fr.result);
-		};
-
-		fr.onerror = function () {
-			reject(fr);
-		};
-
-		fr.readAsText(file);
+		const lector = new FileReader();
+		lector.onload = () => resolve(lector.result);
+		lector.onerror = () => reject(lector.error);
+		lector.readAsText(archivo);
 	});
 }
 
-/**
- * Reads an array an normalices the data in it to a map
- * it asumes the array has only one object
- *
- * @returns  the map with normalized uncategorized and deconstructed data.
- */
-function returnSetOfDataSF() {
-	// Abort if there were no files selected
-	if (!singleFileData.length) return;
-
-	//console.log(singleFileData) ; //aca se ve la mugre a limpiar
-
-	let sanitizedFileData = cleanCategories(singleFileData[0]);
-
-	// split by newline separator
-	let firstDivisionArr = sanitizedFileData.split(NEW_LINE);
-
-	// clean empty, semicolons, and blank spaces
-	let secondDivision = cleanElementsOfArray(firstDivisionArr);
-
-	// clean previous map
-	mapSingleFile = new Map();
-
-	secondDivision.forEach(createMap);
-	//console.log(mapSingleFile);
-	//console.log("Termine ^_^ mapSingleFile" + mapSingleFile);
-
-	return mapSingleFile;
-}
-
-function createMap(item, index, arr) {
-	let itemArr = item.split('=');
-
-	mapSingleFile.set(itemArr[0], itemArr[1]);
-}
+// =============================================================================
+//  Paso 1: limpiar el texto y separar código=valor
+// =============================================================================
 
 /**
- * Clean each garbage categories from the file read.
+ * Limpia el texto del .txt y arma una lista código → valor.
  *
- * @param {*} data a stirng of text from the file read.
- * @returns a string of text clean from categories.
+ * Qué hace, en orden:
+ *   1. Borra los títulos de sección ("[HEADER]", "Datos Vehículo", etc.,
+ *      listados en `categories` de constantCollections.js).
+ *   2. Separa el texto en líneas.
+ *   3. A cada línea le saca los espacios y los punto y coma (los comentarios
+ *      del .txt empiezan con ";").
+ *   4. Descarta las líneas vacías.
+ *   5. Separa cada línea en código y valor por el "=".
+ *
+ * Ejemplo: "10100=KMX-653\r\n10200=TOYOTA" → Map { "10100" → "KMX-653",
+ * "10200" → "TOYOTA" }
+ *
+ * Detalles a tener en cuenta (así funcionaba el código original y los tests
+ * dependen de eso):
+ *   - Las líneas se separan por "\r\n" (fin de línea de Windows), que es como
+ *     vienen los archivos de la línea.
+ *   - Se borran TODOS los espacios, también los de adentro de los valores:
+ *     "8/7/2022 12:30:16" queda "8/7/202212:30:16" (ver textoAFecha).
+ *   - Si una línea queda sin "=" (por ejemplo, un comentario), igual entra a la
+ *     lista, con valor undefined. No molesta: no coincide con ningún código.
+ *
+ * @param {string} texto El contenido completo del .txt.
+ * @returns {Map<string, string>} Código → valor, en el orden del archivo.
  */
-function cleanCategories(data) {
-	let result = data !== undefined ? data : '';
+function separarCodigosYValores(texto) {
+	let limpio = texto ?? '';
 
-	for (let i = 0; i < categories.length; i++) {
-		let replaceCategories = categories[i] + '\r\n';
-		result = result.replace(replaceCategories, '');
+	// 1. Títulos de sección. `replace` con texto borra solo la primera
+	//    aparición de cada uno, que es lo que hace falta: aparecen una vez.
+	for (const titulo of categories) {
+		limpio = limpio.replace(titulo + NEW_LINE, '');
 	}
 
-	return result;
-}
+	const valoresPorCodigo = new Map();
 
-/**
- * Clean each element of the array from
- * - semicolons
- * - blank spaces and
- * - new lines at end of file
- * - and empty slots created by new lines at initial split of file
- *
- * @param {*} data an array of splited text by NEW_LINE from the file read
- * @returns a very clean and tidy array, such wow, such clean.
- */
-function cleanElementsOfArray(data) {
-	// Abort if there were no files selected
-	if (!data.length) return;
+	for (const lineaOriginal of limpio.split(NEW_LINE)) {
+		const linea = lineaOriginal
+			.replaceAll(EMPTY_SPACE, '')
+			.replaceAll(SEMICOLON, '')
+			.trim();
 
-	let result = data !== undefined ? data : [];
+		if (!linea) continue; // línea vacía
 
-	for (let i = 0; i < data.length; i++) {
-		result[i] = result[i].replaceAll(EMPTY_SPACE, '');
-		result[i] = result[i].replaceAll(SEMICOLON, '');
-		result[i] = result[i].replaceAll(NEW_LINE, '');
-		result[i] = result[i].trim();
+		const [codigo, valor] = linea.split('=');
+		valoresPorCodigo.set(codigo, valor);
 	}
 
-	result = cleanArrayOfEmpty(result);
-
-	return result;
+	return valoresPorCodigo;
 }
 
+// =============================================================================
+//  Paso 2: repartir los códigos en secciones
+// =============================================================================
+
 /**
+ * Reparte los valores del .txt en secciones con nombres legibles, según la
+ * tabla SECCIONES.
  *
- * Remove empty_SPACE elements and return a new array
+ * Ejemplo: el código "10100" está en headerMap con el nombre "patente", así
+ * que "10100" → "KMX-653" termina en datos.header.patente = "KMX-653".
  *
- * @param {*} dirtyOne the array to clean
- * @returns  A new array with no empty spaces
+ * Las secciones que no tienen ningún dato en el .txt quedan como objeto
+ * vacío ({}), para que el resto de la app pueda preguntar por ellas sin error.
+ *
+ * @param {Map<string, string>} valoresPorCodigo Resultado del paso 1.
+ * @returns {object} Un objeto con una propiedad por sección.
  */
-function cleanArrayOfEmpty(dirtyOne) {
-	let newArray = [];
-	for (let i = 0; i < dirtyOne.length; i++) {
-		if (dirtyOne[i]) {
-			newArray.push(dirtyOne[i]);
+function agruparPorSeccion(valoresPorCodigo) {
+	const datos = {};
+
+	for (const { seccion, nombres, convertir } of SECCIONES) {
+		const valores = {};
+
+		for (const [codigo, valor] of valoresPorCodigo) {
+			if (nombres.has(codigo)) {
+				valores[nombres.get(codigo)] = convertir(valor);
+			}
+		}
+
+		datos[seccion] = valores;
+	}
+
+	return datos;
+}
+
+// =============================================================================
+//  Paso 3: ajustes de números
+// =============================================================================
+
+/**
+ * Normaliza la ovalidad (izquierda y derecha) de cada eje de freno y de freno
+ * de mano, redondeándola a 2 decimales.
+ *
+ * En la práctica los valores ya vienen redondeados del paso 2, así que lo que
+ * cambia es:
+ *   - Si el .txt trae el código pero sin valor (''), queda en 0.
+ *   - Si el .txt no trae el código, queda en '' (casillero en blanco).
+ *
+ * Se mantiene así porque así funcionaba el código original.
+ *
+ * Modifica `datos` directamente (no devuelve nada).
+ *
+ * @param {object} datos Resultado del paso 2.
+ */
+function redondearOvalidades(datos) {
+	const redondear = (valor) => {
+		const numero = Number((valor * 1).toFixed(2));
+		return isNaN(numero) ? EMPTY : numero;
+	};
+
+	for (const seccion of SECCIONES_CON_OVALIDAD) {
+		datos[seccion].ovalidadLadoDerecho = redondear(datos[seccion].ovalidadLadoDerecho);
+		datos[seccion].ovalidadLadoIzquierdo = redondear(datos[seccion].ovalidadLadoIzquierdo);
+	}
+}
+
+// =============================================================================
+//  Paso 4: fechas
+// =============================================================================
+
+/**
+ * Convierte en objetos Date las fechas de entrada y salida de cada puesto de
+ * la línea (estadísticaDePuestos.fechaDeIngresoAlPuesto1 ... Puesto10, y lo
+ * mismo con fechaDeSalidaDelPuesto).
+ *
+ * Reglas (las mismas que tenía el código original):
+ *   - Puesto 1: se convierte siempre (si no vino, queda undefined).
+ *   - Puesto 2: si no vino, se usa la fecha del puesto 1. Pasa con las motos,
+ *     que tienen un solo puesto; Report.jsx usa la del puesto 2 (o la del 3)
+ *     para calcular el vencimiento.
+ *   - Puestos 3 a 10: se convierten solo si vinieron en el .txt.
+ *
+ * Modifica `datos` directamente (no devuelve nada).
+ *
+ * @param {object} datos Resultado de los pasos anteriores.
+ */
+function convertirFechas(datos) {
+	const puestos = datos.estadísticaDePuestos;
+	// Copia con las fechas todavía en texto, para poder usar las del puesto 1
+	// en el puesto 2 aunque el puesto 1 ya se haya convertido.
+	const textos = { ...puestos };
+
+	for (let n = 1; n <= CANTIDAD_DE_PUESTOS; n++) {
+		for (const campo of ['fechaDeIngresoAlPuesto', 'fechaDeSalidaDelPuesto']) {
+			let texto = textos[campo + n];
+
+			if (n === 2 && texto === undefined) {
+				texto = textos[campo + 1];
+			}
+
+			if (n <= 2 || texto !== undefined) {
+				puestos[campo + n] = textoAFecha(texto);
+			}
 		}
 	}
-	return newArray;
 }
+
 /**
- * Populates the structureMap with the data from the txt file stored in mapSinfleFile
+ * Convierte una fecha del .txt en un objeto Date.
  *
- * @returns the structuredMap global object with each generated content replacing the placeholder.
- */
-function populateStructure() {
-	let mappedHeader = new Map();
-	let mappedAlineacion = new Map();
-	let mappedSuspencionEjeDelantero = new Map();
-	let mappedSuspencionEjeTrasero = new Map();
-	let mappedOpacimetro = new Map();
-	let mappedAnalizadorDeGases = new Map();
-	let mappedFrenosEje_1 = new Map();
-	let mappedFrenosEje_2 = new Map();
-	let mappedFrenosEje_3 = new Map();
-	let mappedFrenosEje_4 = new Map();
-	let mappedFrenosEje_5 = new Map();
-	let mappedFrenosEje_6 = new Map();
-	let mappedFrenoDeManoEje_1 = new Map();
-	let mappedFrenoDeManoEje_2 = new Map();
-	let mappedFrenoDeManoEje_3 = new Map();
-	let mappedFrenoDeManoEje_4 = new Map();
-	let mappedFrenoDeManoEje_5 = new Map();
-	let mappedFrenoDeManoEje_6 = new Map();
-	let mappedSonometro = new Map();
-	let mappedLuxometro = new Map();
-	let mappedInspeccionVisual = new Map();
-	let mappedInspeccionDH = new Map();
-	let mappedFrenos = new Map();
-	let mappedValoresCalibrados = new Map();
-	let mappedLineaDePrueba = new Map();
-	let mappedEstadisticaDePuestos = new Map();
-	let mappedFotovalidacion = new Map();
-	let mappedProfundidaDeNeumaticos = new Map();
-	let mappedPrueba = new Map();
-	let mappedFrenosTotal = new Map();
-	let mappedBancoDeRodadura = new Map();
-	let mappedIngenieria = new Map();
-
-	let collectionOfMaps = [
-		mappedHeader,
-		mappedAlineacion,
-		mappedSuspencionEjeDelantero,
-		mappedSuspencionEjeTrasero,
-		mappedOpacimetro,
-		mappedAnalizadorDeGases,
-		mappedFrenosEje_1,
-		mappedFrenosEje_2,
-		mappedFrenosEje_3,
-		mappedFrenosEje_4,
-		mappedFrenosEje_5,
-		mappedFrenosEje_6,
-		mappedFrenoDeManoEje_1,
-		mappedFrenoDeManoEje_2,
-		mappedFrenoDeManoEje_3,
-		mappedFrenoDeManoEje_4,
-		mappedFrenoDeManoEje_5,
-		mappedFrenoDeManoEje_6,
-		mappedSonometro,
-		mappedLuxometro,
-		mappedInspeccionVisual,
-		mappedInspeccionDH,
-		mappedFrenos,
-		mappedValoresCalibrados,
-		mappedLineaDePrueba,
-		mappedEstadisticaDePuestos,
-		mappedFotovalidacion,
-		mappedProfundidaDeNeumaticos,
-		mappedPrueba,
-		mappedFrenosTotal,
-		mappedBancoDeRodadura,
-		mappedIngenieria,
-	];
-
-	/** Generates structure elements to be replaced on the model map */
-	mapSingleFile.forEach(function (item, key, map) {
-		generateAllStructuresOnMap(item, key, map, collectionOfMaps);
-	});
-
-	/** Replace elements in structure map if they where updated, instantiate empty map them if unchanged */
-	for (let i = 0; i < collectionOfMaps.length; i++) {
-		if (collectionOfMaps[i].size > 0) {
-			structureMap.set(collectionOfVariables[i], collectionOfMaps[i]);
-		} else {
-			structureMap.set(collectionOfVariables[i], new Map());
-		}
-	}
-
-	return structureMap;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Constructs the mappedCategories of structureMap
+ * En el .txt las fechas vienen como "8/7/2022 12:30:16" (día/mes/año
+ * hora:minutos:segundos), pero al limpiar el texto se borran los espacios, así
+ * que llegan pegadas: "8/7/202212:30:16". Como el año siempre tiene 4 cifras,
+ * se puede separar la fecha de la hora sin ambigüedad.
  *
- * @param {*} value current value from mapSingleFile
- * @param {*} key current key from mapSingleFile
- * @param {*} map the global object mapSingleFile
- * @param {*} collectionOfMaps the maps that will store the new mapping of elements from.
- */
-function generateAllStructuresOnMap(value, key, map, collectionOfMaps) {
-	mapHeader(key, value, collectionOfMaps[intHeader]);
-	mapAlineacion(key, value, collectionOfMaps[intAlineacion]);
-	mapSuspencionEjeDelantero(
-		key,
-		value,
-		collectionOfMaps[intSuspencionEjeDelantero]
-	);
-	mapSuspencionEjeTrasero(
-		key,
-		value,
-		collectionOfMaps[intSuspencionEjeTrasero]
-	);
-	mapOpacimetro(key, value, collectionOfMaps[intOpacimetro]);
-	mapAnalizadorDeGases(key, value, collectionOfMaps[intAnalizadorDeGases]);
-	mapFrenosEje_1(key, value, collectionOfMaps[intFrenosEje_1]);
-	mapFrenosEje_2(key, value, collectionOfMaps[intFrenosEje_2]);
-	mapFrenosEje_3(key, value, collectionOfMaps[intFrenosEje_3]);
-	mapFrenosEje_4(key, value, collectionOfMaps[intFrenosEje_4]);
-	mapFrenosEje_5(key, value, collectionOfMaps[intFrenosEje_5]);
-	mapFrenosEje_6(key, value, collectionOfMaps[intFrenosEje_6]);
-	mapFrenoDeManoEje_1(key, value, collectionOfMaps[intFrenoDeManoEje_1]);
-	mapFrenoDeManoEje_2(key, value, collectionOfMaps[intFrenoDeManoEje_2]);
-	mapFrenoDeManoEje_3(key, value, collectionOfMaps[intFrenoDeManoEje_3]);
-	mapFrenoDeManoEje_4(key, value, collectionOfMaps[intFrenoDeManoEje_4]);
-	mapFrenoDeManoEje_5(key, value, collectionOfMaps[intFrenoDeManoEje_5]);
-	mapFrenoDeManoEje_6(key, value, collectionOfMaps[intFrenoDeManoEje_6]);
-	mapSonometro(key, value, collectionOfMaps[intSonometro]);
-	mapLuxometro(key, value, collectionOfMaps[intLuxometro]);
-	mapInspeccionVisual(key, value, collectionOfMaps[intInspeccionVisual]);
-	mapInspeccionDH(key, value, collectionOfMaps[intInspeccionDH]);
-	mapFrenos(key, value, collectionOfMaps[intFrenos]);
-	mapValoresCalibrados(key, value, collectionOfMaps[intValoresCalibrados]);
-	mapLineaDePrueba(key, value, collectionOfMaps[intLineaDePrueba]);
-	mapEstadísticaDePuestos(key, value, collectionOfMaps[intEstadisticaDePuesto]);
-	mapFotovalidacion(key, value, collectionOfMaps[intFotovalidacion]);
-	mapProfundidadDeNeumaticos(
-		key,
-		value,
-		collectionOfMaps[intProfundidaDeNeumaticos]
-	);
-	mapPruebas(key, value, collectionOfMaps[intPruebas]);
-	mapFrenosTotal(key, value, collectionOfMaps[intFrenosTotal]);
-	mapBancoDeRodadura(key, value, collectionOfMaps[intBancoDeRodadura]);
-	mapIngenieria(key, value, collectionOfMaps[intIngenieria]);
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the header structure
+ * Día, mes y hora pueden venir con 1 o 2 cifras ("8/7/2022" o "08/07/2022").
  *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapHeader(key, value, mappedObj) {
-	for (let i = 0; i < headerKeys.length; i++) {
-		if (key === headerKeys[i]) {
-			mappedObj.set(headerMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the alineacion structure
+ * La fecha se interpreta en el horario de la PC (el de Argentina).
  *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
+ * @param {string|undefined} texto Por ejemplo "13/9/202212:53:35".
+ * @returns {Date|undefined} La fecha, o undefined si no vino ninguna. Si el
+ *   texto no tiene el formato esperado devuelve una fecha inválida
+ *   (Invalid Date), como hacía el código original.
  */
-function mapAlineacion(key, value, mappedObj) {
-	for (let i = 0; i < alineacionKeys.length; i++) {
-		if (key === alineacionKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(alineacionMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the suspensionEjeDelantero structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedSuspencionEjeDelantero the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapSuspencionEjeDelantero(key, value, mappedSuspencionEjeDelantero) {
-	for (let i = 0; i < suspencionEjeDelanteroKeys.length; i++) {
-		if (key === suspencionEjeDelanteroKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 1);
-
-			mappedSuspencionEjeDelantero.set(
-				suspencionEjeDelanteroMap.get(key),
-				convertedToNum
-			);
-		}
-	}
-	return mappedSuspencionEjeDelantero;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapSuspencionEjeTrasero structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapSuspencionEjeTrasero(key, value, mappedObj) {
-	for (let i = 0; i < suspencionEjeTraseroKeys.length; i++) {
-		if (key === suspencionEjeTraseroKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 1);
-
-			mappedObj.set(suspencionEjeTraseroMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapOpacimetro structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapOpacimetro(key, value, mappedObj) {
-	for (let i = 0; i < opacimetroKeys.length; i++) {
-		if (key === opacimetroKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(opacimetroMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapAnalizadorDeGases structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapAnalizadorDeGases(key, value, mappedObj) {
-	for (let i = 0; i < analizadorDeGasesKeys.length; i++) {
-		if (key === analizadorDeGasesKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(analizadorDeGasesMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapFrenosEje_1 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosEje_1(key, value, mappedObj) {
-	for (let i = 0; i < frenosEje_1Keys.length; i++) {
-		if (key === frenosEje_1Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenosEje_1Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapFrenosEje_2 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosEje_2(key, value, mappedObj) {
-	for (let i = 0; i < frenosEje_2Keys.length; i++) {
-		if (key === frenosEje_2Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenosEje_2Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapFrenosEje_3 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosEje_3(key, value, mappedObj) {
-	for (let i = 0; i < frenosEje_3Keys.length; i++) {
-		if (key === frenosEje_3Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenosEje_3Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapFrenosEje_4 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosEje_4(key, value, mappedObj) {
-	for (let i = 0; i < frenosEje_4Keys.length; i++) {
-		if (key === frenosEje_4Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenosEje_4Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapFrenosEje_5 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosEje_5(key, value, mappedObj) {
-	for (let i = 0; i < frenosEje_5Keys.length; i++) {
-		if (key === frenosEje_5Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenosEje_5Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the mapFrenosEje_6 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosEje_6(key, value, mappedObj) {
-	for (let i = 0; i < frenosEje_6Keys.length; i++) {
-		if (key === frenosEje_6Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenosEje_6Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenoDeManoEje_1 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenoDeManoEje_1(key, value, mappedObj) {
-	for (let i = 0; i < frenoDeManoEje_1Keys.length; i++) {
-		if (key === frenoDeManoEje_1Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenoDeManoEje_1Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenoDeManoEje_2 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenoDeManoEje_2(key, value, mappedObj) {
-	for (let i = 0; i < frenoDeManoEje_2Keys.length; i++) {
-		if (key === frenoDeManoEje_2Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenoDeManoEje_2Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenoDeManoEje_3 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenoDeManoEje_3(key, value, mappedObj) {
-	for (let i = 0; i < frenoDeManoEje_3Keys.length; i++) {
-		if (key === frenoDeManoEje_3Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenoDeManoEje_3Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenoDeManoEje_4 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenoDeManoEje_4(key, value, mappedObj) {
-	for (let i = 0; i < frenoDeManoEje_4Keys.length; i++) {
-		if (key === frenoDeManoEje_4Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenoDeManoEje_4Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenoDeManoEje_5 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenoDeManoEje_5(key, value, mappedObj) {
-	for (let i = 0; i < frenoDeManoEje_5Keys.length; i++) {
-		if (key === frenoDeManoEje_5Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenoDeManoEje_5Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenoDeManoEje_6 structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenoDeManoEje_6(key, value, mappedObj) {
-	for (let i = 0; i < frenoDeManoEje_6Keys.length; i++) {
-		if (key === frenoDeManoEje_6Keys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(frenoDeManoEje_6Map.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the sonometro structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapSonometro(key, value, mappedObj) {
-	for (let i = 0; i < sonometroKeys.length; i++) {
-		if (key === sonometroKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(sonometroMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the luxometro structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapLuxometro(key, value, mappedObj) {
-	for (let i = 0; i < luxometroKeys.length; i++) {
-		if (key === luxometroKeys[i]) {
-			let convertedToNum = stringToNumber(mapSingleFile.get(key), 2);
-
-			mappedObj.set(luxometroMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the inspeccionVisual structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapInspeccionVisual(key, value, mappedObj) {
-	for (let i = 0; i < inspeccionVisualKeys.length; i++) {
-		if (key === inspeccionVisualKeys[i]) {
-			mappedObj.set(inspeccionVisualMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the inspeccionDH structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapInspeccionDH(key, value, mappedObj) {
-	for (let i = 0; i < inspeccionDHKeys.length; i++) {
-		if (key === inspeccionDHKeys[i]) {
-			mappedObj.set(inspeccionDHMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the frenos structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenos(key, value, mappedObj) {
-	for (let i = 0; i < frenosKeys.length; i++) {
-		if (key === frenosKeys[i]) {
-			mappedObj.set(frenosMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the valoresCalibrados structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapValoresCalibrados(key, value, mappedObj) {
-	for (let i = 0; i < valoresCalibradosKeys.length; i++) {
-		if (key === valoresCalibradosKeys[i]) {
-			let convertedToNum = stringToNumberNotFixed(mapSingleFile.get(key));
-
-			mappedObj.set(valoresCalibradosMap.get(key), convertedToNum);
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the lineaDePrueba structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapLineaDePrueba(key, value, mappedObj) {
-	for (let i = 0; i < lineaDePruebaKeys.length; i++) {
-		if (key === lineaDePruebaKeys[i]) {
-			mappedObj.set(lineaDePruebaMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the estadísticaDePuestos structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapEstadísticaDePuestos(key, value, mappedObj) {
-	for (let i = 0; i < estadisticaDePuestosKeys.length; i++) {
-		if (key === estadisticaDePuestosKeys[i]) {
-			mappedObj.set(estadisticaDePuestosMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the fotovalidacion structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFotovalidacion(key, value, mappedObj) {
-	for (let i = 0; i < fotovalidacionKeys.length; i++) {
-		if (key === fotovalidacionKeys[i]) {
-			mappedObj.set(fotovalidacionMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the ProfundidadDeNeumaticos structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapProfundidadDeNeumaticos(key, value, mappedObj) {
-	for (let i = 0; i < profundidaDeNeumaticosKeys.length; i++) {
-		if (key === profundidaDeNeumaticosKeys[i]) {
-			mappedObj.set(profundidaDeNeumaticosMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the Pruebas structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapPruebas(key, value, mappedObj) {
-	for (let i = 0; i < pruebasKeys.length; i++) {
-		if (key === pruebasKeys[i]) {
-			mappedObj.set(pruebasMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the FrenosTotal structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapFrenosTotal(key, value, mappedObj) {
-	for (let i = 0; i < frenosTotalKeys.length; i++) {
-		if (key === frenosTotalKeys[i]) {
-			mappedObj.set(frenosTotalMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the FrenosTotal structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapBancoDeRodadura(key, value, mappedObj) {
-	for (let i = 0; i < bancoDeRodaduraKeys.length; i++) {
-		if (key === bancoDeRodaduraKeys[i]) {
-			mappedObj.set(banocoDeRodaduraMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Function to be called in a for each loop of the global variable mapSingleFile
- * Function that maps the FrenosTotal structure
- *
- * @param {*} key current key from mapSingleFile
- * @param {*} value current value from mapSingleFile
- * @param {*} mappedObj the placeholder for data to be mapped into from data in the mapSingleFile global variable
- * @returns the new constructed map with data from the mapSingleFile global variable
- */
-function mapIngenieria(key, value, mappedObj) {
-	for (let i = 0; i < ingenieriaKeys.length; i++) {
-		if (key === ingenieriaKeys[i]) {
-			mappedObj.set(ingenieriaMap.get(key), mapSingleFile.get(key));
-		}
-	}
-	return mappedObj;
-}
-
-/**
- * Transforms the structureMap into a object
- * And returns it as a JSON
- *
- * @returns Jsonified global variable structureMap.
- */
-function transformMapToJson(Stringify) {
-	let jsonString;
-
-	/** Transform main Map into object */
-	let obj = Object.fromEntries(structureMap);
-
-	/** Transform submap into object and set it to obj */
-	for (let i = 0; i < collectionOfVariables.length; i++) {
-		let internalObj = Object.fromEntries(
-			structureMap.get(collectionOfVariables[i])
-		);
-		let varToSearch = collectionOfVariables[i];
-		obj[varToSearch] = internalObj;
-	}
-
-	jsonString = JSON.stringify(obj); // just the minimized json
-
-	if (Stringify === true) {
-		jsonString = JSON.stringify(obj, null, TABS); // Stringify with tabs
-	}
-
-	return jsonString;
-}
-
-/**
- * Transforms the structureMap into a object
- * And returns it.
- *
- * @returns objectified global variable structureMap.
- */
-function transformMapToObject() {
-	/** Transform main Map into object */
-	let obj = Object.fromEntries(structureMap);
-
-	/** Transform submap into object and set it to obj */
-	for (let i = 0; i < collectionOfVariables.length; i++) {
-		let internalObj = Object.fromEntries(
-			structureMap.get(collectionOfVariables[i])
-		);
-		let varToSearch = collectionOfVariables[i];
-		obj[varToSearch] = internalObj;
-	}
-
-	fixPercentajesInObj(obj);
-	fixStringsToDates(obj);
-
-	console.log(obj);
-
-	return obj;
-}
-
-/**
- * Transforms a String into a number.
- *
- * @param {*} number Number to be transformed.
- * @returns the string transformed into number without rounding or Empty if Nan.
- */
-function stringToNumberNotFixed(number) {
-	let numReady = Number(parseFloat(number.replace(',', '.')));
-
-	if (isNaN(parseFloat(numReady))) {
-		numReady = EMPTY;
-	}
-
-	return numReady;
-}
-
-/**
- * Transform a string into a number rounded to a fixed amount of decimal values.
- *
- * @param {*} number Number to be transformed
- * @param {*} decimalValues Amount of decimal values to round
- * @returns the string transformed into number with rounding or Empty if Nan.
- */
-function stringToNumber(number, decimalValues) {
-	let numReady = Number(
-		parseFloat(number.replace(',', '.')).toFixed(decimalValues)
-	);
-
-	if (isNaN(parseFloat(numReady))) {
-		numReady = EMPTY;
-	}
-
-	return numReady;
-}
-
-/**
- * Transforms a number into a percentual value
- * Removes the NaN values with EMPTY
- *
- * @param {*} number Number to be transformed
- * @param {*} decimalValues Amount of decimal values to round
- * @returns the number as a percentage
- */
-function numberToPercentage(number, decimalValues) {
-	let numReady = Number((number * 1).toFixed(decimalValues));
-
-	if (isNaN(parseFloat(numReady))) {
-		numReady = EMPTY;
-	}
-
-	return numReady;
-}
-
-/**
- * Special transformation into percentages to specific values of each map in the transformed obj
- *
- * @param {*} obj the structureMap transformed into obj
- */
-function fixPercentajesInObj(obj) {
-	let freno1Ovalidad1 = obj.frenosEje_1.ovalidadLadoDerecho;
-	let freno1Ovalidad2 = obj.frenosEje_1.ovalidadLadoIzquierdo;
-	obj.frenosEje_1.ovalidadLadoDerecho = numberToPercentage(
-		freno1Ovalidad1,
-		TWO_INT
-	);
-
-	obj.frenosEje_1.ovalidadLadoIzquierdo = numberToPercentage(
-		freno1Ovalidad2,
-		TWO_INT
-	);
-
-	let freno2Ovalidad1 = obj.frenosEje_2.ovalidadLadoDerecho;
-	let freno2Ovalidad2 = obj.frenosEje_2.ovalidadLadoIzquierdo;
-	obj.frenosEje_2.ovalidadLadoDerecho = numberToPercentage(
-		freno2Ovalidad1,
-		TWO_INT
-	);
-	obj.frenosEje_2.ovalidadLadoIzquierdo = numberToPercentage(
-		freno2Ovalidad2,
-		TWO_INT
-	);
-
-	let freno3Ovalidad1 = obj.frenosEje_3.ovalidadLadoDerecho;
-	let freno3Ovalidad2 = obj.frenosEje_3.ovalidadLadoIzquierdo;
-	obj.frenosEje_3.ovalidadLadoDerecho = numberToPercentage(
-		freno3Ovalidad1,
-		TWO_INT
-	);
-	obj.frenosEje_3.ovalidadLadoIzquierdo = numberToPercentage(
-		freno3Ovalidad2,
-		TWO_INT
-	);
-
-	let freno4Ovalidad1 = obj.frenosEje_4.ovalidadLadoDerecho;
-	let freno4Ovalidad2 = obj.frenosEje_4.ovalidadLadoIzquierdo;
-	obj.frenosEje_4.ovalidadLadoDerecho = numberToPercentage(
-		freno4Ovalidad1,
-		TWO_INT
-	);
-	obj.frenosEje_4.ovalidadLadoIzquierdo = numberToPercentage(
-		freno4Ovalidad2,
-		TWO_INT
-	);
-
-	let freno5Ovalidad1 = obj.frenosEje_5.ovalidadLadoDerecho;
-	let freno5Ovalidad2 = obj.frenosEje_5.ovalidadLadoIzquierdo;
-	obj.frenosEje_5.ovalidadLadoDerecho = numberToPercentage(
-		freno5Ovalidad1,
-		TWO_INT
-	);
-	obj.frenosEje_5.ovalidadLadoIzquierdo = numberToPercentage(
-		freno5Ovalidad2,
-		TWO_INT
-	);
-
-	let freno6Ovalidad1 = obj.frenosEje_6.ovalidadLadoDerecho;
-	let freno6Ovalidad2 = obj.frenosEje_6.ovalidadLadoIzquierdo;
-	obj.frenosEje_6.ovalidadLadoDerecho = numberToPercentage(
-		freno6Ovalidad1,
-		TWO_INT
-	);
-	obj.frenosEje_6.ovalidadLadoIzquierdo = numberToPercentage(
-		freno6Ovalidad2,
-		TWO_INT
-	);
-
-	let frenoMano1_Ovalidad1 = obj.frenoDeManoEje_1.ovalidadLadoDerecho;
-	let frenoMano1_Ovalidad2 = obj.frenoDeManoEje_1.ovalidadLadoIzquierdo;
-	obj.frenoDeManoEje_1.ovalidadLadoDerecho = numberToPercentage(
-		frenoMano1_Ovalidad1,
-		TWO_INT
-	);
-	obj.frenoDeManoEje_1.ovalidadLadoIzquierdo = numberToPercentage(
-		frenoMano1_Ovalidad2,
-		TWO_INT
-	);
-
-	let frenoMano2_Ovalidad1 = obj.frenoDeManoEje_2.ovalidadLadoDerecho;
-	let frenoMano2_Ovalidad2 = obj.frenoDeManoEje_2.ovalidadLadoIzquierdo;
-	obj.frenoDeManoEje_2.ovalidadLadoDerecho = numberToPercentage(
-		frenoMano2_Ovalidad1,
-		TWO_INT
-	);
-	obj.frenoDeManoEje_2.ovalidadLadoIzquierdo = numberToPercentage(
-		frenoMano2_Ovalidad2,
-		TWO_INT
-	);
-
-	let frenoMano3_Ovalidad1 = obj.frenoDeManoEje_3.ovalidadLadoDerecho;
-	let frenoMano3_Ovalidad2 = obj.frenoDeManoEje_3.ovalidadLadoIzquierdo;
-	obj.frenoDeManoEje_3.ovalidadLadoDerecho = numberToPercentage(
-		frenoMano3_Ovalidad1,
-		TWO_INT
-	);
-	obj.frenoDeManoEje_3.ovalidadLadoIzquierdo = numberToPercentage(
-		frenoMano3_Ovalidad2,
-		TWO_INT
-	);
-
-	let frenoMano4_Ovalidad1 = obj.frenoDeManoEje_4.ovalidadLadoDerecho;
-	let frenoMano4_Ovalidad2 = obj.frenoDeManoEje_4.ovalidadLadoIzquierdo;
-	obj.frenoDeManoEje_4.ovalidadLadoDerecho = numberToPercentage(
-		frenoMano4_Ovalidad1,
-		TWO_INT
-	);
-	obj.frenoDeManoEje_4.ovalidadLadoIzquierdo = numberToPercentage(
-		frenoMano4_Ovalidad2,
-		TWO_INT
-	);
-
-	let frenoMano5_Ovalidad1 = obj.frenoDeManoEje_5.ovalidadLadoDerecho;
-	let frenoMano5_Ovalidad2 = obj.frenoDeManoEje_5.ovalidadLadoIzquierdo;
-	obj.frenoDeManoEje_5.ovalidadLadoDerecho = numberToPercentage(
-		frenoMano5_Ovalidad1,
-		TWO_INT
-	);
-	obj.frenoDeManoEje_5.ovalidadLadoIzquierdo = numberToPercentage(
-		frenoMano5_Ovalidad2,
-		TWO_INT
-	);
-
-	let frenoMano6_Ovalidad1 = obj.frenoDeManoEje_6.ovalidadLadoDerecho;
-	let frenoMano6_Ovalidad2 = obj.frenoDeManoEje_6.ovalidadLadoIzquierdo;
-	obj.frenoDeManoEje_6.ovalidadLadoDerecho = numberToPercentage(
-		frenoMano6_Ovalidad1,
-		TWO_INT
-	);
-	obj.frenoDeManoEje_6.ovalidadLadoIzquierdo = numberToPercentage(
-		frenoMano6_Ovalidad2,
-		TWO_INT
-	);
-
-	let año = obj.header.añoDeFabricacion;
-	obj.header.añoDeFabricacion = stringToNumberNotFixed(año);
-}
-
-/**
- * Transforms strings into dates
- * @param {*} obj the file as object
- */
-function fixStringsToDates(obj) {
-	let dateIn1 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto1;
-	obj.estadísticaDePuestos.fechaDeIngresoAlPuesto1 =
-		getDatesFromString(dateIn1);
-
-	let dateOut1 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto1;
-	obj.estadísticaDePuestos.fechaDeSalidaDelPuesto1 =
-		getDatesFromString(dateOut1);
-
-	/**
-	 * When dates in and out of station 2 are undefined
-	 * they will take the values of in and outs in station 1
-	 */
-
-	let dateIn2 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2;
-	if (dateIn2 === undefined) {
-		dateIn2 = dateIn1;
-	}
-	obj.estadísticaDePuestos.fechaDeIngresoAlPuesto2 =
-		getDatesFromString(dateIn2);
-
-	let dateOut2 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2;
-	if (dateOut2 === undefined) {
-		dateOut2 = dateOut1;
-	}
-	obj.estadísticaDePuestos.fechaDeSalidaDelPuesto2 =
-		getDatesFromString(dateOut2);
-
-	/*
-	 * New Dates
-	 */
-
-	let dateIn3 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto3;
-	if (dateIn3 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto3 =
-			getDatesFromString(dateIn3);
-	}
-
-	let dateOut3 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto3;
-	if (dateOut3 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto3 =
-			getDatesFromString(dateOut3);
-	}
-
-	let dateIn4 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto4;
-	if (dateIn4 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto4 =
-			getDatesFromString(dateIn4);
-	}
-
-	let dateOut4 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto4;
-	if (dateOut4 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto4 =
-			getDatesFromString(dateOut4);
-	}
-
-	let dateIn5 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto5;
-	if (dateIn5 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto5 =
-			getDatesFromString(dateIn5);
-	}
-
-	let dateOut5 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto5;
-	if (dateOut5 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto5 =
-			getDatesFromString(dateOut5);
-	}
-
-	let dateIn6 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto6;
-	if (dateIn6 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto6 =
-			getDatesFromString(dateIn6);
-	}
-
-	let dateOut6 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto6;
-	if (dateOut6 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto6 =
-			getDatesFromString(dateOut6);
-	}
-
-	let dateIn7 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto7;
-	if (dateIn7 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto7 =
-			getDatesFromString(dateIn7);
-	}
-
-	let dateOut7 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto7;
-	if (dateOut7 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto7 =
-			getDatesFromString(dateOut7);
-	}
-
-	let dateIn8 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto8;
-	if (dateIn8 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto8 =
-			getDatesFromString(dateIn8);
-	}
-
-	let dateOut8 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto8;
-	if (dateOut8 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto8 =
-			getDatesFromString(dateOut8);
-	}
-
-	let dateIn9 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto9;
-	if (dateIn9 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto9 =
-			getDatesFromString(dateIn9);
-	}
-
-	let dateOut9 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto9;
-	if (dateOut9 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto9 =
-			getDatesFromString(dateOut9);
-	}
-
-	let dateIn10 = obj.estadísticaDePuestos.fechaDeIngresoAlPuesto10;
-	if (dateIn10 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeIngresoAlPuesto10 =
-			getDatesFromString(dateIn10);
-	}
-
-	let dateOut10 = obj.estadísticaDePuestos.fechaDeSalidaDelPuesto10;
-	if (dateOut10 !== undefined) {
-		obj.estadísticaDePuestos.fechaDeSalidaDelPuesto10 =
-			getDatesFromString(dateOut10);
-	}
-}
-
-/**
- * Parses a string with the format [dd/mm/yyyy HH:mm:ss] or [dd/m/yyyy HH:mm:ss]  into a date
- * value.length === 17 && value[3] === '0' case for single digit hour that comes without 0 befor the number
- *
- * @param {*} value a date in string format. Example: [25/2/2021 09:32:49]
- * @returns A date or undefined if undefined
- */
-function getDatesFromString(value) {
-	if (value === undefined) {
-		return undefined;
-	}
-
-	let day;
-	let month;
-	let year;
-	let hours;
-	let minutes;
-	let seconds;
-
-	let date;
-	let time;
-	let resultDate;
-
-	if (value.length === 16) {
-		date = value.substring(0, 8);
-		time = value.substring(8, 16);
-	}
-
-	if (value.length === 17) {
-		date = value.substring(0, 9);
-		time = value.substring(9, 17);
-	}
-
-  if (value.length === 17 
-    && value[2] === "/" && value[5] === "/"
-    && value[11] === ":" && value[14] === ":" ) {
-    date = value.substring(0, 10);
-    time = value.substring(10, 17);
-  } else if (value.length === 17 
-    && value[2] === "/" && value[4] === "/"
-    && value[11] === ":" && value[14] === ":" ) {
-    date = value.substring(0, 9);
-    time = value.substring(9, 17);
-  }
-
-	if (value.length === 18) {
-		date = value.substring(0, 10);
-		time = value.substring(10, 18);
-	}
-
-	let dateArray = date.split('/');
-
-	day = dateArray[0];
-	month = dateArray[1];
-	year = dateArray[2];
-
-	let timeArray = time.split(':');
-
-	hours = timeArray[0];
-	minutes = timeArray[1];
-	seconds = timeArray[2];
-
-	/*
-  old way
-  if (month - 1 !== NaN) {
-    month = month - 1;
-  }
-
-  resultDate = new Date(year, month, day, hours, minutes, seconds);
-  */
-
-	let monthMinusOne = month - 1;
-
-	if (!isNaN(monthMinusOne)) {
-		month = month - 1;
-	}
-
-	resultDate = new Date(year, month, day, hours, minutes, seconds);
-
-	return resultDate;
+export function textoAFecha(texto) {
+	if (texto === undefined) return undefined;
+
+	//                    día         mes         año     hora        min     seg
+	const partes = /^(\d{1,2})\/(\d{1,2})\/(\d{4})(\d{1,2}):(\d{2}):(\d{2})$/.exec(texto);
+	if (!partes) return new Date(NaN);
+
+	const [, dia, mes, año, hora, minutos, segundos] = partes.map(Number);
+	// En JavaScript los meses van de 0 (enero) a 11 (diciembre).
+	return new Date(año, mes - 1, dia, hora, minutos, segundos);
 }

@@ -1,82 +1,102 @@
-let reportArray;
+/*
+ * =============================================================================
+ *  reportArrays.js — Qué dato del .txt va en cada casillero del informe
+ * =============================================================================
+ *
+ *  El componente Report recorre estas listas para dibujar el informe. Cada
+ *  elemento tiene:
+ *    - ruta:      el valor medido, sacado del objeto que devuelve
+ *                 leerArchivoTxt (por ejemplo datos.luxometro.intensidadBajaIzquierda)
+ *    - class:     la clase CSS del casillero donde se muestra el valor
+ *    - classEval: la clase CSS del casillero que dice si aprueba o no
+ *
+ *  Hay dos versiones porque la moto tiene menos ejes y mediciones. Autos,
+ *  camionetas, camiones y transporte de pasajeros usan la versión de auto.
+ * =============================================================================
+ */
 
 /**
- * Uses the object to create the structure to be read by the maps that fill
- * the HTML structure from "Report"
- * @returns
+ * Arma la estructura del informe para autos, camionetas, camiones y
+ * transporte de pasajeros.
+ *
+ * @param {object} datos Los datos del .txt, tal como los devuelve
+ *   `leerArchivoTxt` (ver txt-navegator/fileAnalizer.js).
+ * @returns {object|undefined} Un objeto con una lista por sección del informe
+ *   (headerInfo, luces, frenos, gases, etc.), o `undefined` si no hay datos.
  */
-function autoReportArrayFiller() {
-	if (window.fileAsObject !== '') {
+function autoReportArrayFiller(datos) {
+	let reportArray;
+	if (datos) {
 		reportArray = {
 			headerInfo: [
 				{
-					ruta: window.fileAsObject.header.patente,
+					ruta: datos.header.patente,
 					class: 'plate',
 				},
 				{
-					ruta: window.fileAsObject.header.marcaDelVehiculo,
+					ruta: datos.header.marcaDelVehiculo,
 					class: 'brand',
 				},
 				{
-					ruta: window.fileAsObject.header.modelo,
+					ruta: datos.header.modelo,
 					class: 'model',
 				},
 				{
-					ruta: window.fileAsObject.header.kilometros,
+					ruta: datos.header.kilometros,
 					class: 'mileage',
 				},
 			],
 			alineation: [
 				{
-					ruta: window.fileAsObject.alineacion.resultadoAlineacionEje1,
+					ruta: datos.alineacion.resultadoAlineacionEje1,
 					class: 'front-al',
 					classEval: 'front-al-eval',
 				},
 				{
-					ruta: window.fileAsObject.alineacion.resultadoAlineacionEje2,
+					ruta: datos.alineacion.resultadoAlineacionEje2,
 					class: 'rear-al',
 					classEval: 'rear-al-eval',
 				},
 			],
 			weight: [
 				{
-					ruta: window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo,
+					ruta: datos.suspensionEjeDelantero.pesoLadoIzquierdo,
 					class: 'front-left',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeDelantero.pesoLadoDerecho,
+					ruta: datos.suspensionEjeDelantero.pesoLadoDerecho,
 					class: 'front-right',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo,
+					ruta: datos.suspensionEjeTrasero.pesoLadoIzquierdo,
 					class: 'rear-left',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeTrasero.pesoLadoDerecho,
+					ruta: datos.suspensionEjeTrasero.pesoLadoDerecho,
 					class: 'rear-right',
 				},
 			],
 			suspention: [
 				{
-					ruta: window.fileAsObject.suspensionEjeDelantero
+					ruta: datos.suspensionEjeDelantero
 						.rendimientoDelanteroIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeDelantero
+					ruta: datos.suspensionEjeDelantero
 						.rendimientoDelanteroDerecho,
 					class: 'front-right',
 					classEval: 'front-right-eval',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeTrasero
+					ruta: datos.suspensionEjeTrasero
 						.rendimientoTraseroIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeTrasero
+					ruta: datos.suspensionEjeTrasero
 						.rendimientoTraseroDerecho,
 					class: 'rear-right',
 					classEval: 'rear-right-eval',
@@ -84,38 +104,38 @@ function autoReportArrayFiller() {
 			],
 			brakePerf: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.rendimientoDelEje,
+					ruta: datos.frenosEje_1.rendimientoDelEje,
 					class: 'front',
 					classEval: 'front-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.rendimientoDelEje,
+					ruta: datos.frenosEje_2.rendimientoDelEje,
 					class: 'rear',
 					classEval: 'rear-eval',
 				},
 			],
 			handBrakePerf: [
 				{
-					ruta: window.fileAsObject.frenoDeManoEje_2.rendimientoDelEje,
+					ruta: datos.frenoDeManoEje_2.rendimientoDelEje,
 					class: 'hand',
 					classEval: 'hand-eval',
 				},
 			],
 			brakeDifDel: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.diferenciaFzaFrenadoLadoALado,
+					ruta: datos.frenosEje_1.diferenciaFzaFrenadoLadoALado,
 					class: 'front',
 					classEval: 'front-eval',
 				},
 			],
 			brakeDifTra: [
 				{
-					ruta: window.fileAsObject.frenosEje_2.diferenciaFzaFrenadoLadoALado,
+					ruta: datos.frenosEje_2.diferenciaFzaFrenadoLadoALado,
 					class: 'rear',
 					classEval: 'rear-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenoDeManoEje_2
+					ruta: datos.frenoDeManoEje_2
 						.diferenciaFzaFrenadoLadoALado,
 					class: 'hand',
 					classEval: 'hand-eval',
@@ -123,60 +143,60 @@ function autoReportArrayFiller() {
 			],
 			brakeStrenghtFront: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
+					ruta: datos.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoDerecho,
+					ruta: datos.frenosEje_1.fuerzaDeFrenadoLadoDerecho,
 					class: 'front-right',
 					classEval: 'front-right-eval',
 				},
 			],
 			brakeStrenghtRear: [
 				{
-					ruta: window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
+					ruta: datos.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoDerecho,
+					ruta: datos.frenosEje_2.fuerzaDeFrenadoLadoDerecho,
 					class: 'rear-right',
 					classEval: 'rear-right-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenoDeManoEje_2
+					ruta: datos.frenoDeManoEje_2
 						.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'hand-left',
 					classEval: 'hand-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenoDeManoEje_2.fuerzaDeFrenadoLadoDerecho,
+					ruta: datos.frenoDeManoEje_2.fuerzaDeFrenadoLadoDerecho,
 					class: 'hand-right',
 					classEval: 'hand-right-eval',
 				},
 			],
 			brakeResist: [
 				{
-					ruta: window.fileAsObject.frenosEje_1
+					ruta: datos.frenosEje_1
 						.resistenciaALaRodaduraLadoIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_1
+					ruta: datos.frenosEje_1
 						.resistenciaALaRodaduraLadoDerecho,
 					class: 'front-right',
 					classEval: 'front-right-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2
+					ruta: datos.frenosEje_2
 						.resistenciaALaRodaduraLadoIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2
+					ruta: datos.frenosEje_2
 						.resistenciaALaRodaduraLadoDerecho,
 					class: 'rear-right',
 					classEval: 'rear-right-eval',
@@ -184,92 +204,92 @@ function autoReportArrayFiller() {
 			],
 			brakeOval: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
+					ruta: datos.frenosEje_1.ovalidadLadoIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_1.ovalidadLadoDerecho,
+					ruta: datos.frenosEje_1.ovalidadLadoDerecho,
 					class: 'front-right',
 					classEval: 'front-right-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
+					ruta: datos.frenosEje_2.ovalidadLadoIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.ovalidadLadoDerecho,
+					ruta: datos.frenosEje_2.ovalidadLadoDerecho,
 					class: 'rear-right',
 					classEval: 'rear-right-eval',
 				},
 			],
 			luxLow: [
 				{
-					ruta: window.fileAsObject.luxometro.intensidadBajaIzquierda,
+					ruta: datos.luxometro.intensidadBajaIzquierda,
 					class: 'left-low',
 					classEval: 'left-low-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.intensidadBajaDerecha,
+					ruta: datos.luxometro.intensidadBajaDerecha,
 					class: 'right-low',
 					classEval: 'right-low-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.intensidadAuxiliarIzquierda,
+					ruta: datos.luxometro.intensidadAuxiliarIzquierda,
 					class: 'left-aux',
 					classEval: 'left-aux-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.intensidadAuxiliarDerecha,
+					ruta: datos.luxometro.intensidadAuxiliarDerecha,
 					class: 'right-aux',
 					classEval: 'right-aux-eval',
 				},
 			],
 			luxHigh: [
 				{
-					ruta: window.fileAsObject.luxometro.intensidadAltaIzquierda,
+					ruta: datos.luxometro.intensidadAltaIzquierda,
 					class: 'left-high',
 					classEval: 'left-high-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.intensidadAltaDerecha,
+					ruta: datos.luxometro.intensidadAltaDerecha,
 					class: 'right-high',
 					classEval: 'right-high-eval',
 				},
 			],
 			luxAng: [
 				{
-					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical,
+					ruta: datos.luxometro.alineacionFaroIzquierdoVertical,
 					class: 'left-vert',
 					classEval: 'left-vert-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.alineacionFaroDerechoVertical,
+					ruta: datos.luxometro.alineacionFaroDerechoVertical,
 					class: 'right-vert',
 					classEval: 'right-vert-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoHorizontal,
+					ruta: datos.luxometro.alineacionFaroIzquierdoHorizontal,
 					class: 'left-hor',
 					classEval: 'left-hor-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.alineacionFaroDerechoHorizontal,
+					ruta: datos.luxometro.alineacionFaroDerechoHorizontal,
 					class: 'right-hor',
 					classEval: 'right-hor-eval',
 				},
 			],
 			soundInt: [
 				{
-					ruta: window.fileAsObject.sonometro.valorDeMedicion,
+					ruta: datos.sonometro.valorDeMedicion,
 					class: 'sound-int',
 					classEval: 'sound-int-eval',
 				},
 			],
 			carbonMonoxide: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases
+					ruta: datos.analizadorDeGases
 						.resultadoMonoxidoDeCarbonoEnAltaRPM,
 					class: 'CO',
 					classEval: 'CO-eval',
@@ -277,7 +297,7 @@ function autoReportArrayFiller() {
 			],
 			hydroCarbon: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases
+					ruta: datos.analizadorDeGases
 						.resultadoHidroCarburosHCAltaRPM,
 					class: 'HCC',
 					classEval: 'HCC-eval',
@@ -285,7 +305,7 @@ function autoReportArrayFiller() {
 			],
 			nitrogenOxides: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases
+					ruta: datos.analizadorDeGases
 						.resultadoPartesPorMillonNox,
 					class: 'Nox',
 					classEval: 'Nox-eval',
@@ -293,7 +313,7 @@ function autoReportArrayFiller() {
 			],
 			opacity: [
 				{
-					ruta: window.fileAsObject.opacimetro.resultadoMedicionOpacidad,
+					ruta: datos.opacimetro.resultadoMedicionOpacidad,
 					class: 'opacity',
 					classEval: 'opacity-eval',
 				},
@@ -303,46 +323,56 @@ function autoReportArrayFiller() {
 	return reportArray;
 }
 
-function motoReportArrayFiller() {
-	if (window.fileAsObject !== '') {
+/**
+ * Arma la estructura del informe para motos: tiene menos ejes y mediciones
+ * que la de auto (por ejemplo, no hay freno de mano ni alineación).
+ *
+ * @param {object} datos Los datos del .txt, tal como los devuelve
+ *   `leerArchivoTxt` (ver txt-navegator/fileAnalizer.js).
+ * @returns {object|undefined} Igual que autoReportArrayFiller pero con las
+ *   secciones de moto, o `undefined` si no hay datos.
+ */
+function motoReportArrayFiller(datos) {
+	let reportArray;
+	if (datos) {
 		reportArray = {
 			headerInfo: [
 				{
-					ruta: window.fileAsObject.header.patente,
+					ruta: datos.header.patente,
 					class: 'plate',
 				},
 				{
-					ruta: window.fileAsObject.header.marcaDelVehiculo,
+					ruta: datos.header.marcaDelVehiculo,
 					class: 'brand',
 				},
 				{
-					ruta: window.fileAsObject.header.modelo,
+					ruta: datos.header.modelo,
 					class: 'model',
 				},
 				{
-					ruta: window.fileAsObject.header.kilometros,
+					ruta: datos.header.kilometros,
 					class: 'mileage',
 				},
 			],
 			weight: [
 				{
-					ruta: window.fileAsObject.suspensionEjeDelantero.pesoLadoIzquierdo,
+					ruta: datos.suspensionEjeDelantero.pesoLadoIzquierdo,
 					class: 'front-left',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeTrasero.pesoLadoIzquierdo,
+					ruta: datos.suspensionEjeTrasero.pesoLadoIzquierdo,
 					class: 'rear-left',
 				},
 			],
 			suspention: [
 				{
-					ruta: window.fileAsObject.suspensionEjeDelantero
+					ruta: datos.suspensionEjeDelantero
 						.rendimientoDelanteroIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.suspensionEjeTrasero
+					ruta: datos.suspensionEjeTrasero
 						.rendimientoTraseroIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
@@ -350,37 +380,37 @@ function motoReportArrayFiller() {
 			],
 			brakePerf: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.rendimientoDelEje,
+					ruta: datos.frenosEje_1.rendimientoDelEje,
 					class: 'front',
 					classEval: 'front-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.rendimientoDelEje,
+					ruta: datos.frenosEje_2.rendimientoDelEje,
 					class: 'rear',
 					classEval: 'rear-eval',
 				},
 			],
 			brakeStrenght: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
+					ruta: datos.frenosEje_1.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
+					ruta: datos.frenosEje_2.fuerzaDeFrenadoLadoIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
 			],
 			brakeResist: [
 				{
-					ruta: window.fileAsObject.frenosEje_1
+					ruta: datos.frenosEje_1
 						.resistenciaALaRodaduraLadoIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2
+					ruta: datos.frenosEje_2
 						.resistenciaALaRodaduraLadoIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
@@ -388,57 +418,57 @@ function motoReportArrayFiller() {
 			],
 			brakeOval: [
 				{
-					ruta: window.fileAsObject.frenosEje_1.ovalidadLadoIzquierdo,
+					ruta: datos.frenosEje_1.ovalidadLadoIzquierdo,
 					class: 'front-left',
 					classEval: 'front-left-eval',
 				},
 				{
-					ruta: window.fileAsObject.frenosEje_2.ovalidadLadoIzquierdo,
+					ruta: datos.frenosEje_2.ovalidadLadoIzquierdo,
 					class: 'rear-left',
 					classEval: 'rear-left-eval',
 				},
 			],
 			luxLow: [
 				{
-					ruta: window.fileAsObject.luxometro.intensidadBajaIzquierda,
+					ruta: datos.luxometro.intensidadBajaIzquierda,
 					class: 'left-low',
 					classEval: 'left-low-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.intensidadAuxiliarIzquierda,
+					ruta: datos.luxometro.intensidadAuxiliarIzquierda,
 					class: 'left-aux',
 					classEval: 'left-aux-eval',
 				},
 			],
 			luxHigh: [
 				{
-					ruta: window.fileAsObject.luxometro.intensidadAltaIzquierda,
+					ruta: datos.luxometro.intensidadAltaIzquierda,
 					class: 'left-high',
 					classEval: 'left-high-eval',
 				},
 			],
 			luxAng: [
 				{
-					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoVertical,
+					ruta: datos.luxometro.alineacionFaroIzquierdoVertical,
 					class: 'left-vert',
 					classEval: 'left-vert-eval',
 				},
 				{
-					ruta: window.fileAsObject.luxometro.alineacionFaroIzquierdoHorizontal,
+					ruta: datos.luxometro.alineacionFaroIzquierdoHorizontal,
 					class: 'left-hor',
 					classEval: 'left-hor-eval',
 				},
 			],
 			soundInt: [
 				{
-					ruta: window.fileAsObject.sonometro.valorDeMedicion,
+					ruta: datos.sonometro.valorDeMedicion,
 					class: 'sound-int',
 					classEval: 'sound-int-eval',
 				},
 			],
 			carbonMonoxide: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases
+					ruta: datos.analizadorDeGases
 						.resultadoMonoxidoDeCarbonoEnAltaRPM,
 					class: 'CO',
 					classEval: 'CO-eval',
@@ -446,7 +476,7 @@ function motoReportArrayFiller() {
 			],
 			hydroCarbon: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases
+					ruta: datos.analizadorDeGases
 						.resultadoHidroCarburosHCAltaRPM,
 					class: 'HCC',
 					classEval: 'HCC-eval',
@@ -454,7 +484,7 @@ function motoReportArrayFiller() {
 			],
 			nitrogenOxides: [
 				{
-					ruta: window.fileAsObject.analizadorDeGases
+					ruta: datos.analizadorDeGases
 						.resultadoPartesPorMillonNox,
 					class: 'Nox',
 					classEval: 'Nox-eval',
