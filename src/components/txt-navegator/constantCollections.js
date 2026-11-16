@@ -1,30 +1,22 @@
+/*
+ * =============================================================================
+ *  constantCollections.js — Tablas código → nombre para leer el .txt
+ * =============================================================================
+ *
+ *  Cada tabla (headerMap, frenosEje_1Map, luxometroMap, ...) corresponde a una
+ *  sección del objeto que arma fileAnalizer.js, y dice qué nombre legible
+ *  tiene cada código del .txt. Por ejemplo, en headerMap:
+ *
+ *      [N10100, patente]   →   "10100=KMX-653"  termina en  datos.header.patente
+ *
+ *  Las constantes (N10100, patente, ...) están en constantVariables.js.
+ *  Qué tabla corresponde a qué sección, y cómo se convierten sus valores
+ *  (texto o número), está en la tabla SECCIONES de fileAnalizer.js.
+ *
+ *  Un código del .txt que no figure en ninguna tabla simplemente se ignora.
+ * =============================================================================
+ */
 import {
-  HEADER,
-  ALINEACION,
-  SUSPENSION_EJE_DELANTERO,
-  SUSPENSION_EJE_TRASERO,
-  OPACIMETRO,
-  ANALIZADOR_DE_GASES,
-  FRENOS_EJE_1,
-  FRENOS_EJE_2,
-  FRENOS_EJE_3,
-  FRENOS_EJE_4,
-  FRENOS_EJE_5,
-  FRENOS_EJE_6,
-  FRENO_DE_MANO_EJE_1,
-  FRENO_DE_MANO_EJE_2,
-  FRENO_DE_MANO_EJE_3,
-  FRENO_DE_MANO_EJE_4,
-  FRENO_DE_MANO_EJE_5,
-  FRENO_DE_MANO_EJE_6,
-  SONOMETRO,
-  LUXOMETRO,
-  INSPECCION_VISUAL,
-  INSPECCION_DH,
-  FRENOS,
-  VALORES_CALIBRADOS,
-  LINEA_DE_PRUEBA,
-  ESTADISTICA_DE_PUESTOS,
   patente,
   numeroDeChasis,
   numeroMotor,
@@ -398,7 +390,6 @@ import {
   N80038,
   N80039,
   N80040,
-  FOTOVALIDACION,
   fotovalidacion_1,
   fotovalidacion_2,
   fotovalidacion_3,
@@ -422,7 +413,6 @@ import {
   N610010,
   N610011,
   N610012,
-  PROFUNDIDAD_DE_NEUMATICOS,
   N16004,
   N16003,
   N16002,
@@ -487,7 +477,6 @@ import {
   revision,
   numLineaAsignada,
   resultadoFinalRevision,
-  PRUEBAS,
   N38501,
   N70010,
   N70011,
@@ -516,11 +505,8 @@ import {
   profundidadNeumatico3_Eje_Der_Izq,
   profundidadNeumatico3_Eje_Der_Der,
   profundidadNeumaticoDeEmergencia,
-  FRENOS_TOTAL,
   eficaciaTotalDelVehiculo,
   N56000,
-  BANCO_DE_RODADURA,
-  INGENIERIA,
   N95000,
   N90000,
   N90001,
@@ -577,7 +563,9 @@ import {
 } from './constantVariables.js';
 
 /**
- * Dirty Categories used to clean the trash data from the read file.
+ * Títulos de sección que trae el .txt y que hay que borrar antes de leerlo
+ * (ver separarCodigosYValores en fileAnalizer.js). Ojo: algunos terminan con
+ * un espacio a propósito, porque así vienen en el archivo.
  */
 export const categories = [
   '[HEADER]',
@@ -614,481 +602,7 @@ export const categories = [
 ];
 
 /**
- * All keys from the header category in the excel file.
- */
-export const headerKeys = [
-  N10100,
-  N10102,
-  N10104,
-  N10200,
-  N10201,
-  N10202,
-  N10203,
-  N10204,
-  N10208,
-  N10209,
-  N10210,
-  N10211,
-  N10212,
-  N10213,
-  N10214,
-  N10215,
-  N10216,
-  N10217,
-  N10300,
-  N10301,
-  N10302,
-  N10303,
-  N10304,
-  N10305,
-  N10306,
-  N10307,
-  N10308,
-  N10309,
-  N10310,
-  N10311,
-  N10312,
-  N10313,
-  N10314,
-  N10315,
-  N10316,
-  N10317,
-  N10318,
-  N10319,
-  N10320,
-  N10321,
-  N10322,
-  N10323,
-  N10324,
-  N10325,
-  N10326,
-  N10327,
-  N10328,
-];
-
-/**
- * All keys from the alineacion category in the excel file.
- */
-export const alineacionKeys = [N30100, N30101, N30102, N30103, N30104, N30105];
-/**
- * All keys from the suspencionEjeDelantero category in the excel file.
- */
-export const suspencionEjeDelanteroKeys = [
-  N31000,
-  N31001,
-  N31010,
-  N31011,
-  N31020,
-  N31021,
-  N31022,
-];
-/**
- * All keys from the suspencionEjeTrasero category in the excel file.
- */
-export const suspencionEjeTraseroKeys = [
-  N31100,
-  N31101,
-  N31110,
-  N31111,
-  N31120,
-  N31121,
-  N31122,
-];
-/**
- * All keys from the opacimetro category in the excel file.
- */
-export const opacimetroKeys = [N38500, N38501];
-/**
- * All keys from the analizadorDeGases category in the excel file.
- */
-export const analizadorDeGasesKeys = [
-  N39000,
-  N39001,
-  N39002,
-  N39003,
-  N39004,
-  N39005,
-  N39007,
-  N39008,
-  N39009,
-  N39010,
-  N39011,
-  N39006,
-];
-/**
- * All keys from the frenosEje_1 category in the excel file.
- */
-export const frenosEje_1Keys = [
-  N50000,
-  N50001,
-  N50010,
-  N50020,
-  N50021,
-  N50030,
-  N50031,
-  N50040,
-  N50100,
-  N50101,
-];
-/**
- * All keys from the frenosEje_2 category in the excel file.
- */
-export const frenosEje_2Keys = [
-  N51000,
-  N51001,
-  N51010,
-  N51020,
-  N51021,
-  N51030,
-  N51031,
-  N51040,
-  N51100,
-  N51101,
-];
-/**
- * All keys from the frenosEje category in the excel file.
- */
-export const frenosEje_3Keys = [
-  N52000,
-  N52001,
-  N52010,
-  N52020,
-  N52021,
-  N52030,
-  N52031,
-  N52040,
-  N52100,
-  N52101,
-];
-/**
- * All keys from the frenosEje_4 category in the excel file.
- */
-export const frenosEje_4Keys = [
-  N53000,
-  N53001,
-  N53010,
-  N53020,
-  N53021,
-  N53030,
-  N53031,
-  N53040,
-  N53100,
-  N53101,
-];
-/**
- * All keys from the frenosEje_5 category in the excel file.
- */
-export const frenosEje_5Keys = [
-  N54000,
-  N54001,
-  N54010,
-  N54020,
-  N54021,
-  N54030,
-  N54031,
-  N54040,
-  N54100,
-  N54101,
-];
-/**
- * All keys from the frenosEje_6 category in the excel file.
- */
-export const frenosEje_6Keys = [
-  N55000,
-  N55001,
-  N55010,
-  N55020,
-  N55021,
-  N55030,
-  N55031,
-  N55040,
-  N55100,
-  N55101,
-];
-/**
- * All keys from the frenoDeManoEje_1 category in the excel file.
- */
-export const frenoDeManoEje_1Keys = [
-  N50250,
-  N50251,
-  N50260,
-  N50240,
-  N50270,
-  N50271,
-  N50280,
-  N50281,
-];
-/**
- * All keys from the frenoDeManoEje_2 category in the excel file.
- */
-export const frenoDeManoEje_2Keys = [
-  N51250,
-  N51251,
-  N51260,
-  N51240,
-  N51270,
-  N51271,
-  N51280,
-  N51281,
-];
-/**
- * All keys from the frenoDeManoEje_3 category in the excel file.
- */
-export const frenoDeManoEje_3Keys = [
-  N52250,
-  N52251,
-  N52260,
-  N52240,
-  N52270,
-  N52271,
-  N52280,
-  N52281,
-];
-/**
- * All keys from the frenoDeManoEje_4 category in the excel file.
- */
-export const frenoDeManoEje_4Keys = [
-  N53250,
-  N53251,
-  N53260,
-  N53240,
-  N53270,
-  N53271,
-  N53280,
-  N53281,
-];
-/**
- * All keys from the frenoDeManoEje_5 category in the excel file.
- */
-export const frenoDeManoEje_5Keys = [
-  N54250,
-  N54251,
-  N54260,
-  N54240,
-  N54270,
-  N54271,
-  N54280,
-  N54281,
-];
-/**
- * All keys from the frenoDeManoEje_6 category in the excel file.
- */
-export const frenoDeManoEje_6Keys = [
-  N55250,
-  N55251,
-  N55260,
-  N55240,
-  N55270,
-  N55271,
-  N55280,
-  N55281,
-];
-/**
- * All keys from the sonometro category in the excel file.
- */
-export const sonometroKeys = ['60000'];
-/**
- * All keys from the luxometro category in the excel file.
- */
-export const luxometroKeys = [
-  N70000,
-  N70001,
-  N70002,
-  N70003,
-  N70004,
-  N70005,
-  N70006,
-  N70007,
-  N70008,
-  N70009,
-  N70010,
-  N70011,
-  N70012,
-  N70013,
-  N70014,
-  N70015,
-  N70016,
-  N70017,
-];
-/**
- * All keys from the inspeccionVisual category in the excel file.
- */
-export const inspeccionVisualKeys = [];
-/**
- * All keys from the inspeccionDH category in the excel file.
- */
-export const inspeccionDHKeys = [];
-/**
- * All keys from the frenos category in the excel file.
- */
-export const frenosKeys = [
-  N100001,
-  N100002,
-  N100003,
-  N100004,
-  N100005,
-  N100006,
-  N100007,
-  N100008,
-  N100009,
-  N100010,
-  N100011,
-  N100012,
-];
-/**
- * All keys from the valoresCalibrados category in the excel file.
- */
-export const valoresCalibradosKeys = [
-  N100013,
-  N100014,
-  N100015,
-  N100016,
-  N100017,
-  N100018,
-  N100019,
-  N100020,
-  N100020,
-  N100021,
-  N100022,
-  N100023,
-  N100024,
-  N100025,
-  N100026,
-  N100027,
-  N100028,
-];
-/**
- * All keys from the lineaDePrueba category in the excel file.
- */
-export const lineaDePruebaKeys = [80000];
-/**
- * All keys from the estadisticaDePuestos category in the excel file.
- */
-export const estadisticaDePuestosKeys = [
-  N80001,
-  N80002,
-  N80003,
-  N80004,
-  N80005,
-  N80006,
-  N80007,
-  N80008,
-  N80009,
-  N80010,
-  N80011,
-  N80012,
-  N80013,
-  N80014,
-  N80015,
-  N80016,
-  N80017,
-  N80018,
-  N80019,
-  N80020,
-  N80021,
-  N80022,
-  N80023,
-  N80024,
-  N80025,
-  N80026,
-  N80027,
-  N80028,
-  N80029,
-  N80030,
-  N80031,
-  N80032,
-  N80033,
-  N80034,
-  N80035,
-  N80036,
-  N80037,
-  N80038,
-  N80039,
-  N80040,
-];
-
-/**
- * All keys from the fotovalidacion category in the excel file.
- */
-export const fotovalidacionKeys = [N100030, N100031, N100032, N100033];
-
-/**
- * All keys and values from the profundidaDeNeumaticos category in the excel file.
- */
-export const profundidaDeNeumaticosKeys = [
-  N61000,
-  N61001,
-  N61002,
-  N61003,
-  N61004,
-  N61005,
-  N61006,
-  N61007,
-  N61008,
-  N61009,
-  N610010,
-  N610011,
-  N610012,
-];
-
-/**
- * All keys and values from the pruebas category in the excel file.
- */
-export const pruebasKeys = [
-  N15000,
-  N15001,
-  N15002,
-  N15003,
-  N15004,
-  N15005,
-  N15006,
-  N15007,
-  N15008,
-  N15009,
-
-  N16000,
-  N16001,
-  N16002,
-  N16003,
-  N16004,
-];
-
-/**
- * All keys and values from the frenosTotal category in the excel file.
- */
-export const frenosTotalKeys = [N56000];
-
-/**
- * All keys and values from the frenosTotal category in the excel file.
- */
-export const bancoDeRodaduraKeys = [
-  N90000,
-  N90001,
-  N90002,
-  N90003,
-  N90004,
-  N90005,
-  N90006,
-  N90007,
-  N90101,
-  N90102,
-  N90103,
-  N90104,
-  N90105,
-  N90106,
-  N90107,
-  N90108,
-  N90200,
-  N90201,
-];
-
-/**
- * All keys and values from the frenosTotal category in the excel file.
- */
-export const ingenieriaKeys = [N95000];
-
-/**
- * All keys and values from the header category in the excel file.
+ * Sección "header": código del .txt → nombre del dato.
  */
 export const headerMap = new Map([
   [N10100, patente],
@@ -1143,7 +657,7 @@ export const headerMap = new Map([
 ]);
 
 /**
- * All keys and values from the alineacion category in the excel file.
+ * Sección "alineacion": código del .txt → nombre del dato.
  */
 export const alineacionMap = new Map([
   [N30100, resultadoAlineacionEje1],
@@ -1154,7 +668,7 @@ export const alineacionMap = new Map([
   [N30105, resultadoAlineacionEje6],
 ]);
 /**
- * All keys and values from the suspencionEjeDelantero category in the excel file.
+ * Sección "suspencionEjeDelantero": código del .txt → nombre del dato.
  */
 export const suspencionEjeDelanteroMap = new Map([
   [N31000, rendimientoDelanteroDerecho],
@@ -1166,7 +680,7 @@ export const suspencionEjeDelanteroMap = new Map([
   [N31022, diferenciaRendimientoLadoALado],
 ]);
 /**
- * All keys and values from the suspencionEjeTrasero category in the excel file.
+ * Sección "suspencionEjeTrasero": código del .txt → nombre del dato.
  */
 export const suspencionEjeTraseroMap = new Map([
   [N31100, rendimientoTraseroDerecho],
@@ -1178,14 +692,14 @@ export const suspencionEjeTraseroMap = new Map([
   [N31122, diferenciaRendimientoLadoALado],
 ]);
 /**
- * All keys and values from the opacimetro category in the excel file.
+ * Sección "opacimetro": código del .txt → nombre del dato.
  */
 export const opacimetroMap = new Map([
   [N38500, resultadoMedicionOpacidad],
   [N38501, observaciones],
 ]);
 /**
- * All keys and values from the analizadorDeGases category in the excel file.
+ * Sección "analizadorDeGases": código del .txt → nombre del dato.
  */
 export const analizadorDeGasesMap = new Map([
   [N39000, resultadoMonoxidoDeCarbonoCO],
@@ -1202,7 +716,7 @@ export const analizadorDeGasesMap = new Map([
   [N39006, resultadoObservaciones],
 ]);
 /**
- * All keys and values from the frenosEje_1 category in the excel file.
+ * Sección "frenosEje_1": código del .txt → nombre del dato.
  */
 export const frenosEje_1Map = new Map([
   [N50000, fuerzaDeFrenadoLadoDerecho],
@@ -1217,7 +731,7 @@ export const frenosEje_1Map = new Map([
   [N50101, pesoLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenosEje_2 category in the excel file.
+ * Sección "frenosEje_2": código del .txt → nombre del dato.
  */
 export const frenosEje_2Map = new Map([
   [N51000, fuerzaDeFrenadoLadoDerecho],
@@ -1232,7 +746,7 @@ export const frenosEje_2Map = new Map([
   [N51101, pesoLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenosEje category in the excel file.
+ * Sección "frenosEje": código del .txt → nombre del dato.
  */
 export const frenosEje_3Map = new Map([
   [N52000, fuerzaDeFrenadoLadoDerecho],
@@ -1247,7 +761,7 @@ export const frenosEje_3Map = new Map([
   [N52101, pesoLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenosEje_4 category in the excel file.
+ * Sección "frenosEje_4": código del .txt → nombre del dato.
  */
 export const frenosEje_4Map = new Map([
   [N53000, fuerzaDeFrenadoLadoDerecho],
@@ -1262,7 +776,7 @@ export const frenosEje_4Map = new Map([
   [N53101, pesoLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenosEje_5 category in the excel file.
+ * Sección "frenosEje_5": código del .txt → nombre del dato.
  */
 export const frenosEje_5Map = new Map([
   [N54000, fuerzaDeFrenadoLadoDerecho],
@@ -1277,7 +791,7 @@ export const frenosEje_5Map = new Map([
   [N54101, pesoLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenosEje_6 category in the excel file.
+ * Sección "frenosEje_6": código del .txt → nombre del dato.
  */
 export const frenosEje_6Map = new Map([
   [N55000, fuerzaDeFrenadoLadoDerecho],
@@ -1292,7 +806,7 @@ export const frenosEje_6Map = new Map([
   [N55101, pesoLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenoDeManoEje_1 category in the excel file.
+ * Sección "frenoDeManoEje_1": código del .txt → nombre del dato.
  */
 export const frenoDeManoEje_1Map = new Map([
   [N50250, fuerzaDeFrenadoLadoDerecho],
@@ -1305,7 +819,7 @@ export const frenoDeManoEje_1Map = new Map([
   [N50281, resistenciaALaRodaduraLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenoDeManoEje_2 category in the excel file.
+ * Sección "frenoDeManoEje_2": código del .txt → nombre del dato.
  */
 export const frenoDeManoEje_2Map = new Map([
   [N51250, fuerzaDeFrenadoLadoDerecho],
@@ -1318,7 +832,7 @@ export const frenoDeManoEje_2Map = new Map([
   [N51281, resistenciaALaRodaduraLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenoDeManoEje_3 category in the excel file.
+ * Sección "frenoDeManoEje_3": código del .txt → nombre del dato.
  */
 export const frenoDeManoEje_3Map = new Map([
   [N52250, fuerzaDeFrenadoLadoDerecho],
@@ -1331,7 +845,7 @@ export const frenoDeManoEje_3Map = new Map([
   [N52281, resistenciaALaRodaduraLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenoDeManoEje_4 category in the excel file.
+ * Sección "frenoDeManoEje_4": código del .txt → nombre del dato.
  */
 export const frenoDeManoEje_4Map = new Map([
   [N53250, fuerzaDeFrenadoLadoDerecho],
@@ -1344,7 +858,7 @@ export const frenoDeManoEje_4Map = new Map([
   [N53281, resistenciaALaRodaduraLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenoDeManoEje_5 category in the excel file.
+ * Sección "frenoDeManoEje_5": código del .txt → nombre del dato.
  */
 export const frenoDeManoEje_5Map = new Map([
   [N54250, fuerzaDeFrenadoLadoDerecho],
@@ -1357,7 +871,7 @@ export const frenoDeManoEje_5Map = new Map([
   [N54281, resistenciaALaRodaduraLadoIzquierdo],
 ]);
 /**
- * All keys and values from the frenoDeManoEje_6 category in the excel file.
+ * Sección "frenoDeManoEje_6": código del .txt → nombre del dato.
  */
 export const frenoDeManoEje_6Map = new Map([
   [N55250, fuerzaDeFrenadoLadoDerecho],
@@ -1370,11 +884,11 @@ export const frenoDeManoEje_6Map = new Map([
   [N55281, resistenciaALaRodaduraLadoIzquierdo],
 ]);
 /**
- * All keys and values from the sonometro category in the excel file.
+ * Sección "sonometro": código del .txt → nombre del dato.
  */
 export const sonometroMap = new Map([[N60000, valorDeMedicion]]);
 /**
- * All keys and values from the luxometro category in the excel file.
+ * Sección "luxometro": código del .txt → nombre del dato.
  */
 export const luxometroMap = new Map([
   [N70000, alineacionFaroDerechoHorizontal],
@@ -1401,15 +915,15 @@ export const luxometroMap = new Map([
   */
 ]);
 /**
- * All keys and values from the inspeccionVisual category in the excel file.
+ * Sección "inspeccionVisual": código del .txt → nombre del dato.
  */
 export const inspeccionVisualMap = new Map([]);
 /**
- * All keys and values from the inspeccionDH category in the excel file.
+ * Sección "inspeccionDH": código del .txt → nombre del dato.
  */
 export const inspeccionDHMap = new Map([]);
 /**
- * All keys and values from the frenos category in the excel file.
+ * Sección "frenos": código del .txt → nombre del dato.
  */
 export const frenosMap = new Map([
   [N100001, motivoDeCorteDePruebaDeFrenoEje1],
@@ -1426,7 +940,7 @@ export const frenosMap = new Map([
   [N100012, motivoDeCorteDePruebaDeFManoEje6],
 ]);
 /**
- * All keys and values from the valoresCalibrados category in the excel file.
+ * Sección "valoresCalibrados": código del .txt → nombre del dato.
  */
 export const valoresCalibradosMap = new Map([
   [N100013, valorDeCeroDeBFDerecho],
@@ -1447,11 +961,11 @@ export const valoresCalibradosMap = new Map([
   [N100028, valorDeGananciaDeBS_Izquierdo],
 ]);
 /**
- * All keys and values from the lineaDePrueba category in the excel file.
+ * Sección "lineaDePrueba": código del .txt → nombre del dato.
  */
 export const lineaDePruebaMap = new Map([[N80000, numeroDeLinea]]);
 /**
- * All keys and values from the estadisticaDePuestos category in the excel file.
+ * Sección "estadisticaDePuestos": código del .txt → nombre del dato.
  */
 export const estadisticaDePuestosMap = new Map([
   [N80001, fechaDeIngresoAlPuesto1],
@@ -1497,7 +1011,7 @@ export const estadisticaDePuestosMap = new Map([
 ]);
 
 /**
- * All keys and values from the fotovalidacion_1 category in the excel file.
+ * Sección "fotovalidacion_1": código del .txt → nombre del dato.
  */
 export const fotovalidacionMap = new Map([
   [N100030, fotovalidacion_1],
@@ -1507,7 +1021,7 @@ export const fotovalidacionMap = new Map([
 ]);
 
 /**
- * All keys and values from the profundidaDeNeumaticos category in the excel file.
+ * Sección "profundidaDeNeumaticos": código del .txt → nombre del dato.
  */
 export const profundidaDeNeumaticosMap = new Map([
   [N61000, profundidadNeumaticoDelanteroIzq],
@@ -1569,79 +1083,3 @@ export const banocoDeRodaduraMap = new Map([
 
 export const ingenieriaMap = new Map([[N95000, observaciones]]);
 
-/**
- *  Stores the map with the excel representation of data.
- *  To remain as a comparison structure when the txt file is read and proccessed.
- */
-export const structureFinalMap = new Map([
-  [HEADER, headerMap],
-  [ALINEACION, alineacionMap],
-  [SUSPENSION_EJE_DELANTERO, suspencionEjeDelanteroMap],
-  [SUSPENSION_EJE_TRASERO, suspencionEjeTraseroMap],
-  [OPACIMETRO, opacimetroMap],
-  [ANALIZADOR_DE_GASES, analizadorDeGasesMap],
-  [FRENOS_EJE_1, frenosEje_1Map],
-  [FRENOS_EJE_2, frenosEje_2Map],
-  [FRENOS_EJE_3, frenosEje_3Map],
-  [FRENOS_EJE_4, frenosEje_4Map],
-  [FRENOS_EJE_5, frenosEje_5Map],
-  [FRENOS_EJE_6, frenosEje_6Map],
-  [FRENO_DE_MANO_EJE_1, frenoDeManoEje_1Map],
-  [FRENO_DE_MANO_EJE_2, frenoDeManoEje_2Map],
-  [FRENO_DE_MANO_EJE_3, frenoDeManoEje_3Map],
-  [FRENO_DE_MANO_EJE_4, frenoDeManoEje_4Map],
-  [FRENO_DE_MANO_EJE_5, frenoDeManoEje_5Map],
-  [FRENO_DE_MANO_EJE_6, frenoDeManoEje_6Map],
-  [SONOMETRO, sonometroMap],
-  [LUXOMETRO, luxometroMap],
-  [INSPECCION_VISUAL, inspeccionVisualMap],
-  [INSPECCION_DH, inspeccionDHMap],
-  [FRENOS, frenosMap],
-  [VALORES_CALIBRADOS, valoresCalibradosMap],
-  [LINEA_DE_PRUEBA, lineaDePruebaMap],
-  [ESTADISTICA_DE_PUESTOS, estadisticaDePuestosMap],
-  [FOTOVALIDACION, fotovalidacionMap],
-  [PROFUNDIDAD_DE_NEUMATICOS, profundidaDeNeumaticosMap],
-  [PRUEBAS, pruebasMap],
-  [FRENOS_TOTAL, frenosTotalMap],
-  [BANCO_DE_RODADURA, frenosTotalMap],
-  [INGENIERIA, frenosTotalMap],
-]);
-
-/**
- * Stores al the variables that represents categories from the excel in a collection.
- */
-export const collectionOfVariables = [
-  HEADER,
-  ALINEACION,
-  SUSPENSION_EJE_DELANTERO,
-  SUSPENSION_EJE_TRASERO,
-  OPACIMETRO,
-  ANALIZADOR_DE_GASES,
-  FRENOS_EJE_1,
-  FRENOS_EJE_2,
-  FRENOS_EJE_3,
-  FRENOS_EJE_4,
-  FRENOS_EJE_5,
-  FRENOS_EJE_6,
-  FRENO_DE_MANO_EJE_1,
-  FRENO_DE_MANO_EJE_2,
-  FRENO_DE_MANO_EJE_3,
-  FRENO_DE_MANO_EJE_4,
-  FRENO_DE_MANO_EJE_5,
-  FRENO_DE_MANO_EJE_6,
-  SONOMETRO,
-  LUXOMETRO,
-  INSPECCION_VISUAL,
-  INSPECCION_DH,
-  FRENOS,
-  VALORES_CALIBRADOS,
-  LINEA_DE_PRUEBA,
-  ESTADISTICA_DE_PUESTOS,
-  FOTOVALIDACION,
-  PROFUNDIDAD_DE_NEUMATICOS,
-  PRUEBAS,
-  FRENOS_TOTAL,
-  BANCO_DE_RODADURA,
-  INGENIERIA,
-];

@@ -146,7 +146,9 @@ exports[`procesarTextoTxt > resultado completo de KMX-653 (snapshot) 1`] = `
   "ingenieria": {},
   "inspeccionDH": {},
   "inspeccionVisual": {},
-  "lineaDePrueba": {},
+  "lineaDePrueba": {
+    "numeroDeLinea": "4",
+  },
   "luxometro": {
     "alineacionFaroDerechoHorizontal": 0,
     "alineacionFaroDerechoVertical": 0,
@@ -386,7 +388,9 @@ exports[`procesarTextoTxt > resultado completo de VCW-112 (snapshot) 1`] = `
   },
   "inspeccionDH": {},
   "inspeccionVisual": {},
-  "lineaDePrueba": {},
+  "lineaDePrueba": {
+    "numeroDeLinea": "4",
+  },
   "luxometro": {
     "alineacionFaroDerechoHorizontal": 0,
     "alineacionFaroDerechoVertical": 0,
