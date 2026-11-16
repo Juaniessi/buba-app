@@ -70,10 +70,17 @@ export const LIMITES_MENOR_O_IGUAL = {
  * Ejemplo con opacity [5, 0.25, 0.2]: 6 → G, 0.3 → M, 0.22 → L, 0.1 → A.
  */
 export const LIMITES_MAYOR_O_IGUAL = {
-	/** Diferencia de frenado entre ruedas, eje delantero (%). */
-	brakeDifDel: [90, 15.1, 13],
-	/** Diferencia de frenado entre ruedas, eje trasero (%). */
-	brakeDifTra: [95, 15.1, 14],
+	/**
+	 * Diferencia de frenado entre ruedas, eje delantero (%).
+	 * El leve (10) es también desde dónde se marca con asterisco la rueda que
+	 * frena menos (ver MajorMarker.jsx). Antes era 13.
+	 */
+	brakeDifDel: [90, 15.1, 10],
+	/**
+	 * Diferencia de frenado entre ruedas, eje trasero y freno de mano (%).
+	 * El leve (12) es también desde dónde se marca con asterisco. Antes era 14.
+	 */
+	brakeDifTra: [95, 15.1, 12],
 	/** Resistencia a la rodadura de cada rueda. */
 	brakeResist: [4, 1, 0.85],
 	/** Ovalidad de los discos o tambores. */
@@ -309,7 +316,7 @@ export function fechaDeInicio(datos) {
 /**
  * Calcula la fecha de vencimiento de la revisión.
  *
- * RTO normal:
+ * RTO particular:
  *   - Rechazado o Solo informe: vence el mismo día.
  *   - Condicional: 60 días.
  *   - Apto: según la vigencia elegida: 2 años, 1 año o 6 meses.
@@ -325,7 +332,7 @@ export function fechaDeInicio(datos) {
  * funcionaba desde siempre.
  *
  * @param {Date} inicio Fecha de la revisión (ver fechaDeInicio).
- * @param {string} rtoType 'normal' o 'traPas'.
+ * @param {string} rtoType 'particular' o 'traPas'.
  * @param {string} resultado 'Apto', 'Condicional', 'Rechazado' o 'SoloInforme'.
  * @param {string} vigencia '2a', '1a', '6m', '3m' o '2m'.
  * @returns {Date} El vencimiento (si la combinación no está prevista, el
@@ -338,7 +345,7 @@ export function calcularVencimiento(inicio, rtoType, resultado, vigencia) {
 	const sumarMeses = (meses) => vence.setMonth(inicio.getMonth() + meses);
 	const sumarAños = (años) => vence.setFullYear(inicio.getFullYear() + años);
 
-	if (rtoType === 'normal') {
+	if (rtoType === 'particular') {
 		if (resultado === 'Condicional') sumarDias(60);
 		if (resultado === 'Apto' && vigencia === '2a') sumarAños(2);
 		if (resultado === 'Apto' && vigencia === '1a') sumarAños(1);

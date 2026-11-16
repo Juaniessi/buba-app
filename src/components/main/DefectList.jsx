@@ -26,6 +26,7 @@ import trashCan from '../../assets/trash-can-solid.svg';
 import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import copyBtn from '../../assets/copy-regular.svg';
 import { SEVERIDADES, cambiarSeveridad, nuevaObservacion } from './observaciones';
+import { esFraseAutomatica } from './observacionesAutomaticas';
 
 /** Opción "nada elegido" para grupo, sección y descripción. */
 const SIN_ELEGIR = { value: '', label: '' };
@@ -69,17 +70,43 @@ function DefectList(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		mostrarAutomaticas,
+		setMostrarAutomaticas,
+		regenerarAutomaticas,
+		hayTxt,
+		filtrarFrasesAutomaticas,
+		setFiltrarFrasesAutomaticas,
 	} = props;
 
-	// Opciones disponibles según lo elegido hasta ahora.
+	// --- Opciones del panel Grupo / Sección / Descripción ---------------------
 	const tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
+
+	// Con "Filtrar frases automáticas" tildado, se ocultan solo las
+	// descripciones que la app ya agrega sola. Los grupos y las secciones se
+	// muestran siempre (aunque se queden sin frases), porque con "Otros" se
+	// puede informar cualquier otra cosa (por ejemplo, algo del ruido).
+
+	/** Descripciones de una sección que se ofrecen en el panel. */
+	const descripcionesDe = (g, s) => {
+		const todas = tipoArray.descripciones[g]?.[s] || [];
+		if (!filtrarFrasesAutomaticas) return todas;
+		return todas.filter((d) => !esFraseAutomatica(tipo, g, s, d.value));
+	};
+	/** Grupos que se ofrecen en el panel (todos). */
+	const grupos = tipoArray.grupo;
 	/** Secciones del grupo elegido (vacío si no hay grupo). */
-	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
+	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] || [] : [];
 	/** Descripciones de la sección elegida ('misc' = notas: no tiene). */
 	const descripciones =
 		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
-			? tipoArray.descripciones[grupo.value][seccion.value] || []
+			? descripcionesDe(grupo.value, seccion.value)
 			: [];
+
+	/**
+	 * Los defectos que se ven (y se imprimen): todos, o solo los manuales si
+	 * se destildó el filtro "Observaciones automáticas".
+	 */
+	const visibles = mostrarAutomaticas ? lista : lista.filter((item) => !item.automatica);
 
 	/**
 	 * Botón "Agregar a la lista": suma el defecto elegido a la lista y limpia
@@ -146,11 +173,11 @@ function DefectList(props) {
 
 	/**
 	 * Botón "Copiar descripciones para SIRTO": copia al portapapeles, en una
-	 * sola línea, las descripciones de los defectos graves y moderados, para
-	 * pegarlas en el sistema SIRTO.
+	 * sola línea, las descripciones de los defectos graves y moderados que se
+	 * ven en la tabla, para pegarlas en el sistema SIRTO.
 	 */
 	function copyListDesc() {
-		const texto = lista
+		const texto = visibles
 			.filter((item) => item.sev === 'Grave' || item.sev === 'Moderado')
 			.map((item) => item.desc)
 			.join(' ');
@@ -162,21 +189,27 @@ function DefectList(props) {
 	/**
 	 * Una fila de la tabla de defectos.
 	 *
-	 * @param {object} defecto { grupo, seccion, desc, sev, Ord }
+	 * @param {object} defecto { grupo, seccion, desc, sev, Ord, automatica }
 	 * @param {number} i Posición en la tabla (la usa React como `key`).
 	 */
 	function filaDeDefecto(defecto, i) {
-		const { grupo, seccion, desc, sev } = defecto;
+		const { grupo, seccion, desc, sev, automatica } = defecto;
 		const color = COLOR_DE_SEVERIDAD[sev] ?? 'varios'; // 'varios' = notas
 
 		return (
-			<tr className={`item-lista`} key={i}>
+			<tr className={`item-lista`} key={i} data-automatica={automatica ? 'si' : 'no'}>
 				<td className={`grupo-col ${color}`}>{grupo}</td>
 				<td className={`seccion-col ${color}`}>{seccion}</td>
 				<td className={`descripcion-col ${color}`}>{desc}</td>
 				<td className={`severidad-col ${color}`}>{sev}</td>
 				<td className="phantom-col"></td>
 				<td className="erase-btn-ctn">
+					{/* Marca de observación automática (no se imprime) */}
+					{automatica && (
+						<small className="marca-auto" title="Observación automática: se calcula a partir del .txt">
+							auto
+						</small>
+					)}
 					{/* Cambiar severidad (no se imprime; las notas no tienen) */}
 					{sev !== '' && (
 						<select
@@ -216,7 +249,7 @@ function DefectList(props) {
 				</thead>
 				{/* Se ordena una copia: `sort` modifica el array, y el estado de
 				    React no se debe modificar directamente. */}
-				<tbody>{[...lista].sort(ordenDeLaLista).map(filaDeDefecto)}</tbody>
+				<tbody>{[...visibles].sort(ordenDeLaLista).map(filaDeDefecto)}</tbody>
 			</table>
 
 			{/* --- Formulario para agregar defectos (no se imprime) -------- */}
@@ -238,17 +271,52 @@ function DefectList(props) {
 							{item.label}
 						</label>
 					))}
+					{/* Filtro: mostrar (e imprimir) o no las observaciones automáticas */}
+					<label className="btn-inside filtro-auto" htmlFor="mostrar-automaticas">
+						<input
+							type="checkbox"
+							id="mostrar-automaticas"
+							checked={mostrarAutomaticas}
+							onChange={(e) => setMostrarAutomaticas(e.target.checked)}
+						/>
+						Observaciones automáticas
+					</label>
 				</div>
 				<div className="wrap-label copyDesc-btn" onClick={copyListDesc}>
 					Copiar descripciones para SIRTO
 					<img className="reset-img" src={copyBtn} alt="copy description" />
 				</div>
+				{/* Regenerar: borra y vuelve a calcular solo las automáticas
+				    (pide confirmación; ver Main.jsx). Sin .txt no hace nada. */}
+				<button
+					type="button"
+					className="regenerar-btn"
+					id="regenerar-btn"
+					disabled={!hayTxt}
+					onClick={regenerarAutomaticas}>
+					Regenerar observaciones automáticas
+				</button>
+
+				{/* Filtro del panel de abajo: no ofrecer las frases automáticas */}
+				<label className="filtro-frases" htmlFor="filtrar-frases-automaticas">
+					<input
+						type="checkbox"
+						id="filtrar-frases-automaticas"
+						checked={filtrarFrasesAutomaticas}
+						onChange={(e) => setFiltrarFrasesAutomaticas(e.target.checked)}
+					/>
+					Filtrar frases automáticas
+					<small>
+						{' '}
+						(en Grupo, Sección y Descripción no aparecen las frases que la app ya agrega sola)
+					</small>
+				</label>
 
 				<div className="variable-btn">
 					{/* 2. Grupo (más la opción especial "*Notas adicionales") */}
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{[...tipoArray.grupo].sort(porEtiqueta).map((item) => (
+						{[...grupos].sort(porEtiqueta).map((item) => (
 							<label
 								className={grupo.value === item.value ? 'radio-checked ' : 'focus'}
 								htmlFor={item.value}

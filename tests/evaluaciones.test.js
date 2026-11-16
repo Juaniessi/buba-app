@@ -80,8 +80,8 @@ describe('evaluarMayorOIgual (un valor alto es malo)', () => {
 	});
 
 	test.each([
-		['brakeDifDel', 90, 15.1, 13],
-		['brakeDifTra', 95, 15.1, 14],
+		['brakeDifDel', 90, 15.1, 10], // leve = desde el asterisco
+		['brakeDifTra', 95, 15.1, 12], // leve = desde el asterisco
 		['brakeResist', 4, 1, 0.85],
 		['brakeOval', 90, 50, 35],
 		['luxLow', 200, 60, 40],
@@ -251,13 +251,13 @@ describe('calcularVencimiento', () => {
 		formatearFecha(calcularVencimiento(inicio, rtoType, resultado, vigencia));
 
 	test.each([
-		// RTO normal
-		['normal', 'Apto', '2a', '8/7/2024'],
-		['normal', 'Apto', '1a', '8/7/2023'],
-		['normal', 'Apto', '6m', '8/1/2023'],
-		['normal', 'Condicional', '1a', '6/9/2022'], // 60 días
-		['normal', 'Rechazado', '1a', '8/7/2022'], // el mismo día
-		['normal', 'SoloInforme', '1a', '8/7/2022'],
+		// RTO particular
+		['particular', 'Apto', '2a', '8/7/2024'],
+		['particular', 'Apto', '1a', '8/7/2023'],
+		['particular', 'Apto', '6m', '8/1/2023'],
+		['particular', 'Condicional', '1a', '6/9/2022'], // 60 días
+		['particular', 'Rechazado', '1a', '8/7/2022'], // el mismo día
+		['particular', 'SoloInforme', '1a', '8/7/2022'],
 		// Transporte de pasajeros
 		['traPas', 'Apto', '1a', '8/7/2023'],
 		['traPas', 'Apto', '6m', '8/1/2023'],
@@ -272,7 +272,7 @@ describe('calcularVencimiento', () => {
 
 	test('no modifica la fecha de inicio', () => {
 		const copia = new Date(inicio.getTime());
-		calcularVencimiento(inicio, 'normal', 'Apto', '2a');
+		calcularVencimiento(inicio, 'particular', 'Apto', '2a');
 		expect(inicio).toEqual(copia);
 	});
 
@@ -281,8 +281,8 @@ describe('calcularVencimiento', () => {
 		// usaba el año UTC y el vencimiento salía para el 31/12 de dos años
 		// después.
 		const fin = new Date(2022, 11, 31, 22, 0);
-		expect(formatearFecha(calcularVencimiento(fin, 'normal', 'Apto', '1a'))).toBe('31/12/2023');
-		expect(formatearFecha(calcularVencimiento(fin, 'normal', 'Apto', '2a'))).toBe('31/12/2024');
+		expect(formatearFecha(calcularVencimiento(fin, 'particular', 'Apto', '1a'))).toBe('31/12/2023');
+		expect(formatearFecha(calcularVencimiento(fin, 'particular', 'Apto', '2a'))).toBe('31/12/2024');
 	});
 });
 

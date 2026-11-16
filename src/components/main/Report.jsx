@@ -81,6 +81,11 @@ function Report(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		mostrarAutomaticas,
+		setMostrarAutomaticas,
+		regenerarAutomaticas,
+		filtrarFrasesAutomaticas,
+		setFiltrarFrasesAutomaticas,
 		handleTxtRender,
 		reportArray,
 		engineType,
@@ -112,16 +117,16 @@ function Report(props) {
 	 * @returns {JSX.Element}
 	 */
 	function dateStamper() {
-		const dueDate = calcularVencimiento(
-			startDate,
-			rtoType.value,
-			dateCalcBtn.value,
-			selectValidity.value
-		);
+		// Sin vigencia elegida (no se pudo calcular sola), un Apto no tiene
+		// vencimiento todavía: queda en blanco hasta que se elija.
+		const sinVigencia = dateCalcBtn.value === 'Apto' && !selectValidity;
+		const dueDate = sinVigencia
+			? null
+			: calcularVencimiento(startDate, rtoType.value, dateCalcBtn.value, selectValidity?.value);
 		return (
 			<div className="date">
 				<p className="start-date">{formatearFecha(startDate)}</p>
-				<p className="end-date">{formatearFecha(dueDate)}</p>
+				<p className="end-date">{dueDate ? formatearFecha(dueDate) : ''}</p>
 			</div>
 		);
 	}
@@ -582,6 +587,12 @@ function Report(props) {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
+					mostrarAutomaticas={mostrarAutomaticas}
+					setMostrarAutomaticas={setMostrarAutomaticas}
+					regenerarAutomaticas={regenerarAutomaticas}
+					hayTxt={txtRender !== null}
+					filtrarFrasesAutomaticas={filtrarFrasesAutomaticas}
+					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
 				/>
 				{/* Referencias: qué significa cada severidad */}
 				<table className="references print">

@@ -83,3 +83,21 @@ export function cambiarSeveridad(lista, observacion, severidad) {
 	const { order } = severidadPorValor(severidad);
 	return lista.map((item) => (item === observacion ? { ...item, sev: severidad, Ord: order } : item));
 }
+
+/**
+ * Resultado de la revisión que corresponde según los defectos cargados:
+ *   - al menos uno Grave     → 'Rechazado'
+ *   - al menos uno Moderado  → 'Condicional'
+ *   - si no (solo leves o ninguno) → 'Apto'
+ *
+ * Lo usa Main.jsx cuando el resultado está en automático. "Solo informe"
+ * nunca sale de acá: se elige a mano.
+ *
+ * @param {object[]} lista Las observaciones que van en el informe.
+ * @returns {'Apto'|'Condicional'|'Rechazado'}
+ */
+export function resultadoSegunDefectos(lista) {
+	if (lista.some((item) => item.sev === 'Grave')) return 'Rechazado';
+	if (lista.some((item) => item.sev === 'Moderado')) return 'Condicional';
+	return 'Apto';
+}

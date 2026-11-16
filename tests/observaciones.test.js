@@ -5,7 +5,11 @@
  * =============================================================================
  */
 import { describe, expect, test } from 'vitest';
-import { cambiarSeveridad, nuevaObservacion } from '../src/components/main/observaciones.js';
+import {
+	cambiarSeveridad,
+	nuevaObservacion,
+	resultadoSegunDefectos,
+} from '../src/components/main/observaciones.js';
 
 const base = { grupo: 'Frenos', seccion: 'Rendimiento de frenado', desc: 'Bajo rendimiento.' };
 
@@ -58,5 +62,26 @@ describe('cambiarSeveridad', () => {
 	test('conserva si es automática', () => {
 		const auto = nuevaObservacion({ ...base, severidad: 'Leve', automatica: true });
 		expect(cambiarSeveridad([auto], auto, 'Moderado')[0].automatica).toBe(true);
+	});
+});
+
+describe('resultadoSegunDefectos', () => {
+	const conSeveridad = (severidad, esNota = false) => nuevaObservacion({ ...base, severidad, esNota });
+
+	test('sin defectos o solo leves → Apto', () => {
+		expect(resultadoSegunDefectos([])).toBe('Apto');
+		expect(resultadoSegunDefectos([conSeveridad('Leve')])).toBe('Apto');
+	});
+
+	test('al menos un Moderado → Condicional', () => {
+		expect(resultadoSegunDefectos([conSeveridad('Leve'), conSeveridad('Moderado')])).toBe('Condicional');
+	});
+
+	test('al menos un Grave → Rechazado, aunque haya moderados', () => {
+		expect(resultadoSegunDefectos([conSeveridad('Moderado'), conSeveridad('Grave')])).toBe('Rechazado');
+	});
+
+	test('las notas no cuentan', () => {
+		expect(resultadoSegunDefectos([conSeveridad('Grave', true)])).toBe('Apto');
 	});
 });

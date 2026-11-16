@@ -108,6 +108,10 @@ const autoArray = {
 				value: 'falloGen',
 				label: 'Fallo generalizado',
 			},
+			{
+				value: 'alinFaros',
+				label: 'Alineación de faros',
+			},
 		],
 		ruedas: [
 			{
@@ -204,6 +208,10 @@ const autoArray = {
 			{
 				value: 'ovalAlab',
 				label: 'Ovalidad o Alabebeo',
+			},
+			{
+				value: 'resistRod',
+				label: 'Resistencia a la rodadura',
 			},
 			{
 				value: 'fuerzaFren',
@@ -497,6 +505,24 @@ const autoArray = {
 				{
 					value: 'optDelDer',
 					label: 'Problemas de masa en óptica delantera derecha.',
+				},
+			],
+			alinFaros: [
+				{
+					value: 'faroIzqVert',
+					label: 'Faro izquierdo desalineado verticalmente.',
+				},
+				{
+					value: 'faroDerVert',
+					label: 'Faro derecho desalineado verticalmente.',
+				},
+				{
+					value: 'faroIzqHor',
+					label: 'Faro izquierdo desalineado horizontalmente.',
+				},
+				{
+					value: 'faroDerHor',
+					label: 'Faro derecho desalineado horizontalmente.',
 				},
 			],
 		},
@@ -994,6 +1020,40 @@ const autoArray = {
 				{
 					value: 'ovaCampFreTraDer',
 					label: 'Ovalidad en campana de freno trasera derecha.',
+				},
+				{
+					value: 'ovalAlabDelIzq',
+					label: 'Ovalidad o alabeo en freno delantero izquierdo.',
+				},
+				{
+					value: 'ovalAlabDelDer',
+					label: 'Ovalidad o alabeo en freno delantero derecho.',
+				},
+				{
+					value: 'ovalAlabTraIzq',
+					label: 'Ovalidad o alabeo en freno trasero izquierdo.',
+				},
+				{
+					value: 'ovalAlabTraDer',
+					label: 'Ovalidad o alabeo en freno trasero derecho.',
+				},
+			],
+			resistRod: [
+				{
+					value: 'resistRodDelIzq',
+					label: 'Resistencia a la rodadura elevada en rueda delantera izquierda.',
+				},
+				{
+					value: 'resistRodDelDer',
+					label: 'Resistencia a la rodadura elevada en rueda delantera derecha.',
+				},
+				{
+					value: 'resistRodTraIzq',
+					label: 'Resistencia a la rodadura elevada en rueda trasera izquierda.',
+				},
+				{
+					value: 'resistRodTraDer',
+					label: 'Resistencia a la rodadura elevada en rueda trasera derecha.',
 				},
 			],
 			fuerzaFren: [
