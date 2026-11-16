@@ -71,7 +71,6 @@ import {
 	EMPTY,
 	EMPTY_SPACE,
 	NEW_LINE,
-	TABS,
 	intHeader,
 	intAlineacion,
 	intSuspencionEjeDelantero,
@@ -108,86 +107,86 @@ import {
 } from './constantVariables.js';
 import {structureMap} from './globalVariables.js';
 
+/*
+ * =============================================================================
+ *  fileAnalizer.js — Lector del archivo .txt que devuelve la línea de RTO
+ * =============================================================================
+ *
+ *  Los equipos de la línea de revisión generan un .txt con una línea por
+ *  medición, del estilo "códigoNumérico=valor" (por ejemplo "10100=KMX-653"
+ *  es la patente). Este archivo convierte ese texto en un objeto de
+ *  JavaScript fácil de usar desde React, por ejemplo:
+ *
+ *      datos.header.patente               → "KMX-653"
+ *      datos.frenosEje_1.rendimientoDelEje → 57.28
+ *
+ *  Punto de entrada: `leerArchivoTxt(archivo)` (ver más abajo). Todo lo demás
+ *  en este archivo son pasos internos de ese proceso:
+ *
+ *    1. Leer el archivo como texto                (readFileAsText)
+ *    2. Limpiarlo y separarlo en pares código=valor (returnSetOfDataSF)
+ *    3. Agrupar los códigos por equipo/sección     (populateStructure)
+ *    4. Pasar todo a un objeto común y corriente   (transformMapToObject)
+ * =============================================================================
+ */
+
 /**
- *   Global Variable scopped to this file only
- *   Is used to store the value of the read file.
- *   While it's cleaned trimed parsed and deconstructed
+ * Texto crudo del archivo que se está procesando.
+ * Es un array por cómo estaba escrito originalmente, pero siempre tiene un
+ * solo elemento: el contenido completo del .txt.
+ *
+ * Es una variable "del módulo" (solo la ven las funciones de este archivo),
+ * no global del navegador.
  */
 let singleFileData = [];
 
 /**
- *  Global Variable scopped to this file only
- *  Will hold data from the txt file
- *  already parsed, cleaned and deconstructed.
+ * Pares código → valor ya limpios, sacados del .txt.
+ * Ejemplo: Map { "10100" → "KMX-653", "10200" → "TOYOTA", ... }
+ * También es una variable del módulo.
  */
 let mapSingleFile = new Map();
 
 /**
- *  Global Variable scopped to this file only
- *  Will hold data from the txt file as object
+ * Lee un archivo .txt de la línea de RTO y devuelve sus datos como objeto.
+ *
+ * Es una función `async`: quien la llama tiene que usar `await` (o `.then`)
+ * para recibir el resultado. Así el resto de la app espera exactamente lo que
+ * tarda en leerse el archivo, ni más ni menos.
+ *
+ * Antes esto se resolvía con temporizadores (`setTimeout` de 50, 60 y 70 ms)
+ * que "suponían" que el archivo ya se había leído, y el resultado se dejaba en
+ * una variable global del navegador (`window.fileAsObject`). En una PC lenta
+ * eso podía generar un informe vacío o con los datos del archivo anterior.
+ *
+ * @param {File} archivo El archivo elegido en el `<input type="file">`.
+ * @returns {Promise<object>} Los datos del .txt agrupados por sección
+ *   (header, alineacion, frenosEje_1, luxometro, etc.).
  */
-let fileAsObject;
+export async function leerArchivoTxt(archivo) {
+	// 1. Esperamos a que el navegador termine de leer el archivo completo.
+	const texto = await readFileAsText(archivo);
 
-// Handle multiple fileuploads
-/* document.getElementById('file-input').addEventListener(
-	'change', */
-export function procesTxt(ev) {
-	let files = ev.currentTarget.files;
-	let readers = [];
+	// 2. Lo dejamos donde lo esperan las funciones de limpieza de más abajo.
+	singleFileData = [texto];
 
-	// Abort if there were no files selected
-	if (!files.length) return;
-
-	// Store promises in array
-	for (let i = 0; i < files.length; i++) {
-		readers.push(readFileAsText(files[i]));
-	}
-
-	singleFileData = [];
-
-	// Trigger Promises
-	Promise.all(readers).then((values) => {
-		// Values will be an array that contains an item
-		// with the text of every selected file
-		// ["File1 Content", "File2 Content" ... "FileN Content"]
-		singleFileData.push(values.toString());
-	});
-
-	setTimeout(function () {
-		proccesFileGetJson(true);
-		fileAsObject = proccesFileGetObject();
-
-		window.fileAsObject = fileAsObject;
-		window.fileAsMap = structureMap;
-		return fileAsObject;
-	}, 50);
-}
-
-/**
- * Calls the functions that will process any files stored in singleFileData
- * @returns retrieves the json object
- */
-export function proccesFileGetJson(stringify) {
+	// 3. Limpiamos, separamos en código=valor y agrupamos por sección.
 	returnSetOfDataSF();
 	populateStructure();
-	return transformMapToJson(stringify);
-}
 
-/**
- * Calls the functions that will process any files stored in singleFileData
- * @returns retrieves the object
- */
-export function proccesFileGetObject() {
-	returnSetOfDataSF();
-	populateStructure();
+	// 4. Devolvemos el resultado como objeto común de JavaScript.
 	return transformMapToObject();
 }
 
 /**
- * Simple JavaScript Promise that reads a file as text.
+ * Lee un archivo y devuelve su contenido como texto.
  *
- * @param {*} file A file to read
- * @returns returns a promise with the file read
+ * El navegador lee los archivos de forma asíncrona (no al instante), así que
+ * envolvemos el `FileReader` en una Promesa para poder usarlo con `await`.
+ *
+ * @param {File} file El archivo a leer.
+ * @returns {Promise<string>} El contenido del archivo. Si falla la lectura,
+ *   la promesa se rechaza (y `leerArchivoTxt` también).
  */
 function readFileAsText(file) {
 	return new Promise(function (resolve, reject) {
@@ -1064,36 +1063,6 @@ function mapIngenieria(key, value, mappedObj) {
 		}
 	}
 	return mappedObj;
-}
-
-/**
- * Transforms the structureMap into a object
- * And returns it as a JSON
- *
- * @returns Jsonified global variable structureMap.
- */
-function transformMapToJson(Stringify) {
-	let jsonString;
-
-	/** Transform main Map into object */
-	let obj = Object.fromEntries(structureMap);
-
-	/** Transform submap into object and set it to obj */
-	for (let i = 0; i < collectionOfVariables.length; i++) {
-		let internalObj = Object.fromEntries(
-			structureMap.get(collectionOfVariables[i])
-		);
-		let varToSearch = collectionOfVariables[i];
-		obj[varToSearch] = internalObj;
-	}
-
-	jsonString = JSON.stringify(obj); // just the minimized json
-
-	if (Stringify === true) {
-		jsonString = JSON.stringify(obj, null, TABS); // Stringify with tabs
-	}
-
-	return jsonString;
 }
 
 /**

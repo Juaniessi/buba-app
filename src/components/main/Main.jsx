@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react';
 import Report from './Report';
-import {procesTxt} from '../txt-navegator/fileAnalizer.js';
+import {leerArchivoTxt} from '../txt-navegator/fileAnalizer.js';
 import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
 import {
 	autoReportArrayFiller,
@@ -67,26 +67,43 @@ function Main() {
 	const [unlistedDef, setUnlistedDef] = useState('');
 	const [lista, setLista] = useState([]);
 
+	/** Datos del .txt ya procesados (o null si todavía no se cargó ninguno). */
 	const [txtRender, setTxtRender] = useState(null);
-	/**  handles all the process that must ocurr when the txt is read.
-	 * @param {*} e the txt file.
-	 * @function reportArrayFiller called to fill the object in order to read it latter.
+
+	/**
+	 * Se ejecuta cuando el usuario elige un .txt en "Seleccione archivo txt".
+	 *
+	 * Pasos:
+	 *   1. Toma el archivo elegido. Si canceló el diálogo, no hace nada.
+	 *   2. Espera (`await`) a que se lea y se procese completo.
+	 *   3. Recién ahí borra la lista de defectos anterior, guarda los datos
+	 *      nuevos y arma el informe (versión moto o versión auto).
+	 *
+	 * Antes estos pasos se coordinaban con temporizadores de 60 y 70 ms, que
+	 * podían quedarse cortos en una PC lenta.
+	 *
+	 * @param {Event} e El evento `change` del `<input type="file">`.
 	 */
-	const handleTxtRender = (e) => {
+	const handleTxtRender = async (e) => {
+		const archivo = e.currentTarget.files[0];
+		if (!archivo) return;
+
+		let datos;
+		try {
+			datos = await leerArchivoTxt(archivo);
+		} catch (error) {
+			console.error('No se pudo leer el archivo .txt', error);
+			alert('No se pudo leer el archivo. Probá elegirlo de nuevo.');
+			return;
+		}
+
 		setLista([]);
-		procesTxt(e);
-
-		setTimeout(function () {
-			setTxtRender(window.fileAsObject);
-		}, 60);
-
-		setTimeout(function () {
-			if (tipo === 'Moto') {
-				setReportArray(motoReportArrayFiller());
-			} else {
-				setReportArray(autoReportArrayFiller());
-			}
-		}, 70);
+		setTxtRender(datos);
+		setReportArray(
+			tipo === 'Moto'
+				? motoReportArrayFiller(datos)
+				: autoReportArrayFiller(datos)
+		);
 	};
 
 	/*
