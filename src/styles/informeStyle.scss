@@ -71,6 +71,22 @@
 			left: 235px;
 			font-family: 'RobotoBold';
 			font-size: 0.75rem;
+			// Segunda revisión: las dos fechas apiladas en el hueco de INICIO.
+			// Arriba la primera, más chica; abajo la segunda, sobre la línea.
+			// Están al límite del espacio: más grandes se pisan con el título
+			// "VIGENCIA DE LA RTO" o con la "/" de FIN.
+			&.primera,
+			&.segunda {
+				white-space: nowrap; // "1ª 6/11/2026" nunca en dos renglones
+			}
+			&.primera {
+				top: 54px;
+				font-size: 0.5rem;
+			}
+			&.segunda {
+				top: 63px;
+				font-size: 0.6rem;
+			}
 		}
 		.end-date {
 			top: 61px;
@@ -78,6 +94,18 @@
 			font-family: 'RobotoBlack';
 			font-size: 0.75rem;
 		}
+	}
+	// Mail de la franja azul ("Tel: ... - Mail: turnos@bubatec.com"). El
+	// dibujo tenía "info@bubatec.com" en curvas; se borró y va como texto,
+	// en Roboto de 10,4 px como el resto de esa línea. En los SVG, "Tel: ...
+	// Mail:" se corrió 5,9 px a la izquierda para que la línea siga centrada.
+	.mail-turnos {
+		top: 95.6px;
+		left: 325.1px;
+		font-family: 'Roboto';
+		font-size: 10.4px;
+		color: white;
+		white-space: nowrap;
 	}
 	// Patente, marca, modelo y kilómetros.
 	.header-info {
@@ -598,6 +626,66 @@
 	background-color: white;
 }
 
+// --- Hojas (ver hojas.js y DefectList.jsx) ------------------------------------
+// "Hoja 1 de N", arriba de las referencias, a la derecha. Si se mueve, hay
+// que actualizar ESPACIO_HOJA_1 en hojas.js.
+.hoja-numero {
+	position: absolute;
+	top: 908px;
+	left: 15px;
+	width: 660px;
+	text-align: right;
+	font-size: 0.6rem;
+	font-weight: bold;
+}
+
+// Título "Observaciones que no entran en la hoja 1" (solo en pantalla).
+.hojas-extra-titulo {
+	margin: 1.5rem 0 0.5rem;
+}
+
+// Hoja extra con las observaciones que no entran en la hoja 1: del mismo
+// tamaño que la hoja 1 (el dibujo mide 700 x 990 px) y, al imprimir, en una
+// página aparte. Si se mueven la tabla o las referencias, hay que actualizar
+// ESPACIO_OTRAS_HOJAS en hojas.js.
+.hoja-extra {
+	position: relative;
+	width: 700px;
+	height: 990px;
+	margin: 10px 0;
+	border: solid black 1px;
+	background-color: white;
+	break-before: page;
+	page-break-before: always; // lo mismo, para navegadores viejos
+	break-inside: avoid;
+	// Patente, fecha y número de hoja, en una franja azul como la de la hoja 1.
+	.hoja-encabezado {
+		display: flex;
+		justify-content: space-between;
+		margin: 15px 15px 0;
+		padding: 6px 10px;
+		background-color: rgb(34, 64, 120);
+		color: white;
+		font-size: 0.8rem;
+	}
+	.hoja-titulo {
+		margin: 6px 15px 0;
+		font-size: 0.8rem;
+		font-weight: bold;
+	}
+	// La tabla y las referencias, en el mismo lugar en todas las hojas extra.
+	// max-content: que las columnas midan lo mismo que en la hoja 1 (si no, en
+	// pantalla la columna "Editar" la achica para que entre en la hoja, las
+	// descripciones ocupan más renglones y el reparto en hojas sale distinto).
+	.lista-final {
+		top: 70px;
+		width: max-content;
+	}
+	.references {
+		top: 905px;
+	}
+}
+
 // Botón "Copiar descripciones para SIRTO" (no se imprime).
 .copyDesc-btn {
 	position: absolute;
@@ -606,6 +694,52 @@
 	background-color: rgb(0, 170, 190);
 	color: white;
 	font-weight: 500;
+}
+
+// Botón "Regenerar observaciones automáticas", a la derecha del de SIRTO y
+// de su mismo tamaño (no se imprime). Gris y sin efecto mientras no haya un
+// .txt cargado.
+.regenerar-btn {
+	position: absolute;
+	left: 715px;
+	top: 1010px;
+	width: 150px;
+	height: 67px;
+	padding: 0.25rem;
+	border: solid 1px black;
+	border-radius: 5px;
+	background-color: rgb(0, 170, 190);
+	color: white;
+	font-weight: 500;
+	cursor: pointer;
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+	&:active {
+		box-shadow: none;
+		transform: translateY(4px);
+	}
+	&:disabled {
+		background-color: gray;
+		cursor: not-allowed;
+	}
+}
+
+// Filtro "Observaciones automáticas", al lado de los botones de severidad.
+.filtro-auto {
+	background-color: rgb(204, 240, 245);
+}
+
+// Filtro "Filtrar frases automáticas", arriba del panel Grupo / Sección /
+// Descripción (afecta solo a las opciones de ese panel).
+.filtro-frases {
+	margin: 0.5rem;
+	padding: 2px 6px;
+	width: max-content;
+	border-radius: 3px;
+	background-color: rgb(204, 240, 245);
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+	small {
+		font-size: 0.8rem;
+	}
 }
 
 // Ayuda que aparece al pasar el mouse sobre las vigencias.

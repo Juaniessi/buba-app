@@ -10,7 +10,9 @@
  *  Para leerlos: en cada tabla, cada fila es [valor medido, letra esperada].
  * =============================================================================
  */
+import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
+import { procesarTextoTxt } from '../src/components/txt-navegator/fileAnalizer.js';
 import {
 	CALIFICACION,
 	evaluarMenorOIgual,
@@ -22,6 +24,8 @@ import {
 	evaluarHCMoto,
 	añoValido,
 	fechaDeInicio,
+	fechaDePrimeraRevision,
+	esFechaValida,
 	calcularVencimiento,
 	formatearFecha,
 } from '../src/components/main/evaluaciones.js';
@@ -80,8 +84,8 @@ describe('evaluarMayorOIgual (un valor alto es malo)', () => {
 	});
 
 	test.each([
-		['brakeDifDel', 90, 15.1, 13],
-		['brakeDifTra', 95, 15.1, 14],
+		['brakeDifDel', 90, 15.1, 10], // leve = desde el asterisco
+		['brakeDifTra', 95, 15.1, 12], // leve = desde el asterisco
 		['brakeResist', 4, 1, 0.85],
 		['brakeOval', 90, 50, 35],
 		['luxLow', 200, 60, 40],
@@ -244,6 +248,48 @@ describe('fechaDeInicio', () => {
 	});
 });
 
+describe('fechas que faltan', () => {
+	test('formatearFecha sin fecha válida devuelve vacío (no rompe el informe)', () => {
+		expect(formatearFecha(undefined)).toBe('');
+		expect(formatearFecha('')).toBe('');
+		expect(formatearFecha(new Date(NaN))).toBe('');
+		expect(esFechaValida(new Date(2026, 10, 16))).toBe(true);
+	});
+});
+
+describe('fechaDePrimeraRevision', () => {
+	const leer = (nombre) =>
+		procesarTextoTxt(readFileSync(new URL(`./fixtures/${nombre}`, import.meta.url), 'utf8'));
+
+	test('sin .txt, null', () => {
+		expect(fechaDePrimeraRevision(null)).toBeNull();
+	});
+
+	test('primera revisión (todos los puestos el mismo día): null', () => {
+		expect(fechaDePrimeraRevision(leer('OMC542.txt'))).toBeNull();
+		expect(fechaDePrimeraRevision(leer('KMX-653.txt'))).toBeNull();
+		expect(fechaDePrimeraRevision(leer('VCW-112.txt'))).toBeNull();
+	});
+
+	test('segunda revisión: el puesto que no se repitió conserva la fecha de la primera', () => {
+		// OMC542_2: puesto 1 del 6/11/2026; puestos 2 y 3 del 16/11/2026.
+		const datos = leer('OMC542_2.txt');
+		expect(formatearFecha(fechaDeInicio(datos))).toBe('16/11/2026');
+		expect(formatearFecha(fechaDePrimeraRevision(datos))).toBe('6/11/2026');
+	});
+
+	test('fechas inválidas o que faltan no cuentan', () => {
+		const datos = {
+			estadísticaDePuestos: {
+				fechaDeIngresoAlPuesto1: new Date(NaN),
+				fechaDeSalidaDelPuesto1: undefined,
+				fechaDeSalidaDelPuesto2: new Date(2026, 10, 16, 11, 12),
+			},
+		};
+		expect(fechaDePrimeraRevision(datos)).toBeNull();
+	});
+});
+
 describe('calcularVencimiento', () => {
 	// Revisión del 8/7/2022 a las 12:41.
 	const inicio = new Date(2022, 6, 8, 12, 41);
@@ -251,13 +297,13 @@ describe('calcularVencimiento', () => {
 		formatearFecha(calcularVencimiento(inicio, rtoType, resultado, vigencia));
 
 	test.each([
-		// RTO normal
-		['normal', 'Apto', '2a', '8/7/2024'],
-		['normal', 'Apto', '1a', '8/7/2023'],
-		['normal', 'Apto', '6m', '8/1/2023'],
-		['normal', 'Condicional', '1a', '6/9/2022'], // 60 días
-		['normal', 'Rechazado', '1a', '8/7/2022'], // el mismo día
-		['normal', 'SoloInforme', '1a', '8/7/2022'],
+		// RTO particular
+		['particular', 'Apto', '2a', '8/7/2024'],
+		['particular', 'Apto', '1a', '8/7/2023'],
+		['particular', 'Apto', '6m', '8/1/2023'],
+		['particular', 'Condicional', '1a', '6/9/2022'], // 60 días
+		['particular', 'Rechazado', '1a', '8/7/2022'], // el mismo día
+		['particular', 'SoloInforme', '1a', '8/7/2022'],
 		// Transporte de pasajeros
 		['traPas', 'Apto', '1a', '8/7/2023'],
 		['traPas', 'Apto', '6m', '8/1/2023'],
@@ -272,7 +318,7 @@ describe('calcularVencimiento', () => {
 
 	test('no modifica la fecha de inicio', () => {
 		const copia = new Date(inicio.getTime());
-		calcularVencimiento(inicio, 'normal', 'Apto', '2a');
+		calcularVencimiento(inicio, 'particular', 'Apto', '2a');
 		expect(inicio).toEqual(copia);
 	});
 
@@ -281,8 +327,8 @@ describe('calcularVencimiento', () => {
 		// usaba el año UTC y el vencimiento salía para el 31/12 de dos años
 		// después.
 		const fin = new Date(2022, 11, 31, 22, 0);
-		expect(formatearFecha(calcularVencimiento(fin, 'normal', 'Apto', '1a'))).toBe('31/12/2023');
-		expect(formatearFecha(calcularVencimiento(fin, 'normal', 'Apto', '2a'))).toBe('31/12/2024');
+		expect(formatearFecha(calcularVencimiento(fin, 'particular', 'Apto', '1a'))).toBe('31/12/2023');
+		expect(formatearFecha(calcularVencimiento(fin, 'particular', 'Apto', '2a'))).toBe('31/12/2024');
 	});
 });
 

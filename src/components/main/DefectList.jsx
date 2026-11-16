@@ -3,9 +3,11 @@
  *  DefectList.jsx — Lista de defectos del informe y formulario para cargarlos
  * =============================================================================
  *
- *  Dibuja dos cosas:
+ *  Dibuja tres cosas:
  *    1. La tabla de defectos que sale en el informe impreso, ordenada de más
- *       grave a más leve, con un botón para quitar cada uno.
+ *       grave a más leve. Cada fila tiene, solo en pantalla, un selector
+ *       para cambiar la severidad y un botón para quitarla. Abajo a la
+ *       derecha dice "Hoja 1 de N".
  *    2. El formulario (no se imprime) para agregar defectos, en cuatro pasos:
  *         Severidad → Grupo → Sección → Descripción → "Agregar a la lista"
  *       Las opciones de grupo, sección y descripción salen de
@@ -13,17 +15,26 @@
  *       Si el defecto no está en la lista, se elige "Otros" y se escribe a
  *       mano en "Defecto no listado". "*Notas adicionales" sirve para agregar
  *       texto libre sin severidad.
+ *    3. Si las observaciones no entran en la hoja 1, las que sobran van a una
+ *       hoja 2 (y a una 3, etc., si hiciera falta). Cada hoja extra repite la
+ *       patente y la fecha, dice "Hoja 2 de 2" y lleva las referencias al
+ *       pie. En pantalla aparece debajo del formulario; al imprimir, en una
+ *       página aparte. El reparto lo decide hojas.js.
  *
  *  No guarda estado propio: lo que se va eligiendo vive en Main.jsx y llega
  *  por props, junto con las funciones para cambiarlo.
  * =============================================================================
  */
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { autoArray } from '../dataArrays/carDataBase';
 import { motoArray } from '../dataArrays/motoDataBase';
 import trashCan from '../../assets/trash-can-solid.svg';
 import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import copyBtn from '../../assets/copy-regular.svg';
+import { SEVERIDADES, cambiarSeveridad, nuevaObservacion } from './observaciones';
+import { esFraseAutomatica } from './observacionesAutomaticas';
+import { cortarEnHojas, repartirEnHojas } from './hojas';
+import Referencias from './Referencias';
 
 /** Opción "nada elegido" para grupo, sección y descripción. */
 const SIN_ELEGIR = { value: '', label: '' };
@@ -67,17 +78,90 @@ function DefectList(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		mostrarAutomaticas,
+		setMostrarAutomaticas,
+		regenerarAutomaticas,
+		hayTxt,
+		filtrarFrasesAutomaticas,
+		setFiltrarFrasesAutomaticas,
+		patente,
+		fecha,
+		transportePasajeros,
 	} = props;
 
-	// Opciones disponibles según lo elegido hasta ahora.
+	// --- Opciones del panel Grupo / Sección / Descripción ---------------------
 	const tipoArray = tipo !== 'Moto' ? autoArray : motoArray;
+
+	// Con "Filtrar frases automáticas" tildado, se ocultan solo las
+	// descripciones que la app ya agrega sola. Los grupos y las secciones se
+	// muestran siempre (aunque se queden sin frases), porque con "Otros" se
+	// puede informar cualquier otra cosa (por ejemplo, algo del ruido).
+
+	/** Descripciones de una sección que se ofrecen en el panel. */
+	const descripcionesDe = (g, s) => {
+		const todas = tipoArray.descripciones[g]?.[s] || [];
+		if (!filtrarFrasesAutomaticas) return todas;
+		return todas.filter((d) => !esFraseAutomatica(tipo, g, s, d.value));
+	};
+	/** Grupos que se ofrecen en el panel (todos). */
+	const grupos = tipoArray.grupo;
 	/** Secciones del grupo elegido (vacío si no hay grupo). */
-	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] : [];
+	const secciones = grupo.value !== '' ? tipoArray.seccion[grupo.value] || [] : [];
 	/** Descripciones de la sección elegida ('misc' = notas: no tiene). */
 	const descripciones =
 		seccion.value !== '' && grupo.value !== '' && seccion.value !== 'misc'
-			? tipoArray.descripciones[grupo.value][seccion.value] || []
+			? descripcionesDe(grupo.value, seccion.value)
 			: [];
+
+	/**
+	 * Los defectos que se ven (y se imprimen): todos, o solo los manuales si
+	 * se destildó el filtro "Observaciones automáticas".
+	 */
+	const visibles = mostrarAutomaticas ? lista : lista.filter((item) => !item.automatica);
+
+	// --- Reparto de las observaciones en hojas --------------------------------
+	//  Se mide la altura real de cada fila (una descripción larga ocupa dos
+	//  renglones) y hojas.js decide cuántas entran en cada hoja. Como hay que
+	//  medir lo que ya está dibujado, se hace en dos pasos: se dibuja con el
+	//  reparto anterior, se mide y, si cambió, se vuelve a dibujar. Las filas
+	//  miden lo mismo en cualquier hoja, así que el segundo dibujo no cambia
+	//  el reparto y no se repite.
+
+	/** Las observaciones visibles, en el orden de la tabla. Se ordena una
+	 *  copia: `sort` modifica el array, y el estado de React no se debe
+	 *  modificar directamente. */
+	const ordenadas = [...visibles].sort(ordenDeLaLista);
+
+	/** Cuántas filas van en cada hoja (ver repartirEnHojas). */
+	const [filasPorHoja, setFilasPorHoja] = useState([0]);
+
+	/** Las filas de cada hoja: hojas[0] es la hoja 1. */
+	const hojas = cortarEnHojas(ordenadas, filasPorHoja);
+
+	/** La tabla de la hoja 1 y el contenedor de las hojas extra (para medir). */
+	const tablaRef = useRef(null);
+	const hojasExtraRef = useRef(null);
+
+	// Mide las filas después de cada dibujo y, si hace falta, reparte de nuevo.
+	useLayoutEffect(() => {
+		const tabla = tablaRef.current;
+		if (!tabla) return;
+		const filas = [
+			...tabla.querySelectorAll('tbody tr'),
+			...(hojasExtraRef.current?.querySelectorAll('table.lista-final tbody tr') ?? []),
+		];
+		const alturas = filas.map((fila) => fila.getBoundingClientRect().height);
+		const encabezado = tabla.tHead ? tabla.tHead.getBoundingClientRect().height : 0;
+		const nuevo = repartirEnHojas(alturas, { encabezado });
+		if (nuevo.join() !== filasPorHoja.join()) setFilasPorHoja(nuevo);
+	});
+
+	// Cuando terminan de cargar las fuentes, las filas pueden cambiar de
+	// altura: se vuelve a dibujar (y a medir).
+	const [, setFuentesCargadas] = useState(false);
+	useEffect(() => {
+		document.fonts?.ready.then(() => setFuentesCargadas(true));
+	}, []);
 
 	/**
 	 * Botón "Agregar a la lista": suma el defecto elegido a la lista y limpia
@@ -102,14 +186,14 @@ function DefectList(props) {
 			return;
 		}
 
-		const esNota = seccion.label === 'Varios';
-		const itemLista = {
+		const itemLista = nuevaObservacion({
 			grupo: grupo.label,
 			seccion: seccion.label,
 			desc: descripcion.value === 'otro' ? unlistedDef : descripcion.label,
-			sev: esNota ? '' : severidad.value,
-			Ord: esNota ? 0 : severidad.order,
-		};
+			severidad: severidad.value,
+			esNota: seccion.label === 'Varios',
+			automatica: false, // la cargó una persona
+		});
 
 		setLista(lista.concat(itemLista));
 		setGrupo(SIN_ELEGIR);
@@ -132,12 +216,23 @@ function DefectList(props) {
 	}
 
 	/**
+	 * Selector de severidad de una fila: cambia la severidad de ese defecto.
+	 * La tabla se reordena sola (de más grave a más leve).
+	 *
+	 * @param {object} defecto El defecto a cambiar.
+	 * @param {string} severidad La severidad elegida.
+	 */
+	function cambiarSeveridadDe(defecto, severidad) {
+		setLista(cambiarSeveridad(lista, defecto, severidad));
+	}
+
+	/**
 	 * Botón "Copiar descripciones para SIRTO": copia al portapapeles, en una
-	 * sola línea, las descripciones de los defectos graves y moderados, para
-	 * pegarlas en el sistema SIRTO.
+	 * sola línea, las descripciones de los defectos graves y moderados que se
+	 * ven en la tabla, para pegarlas en el sistema SIRTO.
 	 */
 	function copyListDesc() {
-		const texto = lista
+		const texto = visibles
 			.filter((item) => item.sev === 'Grave' || item.sev === 'Moderado')
 			.map((item) => item.desc)
 			.join(' ');
@@ -146,24 +241,61 @@ function DefectList(props) {
 		}
 	}
 
+	/** Encabezado de la tabla de defectos (se repite en cada hoja). */
+	function encabezadoDeTabla() {
+		return (
+			<thead>
+				<tr className="lista-headers">
+					<th className="grupo-col">Grupo</th>
+					<th className="seccion-col">Sección</th>
+					<th className="descripcion-col">Descripción</th>
+					<th className="severidad-col">Severidad</th>
+					<th className="phantom-col"></th>
+					<th className="quitar-col">Editar</th>
+				</tr>
+			</thead>
+		);
+	}
+
 	/**
 	 * Una fila de la tabla de defectos.
 	 *
-	 * @param {object} defecto { grupo, seccion, desc, sev, Ord }
+	 * @param {object} defecto { grupo, seccion, desc, sev, Ord, automatica }
 	 * @param {number} i Posición en la tabla (la usa React como `key`).
 	 */
 	function filaDeDefecto(defecto, i) {
-		const { grupo, seccion, desc, sev } = defecto;
+		const { grupo, seccion, desc, sev, automatica } = defecto;
 		const color = COLOR_DE_SEVERIDAD[sev] ?? 'varios'; // 'varios' = notas
 
 		return (
-			<tr className={`item-lista`} key={i}>
+			<tr className={`item-lista`} key={i} data-automatica={automatica ? 'si' : 'no'}>
 				<td className={`grupo-col ${color}`}>{grupo}</td>
 				<td className={`seccion-col ${color}`}>{seccion}</td>
 				<td className={`descripcion-col ${color}`}>{desc}</td>
 				<td className={`severidad-col ${color}`}>{sev}</td>
 				<td className="phantom-col"></td>
 				<td className="erase-btn-ctn">
+					{/* Marca de observación automática (no se imprime) */}
+					{automatica && (
+						<small className="marca-auto" title="Observación automática: se calcula a partir del .txt">
+							auto
+						</small>
+					)}
+					{/* Cambiar severidad (no se imprime; las notas no tienen) */}
+					{sev !== '' && (
+						<select
+							className="severidad-select"
+							aria-label="Cambiar severidad"
+							title="Cambiar severidad"
+							value={sev}
+							onChange={(e) => cambiarSeveridadDe(defecto, e.target.value)}>
+							{SEVERIDADES.map((s) => (
+								<option key={s.value} value={s.value}>
+									{s.label}
+								</option>
+							))}
+						</select>
+					)}
 					<button className="erase-btn" onClick={() => eraseDefect(defecto)}>
 						<img className="trash-can" src={trashCan} alt="Trash-can" />
 					</button>
@@ -174,22 +306,16 @@ function DefectList(props) {
 
 	return (
 		<>
-			{/* --- Tabla de defectos (se imprime) -------------------------- */}
-			<table className="lista-final print">
-				<thead>
-					<tr className="lista-headers">
-						<th className="grupo-col">Grupo</th>
-						<th className="seccion-col">Sección</th>
-						<th className="descripcion-col">Descripción</th>
-						<th className="severidad-col">Severidad</th>
-						<th className="phantom-col"></th>
-						<th className="quitar-col">Quitar</th>
-					</tr>
-				</thead>
-				{/* Se ordena una copia: `sort` modifica el array, y el estado de
-				    React no se debe modificar directamente. */}
-				<tbody>{[...lista].sort(ordenDeLaLista).map(filaDeDefecto)}</tbody>
+			{/* --- Tabla de defectos de la hoja 1 (se imprime) ------------- */}
+			<table className="lista-final print" ref={tablaRef}>
+				{encabezadoDeTabla()}
+				<tbody>{hojas[0].map(filaDeDefecto)}</tbody>
 			</table>
+			{/* Número de hoja, arriba de las referencias */}
+			<div className="hoja-numero print" id="hoja-numero">
+				Hoja 1 de {hojas.length}
+				{hojas.length > 1 && ' (las observaciones siguen en la hoja 2)'}
+			</div>
 
 			{/* --- Formulario para agregar defectos (no se imprime) -------- */}
 			<form className="form-radio-ext" id="no-print3">
@@ -210,17 +336,52 @@ function DefectList(props) {
 							{item.label}
 						</label>
 					))}
+					{/* Filtro: mostrar (e imprimir) o no las observaciones automáticas */}
+					<label className="btn-inside filtro-auto" htmlFor="mostrar-automaticas">
+						<input
+							type="checkbox"
+							id="mostrar-automaticas"
+							checked={mostrarAutomaticas}
+							onChange={(e) => setMostrarAutomaticas(e.target.checked)}
+						/>
+						Observaciones automáticas
+					</label>
 				</div>
 				<div className="wrap-label copyDesc-btn" onClick={copyListDesc}>
 					Copiar descripciones para SIRTO
 					<img className="reset-img" src={copyBtn} alt="copy description" />
 				</div>
+				{/* Regenerar: borra y vuelve a calcular solo las automáticas
+				    (pide confirmación; ver Main.jsx). Sin .txt no hace nada. */}
+				<button
+					type="button"
+					className="regenerar-btn"
+					id="regenerar-btn"
+					disabled={!hayTxt}
+					onClick={regenerarAutomaticas}>
+					Regenerar observaciones automáticas
+				</button>
+
+				{/* Filtro del panel de abajo: no ofrecer las frases automáticas */}
+				<label className="filtro-frases" htmlFor="filtrar-frases-automaticas">
+					<input
+						type="checkbox"
+						id="filtrar-frases-automaticas"
+						checked={filtrarFrasesAutomaticas}
+						onChange={(e) => setFiltrarFrasesAutomaticas(e.target.checked)}
+					/>
+					Filtrar frases automáticas
+					<small>
+						{' '}
+						(en Grupo, Sección y Descripción no aparecen las frases que la app ya agrega sola)
+					</small>
+				</label>
 
 				<div className="variable-btn">
 					{/* 2. Grupo (más la opción especial "*Notas adicionales") */}
 					<div className="btn-package col-class group-c">
 						<h3>Grupo</h3>
-						{[...tipoArray.grupo].sort(porEtiqueta).map((item) => (
+						{[...grupos].sort(porEtiqueta).map((item) => (
 							<label
 								className={grupo.value === item.value ? 'radio-checked ' : 'focus'}
 								htmlFor={item.value}
@@ -352,6 +513,37 @@ function DefectList(props) {
 					</button>
 				</div>
 			</form>
+
+			{/* --- Hojas extra: las observaciones que no entran en la hoja 1 --- */}
+			<div className="hojas-extra" ref={hojasExtraRef}>
+				{hojas.length > 1 && (
+					<h2 className="hojas-extra-titulo">
+						Observaciones que no entran en la hoja 1 (se imprimen en otra hoja)
+					</h2>
+				)}
+				{hojas.slice(1).map((filas, i) => (
+					<section className="hoja-extra print" key={i}>
+						<div className="hoja-encabezado">
+							<div>
+								Patente: <strong className="hoja-patente">{patente}</strong>
+							</div>
+							<div>
+								Fecha de la revisión: <strong className="hoja-fecha">{fecha}</strong>
+							</div>
+							<div className="hoja-de">
+								Hoja {i + 2} de {hojas.length}
+							</div>
+						</div>
+						<div className="hoja-titulo">Observaciones (continuación)</div>
+						<table className="lista-final print">
+							{encabezadoDeTabla()}
+							<tbody>{filas.map(filaDeDefecto)}</tbody>
+						</table>
+						<Referencias />
+						{transportePasajeros && <div className="marca-de-agua">Transporte de pasajeros</div>}
+					</section>
+				))}
+			</div>
 		</>
 	);
 }

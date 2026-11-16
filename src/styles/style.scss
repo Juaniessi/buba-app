@@ -29,7 +29,9 @@
 	h3,
 	button,
 	input,
+	select,
 	textarea,
+	.marca-auto,
 	.quitar-col {
 		display: none;
 	}
@@ -216,9 +218,25 @@ td {
 		min-width: 40px;
 		border: none;
 	}
+	// Columna "Editar" (solo en pantalla): selector de severidad y papelera.
 	.erase-btn-ctn {
 		text-align: center;
 		border: none;
+		white-space: nowrap;
+		.severidad-select {
+			font-size: 0.65rem;
+			margin-right: 4px;
+			cursor: pointer;
+		}
+		// Marca "auto" de las observaciones automáticas.
+		.marca-auto {
+			font-size: 0.6rem;
+			margin-right: 4px;
+			padding: 0 3px;
+			border-radius: 3px;
+			background-color: rgb(0, 170, 190);
+			color: white;
+		}
 		.erase-btn {
 			width: 12px;
 			height: 12px;
@@ -268,6 +286,42 @@ td {
 .Rechazado {
 	background-color: rgba(0, 0, 0, 0.5);
 	color: white;
+}
+// Aviso debajo de la vigencia (RTO particular): por qué tiene ese valor.
+.aviso-vigencia {
+	margin: 0 0.5rem 0.5rem;
+	padding: 4px 8px;
+	width: max-content;
+	max-width: 700px;
+	border-radius: 3px;
+	font-size: 0.85rem;
+	&.info {
+		background-color: rgb(204, 240, 245);
+	}
+	&.alerta {
+		background-color: rgb(255, 225, 150);
+		font-weight: 500;
+	}
+	&.manual {
+		background-color: lightgray;
+	}
+	// Segunda revisión (con la casilla para contar desde la primera).
+	&.segunda {
+		background-color: rgb(225, 215, 250);
+		.aviso-nota {
+			margin-top: 2px;
+			font-size: 0.8rem;
+		}
+	}
+}
+// Vigencia sin elegir cuando no se pudo calcular sola: borde naranja.
+.falta-elegir {
+	outline: 2px solid rgb(230, 140, 0);
+}
+
+// Casilla "Automático" del resultado.
+.resultado-auto {
+	background-color: rgb(204, 240, 245);
 }
 .Apto {
 	background-color: rgba(81, 209, 246, 0.75);

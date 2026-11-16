@@ -19,6 +19,17 @@
 import React, { useState, useRef } from 'react';
 import Report from './Report';
 import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
+import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
+import { resultadoSegunDefectos } from './observaciones';
+import { calcularVigenciaParticular } from './vigencia';
+import { fechaDeInicio, fechaDePrimeraRevision, formatearFecha } from './evaluaciones';
+
+/** Aviso que se muestra antes de regenerar las observaciones automáticas. */
+const AVISO_REGENERAR =
+	'Se van a regenerar por completo las observaciones automáticas.\n\n' +
+	'Las que cargaste a mano no se tocan, pero si cambiaste la severidad de ' +
+	'alguna automática, ese cambio se pierde. Por favor, revisá las severidades.\n\n' +
+	'¿Continuar?';
 import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import {
 	autoReportArrayFiller,
@@ -46,8 +57,8 @@ const ESTADO_INICIAL = {
 	// --- Vehículo -------------------------------------------------------------
 	/** Tipo de vehículo: 'Auto', 'Camioneta', 'Camion', 'Minibus' o 'Moto'. */
 	tipo: 'Auto',
-	/** RTO normal o de transporte de pasajeros (cambia las vigencias posibles). */
-	rtoType: { value: 'normal', label: 'Normal' },
+	/** RTO particular o de transporte de pasajeros (cambia las vigencias posibles). */
+	rtoType: { value: 'particular', label: 'Particular' },
 	/** Solo motos: motor de 4 o 2 tiempos (cambia el límite de HC). */
 	engineType: { value: '4T', label: '4 Tiempos' },
 	/**
@@ -62,10 +73,26 @@ const ESTADO_INICIAL = {
 	transmisionType: { value: '4x2', label: 'Normal' },
 
 	// --- Resultado y vencimiento ---------------------------------------------
-	/** Resultado de la revisión: Apto, Condicional, Rechazado o Solo informe. */
+	/**
+	 * Si está en true, el resultado se calcula solo según los defectos del
+	 * informe: con alguno Grave → Rechazado; con alguno Moderado →
+	 * Condicional; si no → Apto (ver resultadoSegunDefectos en
+	 * observaciones.js). Pasa a false al elegir un resultado a mano.
+	 */
+	resultadoAutomatico: true,
+	/**
+	 * Resultado elegido a mano: Apto, Condicional, Rechazado o Solo informe.
+	 * Solo se usa cuando resultadoAutomatico es false.
+	 */
 	dateCalcBtn: { value: 'Apto', label: 'Apto' },
 	/** Vigencia elegida (solo se puede cambiar cuando el resultado es Apto). */
 	selectValidity: { value: '1a', label: '1 año' },
+	/**
+	 * RTO particular: si está en true, la vigencia se calcula sola según la
+	 * antigüedad del vehículo, que sale de la patente (ver vigencia.js).
+	 * Pasa a false al elegir una vigencia a mano.
+	 */
+	vigenciaAutomatica: true,
 
 	// --- Defecto que se está cargando ----------------------------------------
 	//  (se arma eligiendo severidad → grupo → sección → descripción, y se suma
@@ -76,8 +103,22 @@ const ESTADO_INICIAL = {
 	descripcion: SIN_ELEGIR,
 	/** Texto libre cuando la descripción elegida es "Otros". */
 	unlistedDef: '',
-	/** Defectos ya agregados al informe. */
+	/**
+	 * Defectos del informe: los que cargó la persona y los automáticos (los
+	 * genera la app a partir del .txt; ver observacionesAutomaticas.js).
+	 */
 	lista: [],
+	/**
+	 * Filtro "Observaciones automáticas": si se destilda, las automáticas no
+	 * se muestran ni se imprimen (pero no se borran).
+	 */
+	mostrarAutomaticas: true,
+	/**
+	 * Filtro "Filtrar frases automáticas" del panel para agregar defectos: si
+	 * está tildado, Grupo / Sección / Descripción no ofrecen las frases que la
+	 * app ya agrega sola (así es más fácil encontrar las demás).
+	 */
+	filtrarFrasesAutomaticas: true,
 
 	// --- Archivos cargados ---------------------------------------------------
 	/** Datos del .txt ya procesados (null si todavía no se cargó ninguno). */
@@ -119,17 +160,72 @@ function Main() {
 		truckSize,
 		transmisionType,
 		dateCalcBtn,
+		resultadoAutomatico,
 		selectValidity,
+		vigenciaAutomatica,
 		severidad,
 		grupo,
 		seccion,
 		descripcion,
 		unlistedDef,
 		lista,
+		mostrarAutomaticas,
+		filtrarFrasesAutomaticas,
 		txtRender,
 		reportArray,
 		imgUpload,
 	} = estado;
+
+	/** Los defectos que van en el informe (respeta el filtro "Observaciones automáticas"). */
+	const listaDelInforme = mostrarAutomaticas ? lista : lista.filter((item) => !item.automatica);
+
+	/**
+	 * El resultado que vale: el calculado según los defectos (en automático)
+	 * o el elegido a mano. Es el que se muestra marcado y el que sale impreso.
+	 */
+	const resultado = resultadoAutomatico
+		? radioGeneratorArray.dateCalc.find((o) => o.value === resultadoSegunDefectos(listaDelInforme))
+		: dateCalcBtn;
+
+	/**
+	 * Si el .txt es de una segunda revisión, la fecha de la primera (si no,
+	 * null). Ver fechaDePrimeraRevision en evaluaciones.js.
+	 */
+	const primeraRevision = fechaDePrimeraRevision(txtRender);
+
+	/**
+	 * Desde cuándo se cuenta la vigencia (y el vencimiento): en una segunda
+	 * revisión con resultado Apto, desde la primera revisión; si no, desde el
+	 * día de la revisión. Se decide solo, sin casillas: la segunda revisión se
+	 * detecta con las fechas del .txt.
+	 */
+	const inicioVigencia =
+		primeraRevision && resultado.value === 'Apto'
+			? primeraRevision
+			: fechaDeInicio(txtRender);
+
+	/**
+	 * Vigencia automática (solo RTO particular con un .txt cargado): qué
+	 * corresponde según la patente, o por qué no se puede calcular. La
+	 * antigüedad se mide al inicio de la vigencia.
+	 */
+	const infoVigencia =
+		rtoType.value === 'particular' && txtRender
+			? calcularVigenciaParticular(txtRender.header.patente, inicioVigencia)
+			: null;
+
+	/**
+	 * La vigencia que vale: la calculada (en automático) o la elegida a mano.
+	 * Es null cuando está en automático pero no se pudo calcular: no queda
+	 * ninguna marcada y el vencimiento sale en blanco hasta que se elija una.
+	 */
+	const vigencia =
+		infoVigencia && vigenciaAutomatica
+			? radioGeneratorArray.selectValidity.find((o) => o.value === infoVigencia.vigencia) ?? null
+			: selectValidity;
+
+	/** Falta elegir la vigencia a mano (en automático no se pudo calcular). */
+	const faltaVigencia = resultado.value === 'Apto' && vigencia === null;
 
 	/**
 	 * Referencias a los dos `<input type="file">` (el del .txt y el de la
@@ -178,14 +274,14 @@ function Main() {
 	};
 
 	/**
-	 * Cambio entre RTO normal y transporte de pasajeros. Además pone la
+	 * Cambio entre RTO particular y transporte de pasajeros. Además pone la
 	 * vigencia más usada en cada caso: 3 meses para transporte de pasajeros y
-	 * 1 año para la normal.
+	 * 1 año para la particular.
 	 *
 	 * @param {{value: string, label: string}} item La opción elegida.
 	 */
 	const handleSetRtoType = (item) => {
-		if (rtoType.value === 'normal') {
+		if (rtoType.value === 'particular') {
 			actualizar({ rtoType: item, selectValidity: { value: '3m', label: '3 Meses' } });
 		}
 		if (rtoType.value === 'traPas') {
@@ -213,6 +309,39 @@ function Main() {
 	const setDescripcion = (valor) => actualizar({ descripcion: valor });
 	const setUnlistedDef = (valor) => actualizar({ unlistedDef: valor });
 	const setLista = (valor) => actualizar({ lista: valor });
+	const setMostrarAutomaticas = (valor) => actualizar({ mostrarAutomaticas: valor });
+	const setFiltrarFrasesAutomaticas = (valor) => actualizar({ filtrarFrasesAutomaticas: valor });
+
+	// --- Observaciones automáticas ------------------------------------------------
+
+	/**
+	 * Calcula las observaciones automáticas de un .txt con las opciones que
+	 * están elegidas ahora (tipo de vehículo, tamaño de camión, tracción, motor).
+	 *
+	 * @param {object} datos Los datos del .txt.
+	 * @returns {object[]}
+	 */
+	const automaticasDe = (datos) =>
+		generarObservacionesAutomaticas(datos, {
+			tipo,
+			truckSize: truckSize.value,
+			transmisionType: transmisionType.value,
+			engineType: engineType.value,
+		});
+
+	/**
+	 * Botón "Regenerar observaciones automáticas": después de confirmar el
+	 * aviso, borra las automáticas y las vuelve a calcular. Las que cargó la
+	 * persona no se tocan. Sirve para recuperar una borrada por error, o si
+	 * se cambió algo que afecta la calificación (camión grande, 4x4, motor).
+	 */
+	const regenerarAutomaticas = () => {
+		if (!txtRender) return;
+		if (!window.confirm(AVISO_REGENERAR)) return;
+		actualizar({
+			lista: lista.filter((item) => !item.automatica).concat(automaticasDe(txtRender)),
+		});
+	};
 
 	// --- Archivos ----------------------------------------------------------------
 
@@ -222,8 +351,9 @@ function Main() {
 	 * Pasos:
 	 *   1. Toma el archivo elegido. Si canceló el diálogo, no hace nada.
 	 *   2. Espera (`await`) a que se lea y se procese completo.
-	 *   3. Recién ahí borra la lista de defectos anterior, guarda los datos
-	 *      nuevos y arma el informe (versión moto o versión auto).
+	 *   3. Recién ahí reemplaza la lista de defectos anterior por las
+	 *      observaciones automáticas del archivo nuevo, guarda los datos y
+	 *      arma el informe (versión moto o versión auto).
 	 *
 	 * @param {Event} e El evento `change` del `<input type="file">`.
 	 */
@@ -241,7 +371,7 @@ function Main() {
 		}
 
 		actualizar({
-			lista: [],
+			lista: automaticasDe(datos),
 			txtRender: datos,
 			reportArray:
 				tipo === 'Moto' ? motoReportArrayFiller(datos) : autoReportArrayFiller(datos),
@@ -300,7 +430,7 @@ function Main() {
 						</label>
 					))}
 
-					{/* RTO normal / transporte de pasajeros (todos los tipos) */}
+					{/* RTO particular / transporte de pasajeros (todos los tipos) */}
 					<div className="engine-and-size-ctn">
 						{tipo === 'Moto' ||
 						tipo === 'Auto' ||
@@ -399,25 +529,48 @@ function Main() {
 								name="dateCalcBtn"
 								id={item.value}
 								value={item.value}
-								checked={dateCalcBtn.value === item.value} // marca visualmente la opción elegida
-								onChange={() => actualizar({ dateCalcBtn: item })}
+								checked={resultado.value === item.value} // marca visualmente la opción elegida
+								// Elegir un resultado a mano pasa a modo manual.
+								onChange={() => actualizar({ dateCalcBtn: item, resultadoAutomatico: false })}
 							/>
 							{item.label}
 						</label>
-					))}{' '}
+					))}
+					{/* Automático: el resultado sigue a los defectos. Destildado (o al
+					    elegir un resultado a mano) queda fijo en lo que se elija. */}
+					<label
+						className="btn-inside resultado-auto"
+						htmlFor="resultado-automatico"
+						title="Con algún defecto Grave: Rechazado. Con alguno Moderado: Condicional. Si no: Apto.">
+						<input
+							type="checkbox"
+							id="resultado-automatico"
+							checked={resultadoAutomatico}
+							onChange={(e) =>
+								actualizar(
+									e.target.checked
+										? { resultadoAutomatico: true }
+										: { resultadoAutomatico: false, dateCalcBtn: resultado }
+								)
+							}
+						/>
+						Automático
+					</label>{' '}
 					<span>Vigencia:</span>
 					{/* Las vigencias posibles cambian según el tipo de RTO.
 					    Solo se pueden elegir si el resultado es Apto. */}
-					{(rtoType.value === 'normal'
+					{(rtoType.value === 'particular'
 						? radioGeneratorArray.selectValidity
 						: radioGeneratorArray.selectValidityTra
 					).map((item) => (
 						<label
 							className={
-								dateCalcBtn.value !== 'Apto'
+								resultado.value !== 'Apto'
 									? 'btn-inside tooltip'
-									: selectValidity.value === item.value
+									: vigencia?.value === item.value
 									? 'radio-checked btn-inside tooltip'
+									: faltaVigencia
+									? 'focus btn-inside tooltip falta-elegir'
 									: 'focus btn-inside tooltip'
 							}
 							htmlFor={item.value}
@@ -427,17 +580,68 @@ function Main() {
 							<input
 								type="radio"
 								className={`rad-c`}
-								disabled={dateCalcBtn.value !== 'Apto'}
+								disabled={resultado.value !== 'Apto'}
 								name="dueDateSelector"
 								id={item.value}
 								value={item.value}
-								checked={selectValidity.value === item.value} // marca visualmente la opción elegida
-								onChange={() => actualizar({ selectValidity: item })}
+								checked={vigencia?.value === item.value} // marca visualmente la opción elegida
+								// Elegir una vigencia a mano pasa a modo manual.
+								onChange={() => actualizar({ selectValidity: item, vigenciaAutomatica: false })}
 							/>
 							{item.label}
 						</label>
 					))}
+					{/* Automática (solo RTO particular): la vigencia sigue a la patente */}
+					{rtoType.value === 'particular' && (
+						<label className="btn-inside resultado-auto" htmlFor="vigencia-automatica">
+							<input
+								type="checkbox"
+								id="vigencia-automatica"
+								checked={vigenciaAutomatica}
+								onChange={(e) =>
+									actualizar(
+										e.target.checked
+											? { vigenciaAutomatica: true }
+											: { vigenciaAutomatica: false, selectValidity: vigencia ?? selectValidity }
+									)
+								}
+							/>
+							Automática
+						</label>
+					)}
 				</div>
+
+				{/* Segunda revisión: desde cuándo se cuenta la vigencia */}
+				{primeraRevision && (
+					<div id="aviso-segunda" className="aviso-vigencia segunda">
+						<b>Segunda revisión</b>: la primera fue el {formatearFecha(primeraRevision)}. En el
+						informe salen las dos fechas.
+						<div className="aviso-nota">
+							{resultado.value === 'Apto'
+								? 'Como es Apto, la vigencia se cuenta desde la primera revisión.'
+								: 'Como no es Apto, el vencimiento se cuenta desde la revisión de hoy.'}
+						</div>
+					</div>
+				)}
+				{/* Por qué la vigencia tiene el valor que tiene (solo si hay que elegirla) */}
+				{infoVigencia && resultado.value === 'Apto' && (
+					<p
+						id="aviso-vigencia"
+						className={
+							!vigenciaAutomatica
+								? 'aviso-vigencia manual'
+								: infoVigencia.estado === 'automatica'
+								? 'aviso-vigencia info'
+								: 'aviso-vigencia alerta'
+						}>
+						{!vigenciaAutomatica
+							? 'Vigencia elegida a mano.' +
+							  (infoVigencia.vigencia
+									? ` La automática daba ${infoVigencia.vigencia === '2a' ? '2 años' : '1 año'}.`
+									: '')
+							: infoVigencia.explicacion}
+					</p>
+				)}
 				<h3>Carga de archivos e impresión</h3>
 			</form>
 
@@ -461,6 +665,12 @@ function Main() {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
+					mostrarAutomaticas={mostrarAutomaticas}
+					setMostrarAutomaticas={setMostrarAutomaticas}
+					regenerarAutomaticas={regenerarAutomaticas}
+					hayTxt={txtRender !== null}
+					filtrarFrasesAutomaticas={filtrarFrasesAutomaticas}
+					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
 					txtRender={txtRender}
 					handleTxtRender={handleTxtRender}
 					reportArray={reportArray}
@@ -470,9 +680,11 @@ function Main() {
 					imgUpload={imgUpload}
 					onImageChange={onImageChange}
 					loadImgRef={loadImgRef}
-					dateCalcBtn={dateCalcBtn}
-					selectValidity={selectValidity}
+					dateCalcBtn={resultado}
+					selectValidity={vigencia}
 					rtoType={rtoType}
+					inicioVigencia={inicioVigencia}
+					primeraRevision={primeraRevision}
 				/>
 			</section>
 		</main>

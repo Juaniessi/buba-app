@@ -17,12 +17,17 @@
  */
 import React from 'react';
 import '../../styles/majorMarkerStyle.scss';
+import { LIMITES_MAYOR_O_IGUAL } from './evaluaciones';
 
-/** Diferencia mínima (%) entre lados para marcar el eje. */
+/**
+ * Diferencia mínima (%) entre lados para marcar el eje: es el límite Leve de
+ * la diferencia de frenado (evaluaciones.js), así el asterisco y la
+ * calificación coinciden siempre.
+ */
 const DIFERENCIA_MINIMA = {
-	delantero: 10,
-	trasero: 12,
-	deMano: 12,
+	delantero: LIMITES_MAYOR_O_IGUAL.brakeDifDel[2],
+	trasero: LIMITES_MAYOR_O_IGUAL.brakeDifTra[2],
+	deMano: LIMITES_MAYOR_O_IGUAL.brakeDifTra[2],
 };
 
 /**

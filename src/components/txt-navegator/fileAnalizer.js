@@ -262,8 +262,29 @@ export function procesarTextoTxt(texto) {
 	redondearOvalidades(datos);
 	datos.header.añoDeFabricacion = textoANumero(datos.header.añoDeFabricacion);
 	convertirFechas(datos);
+	separarCopiaDeLaPatente(datos);
 
 	return datos;
+}
+
+/**
+ * Para pasar un vehículo por segunda vez (después de un Condicional), se
+ * copiaba su .txt y se le cambiaba la patente agregándole "_2" (por ejemplo,
+ * "OMC542_2"). En el informe tiene que salir la patente real ("OMC542"), así
+ * que el "_2" (o "_3", etc.) se saca de `header.patente`.
+ *
+ * La patente tal cual vino queda en `header.patenteDelArchivo`: es la que se
+ * copia al portapapeles al imprimir, para nombrar el PDF sin pisar el de la
+ * primera revisión.
+ *
+ * Modifica `datos` directamente (no devuelve nada).
+ *
+ * @param {object} datos Resultado de los pasos anteriores.
+ */
+function separarCopiaDeLaPatente(datos) {
+	const delArchivo = datos.header.patente ?? '';
+	datos.header.patenteDelArchivo = delArchivo;
+	datos.header.patente = delArchivo.replace(/_\d+$/, '');
 }
 
 // =============================================================================

@@ -91,6 +91,10 @@ const motoArray = {
 				value: 'luzPat',
 				label: 'De patente',
 			},
+			{
+				value: 'alinFaros',
+				label: 'Alineación de faros',
+			},
 		],
 		ruedas: [
 			{
@@ -129,6 +133,10 @@ const motoArray = {
 			{
 				value: 'ovalAlab',
 				label: 'Ovalidad o Alabebeo',
+			},
+			{
+				value: 'resistRod',
+				label: 'Resistencia a la rodadura',
 			},
 			{
 				value: 'circHidr',
@@ -283,6 +291,16 @@ const motoArray = {
 					label: 'Luz de patente trasera no enciende.',
 				},
 			],
+			alinFaros: [
+				{
+					value: 'faroVert',
+					label: 'Faro desalineado verticalmente.',
+				},
+				{
+					value: 'faroHor',
+					label: 'Faro desalineado horizontalmente.',
+				},
+			],
 			balizas: [
 				{
 					value: 'luzBalizasDel',
@@ -435,6 +453,24 @@ const motoArray = {
 				{
 					value: 'ovalTra',
 					label: 'Ovalidad en campana de freno trasera.',
+				},
+				{
+					value: 'ovalAlabDel',
+					label: 'Ovalidad o alabeo en freno delantero.',
+				},
+				{
+					value: 'ovalAlabTra',
+					label: 'Ovalidad o alabeo en freno trasero.',
+				},
+			],
+			resistRod: [
+				{
+					value: 'resistRodDel',
+					label: 'Resistencia a la rodadura elevada en rueda delantera.',
+				},
+				{
+					value: 'resistRodTra',
+					label: 'Resistencia a la rodadura elevada en rueda trasera.',
 				},
 			],
 			circHidr: [

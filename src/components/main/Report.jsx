@@ -24,6 +24,7 @@ import truckReport from '../../assets/informe-img/informe-camion.svg';
 import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
+import Referencias from './Referencias';
 import printSolid from '../../assets/print-solid.svg';
 import fileArrow from '../../assets/file-arrow-up-solid.svg';
 import fileImage from '../../assets/file-image-solid.svg';
@@ -39,6 +40,7 @@ import {
 	fechaDeInicio,
 	calcularVencimiento,
 	formatearFecha,
+	esFechaValida,
 } from './evaluaciones';
 
 /** Imagen de fondo del informe según el tipo de vehículo. */
@@ -81,6 +83,11 @@ function Report(props) {
 		setUnlistedDef,
 		lista,
 		setLista,
+		mostrarAutomaticas,
+		setMostrarAutomaticas,
+		regenerarAutomaticas,
+		filtrarFrasesAutomaticas,
+		setFiltrarFrasesAutomaticas,
 		handleTxtRender,
 		reportArray,
 		engineType,
@@ -93,6 +100,8 @@ function Report(props) {
 		selectValidity,
 		txtRender,
 		rtoType,
+		inicioVigencia,
+		primeraRevision,
 	} = props;
 
 	// -------------------------------------------------------------------------
@@ -108,20 +117,38 @@ function Report(props) {
 	const startDate = fechaDeInicio(txtRender);
 
 	/**
-	 * Las dos fechas del informe: la de la revisión y la de vencimiento.
+	 * Las fechas de la franja de arriba: INICIO y FIN.
+	 *
+	 * En una revisión normal, INICIO es el día de la revisión. En una segunda
+	 * revisión, en el lugar de INICIO van las dos fechas, una debajo de la
+	 * otra: arriba, más chica, la de la primera ("1ª 6/11/2026") y abajo la de
+	 * la segunda ("2ª 16/11/2026"). Entran justo en el hueco del dibujo: si se
+	 * agrandan, se pisan con el título o con la "/" de FIN.
+	 *
+	 * El vencimiento (FIN) se cuenta desde inicioVigencia (lo decide Main.jsx:
+	 * en una segunda revisión Apto, desde la primera).
 	 * @returns {JSX.Element}
 	 */
 	function dateStamper() {
-		const dueDate = calcularVencimiento(
-			startDate,
-			rtoType.value,
-			dateCalcBtn.value,
-			selectValidity.value
-		);
+		// Sin vigencia elegida (no se pudo calcular sola), un Apto no tiene
+		// vencimiento todavía: queda en blanco hasta que se elija.
+		// Sin fecha de revisión en el .txt, tampoco hay vencimiento.
+		const sinVigencia =
+			(dateCalcBtn.value === 'Apto' && !selectValidity) || !esFechaValida(inicioVigencia);
+		const dueDate = sinVigencia
+			? null
+			: calcularVencimiento(inicioVigencia, rtoType.value, dateCalcBtn.value, selectValidity?.value);
 		return (
 			<div className="date">
-				<p className="start-date">{formatearFecha(startDate)}</p>
-				<p className="end-date">{formatearFecha(dueDate)}</p>
+				{primeraRevision ? (
+					<>
+						<p className="start-date primera">1ª {formatearFecha(primeraRevision)}</p>
+						<p className="start-date segunda">2ª {formatearFecha(startDate)}</p>
+					</>
+				) : (
+					<p className="start-date">{formatearFecha(inicioVigencia)}</p>
+				)}
+				<p className="end-date">{dueDate ? formatearFecha(dueDate) : ''}</p>
 			</div>
 		);
 	}
@@ -137,6 +164,10 @@ function Report(props) {
 	 * guardar el PDF, alcanza con Ctrl+V para ponerle la patente como nombre
 	 * de archivo. Después abre el diálogo de impresión del navegador.
 	 *
+	 * Se copia la patente con el "_2" si el .txt lo traía ("OMC542_2"), o
+	 * agregándoselo si la app detectó una segunda revisión: así el PDF de la
+	 * segunda revisión no pisa al de la primera.
+	 *
 	 * Si no se puede copiar (por ejemplo, porque el navegador no dio permiso),
 	 * igual imprime. Antes, en ese caso, no imprimía; y sin .txt cargado el
 	 * botón no hacía nada.
@@ -146,8 +177,11 @@ function Report(props) {
 			window.print();
 			return;
 		}
+		const { patente, patenteDelArchivo } = txtRender.header;
+		const nombreDelPdf =
+			patenteDelArchivo !== patente || !primeraRevision ? patenteDelArchivo : `${patente}_2`;
 		navigator.clipboard
-			.writeText(`${txtRender.header.patente}`)
+			.writeText(nombreDelPdf)
 			.catch((error) => {
 				console.error(`No se pudo copiar la patente: ${error}`);
 			})
@@ -222,6 +256,10 @@ function Report(props) {
 						alt="Report background mold"
 					/>
 					<img className="car-photo" src={imgUpload} alt="Foto del vehiculo" />
+					{/* Mail de la franja de arriba. En el dibujo decía "info@bubatec.com"
+					    (estaba mal); se borró del dibujo y se escribe acá, con la misma
+					    letra (Roboto) y tamaño. */}
+					<p className="mail-turnos">turnos@bubatec.com</p>
 
 					{/* Mediciones: sin .txt no se muestra nada. Cada casillero tiene
 					    el valor medido (item.ruta) y, al lado, su calificación
@@ -582,50 +620,19 @@ function Report(props) {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
+					mostrarAutomaticas={mostrarAutomaticas}
+					setMostrarAutomaticas={setMostrarAutomaticas}
+					regenerarAutomaticas={regenerarAutomaticas}
+					hayTxt={txtRender !== null}
+					filtrarFrasesAutomaticas={filtrarFrasesAutomaticas}
+					setFiltrarFrasesAutomaticas={setFiltrarFrasesAutomaticas}
+					// Para el encabezado de la hoja 2 (si las observaciones no entran)
+					patente={txtRender ? txtRender.header.patente : ''}
+					fecha={formatearFecha(startDate)}
+					transportePasajeros={rtoType.value === 'traPas'}
 				/>
-				{/* Referencias: qué significa cada severidad */}
-				<table className="references print">
-					<thead>
-						<tr className="reference-headers"></tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td className="def-name minor">Leve</td>
-							<td className="def-col">
-								Son defectos que no exigen una nueva inspección, pero que
-								deberán subsanarse antes de la siguiente revisión.
-							</td>
-						</tr>
-						<tr>
-							<td className="def-name orange">Moderado</td>
-							<td className="def-col">
-								Exigen una nueva inspección sin cargo dentro de los sesenta (60)
-								días corridos a partir de la verificación. Pasando el tiempo
-								estipulado de “circulación originaria”, repetirá el pago
-								original.
-								<br />
-								<b>
-									(*) Si el vencimiento coincide con domingo o feriado, el mismo
-									se traslada al día habil inmediato anterior.
-								</b>
-							</td>
-						</tr>
-						<tr>
-							<td className="def-name black">
-								<b>Grave</b>
-							</td>
-							<td className="def-col">
-								Exigen una nueva inspección atento a la gravedad que registra la
-								unidad. Repetirá el pago original. Esta calificación no permite
-								la circulación del vehículo. Una vez reparada la unidad se
-								someterá a la segunda inspección.
-							</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr></tr>
-					</tfoot>
-				</table>
+				{/* Referencias: qué significa cada severidad (ver Referencias.jsx) */}
+				<Referencias />
 			</section>
 			{/* Marca de agua "Transporte de pasajeros" sobre todo el informe */}
 			{rtoType.value === 'traPas' ? (
