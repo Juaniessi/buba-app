@@ -210,7 +210,8 @@ function Report(props) {
 	 * @returns {*} the case number to be applied to the noiseEvaluator.
 	 */
 	function yearRectificatordb() {
-		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
+		// txtRender son los datos del .txt que llegan como prop desde Main.
+		let anoFabrication = txtRender.header.añoDeFabricacion;
 		let caseNumber;
 
 		if (
@@ -266,7 +267,8 @@ function Report(props) {
 	 * @returns {*} the case number to be applied to the HC or CO evaluators.
 	 */
 	function yearRectificatorGas() {
-		let anoFabrication = window.fileAsObject.header.añoDeFabricacion;
+		// txtRender son los datos del .txt que llegan como prop desde Main.
+		let anoFabrication = txtRender.header.añoDeFabricacion;
 		let caseNumber;
 
 		if (
@@ -709,7 +711,10 @@ function Report(props) {
 									</div>
 								))}
 							</div>
-							{window.fileAsObject.opacimetro.resultadoMedicionOpacidad ===
+							{/* Opacidad -1 = no se midió opacidad (normalmente un motor
+							    naftero): en su lugar se muestran los gases CO y HC.
+							    Si hay medición de opacidad (diésel), se muestra esa. */}
+							{txtRender.opacimetro.resultadoMedicionOpacidad ===
 							-1 ? (
 								<div className="gases">
 									{reportArray.carbonMonoxide.map((item, i) => (
