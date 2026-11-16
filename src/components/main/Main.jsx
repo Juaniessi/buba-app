@@ -1,7 +1,25 @@
-import React, {useState, useRef} from 'react';
+/*
+ * =============================================================================
+ *  Main.jsx — Formulario principal y "dueño" del estado de la app
+ * =============================================================================
+ *
+ *  Este componente:
+ *    1. Guarda todo lo que eligió la persona (tipo de vehículo, resultado,
+ *       vigencia, defectos cargados, el .txt leído, la foto...) en un único
+ *       objeto de estado.
+ *    2. Dibuja la parte de arriba del formulario: tipo de vehículo, tipo de
+ *       RTO, motor / tamaño / tracción, resultado y vigencia.
+ *    3. Le pasa todo a <Report>, que dibuja el informe, la carga de archivos
+ *       y la lista de defectos.
+ *
+ *  Para entender el estado, empezar por ESTADO_INICIAL (justo abajo): ahí está
+ *  cada campo con su valor al abrir la app y una explicación de para qué sirve.
+ * =============================================================================
+ */
+import React, { useState, useRef } from 'react';
 import Report from './Report';
-import {leerArchivoTxt} from '../txt-navegator/fileAnalizer.js';
-import {radioGeneratorArray} from '../dataArrays/radioBtnDB';
+import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
+import { radioGeneratorArray } from '../dataArrays/radioBtnDB';
 import {
 	autoReportArrayFiller,
 	motoReportArrayFiller,
@@ -9,66 +27,194 @@ import {
 import resetBtnImg from '../../assets/arrow-rotate-left-solid.svg';
 import WeightSum from './WeigthSum';
 
+/** Opción "nada elegido" para grupo, sección y descripción del defecto. */
+const SIN_ELEGIR = { value: '', label: '' };
+
+/**
+ * Valores con los que arranca la app, y a los que vuelve con "Reiniciar todos
+ * los campos".
+ *
+ * Varios campos guardan la opción completa elegida ({ value, label }) y no
+ * solo el valor, porque el informe muestra el `label` (por ejemplo,
+ * "Resultado RTO: Apto"). Las opciones posibles están en
+ * dataArrays/radioBtnDB.js.
+ *
+ * Para agregar un campo nuevo: sumarlo acá con su valor inicial. Así
+ * "Reiniciar" lo limpia solo, sin tener que acordarse de nada más.
+ */
+const ESTADO_INICIAL = {
+	// --- Vehículo -------------------------------------------------------------
+	/** Tipo de vehículo: 'Auto', 'Camioneta', 'Camion', 'Minibus' o 'Moto'. */
+	tipo: 'Auto',
+	/** RTO normal o de transporte de pasajeros (cambia las vigencias posibles). */
+	rtoType: { value: 'normal', label: 'Normal' },
+	/** Solo motos: motor de 4 o 2 tiempos (cambia el límite de HC). */
+	engineType: { value: '4T', label: '4 Tiempos' },
+	/**
+	 * Solo camiones y minibuses: tamaño. Con 'bigTruck', la suspensión y la
+	 * resistencia a la rodadura se muestran siempre como aptas (A).
+	 */
+	truckSize: { value: 'smallTruck', label: 'Camión pequeño' },
+	/**
+	 * Solo autos y camionetas: tracción. Con '4x4', la resistencia a la
+	 * rodadura se muestra siempre como apta (A).
+	 */
+	transmisionType: { value: '4x2', label: 'Normal' },
+
+	// --- Resultado y vencimiento ---------------------------------------------
+	/** Resultado de la revisión: Apto, Condicional, Rechazado o Solo informe. */
+	dateCalcBtn: { value: 'Apto', label: 'Apto' },
+	/** Vigencia elegida (solo se puede cambiar cuando el resultado es Apto). */
+	selectValidity: { value: '1a', label: '1 año' },
+
+	// --- Defecto que se está cargando ----------------------------------------
+	//  (se arma eligiendo severidad → grupo → sección → descripción, y se suma
+	//  a `lista` con "Agregar a la lista"; ver DefectList.jsx)
+	severidad: { value: 'Leve', label: 'Leve', order: 1 },
+	grupo: SIN_ELEGIR,
+	seccion: SIN_ELEGIR,
+	descripcion: SIN_ELEGIR,
+	/** Texto libre cuando la descripción elegida es "Otros". */
+	unlistedDef: '',
+	/** Defectos ya agregados al informe. */
+	lista: [],
+
+	// --- Archivos cargados ---------------------------------------------------
+	/** Datos del .txt ya procesados (null si todavía no se cargó ninguno). */
+	txtRender: null,
+	/**
+	 * Qué dato del .txt va en cada casillero del informe ('' si no hay .txt).
+	 * Lo arman las funciones de dataArrays/reportArrays.js.
+	 */
+	reportArray: '',
+	/** Dirección temporal de la foto del vehículo (null si no se cargó). */
+	imgUpload: null,
+};
+
 function Main() {
+	/** Todo el estado de la app, en un solo objeto (ver ESTADO_INICIAL). */
+	const [estado, setEstado] = useState(ESTADO_INICIAL);
+
+	/**
+	 * Cambia uno o varios campos del estado y deja los demás como estaban.
+	 *
+	 * Ejemplo: actualizar({ tipo: 'Moto', lista: [] })
+	 *
+	 * Usa la forma `setEstado(anterior => ...)` para que, si se llama varias
+	 * veces seguidas (como hace DefectList al agregar un defecto), cada cambio
+	 * se sume al anterior en lugar de pisarlo.
+	 *
+	 * @param {object} cambios Los campos a cambiar, con sus valores nuevos.
+	 */
+	const actualizar = (cambios) => {
+		setEstado((anterior) => ({ ...anterior, ...cambios }));
+	};
+
+	// Para no escribir `estado.` en todos lados, sacamos cada campo a su
+	// propia variable. Son solo para leer: para cambiarlos, usar actualizar().
+	const {
+		tipo,
+		rtoType,
+		engineType,
+		truckSize,
+		transmisionType,
+		dateCalcBtn,
+		selectValidity,
+		severidad,
+		grupo,
+		seccion,
+		descripcion,
+		unlistedDef,
+		lista,
+		txtRender,
+		reportArray,
+		imgUpload,
+	} = estado;
+
+	/**
+	 * Referencias a los dos `<input type="file">` (el del .txt y el de la
+	 * foto), que están dentro de Report. Hacen falta para vaciarlos al
+	 * reiniciar: si no, elegir de nuevo el mismo archivo no dispararía el
+	 * evento `change`.
+	 */
+	const loadFileRef = useRef(null);
+	const loadImgRef = useRef(null);
+
+	// ---------------------------------------------------------------------------
+	//  Acciones
+	// ---------------------------------------------------------------------------
+
+	/** Botón "Reiniciar todos los campos": vuelve todo a ESTADO_INICIAL. */
 	const resetBtn = () => {
-		setSeveridad({value: 'Leve', label: 'Leve', order: 1});
-		setTipo('Auto');
-		setGrupo({value: '', label: ''});
-		setSeccion({value: '', label: ''});
-		setDescripcion({value: '', label: ''});
-		setLista([]);
-		setTxtRender(null);
-		setImgUpload('');
-		setReportArray('');
-		setEngineType({value: '4T', label: '4 Tiempos'});
-		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
-		setTransmisionType({value: '4x2', label: 'Normal'});
-		setRtoType({value: 'normal', label: 'Normal'});
-		setDateCalcBtn({value: 'Apto', label: 'Apto'});
-		setSelectValidity({value: '1a', label: '1 año'});
-		loadFileRef.current.value = null;
-		loadImgRef.current.value = [];
+		if (imgUpload) URL.revokeObjectURL(imgUpload); // libera la foto anterior
+		setEstado(ESTADO_INICIAL);
+		if (loadFileRef.current) loadFileRef.current.value = '';
+		if (loadImgRef.current) loadImgRef.current.value = '';
 	};
-	const [tipo, setTipo] = useState('Auto');
+
+	/**
+	 * Cambio de tipo de vehículo.
+	 *
+	 * - Vuelve motor, tamaño y tracción a sus valores iniciales (cada tipo usa
+	 *   uno distinto).
+	 * - Si se pasa de moto a otro tipo, o al revés, borra el informe y los
+	 *   defectos: la moto tiene otro formato de informe y hay que volver a
+	 *   cargar el .txt.
+	 *
+	 * @param {{value: string, label: string}} item La opción elegida.
+	 */
 	const handleTipo = (item) => {
+		const cambios = {
+			tipo: item.value,
+			engineType: ESTADO_INICIAL.engineType,
+			truckSize: ESTADO_INICIAL.truckSize,
+			transmisionType: ESTADO_INICIAL.transmisionType,
+		};
 		if (tipo === 'Moto' || item.value === 'Moto') {
-			setLista([]);
-			setReportArray('');
+			cambios.lista = [];
+			cambios.reportArray = '';
 		}
-		setTipo(item.value);
-		setEngineType({value: '4T', label: '4 Tiempos'});
-		setTruckSize({value: 'smallTruck', label: 'Camión pequeño'});
-		setTransmisionType({value: '4x2', label: 'Normal'});
+		actualizar(cambios);
 	};
 
-	const [severidad, setSeveridad] = useState({
-		value: 'Leve',
-		label: 'Leve',
-		order: 1,
-	});
-	const handleSeveridad = (item) => {
-		setSeveridad(item);
+	/**
+	 * Cambio entre RTO normal y transporte de pasajeros. Además pone la
+	 * vigencia más usada en cada caso: 3 meses para transporte de pasajeros y
+	 * 1 año para la normal.
+	 *
+	 * @param {{value: string, label: string}} item La opción elegida.
+	 */
+	const handleSetRtoType = (item) => {
+		if (rtoType.value === 'normal') {
+			actualizar({ rtoType: item, selectValidity: { value: '3m', label: '3 Meses' } });
+		}
+		if (rtoType.value === 'traPas') {
+			actualizar({ rtoType: item, selectValidity: { value: '1a', label: '1 Año' } });
+		}
 	};
-	const [grupo, setGrupo] = useState({value: '', label: ''});
-	const handleGrupo = (item) => {
-		setGrupo(item);
-		setSeccion({value: '', label: ''});
-		setDescripcion({value: '', label: ''});
-	};
-	const [seccion, setSeccion] = useState({value: '', label: ''});
-	const handleSeccion = (item) => {
-		setSeccion(item);
-		setDescripcion({value: '', label: ''});
-	};
-	const [descripcion, setDescripcion] = useState({value: '', label: ''});
-	const handleDescripcion = (item) => {
-		setDescripcion(item);
-	};
-	const [unlistedDef, setUnlistedDef] = useState('');
-	const [lista, setLista] = useState([]);
 
-	/** Datos del .txt ya procesados (o null si todavía no se cargó ninguno). */
-	const [txtRender, setTxtRender] = useState(null);
+	// --- Defecto que se está cargando (los usa DefectList) ----------------------
+
+	const handleSeveridad = (item) => actualizar({ severidad: item });
+
+	/** Al cambiar de grupo se borran la sección y la descripción elegidas. */
+	const handleGrupo = (item) =>
+		actualizar({ grupo: item, seccion: SIN_ELEGIR, descripcion: SIN_ELEGIR });
+
+	/** Al cambiar de sección se borra la descripción elegida. */
+	const handleSeccion = (item) => actualizar({ seccion: item, descripcion: SIN_ELEGIR });
+
+	const handleDescripcion = (item) => actualizar({ descripcion: item });
+
+	// DefectList también cambia estos campos directamente (por ejemplo, para
+	// limpiarlos después de "Agregar a la lista").
+	const setGrupo = (valor) => actualizar({ grupo: valor });
+	const setSeccion = (valor) => actualizar({ seccion: valor });
+	const setDescripcion = (valor) => actualizar({ descripcion: valor });
+	const setUnlistedDef = (valor) => actualizar({ unlistedDef: valor });
+	const setLista = (valor) => actualizar({ lista: valor });
+
+	// --- Archivos ----------------------------------------------------------------
 
 	/**
 	 * Se ejecuta cuando el usuario elige un .txt en "Seleccione archivo txt".
@@ -78,9 +224,6 @@ function Main() {
 	 *   2. Espera (`await`) a que se lea y se procese completo.
 	 *   3. Recién ahí borra la lista de defectos anterior, guarda los datos
 	 *      nuevos y arma el informe (versión moto o versión auto).
-	 *
-	 * Antes estos pasos se coordinaban con temporizadores de 60 y 70 ms, que
-	 * podían quedarse cortos en una PC lenta.
 	 *
 	 * @param {Event} e El evento `change` del `<input type="file">`.
 	 */
@@ -97,116 +240,31 @@ function Main() {
 			return;
 		}
 
-		setLista([]);
-		setTxtRender(datos);
-		setReportArray(
-			tipo === 'Moto'
-				? motoReportArrayFiller(datos)
-				: autoReportArrayFiller(datos)
-		);
-	};
-
-	/*
-	 *reportArray stores the object that needs to be read in order to create the Report
-	 */
-	const [reportArray, setReportArray] = useState('');
-
-	/**
-	 * created to manage multi motor types in MOTO.
-	 */
-	const [engineType, setEngineType] = useState({
-		value: '4T',
-		label: '4 Tiempos',
-	});
-	/**
-	 * manages truck sizes.
-	 * to use porpperly, add truckSize.value to evaluation functions and send it as param when nedded.
-	 */
-	const [truckSize, setTruckSize] = useState({
-		value: 'smallTruck',
-		label: 'Camión pequeño',
-	});
-	/**
-	 * manages transmision type.
-	 * to use porpperly, add transmisionType.value to evaluation functions and send it as param when nedded.
-	 */
-
-	const [transmisionType, setTransmisionType] = useState({
-		value: '4x2',
-		label: 'Normal',
-	});
-
-	/**
-	 * manages RTO type.
-	 */
-
-	const [rtoType, setRtoType] = useState({
-		value: 'normal',
-		label: 'Normal',
-	});
-
-	/**
-	 * Switches between the most used value for the Validity period
-	 */
-
-	const handleSetRtoType = (item) => {
-		if (rtoType.value === 'normal') {
-			setSelectValidity({value: '3m', label: '3 Meses'});
-			setRtoType(item);
-		}
-
-		if (rtoType.value === 'traPas') {
-			setSelectValidity({value: '1a', label: '1 Año'});
-			setRtoType(item);
-		}
+		actualizar({
+			lista: [],
+			txtRender: datos,
+			reportArray:
+				tipo === 'Moto' ? motoReportArrayFiller(datos) : autoReportArrayFiller(datos),
+		});
 	};
 
 	/**
-	 * manages dueDate for the report.
-	 */
-
-	const [selectValidity, setSelectValidity] = useState({
-		value: '1a',
-		label: '1 año',
-	});
-
-	const handleDueDateExtend = (item) => {
-		setSelectValidity(item);
-	};
-
-	const [imgUpload, setImgUpload] = useState(null);
-
-	/**
-	 * this function takes the img and creates an URL you can use as a src=""
-	 * @param {*} event the uploadesd image.
+	 * Se ejecuta cuando el usuario elige la foto del vehículo. Crea una
+	 * dirección temporal (blob:...) para mostrarla en el informe con <img>, y
+	 * libera la de la foto anterior.
+	 *
+	 * @param {Event} event El evento `change` del `<input type="file">`.
 	 */
 	const onImageChange = (event) => {
-		URL.revokeObjectURL(imgUpload);
+		if (imgUpload) URL.revokeObjectURL(imgUpload);
 		if (event.target.files && event.target.files[0]) {
-			setImgUpload(URL.createObjectURL(event.target.files[0]));
+			actualizar({ imgUpload: URL.createObjectURL(event.target.files[0]) });
 		}
 	};
 
-	/**
-	 * created to handle the button while an automated function for dates
-	 * is in progress.
-	 */
-	const [dateCalcBtn, setDateCalcBtn] = useState({
-		value: 'Apto',
-		label: 'Apto',
-	});
-	const handleDateCalcBtn = (item) => {
-		setDateCalcBtn(item);
-	};
-
-	/**
-	 * loadFileRef and loadImgRef are used to clear the file between
-	 * rerenders so you can actually chose the same file twice when you
-	 * forgot to change the type.
-	 */
-
-	const loadFileRef = useRef(null);
-	const loadImgRef = useRef([]);
+	// ---------------------------------------------------------------------------
+	//  Pantalla
+	// ---------------------------------------------------------------------------
 
 	return (
 		<main>
@@ -220,13 +278,13 @@ function Main() {
 					Reiniciar todos los campos:
 					<img className="reset-img" src={resetBtnImg} alt="reset" />
 				</div>
+
+				{/* --- Tipo de vehículo ---------------------------------------- */}
 				<h2>Tipo de vehículo</h2>
 				<div className="btn-package">
-					{radioGeneratorArray.type.map((item, i) => (
+					{radioGeneratorArray.type.map((item) => (
 						<label
-							className={`btn-inside ${
-								tipo === item.value ? 'radio-checked' : ''
-							}`}
+							className={`btn-inside ${tipo === item.value ? 'radio-checked' : ''}`}
 							htmlFor={item.value}
 							key={item.value}>
 							<input
@@ -235,23 +293,23 @@ function Main() {
 								name="tipo"
 								id={item.value}
 								value={item.value}
-								checked={tipo === item.value} //determina que visualmente se vea checked
+								checked={tipo === item.value} // marca visualmente la opción elegida
 								onChange={() => handleTipo(item)}
 							/>
 							{item.label}
 						</label>
 					))}
+
+					{/* RTO normal / transporte de pasajeros (todos los tipos) */}
 					<div className="engine-and-size-ctn">
 						{tipo === 'Moto' ||
 						tipo === 'Auto' ||
 						tipo === 'Camioneta' ||
 						tipo === 'Minibus' ||
 						tipo === 'Camion'
-							? radioGeneratorArray.rtoType.map((item, i) => (
+							? radioGeneratorArray.rtoType.map((item) => (
 									<div className="engine-and-size" key={item.value}>
-										<label
-											className="btn-inside transp-color"
-											htmlFor={item.value}>
+										<label className="btn-inside transp-color" htmlFor={item.value}>
 											<input
 												type="radio"
 												className="rad-c"
@@ -267,9 +325,12 @@ function Main() {
 							  ))
 							: ''}
 					</div>
+
+					{/* Opciones que dependen del tipo de vehículo */}
 					<div className="engine-and-size-ctn">
+						{/* Moto: motor de 4 o 2 tiempos */}
 						{tipo === 'Moto'
-							? radioGeneratorArray.engineType.map((item, i) => (
+							? radioGeneratorArray.engineType.map((item) => (
 									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
@@ -279,15 +340,16 @@ function Main() {
 												id={item.value}
 												value={item.value}
 												checked={engineType.value === item.value}
-												onChange={() => setEngineType(item)}
+												onChange={() => actualizar({ engineType: item })}
 											/>
 											{item.label}
 										</label>
 									</div>
 							  ))
 							: ''}
-						{tipo === 'Camion'|| tipo === 'Minibus'
-							? radioGeneratorArray.truckSize.map((item, i) => (
+						{/* Camión y minibus: tamaño */}
+						{tipo === 'Camion' || tipo === 'Minibus'
+							? radioGeneratorArray.truckSize.map((item) => (
 									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
@@ -297,15 +359,16 @@ function Main() {
 												id={item.value}
 												value={item.value}
 												checked={truckSize.value === item.value}
-												onChange={() => setTruckSize(item)}
+												onChange={() => actualizar({ truckSize: item })}
 											/>
 											{item.label}
 										</label>
 									</div>
 							  ))
 							: ''}
-						{tipo === 'Auto' || tipo === 'Camioneta' 
-							? radioGeneratorArray.transmisionType.map((item, i) => (
+						{/* Auto y camioneta: tracción */}
+						{tipo === 'Auto' || tipo === 'Camioneta'
+							? radioGeneratorArray.transmisionType.map((item) => (
 									<div className="engine-and-size" key={item.value}>
 										<label className="btn-inside" htmlFor={item.value}>
 											<input
@@ -315,7 +378,7 @@ function Main() {
 												id={item.value}
 												value={item.value}
 												checked={transmisionType.value === item.value}
-												onChange={() => setTransmisionType(item)}
+												onChange={() => actualizar({ transmisionType: item })}
 											/>
 											{item.label}
 										</label>
@@ -324,83 +387,61 @@ function Main() {
 							: ''}
 					</div>
 				</div>
+
+				{/* --- Resultado y vigencia ------------------------------------ */}
 				<h3>Calcular fecha</h3>
 				<div className="btn-package">
-					{radioGeneratorArray.dateCalc.map((item, i) => (
-						<label
-							className={`btn-inside ${item.value}`}
-							htmlFor={item.value}
-							key={item.value}>
+					{radioGeneratorArray.dateCalc.map((item) => (
+						<label className={`btn-inside ${item.value}`} htmlFor={item.value} key={item.value}>
 							<input
 								type="radio"
 								className={`rad-c`}
 								name="dateCalcBtn"
 								id={item.value}
 								value={item.value}
-								checked={dateCalcBtn.value === item.value} //determina que visualmente se vea checked
-								onChange={() => handleDateCalcBtn(item)}
+								checked={dateCalcBtn.value === item.value} // marca visualmente la opción elegida
+								onChange={() => actualizar({ dateCalcBtn: item })}
 							/>
 							{item.label}
 						</label>
 					))}{' '}
 					<span>Vigencia:</span>
-					{rtoType.value === 'normal' // cambio etre los botones posibles, para evitar problemas en la lógica
-						? radioGeneratorArray.selectValidity.map((item, i) => (
-								<label
-									className={
-										dateCalcBtn.value !== 'Apto'
-											? 'btn-inside tooltip'
-											: selectValidity.value === item.value
-											? 'radio-checked btn-inside tooltip'
-											: 'focus btn-inside tooltip'
-									}
-									htmlFor={item.value}
-									key={item.value}>
-									<span className="tooltiptext">{item.tooltip}</span>
-
-									<input
-										type="radio"
-										className={`rad-c`}
-										disabled={dateCalcBtn.value !== 'Apto'}
-										name="dueDateSelector"
-										id={item.value}
-										value={item.value}
-										checked={selectValidity.value === item.value} //determina que visualmente se vea checked
-										onChange={() => handleDueDateExtend(item)}
-									/>
-									{item.label}
-								</label>
-						  ))
-						: radioGeneratorArray.selectValidityTra.map((item, i) => (
-								<label
-									className={
-										dateCalcBtn.value !== 'Apto'
-											? 'btn-inside tooltip'
-											: selectValidity.value === item.value
-											? 'radio-checked btn-inside tooltip'
-											: 'focus btn-inside tooltip'
-									}
-									htmlFor={item.value}
-									key={item.value}>
-									<span className="tooltiptext">{item.tooltip}</span>
-
-									<input
-										type="radio"
-										className={`rad-c`}
-										disabled={dateCalcBtn.value !== 'Apto'}
-										name="dueDateSelector"
-										id={item.value}
-										value={item.value}
-										checked={selectValidity.value === item.value} //determina que visualmente se vea checked
-										onChange={() => handleDueDateExtend(item)}
-									/>
-									{item.label}
-								</label>
-						  ))
+					{/* Las vigencias posibles cambian según el tipo de RTO.
+					    Solo se pueden elegir si el resultado es Apto. */}
+					{(rtoType.value === 'normal'
+						? radioGeneratorArray.selectValidity
+						: radioGeneratorArray.selectValidityTra
+					).map((item) => (
+						<label
+							className={
+								dateCalcBtn.value !== 'Apto'
+									? 'btn-inside tooltip'
+									: selectValidity.value === item.value
+									? 'radio-checked btn-inside tooltip'
+									: 'focus btn-inside tooltip'
 							}
+							htmlFor={item.value}
+							key={item.value}>
+							<span className="tooltiptext">{item.tooltip}</span>
+
+							<input
+								type="radio"
+								className={`rad-c`}
+								disabled={dateCalcBtn.value !== 'Apto'}
+								name="dueDateSelector"
+								id={item.value}
+								value={item.value}
+								checked={selectValidity.value === item.value} // marca visualmente la opción elegida
+								onChange={() => actualizar({ selectValidity: item })}
+							/>
+							{item.label}
+						</label>
+					))}
 				</div>
 				<h3>Carga de archivos e impresión</h3>
 			</form>
+
+			{/* --- Informe, carga de archivos y lista de defectos ----------- */}
 			<section className="finalReport">
 				<Report
 					tipo={tipo}
