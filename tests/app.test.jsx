@@ -171,6 +171,53 @@ describe('opciones del formulario', () => {
 	});
 });
 
+describe('botón "Imprimir informe"', () => {
+	/**
+	 * Reemplaza window.print y el portapapeles por versiones de prueba, que
+	 * solo registran si se usaron. `copiaFalla` simula que el navegador no da
+	 * permiso para copiar.
+	 */
+	function prepararImpresion({ copiaFalla = false } = {}) {
+		const imprimir = vi.spyOn(window, 'print').mockImplementation(() => {});
+		const copiar = vi.fn(() =>
+			copiaFalla ? Promise.reject(new Error('sin permiso')) : Promise.resolve()
+		);
+		Object.defineProperty(navigator, 'clipboard', {
+			value: { writeText: copiar },
+			configurable: true,
+		});
+		vi.spyOn(console, 'error').mockImplementation(() => {});
+		return { imprimir, copiar };
+	}
+
+	test('sin .txt cargado, imprime igual', () => {
+		// Antes, sin .txt, el botón no hacía nada.
+		const { imprimir, copiar } = prepararImpresion();
+		const app = abrirApp();
+		fireEvent.click(app.querySelector('#print-btn'));
+		expect(imprimir).toHaveBeenCalledTimes(1);
+		expect(copiar).not.toHaveBeenCalled();
+	});
+
+	test('con .txt, copia la patente y después imprime', async () => {
+		const { imprimir, copiar } = prepararImpresion();
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		fireEvent.click(app.querySelector('#print-btn'));
+		expect(copiar).toHaveBeenCalledWith('KMX-653');
+		await waitFor(() => expect(imprimir).toHaveBeenCalledTimes(1));
+	});
+
+	test('si no se puede copiar la patente, imprime igual', async () => {
+		// Antes, si el navegador no daba permiso para copiar, no imprimía.
+		const { imprimir } = prepararImpresion({ copiaFalla: true });
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		fireEvent.click(app.querySelector('#print-btn'));
+		await waitFor(() => expect(imprimir).toHaveBeenCalledTimes(1));
+	});
+});
+
 describe('botón "Reiniciar todos los campos"', () => {
 	test('deja la pantalla exactamente como al abrir la app', async () => {
 		// Cómo se ve la app recién abierta, para comparar.
