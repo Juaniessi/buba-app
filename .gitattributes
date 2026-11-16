@@ -1,3 +1,8 @@
 # Los .txt de ejemplo son salidas reales de la línea de RTO, con finales de
 # línea de Windows (CRLF). El lector depende de eso: Git los guarda tal cual.
 tests/fixtures/*.txt -text
+
+# Los snapshots de los tests los escribe Vitest siempre con finales de línea
+# LF. Si Git los dejara con CRLF (lo normal en Windows), cada `npm test` los
+# reescribiría y aparecerían como modificados sin haber cambiado nada.
+tests/__snapshots__/*.snap text eol=lf
