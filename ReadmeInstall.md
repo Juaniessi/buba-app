@@ -48,6 +48,16 @@ Se abre el navegador en http://localhost:3000/buba-app/ (arranca en un par de se
 la página se actualiza sola. Para frenarlo: hacé clic en la terminal y apretá `Ctrl + C`
 (si pregunta "¿Terminar el trabajo por lotes?", respondé `S`).
 
+### Estilos (.scss)
+
+Los estilos están en `src/styles/*.scss` y **se editan directamente ahí**: Vite los
+compila solo, tanto con `npm start` como al publicar. No hace falta la extensión
+"Live Sass Compiler" de VS Code; si la tenés instalada, podés desactivarla para este
+proyecto (los `.css` que genere igual se ignoran).
+
+Las posiciones de cada valor sobre el dibujo del informe están en
+`src/styles/informeStyle.scss` (el comentario del principio explica cómo moverlos).
+
 ### Correr los tests automáticos
 
 ```

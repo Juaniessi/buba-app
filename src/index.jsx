@@ -12,7 +12,9 @@
  */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './styles/style.css';
+// Estilos generales. Van antes que App para que el orden del CSS final sea
+// el mismo de siempre (generales → asteriscos → informe).
+import './styles/style.scss';
 import App from './App';
 
 createRoot(document.getElementById('root')).render(
