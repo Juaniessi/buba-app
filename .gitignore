@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/components/compareFiles/.~lock.codigos Ultimate2020 (1).xlsx\#
+
+# Claude Code (worktrees y config local)
+.claude/
