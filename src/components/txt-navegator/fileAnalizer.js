@@ -120,8 +120,11 @@ import {structureMap} from './globalVariables.js';
  *      datos.header.patente               → "KMX-653"
  *      datos.frenosEje_1.rendimientoDelEje → 57.28
  *
- *  Punto de entrada: `leerArchivoTxt(archivo)` (ver más abajo). Todo lo demás
- *  en este archivo son pasos internos de ese proceso:
+ *  Puntos de entrada (ver más abajo):
+ *    - `leerArchivoTxt(archivo)`: la usa la app, recibe el archivo elegido.
+ *    - `procesarTextoTxt(texto)`: la usan los tests, recibe el texto ya leído.
+ *
+ *  Todo lo demás en este archivo son pasos internos de ese proceso:
  *
  *    1. Leer el archivo como texto                (readFileAsText)
  *    2. Limpiarlo y separarlo en pares código=valor (returnSetOfDataSF)
@@ -164,17 +167,32 @@ let mapSingleFile = new Map();
  *   (header, alineacion, frenosEje_1, luxometro, etc.).
  */
 export async function leerArchivoTxt(archivo) {
-	// 1. Esperamos a que el navegador termine de leer el archivo completo.
+	// Esperamos a que el navegador termine de leer el archivo completo
+	// y después lo procesamos.
 	const texto = await readFileAsText(archivo);
+	return procesarTextoTxt(texto);
+}
 
-	// 2. Lo dejamos donde lo esperan las funciones de limpieza de más abajo.
+/**
+ * Convierte el contenido de un .txt de la línea de RTO en un objeto.
+ *
+ * Es la parte de `leerArchivoTxt` que no depende del navegador: recibe el
+ * texto ya leído. Está separada para poder probarla con tests automáticos
+ * (ver tests/fileAnalizer.test.js) sin tener que simular un archivo real.
+ *
+ * @param {string} texto El contenido completo del .txt.
+ * @returns {object} Los datos agrupados por sección (header, alineacion,
+ *   frenosEje_1, luxometro, etc.).
+ */
+export function procesarTextoTxt(texto) {
+	// 1. Lo dejamos donde lo esperan las funciones de limpieza de más abajo.
 	singleFileData = [texto];
 
-	// 3. Limpiamos, separamos en código=valor y agrupamos por sección.
+	// 2. Limpiamos, separamos en código=valor y agrupamos por sección.
 	returnSetOfDataSF();
 	populateStructure();
 
-	// 4. Devolvemos el resultado como objeto común de JavaScript.
+	// 3. Devolvemos el resultado como objeto común de JavaScript.
 	return transformMapToObject();
 }
 
