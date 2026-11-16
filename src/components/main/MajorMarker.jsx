@@ -16,7 +16,7 @@
  * =============================================================================
  */
 import React from 'react';
-import '../../styles/majorMarkerStyle.css';
+import '../../styles/majorMarkerStyle.scss';
 
 /** Diferencia mínima (%) entre lados para marcar el eje. */
 const DIFERENCIA_MINIMA = {
