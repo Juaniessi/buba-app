@@ -1,3 +1,22 @@
+/*
+ * =============================================================================
+ *  Report.jsx — El informe que se imprime, y los botones para armarlo
+ * =============================================================================
+ *
+ *  Dibuja, de arriba hacia abajo:
+ *    1. Los botones para cargar el .txt, cargar la foto e imprimir.
+ *    2. El informe: una imagen de fondo con el dibujo del vehículo
+ *       (informe-img/*.svg), y encima, en posiciones fijas definidas en
+ *       styles/informeStyle.scss, cada medición con su calificación (A, L, M o
+ *       G). Hay una versión para motos y otra para el resto.
+ *    3. La lista de defectos y el formulario para agregarlos (DefectList).
+ *
+ *  No guarda estado propio: todo lo recibe de Main.jsx como props.
+ *  Las reglas para calificar cada medición y calcular el vencimiento están en
+ *  evaluaciones.js; qué dato del .txt va en cada casillero, en
+ *  dataArrays/reportArrays.js.
+ * =============================================================================
+ */
 import React from 'react';
 import carReport from '../../assets/informe-img/informe-auto.svg';
 import pickupReport from '../../assets/informe-img/informe-camioneta.svg';
@@ -9,6 +28,39 @@ import printSolid from '../../assets/print-solid.svg';
 import fileArrow from '../../assets/file-arrow-up-solid.svg';
 import fileImage from '../../assets/file-image-solid.svg';
 import MajorMarker from './MajorMarker';
+import {
+	evaluarMenorOIgual,
+	evaluarMayorOIgual,
+	evaluarRango,
+	evaluarRuido,
+	evaluarHC,
+	evaluarCO,
+	evaluarHCMoto,
+	fechaDeInicio,
+	calcularVencimiento,
+	formatearFecha,
+} from './evaluaciones';
+
+/** Imagen de fondo del informe según el tipo de vehículo. */
+const IMAGEN_DEL_INFORME = {
+	Auto: carReport,
+	Camioneta: pickupReport,
+	Camion: truckReport,
+	Moto: motoReport,
+	Minibus: minibusReport,
+};
+
+/**
+ * Muestra la calificación de una medición: la letra (A, L, M o G) con la
+ * clase CSS que la pinta del color de su severidad.
+ *
+ * @param {{resultado: {clase: string, letra: string}|undefined}} props
+ *   El resultado de una de las funciones evaluar... de evaluaciones.js.
+ */
+function Nota({ resultado }) {
+	if (!resultado) return null;
+	return <span className={resultado.clase}>{resultado.letra}</span>;
+}
 
 function Report(props) {
 	const {
@@ -44,459 +96,76 @@ function Report(props) {
 		rtoType,
 	} = props;
 
-	let imgSelector; // this varaible sets te img to show
-	/**  selecs between the posible vehicles to evaluate.
-	 * @param {*} tipo taken from the variable of state.
-	 * @param {*} imgSelector variable to store the img to display.
-	 * @returns the img to display.
-	 */
-	function reportImgSelector(tipo) {
-		if (tipo === 'Auto') {
-			imgSelector = carReport;
-		} else if (tipo === 'Camioneta') {
-			imgSelector = pickupReport;
-		} else if (tipo === 'Camion') {
-			imgSelector = truckReport;
-		} else if (tipo === 'Moto') {
-			imgSelector = motoReport;
-		} else if (tipo === 'Minibus') {
-			imgSelector = minibusReport;
-		} else {
-			imgSelector = carReport;
-		}
-		return imgSelector;
-	}
+	// -------------------------------------------------------------------------
+	//  Calificaciones y fechas
+	// -------------------------------------------------------------------------
+	//  Las reglas (límites de cada medición y cálculo del vencimiento) están en
+	//  evaluaciones.js. Acá solo se las usa para dibujar el informe.
+
+	/** Año de fabricación del .txt: define los límites de ruido y de gases. */
+	const año = txtRender === null ? '' : txtRender.header.añoDeFabricacion;
+
+	/** Fecha de la revisión (inicio de la vigencia), o '' si no hay .txt. */
+	const startDate = fechaDeInicio(txtRender);
 
 	/**
-	 * @constant minorOrEqArray is a MAP containing the key and values to generate the evaluation.
-	 */
-	const minorOrEqArray = new Map([
-		['brakePerf', [5, 40, 44]],
-		['handBrakePerf', [3, 14.4, 16]],
-		['brakeStrenghtFront', [0.15, 0.3, 0.42]],
-		['brakeStrenghtRear', [0.05, 0.3, 0.42]],
-		['brakeStrenghtMoto', [0.05, 0.15, 0.26]],
-	]);
-
-	/**
-	 * @constant majorOrEqArray is a MAP containing the key and values to generate the evaluation.
-	 */
-	const majorOrEqArray = new Map([
-		['brakeDifDel', [90, 15.1, 13]],
-		['brakeDifTra', [95, 15.1, 14]],
-		['brakeResist', [4, 1, 0.85]],
-		['brakeOval', [90, 50, 35]],
-		['luxLow', [200, 60, 40]],
-		['luxHigh', [200, 150, 85]],
-		['luxAng', [15, 7, 3]],
-		['opacity', [5, 0.25, 0.2]],
-		['HC<=1991', [2500, 900, 600]],
-		['HC<=1994', [2500, 600, 400]],
-		['HC>1994', [2500, 400, 250]],
-		['CO<=1991', [15, 4.5, 2]],
-		['CO<=1994', [15, 3, 1.5]],
-		['CO>1994', [15, 2.5, 1]],
-		['noiseAutoMotoViejo', [100, 85.1, 77]],
-		['noiseAutoMotoNuevo', [100, 80.1, 77]],
-		['noiseCamionViejo', [100, 95.1, 85]],
-		['noiseCamionNuevo', [100, 87.1, 84]],
-		['HC-4T', [4000, 3000, 1500]],
-		['HC-2T', [12000, 9000, 4500]],
-		['CO-Moto', [8, 4.5, 3.5]],
-	]);
-
-	/**
-	 * @constant minorAndMajorOrEqArray is a MAP containing the key and values to generate the evaluation.
-	 */
-	const minorAndMajorOrEqArray = new Map([
-		['susp', [-1, 102, 39.9, 100, 45, 99.5]],
-		['alin', [-256, 256, -5, 5, -4, 4]],
-	]);
-
-	/**  function to evaluate txt properties when the comparisson is <=. It also handles the severity flags.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} paramSelector value extracted from minorOrEqArray via get() method from maps.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-	function minorOrEqual(txtProp, paramSelector) {
-		let params = minorOrEqArray.get(paramSelector);
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (txtProp <= params[0]) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (txtProp <= params[1]) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (txtProp <= params[2]) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-	/**  function to evaluate txt properties when the comparisson is >=. It also handles the severity flags.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-	function majorOrEqual(txtProp, paramSelector, truckSize, transmisionType) {
-		let params = majorOrEqArray.get(paramSelector);
-		let severityEvaluation = '';
-		let severityLetter = '';
-		if (txtProp >= params[0]) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (txtProp >= params[1]) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (txtProp >= params[2]) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-
-		if (transmisionType === '4x4') {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-
-		if (truckSize === 'bigTruck') {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	/**  function to evaluate txt properties when the comparisson is <= and >=. It also handles the severity flags.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} paramSelector value extracted from majorOrEqArray via get() method from maps.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-
-	function minorAndMajorOrEqual(txtProp, paramSelector, truckSize) {
-		let params = minorAndMajorOrEqArray.get(paramSelector);
-		let severityEvaluation = '';
-		let severityLetter = '';
-
-		if (txtProp <= params[0] || txtProp >= params[1]) {
-			severityEvaluation = 'severe';
-			severityLetter = 'G';
-		} else if (txtProp <= params[2] || txtProp >= params[3]) {
-			severityEvaluation = 'moderate';
-			severityLetter = 'M';
-		} else if (txtProp <= params[4] || txtProp >= params[5]) {
-			severityEvaluation = 'minor';
-			severityLetter = 'L';
-		} else {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		if (truckSize === 'bigTruck') {
-			severityEvaluation = '';
-			severityLetter = 'A';
-		}
-		return <span className={`${severityEvaluation}`}>{severityLetter}</span>;
-	}
-
-	/**
-	 *Function that rectifies a bad year input and delivers a case scenario.
-	 * @returns {*} the case number to be applied to the noiseEvaluator.
-	 */
-	function yearRectificatordb() {
-		// txtRender son los datos del .txt que llegan como prop desde Main.
-		let anoFabrication = txtRender.header.añoDeFabricacion;
-		let caseNumber;
-
-		if (
-			anoFabrication < 1920 ||
-			anoFabrication > 2200 ||
-			anoFabrication === ''
-		) {
-			anoFabrication = 2000;
-		}
-		if (anoFabrication <= 1997) {
-			caseNumber = 1;
-		} else {
-			caseNumber = 2;
-		}
-		return caseNumber;
-	}
-
-	/**  function to evaluate noise levels.
-	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
-	 * bacause you need two more parameters to compare.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} caseNumber value extracted from yearRectificatorGas.
-	 * @param {*} tipo uses the state variable to understand wich vehicle is being evaluated.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-	function noiseEvaluator(txtProp, caseNumber, tipo) {
-		if (
-			tipo === 'Auto' ||
-			tipo === 'Camioneta' ||
-			tipo === 'Moto' ||
-			tipo === 'Minibus'
-		) {
-			switch (caseNumber) {
-				case 1:
-					return majorOrEqual(txtProp, 'noiseAutoMotoViejo');
-				case 2:
-					return majorOrEqual(txtProp, 'noiseAutoMotoNuevo');
-				default:
-			}
-		} else if (tipo === 'Camion') {
-			switch (caseNumber) {
-				case 1:
-					return majorOrEqual(txtProp, 'noiseCamionViejo');
-				case 2:
-					return majorOrEqual(txtProp, 'noiseCamionNuevo');
-				default:
-			}
-		}
-	}
-
-	/**
-	 *Function that rectifies a bad year input and swithces between case of use.
-	 * @returns {*} the case number to be applied to the HC or CO evaluators.
-	 */
-	function yearRectificatorGas() {
-		// txtRender son los datos del .txt que llegan como prop desde Main.
-		let anoFabrication = txtRender.header.añoDeFabricacion;
-		let caseNumber;
-
-		if (
-			anoFabrication < 1920 ||
-			anoFabrication > 2200 ||
-			anoFabrication === ''
-		) {
-			anoFabrication = 2000;
-		}
-		if (anoFabrication <= 1991) {
-			caseNumber = 1;
-			return caseNumber;
-		} else if (anoFabrication <= 1994) {
-			caseNumber = 2;
-			return caseNumber;
-		} else if (anoFabrication > 1994) {
-			caseNumber = 3;
-			return caseNumber;
-		}
-	}
-
-	/**  function to evaluate if the HC ppm on CARS are ok, simliar function is used for CO.
-	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
-	 * bacause you need another more parameter to compare.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} caseNumber value extracted from yearRectificatorGas.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-	function HCEvaluator(txtProp, caseNumber) {
-		switch (caseNumber) {
-			case 1:
-				return majorOrEqual(txtProp, 'HC<=1991');
-			case 2:
-				return majorOrEqual(txtProp, 'HC<=1994');
-			case 3:
-				return majorOrEqual(txtProp, 'HC>1994');
-			default:
-		}
-	}
-
-	/**  function to evaluate if the CO emisions are OK, for bouth CAR and MOTO.
-	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
-	 * bacause you need another more parameter to compare.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} caseNumber value extracted from yearRectificatorGas.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-	function COEvaluator(txtProp, caseNumber) {
-		switch (caseNumber) {
-			case 1:
-				return majorOrEqual(txtProp, 'CO<=1991');
-			case 2:
-				return majorOrEqual(txtProp, 'CO<=1994');
-			case 3:
-				return majorOrEqual(txtProp, 'CO>1994');
-			default:
-		}
-	}
-
-	/**  function to evaluate if the HC ppm on motos are ok.
-	 * Cannot use standar implementation of minorOrEqual or majorOrEqual,
-	 * bacause you need another more parameter to compare.
-	 * @param {*} txtProp prop from object: fileAsObject.
-	 * @param {*} caseNumber value extracted from yearRectificatorGas.
-	 * @returns the HTML tag, className and the filling to be inserted inside <p>.
-	 */
-	function HCEvaluatorMoto(txtProp, engineType) {
-		switch (engineType) {
-			case '4T':
-				return majorOrEqual(txtProp, 'HC-4T');
-			case '2T':
-				return majorOrEqual(txtProp, 'HC-2T');
-			default:
-		}
-	}
-
-	/**
-	 * @param {*} startDate given the case that "fechaDeSalidaDelPuesto2" does not exist,
-	 * like in the txt of Motocicles, fechaDeSalidaDelPuesto2 = fechaDeSalidaDelPuesto1
-	 * and fechaDeIngresoAlPuesto2 = fechaDeIngresoAlPuesto1,
-	 * this is all solved in the "fileAnalizer.js".
-	 *
-	 * We have now switched to use fechaDeIngresoAlPuesto1 as it is more acurate for the customer.
-	 *
-	 */
-	let startDate =
-		txtRender === null
-			? ''
-			: txtRender.estadísticaDePuestos.fechaDeSalidaDelPuesto3 === undefined
-			? txtRender.estadísticaDePuestos.fechaDeSalidaDelPuesto2
-			: txtRender.estadísticaDePuestos.fechaDeSalidaDelPuesto3;
-	/**
-	 * Calculates the due date for this report.
-	 * @returns The calculated due date.
-	 */
-	function dueDateCalculator() {
-		let dueDate = new Date(startDate.getTime());
-
-		if (rtoType.value === 'normal') {
-			if (
-				dateCalcBtn.value === 'Rechazado' ||
-				dateCalcBtn.value === 'SoloInforme'
-			) {
-				dueDate = new Date(startDate.getTime());
-			} else if (dateCalcBtn.value === 'Condicional') {
-				dueDate = new Date(dueDate.setDate(startDate.getDate() + 60));
-			} else if (
-				dateCalcBtn.value === 'Apto' &&
-				selectValidity.value === '1a'
-			) {
-				dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
-			} else if (
-				dateCalcBtn.value === 'Apto' &&
-				selectValidity.value === '2a'
-			) {
-				dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 2));
-			} else if (
-				dateCalcBtn.value === 'Apto' &&
-				selectValidity.value === '6m'
-			) {
-				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
-			}
-		}
-
-		if (rtoType.value === 'traPas') {
-			if (dateCalcBtn.value === 'SoloInforme') {
-				dueDate = new Date(startDate.getTime());
-			}
-			if (dateCalcBtn.value === 'Rechazado') {
-				dueDate = new Date(dueDate.setDate(startDate.getDate() + 12));
-			}
-			if (dateCalcBtn.value === 'Condicional') {
-				dueDate = new Date(dueDate.setDate(startDate.getDate() + 15));
-			}
-			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '3m') {
-				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 3));
-			}
-			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '6m') {
-				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 6));
-			}
-			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '2m') {
-				dueDate = new Date(dueDate.setMonth(startDate.getMonth() + 2));
-			}
-			if (dateCalcBtn.value === 'Apto' && selectValidity.value === '1a') {
-				dueDate = new Date(dueDate.setFullYear(startDate.getUTCFullYear() + 1));
-			}
-
-			/* not using it any more for now 
-			dueDateExtender(dueDate); */
-		}
-
-		return dueDate;
-	}
-
-	/**
-	 * Extends the dueDate in the cases that the fininshing day is saturday or sunday and only for "Transporte de pasajeros".
-	 * @returns The calculated due date.
-	 */
-
-	function dueDateExtender(dueDate) {
-		const sabado = 6;
-		const domingo = 0;
-
-		/* console.log('fecha en extensor' + dueDate);
-		console.log('día en extensor' + dueDate.getDay()); */
-
-		if (dueDate.getDay() === sabado) {
-			dueDate = new Date(dueDate.setDate(dueDate.getDate() + 2));
-		} else if (dueDate.getDay() === domingo) {
-			dueDate = new Date(dueDate.setDate(dueDate.getDate() + 1));
-		}
-
-		return dueDate;
-	}
-	/**
-	 * calulates the "due date" and arranges bouth dates in a legible way.
-	 * @returns the HTML code with the date embeded and the clases to position it.
+	 * Las dos fechas del informe: la de la revisión y la de vencimiento.
+	 * @returns {JSX.Element}
 	 */
 	function dateStamper() {
-		const dueDate = dueDateCalculator();
+		const dueDate = calcularVencimiento(
+			startDate,
+			rtoType.value,
+			dateCalcBtn.value,
+			selectValidity.value
+		);
 		return (
 			<div className="date">
-				<p className="start-date">
-					{startDate.getDate() +
-						'/' +
-						Number(startDate.getMonth() + 1) +
-						'/' +
-						startDate.getFullYear()}
-				</p>
-				<p className="end-date">
-					{dueDate.getDate() +
-						'/' +
-						Number(dueDate.getMonth() + 1) +
-						'/' +
-						dueDate.getFullYear()}
-				</p>
+				<p className="start-date">{formatearFecha(startDate)}</p>
+				<p className="end-date">{formatearFecha(dueDate)}</p>
 			</div>
 		);
 	}
 
-	/**
-	 * gets the licence plate and copies it to the clip board so when you save the PDF
-	 * you can simply paste the patent as name file.
-	 * Uses promises .then() method to actually send the print afther the text is copied.
-	 */
+	// -------------------------------------------------------------------------
+	//  Imprimir
+	// -------------------------------------------------------------------------
 
+	/**
+	 * Botón "Imprimir informe".
+	 *
+	 * Si hay un .txt cargado, primero copia la patente al portapapeles: así, al
+	 * guardar el PDF, alcanza con Ctrl+V para ponerle la patente como nombre
+	 * de archivo. Después abre el diálogo de impresión del navegador.
+	 *
+	 * Si no se puede copiar (por ejemplo, porque el navegador no dio permiso),
+	 * igual imprime. Antes, en ese caso, no imprimía; y sin .txt cargado el
+	 * botón no hacía nada.
+	 */
 	function copyThenPrint() {
-		if (txtRender !== '') {
-			navigator.clipboard
-				.writeText(`${txtRender.header.patente}`)
-				.then(() => {
-					printPage();
-				})
-				.catch((error) => {
-					console.error(`Could not copy text: ${error}`);
-				});
-		} else {
-			printPage();
+		if (!txtRender) {
+			window.print();
+			return;
 		}
+		navigator.clipboard
+			.writeText(`${txtRender.header.patente}`)
+			.catch((error) => {
+				console.error(`No se pudo copiar la patente: ${error}`);
+			})
+			.finally(() => {
+				window.print();
+			});
 	}
 
-	const printPage = () => {
-		window.print();
-		return false;
-	};
+	// -------------------------------------------------------------------------
+	//  Pantalla
+	// -------------------------------------------------------------------------
+	//  Los id "no-print..." y la clase "print" deciden qué se ve al imprimir
+	//  (ver las reglas @media print en styles/).
 
 	return (
 		<>
+			{/* --- Botones: cargar .txt, cargar foto, imprimir (no se imprimen) --- */}
 			<div className="insert-btn-cont" id="no-print2">
 				<div className="btn-txt-render-container">
 					<label
@@ -544,17 +213,24 @@ function Report(props) {
 					</button>
 				</label>
 			</div>
+			{/* --- El informe (lo que se imprime) ------------------------------ */}
 			<section className="finalReport print">
 				<>
+					{/* Fondo: dibujo del vehículo con los casilleros vacíos */}
 					<img
 						className="report-img"
-						src={reportImgSelector(tipo)}
+						src={IMAGEN_DEL_INFORME[tipo] ?? carReport}
 						alt="Report background mold"
 					/>
 					<img className="car-photo" src={imgUpload} alt="Foto del vehiculo" />
+
+					{/* Mediciones: sin .txt no se muestra nada. Cada casillero tiene
+					    el valor medido (item.ruta) y, al lado, su calificación
+					    (<Nota>). Las clases CSS los ubican sobre el dibujo. */}
 					{reportArray === '' ? (
 						''
 					) : tipo !== 'Moto' ? (
+						/* --- Versión para autos, camionetas, camiones y colectivos --- */
 						<article className="txtRenderAuto">
 							<div className="header-info">
 								{reportArray.headerInfo.map((item, i) => (
@@ -568,7 +244,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorAndMajorOrEqual(item.ruta, 'alin')}
+											<Nota resultado={evaluarRango(item.ruta, 'alin')} />
 										</p>
 									</div>
 								))}
@@ -585,7 +261,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorAndMajorOrEqual(item.ruta, 'susp', truckSize.value)}
+											<Nota resultado={evaluarRango(item.ruta, 'susp', truckSize.value)} />
 										</p>
 									</div>
 								))}
@@ -596,7 +272,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakePerf')}
+												<Nota resultado={evaluarMenorOIgual(item.ruta, 'brakePerf')} />
 											</p>
 										</div>
 									))}
@@ -604,7 +280,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'handBrakePerf')}
+												<Nota resultado={evaluarMenorOIgual(item.ruta, 'handBrakePerf')} />
 											</p>
 										</div>
 									))}
@@ -614,7 +290,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeDifDel')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'brakeDifDel')} />
 											</p>
 										</div>
 									))}
@@ -622,7 +298,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeDifTra')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'brakeDifTra')} />
 											</p>
 										</div>
 									))}
@@ -632,7 +308,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakeStrenghtFront')}
+												<Nota resultado={evaluarMenorOIgual(item.ruta, 'brakeStrenghtFront')} />
 											</p>
 										</div>
 									))}
@@ -640,7 +316,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakeStrenghtRear')}
+												<Nota resultado={evaluarMenorOIgual(item.ruta, 'brakeStrenghtRear')} />
 											</p>
 										</div>
 									))}
@@ -650,12 +326,12 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(
-													item.ruta,
-													'brakeResist',
-													truckSize.value,
-													transmisionType.value
-												)}
+												<Nota
+													resultado={evaluarMayorOIgual(item.ruta, 'brakeResist', {
+														truckSize: truckSize.value,
+														transmisionType: transmisionType.value,
+													})}
+												/>
 											</p>
 										</div>
 									))}
@@ -665,7 +341,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeOval')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'brakeOval')} />
 											</p>
 										</div>
 									))}
@@ -677,7 +353,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'luxLow')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxLow')} />
 											</p>
 										</div>
 									))}
@@ -685,7 +361,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'luxHigh')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxHigh')} />
 											</p>
 										</div>
 									))}
@@ -695,7 +371,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'luxAng')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxAng')} />
 											</p>
 										</div>
 									))}
@@ -706,7 +382,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{noiseEvaluator(item.ruta, yearRectificatordb(), tipo)}
+											<Nota resultado={evaluarRuido(item.ruta, año, tipo)} />
 										</p>
 									</div>
 								))}
@@ -721,7 +397,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{COEvaluator(item.ruta, yearRectificatorGas())}
+												<Nota resultado={evaluarCO(item.ruta, año)} />
 											</p>
 										</div>
 									))}
@@ -729,7 +405,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{HCEvaluator(item.ruta, yearRectificatorGas())}
+												<Nota resultado={evaluarHC(item.ruta, año)} />
 											</p>
 										</div>
 									))}
@@ -746,7 +422,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'opacity')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'opacity')} />
 											</p>
 										</div>
 									))}
@@ -755,6 +431,7 @@ function Report(props) {
 							<div className="date">{dateStamper()}</div>
 						</article>
 					) : (
+						/* --- Versión para motos ----------------------------------- */
 						<article className="txtRenderMoto">
 							<div className="header-info">
 								{reportArray.headerInfo.map((item, i) => (
@@ -775,7 +452,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{minorAndMajorOrEqual(item.ruta, 'susp')}
+											<Nota resultado={evaluarRango(item.ruta, 'susp')} />
 										</p>
 									</div>
 								))}
@@ -786,7 +463,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakePerf')}
+												<Nota resultado={evaluarMenorOIgual(item.ruta, 'brakePerf')} />
 											</p>
 										</div>
 									))}
@@ -796,7 +473,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{minorOrEqual(item.ruta, 'brakeStrenghtMoto')}
+												<Nota resultado={evaluarMenorOIgual(item.ruta, 'brakeStrenghtMoto')} />
 											</p>
 										</div>
 									))}
@@ -806,7 +483,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeResist')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'brakeResist')} />
 											</p>
 										</div>
 									))}
@@ -816,7 +493,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'brakeOval')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'brakeOval')} />
 											</p>
 										</div>
 									))}
@@ -828,7 +505,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'luxLow')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxLow')} />
 											</p>
 										</div>
 									))}
@@ -836,7 +513,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'luxHigh')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxHigh')} />
 											</p>
 										</div>
 									))}
@@ -846,7 +523,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												{majorOrEqual(item.ruta, 'luxAng')}
+												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxAng')} />
 											</p>
 										</div>
 									))}
@@ -857,7 +534,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{noiseEvaluator(item.ruta, yearRectificatordb(), tipo)}
+											<Nota resultado={evaluarRuido(item.ruta, año, tipo)} />
 										</p>
 									</div>
 								))}
@@ -867,7 +544,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{majorOrEqual(item.ruta, 'CO-Moto')}
+											<Nota resultado={evaluarMayorOIgual(item.ruta, 'CO-Moto')} />
 										</p>
 									</div>
 								))}
@@ -875,7 +552,7 @@ function Report(props) {
 									<div key={i}>
 										<p className={item.class}>{item.ruta}</p>
 										<p className={item.classEval}>
-											{HCEvaluatorMoto(item.ruta, engineType.value)}
+											<Nota resultado={evaluarHCMoto(item.ruta, engineType.value)} />
 										</p>
 									</div>
 								))}
@@ -893,7 +570,10 @@ function Report(props) {
 				<p className={`result-rto ${dateCalcBtn.value}`}>
 					Resultado RTO: {dateCalcBtn.label}
 				</p>
+				{/* Asteriscos sobre la rueda que frena menos, cuando la diferencia
+				    entre lados es grande (ver MajorMarker.jsx) */}
 				<MajorMarker txtRender={txtRender} tipo={tipo} />
+				{/* Lista de defectos y formulario para agregarlos */}
 				<DefectList
 					tipo={tipo}
 					severidad={severidad}
@@ -913,6 +593,7 @@ function Report(props) {
 					setLista={setLista}
 					severityOrder={severityOrder}
 				/>
+				{/* Referencias: qué significa cada severidad */}
 				<table className="references print">
 					<thead>
 						<tr className="reference-headers"></tr>
@@ -956,14 +637,12 @@ function Report(props) {
 					</tfoot>
 				</table>
 			</section>
-			{
-				rtoType.value === 'traPas' ? (
-					<div className="marca-de-agua">Transporte de pasajeros</div>
-				) : (
-					''
-				)
-				/* marca de agua para transporte de pasajeros*/
-			}
+			{/* Marca de agua "Transporte de pasajeros" sobre todo el informe */}
+			{rtoType.value === 'traPas' ? (
+				<div className="marca-de-agua">Transporte de pasajeros</div>
+			) : (
+				''
+			)}
 		</>
 	);
 }
