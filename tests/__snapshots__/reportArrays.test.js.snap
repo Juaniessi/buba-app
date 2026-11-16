@@ -1,0 +1,869 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`autoReportArrayFiller > informe de auto con KMX-653.txt (snapshot) 1`] = `
+{
+  "alineation": [
+    {
+      "class": "front-al",
+      "classEval": "front-al-eval",
+      "ruta": 2.9,
+    },
+    {
+      "class": "rear-al",
+      "classEval": "rear-al-eval",
+      "ruta": 0,
+    },
+  ],
+  "brakeDifDel": [
+    {
+      "class": "front",
+      "classEval": "front-eval",
+      "ruta": 5,
+    },
+  ],
+  "brakeDifTra": [
+    {
+      "class": "rear",
+      "classEval": "rear-eval",
+      "ruta": 30,
+    },
+    {
+      "class": "hand",
+      "classEval": "hand-eval",
+      "ruta": 29,
+    },
+  ],
+  "brakeOval": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.44,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 0.51,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.3,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 0.17,
+    },
+  ],
+  "brakePerf": [
+    {
+      "class": "front",
+      "classEval": "front-eval",
+      "ruta": 57.28,
+    },
+    {
+      "class": "rear",
+      "classEval": "rear-eval",
+      "ruta": 54.25,
+    },
+  ],
+  "brakeResist": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.35,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 0.25,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.45,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 0.31,
+    },
+  ],
+  "brakeStrenghtFront": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 3.59,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 3.42,
+    },
+  ],
+  "brakeStrenghtRear": [
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 3.22,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 2.27,
+    },
+    {
+      "class": "hand-left",
+      "classEval": "hand-left-eval",
+      "ruta": 3.15,
+    },
+    {
+      "class": "hand-right",
+      "classEval": "hand-right-eval",
+      "ruta": 2.22,
+    },
+  ],
+  "carbonMonoxide": [
+    {
+      "class": "CO",
+      "classEval": "CO-eval",
+      "ruta": undefined,
+    },
+  ],
+  "handBrakePerf": [
+    {
+      "class": "hand",
+      "classEval": "hand-eval",
+      "ruta": 24.05,
+    },
+  ],
+  "headerInfo": [
+    {
+      "class": "plate",
+      "ruta": "KMX-653",
+    },
+    {
+      "class": "brand",
+      "ruta": "TOYOTA",
+    },
+    {
+      "class": "model",
+      "ruta": "SW4",
+    },
+    {
+      "class": "mileage",
+      "ruta": "",
+    },
+  ],
+  "hydroCarbon": [
+    {
+      "class": "HCC",
+      "classEval": "HCC-eval",
+      "ruta": undefined,
+    },
+  ],
+  "luxAng": [
+    {
+      "class": "left-vert",
+      "classEval": "left-vert-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "right-vert",
+      "classEval": "right-vert-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "left-hor",
+      "classEval": "left-hor-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "right-hor",
+      "classEval": "right-hor-eval",
+      "ruta": 0,
+    },
+  ],
+  "luxHigh": [
+    {
+      "class": "left-high",
+      "classEval": "left-high-eval",
+      "ruta": 31,
+    },
+    {
+      "class": "right-high",
+      "classEval": "right-high-eval",
+      "ruta": 30,
+    },
+  ],
+  "luxLow": [
+    {
+      "class": "left-low",
+      "classEval": "left-low-eval",
+      "ruta": 7,
+    },
+    {
+      "class": "right-low",
+      "classEval": "right-low-eval",
+      "ruta": 9,
+    },
+    {
+      "class": "left-aux",
+      "classEval": "left-aux-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "right-aux",
+      "classEval": "right-aux-eval",
+      "ruta": 0,
+    },
+  ],
+  "nitrogenOxides": [
+    {
+      "class": "Nox",
+      "classEval": "Nox-eval",
+      "ruta": 0,
+    },
+  ],
+  "opacity": [
+    {
+      "class": "opacity",
+      "classEval": "opacity-eval",
+      "ruta": 0.01,
+    },
+  ],
+  "soundInt": [
+    {
+      "class": "sound-int",
+      "classEval": "sound-int-eval",
+      "ruta": 70,
+    },
+  ],
+  "suspention": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 74.7,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 69.8,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 75.6,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 73.9,
+    },
+  ],
+  "weight": [
+    {
+      "class": "front-left",
+      "ruta": 438,
+    },
+    {
+      "class": "front-right",
+      "ruta": 810.3,
+    },
+    {
+      "class": "rear-left",
+      "ruta": 395.9,
+    },
+    {
+      "class": "rear-right",
+      "ruta": 635.5,
+    },
+  ],
+}
+`;
+
+exports[`autoReportArrayFiller > informe de auto con VCW-112.txt (snapshot) 1`] = `
+{
+  "alineation": [
+    {
+      "class": "front-al",
+      "classEval": "front-al-eval",
+      "ruta": 8.57,
+    },
+    {
+      "class": "rear-al",
+      "classEval": "rear-al-eval",
+      "ruta": 0,
+    },
+  ],
+  "brakeDifDel": [
+    {
+      "class": "front",
+      "classEval": "front-eval",
+      "ruta": 7,
+    },
+  ],
+  "brakeDifTra": [
+    {
+      "class": "rear",
+      "classEval": "rear-eval",
+      "ruta": 2,
+    },
+    {
+      "class": "hand",
+      "classEval": "hand-eval",
+      "ruta": 6,
+    },
+  ],
+  "brakeOval": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.03,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 0.04,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.07,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 0.13,
+    },
+  ],
+  "brakePerf": [
+    {
+      "class": "front",
+      "classEval": "front-eval",
+      "ruta": 48.87,
+    },
+    {
+      "class": "rear",
+      "classEval": "rear-eval",
+      "ruta": 60.89,
+    },
+  ],
+  "brakeResist": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.31,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 0.37,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.29,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 0.33,
+    },
+  ],
+  "brakeStrenghtFront": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 2.15,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 2.31,
+    },
+  ],
+  "brakeStrenghtRear": [
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 3.02,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 3.08,
+    },
+    {
+      "class": "hand-left",
+      "classEval": "hand-left-eval",
+      "ruta": 3.19,
+    },
+    {
+      "class": "hand-right",
+      "classEval": "hand-right-eval",
+      "ruta": 2.99,
+    },
+  ],
+  "carbonMonoxide": [
+    {
+      "class": "CO",
+      "classEval": "CO-eval",
+      "ruta": 0.25,
+    },
+  ],
+  "handBrakePerf": [
+    {
+      "class": "hand",
+      "classEval": "hand-eval",
+      "ruta": 32.3,
+    },
+  ],
+  "headerInfo": [
+    {
+      "class": "plate",
+      "ruta": "VCW-112",
+    },
+    {
+      "class": "brand",
+      "ruta": "CHEVROLET",
+    },
+    {
+      "class": "model",
+      "ruta": "C10",
+    },
+    {
+      "class": "mileage",
+      "ruta": "",
+    },
+  ],
+  "hydroCarbon": [
+    {
+      "class": "HCC",
+      "classEval": "HCC-eval",
+      "ruta": 2221,
+    },
+  ],
+  "luxAng": [
+    {
+      "class": "left-vert",
+      "classEval": "left-vert-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "right-vert",
+      "classEval": "right-vert-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "left-hor",
+      "classEval": "left-hor-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "right-hor",
+      "classEval": "right-hor-eval",
+      "ruta": 0,
+    },
+  ],
+  "luxHigh": [
+    {
+      "class": "left-high",
+      "classEval": "left-high-eval",
+      "ruta": 21,
+    },
+    {
+      "class": "right-high",
+      "classEval": "right-high-eval",
+      "ruta": 20,
+    },
+  ],
+  "luxLow": [
+    {
+      "class": "left-low",
+      "classEval": "left-low-eval",
+      "ruta": 3,
+    },
+    {
+      "class": "right-low",
+      "classEval": "right-low-eval",
+      "ruta": 2,
+    },
+    {
+      "class": "left-aux",
+      "classEval": "left-aux-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "right-aux",
+      "classEval": "right-aux-eval",
+      "ruta": 0,
+    },
+  ],
+  "nitrogenOxides": [
+    {
+      "class": "Nox",
+      "classEval": "Nox-eval",
+      "ruta": 0,
+    },
+  ],
+  "opacity": [
+    {
+      "class": "opacity",
+      "classEval": "opacity-eval",
+      "ruta": -1,
+    },
+  ],
+  "soundInt": [
+    {
+      "class": "sound-int",
+      "classEval": "sound-int-eval",
+      "ruta": 73,
+    },
+  ],
+  "suspention": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 84.3,
+    },
+    {
+      "class": "front-right",
+      "classEval": "front-right-eval",
+      "ruta": 73.9,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 60.5,
+    },
+    {
+      "class": "rear-right",
+      "classEval": "rear-right-eval",
+      "ruta": 60.4,
+    },
+  ],
+  "weight": [
+    {
+      "class": "front-left",
+      "ruta": 538.4,
+    },
+    {
+      "class": "front-right",
+      "ruta": 391.5,
+    },
+    {
+      "class": "rear-left",
+      "ruta": 425.6,
+    },
+    {
+      "class": "rear-right",
+      "ruta": 595.8,
+    },
+  ],
+}
+`;
+
+exports[`motoReportArrayFiller > informe de moto con KMX-653.txt (snapshot) 1`] = `
+{
+  "brakeOval": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.44,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.3,
+    },
+  ],
+  "brakePerf": [
+    {
+      "class": "front",
+      "classEval": "front-eval",
+      "ruta": 57.28,
+    },
+    {
+      "class": "rear",
+      "classEval": "rear-eval",
+      "ruta": 54.25,
+    },
+  ],
+  "brakeResist": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.35,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.45,
+    },
+  ],
+  "brakeStrenght": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 3.59,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 3.22,
+    },
+  ],
+  "carbonMonoxide": [
+    {
+      "class": "CO",
+      "classEval": "CO-eval",
+      "ruta": undefined,
+    },
+  ],
+  "headerInfo": [
+    {
+      "class": "plate",
+      "ruta": "KMX-653",
+    },
+    {
+      "class": "brand",
+      "ruta": "TOYOTA",
+    },
+    {
+      "class": "model",
+      "ruta": "SW4",
+    },
+    {
+      "class": "mileage",
+      "ruta": "",
+    },
+  ],
+  "hydroCarbon": [
+    {
+      "class": "HCC",
+      "classEval": "HCC-eval",
+      "ruta": undefined,
+    },
+  ],
+  "luxAng": [
+    {
+      "class": "left-vert",
+      "classEval": "left-vert-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "left-hor",
+      "classEval": "left-hor-eval",
+      "ruta": 0,
+    },
+  ],
+  "luxHigh": [
+    {
+      "class": "left-high",
+      "classEval": "left-high-eval",
+      "ruta": 31,
+    },
+  ],
+  "luxLow": [
+    {
+      "class": "left-low",
+      "classEval": "left-low-eval",
+      "ruta": 7,
+    },
+    {
+      "class": "left-aux",
+      "classEval": "left-aux-eval",
+      "ruta": 0,
+    },
+  ],
+  "nitrogenOxides": [
+    {
+      "class": "Nox",
+      "classEval": "Nox-eval",
+      "ruta": 0,
+    },
+  ],
+  "soundInt": [
+    {
+      "class": "sound-int",
+      "classEval": "sound-int-eval",
+      "ruta": 70,
+    },
+  ],
+  "suspention": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 74.7,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 75.6,
+    },
+  ],
+  "weight": [
+    {
+      "class": "front-left",
+      "ruta": 438,
+    },
+    {
+      "class": "rear-left",
+      "ruta": 395.9,
+    },
+  ],
+}
+`;
+
+exports[`motoReportArrayFiller > informe de moto con VCW-112.txt (snapshot) 1`] = `
+{
+  "brakeOval": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.03,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.07,
+    },
+  ],
+  "brakePerf": [
+    {
+      "class": "front",
+      "classEval": "front-eval",
+      "ruta": 48.87,
+    },
+    {
+      "class": "rear",
+      "classEval": "rear-eval",
+      "ruta": 60.89,
+    },
+  ],
+  "brakeResist": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 0.31,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 0.29,
+    },
+  ],
+  "brakeStrenght": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 2.15,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 3.02,
+    },
+  ],
+  "carbonMonoxide": [
+    {
+      "class": "CO",
+      "classEval": "CO-eval",
+      "ruta": 0.25,
+    },
+  ],
+  "headerInfo": [
+    {
+      "class": "plate",
+      "ruta": "VCW-112",
+    },
+    {
+      "class": "brand",
+      "ruta": "CHEVROLET",
+    },
+    {
+      "class": "model",
+      "ruta": "C10",
+    },
+    {
+      "class": "mileage",
+      "ruta": "",
+    },
+  ],
+  "hydroCarbon": [
+    {
+      "class": "HCC",
+      "classEval": "HCC-eval",
+      "ruta": 2221,
+    },
+  ],
+  "luxAng": [
+    {
+      "class": "left-vert",
+      "classEval": "left-vert-eval",
+      "ruta": 0,
+    },
+    {
+      "class": "left-hor",
+      "classEval": "left-hor-eval",
+      "ruta": 0,
+    },
+  ],
+  "luxHigh": [
+    {
+      "class": "left-high",
+      "classEval": "left-high-eval",
+      "ruta": 21,
+    },
+  ],
+  "luxLow": [
+    {
+      "class": "left-low",
+      "classEval": "left-low-eval",
+      "ruta": 3,
+    },
+    {
+      "class": "left-aux",
+      "classEval": "left-aux-eval",
+      "ruta": 0,
+    },
+  ],
+  "nitrogenOxides": [
+    {
+      "class": "Nox",
+      "classEval": "Nox-eval",
+      "ruta": 0,
+    },
+  ],
+  "soundInt": [
+    {
+      "class": "sound-int",
+      "classEval": "sound-int-eval",
+      "ruta": 73,
+    },
+  ],
+  "suspention": [
+    {
+      "class": "front-left",
+      "classEval": "front-left-eval",
+      "ruta": 84.3,
+    },
+    {
+      "class": "rear-left",
+      "classEval": "rear-left-eval",
+      "ruta": 60.5,
+    },
+  ],
+  "weight": [
+    {
+      "class": "front-left",
+      "ruta": 538.4,
+    },
+    {
+      "class": "rear-left",
+      "ruta": 425.6,
+    },
+  ],
+}
+`;

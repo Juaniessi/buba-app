@@ -48,6 +48,25 @@ Se abre el navegador en http://localhost:3000/buba-app/ (arranca en un par de se
 la página se actualiza sola. Para frenarlo: hacé clic en la terminal y apretá `Ctrl + C`
 (si pregunta "¿Terminar el trabajo por lotes?", respondé `S`).
 
+### Correr los tests automáticos
+
+```
+npm test
+```
+
+Prueba la app sola (tarda unos segundos): lee los .txt de ejemplo de `tests/fixtures/`,
+arma informes, agrega defectos, etc., y compara el resultado con el guardado en
+`tests/__snapshots__/`. Tiene que terminar con algo como `Tests 27 passed`.
+
+- Si **falla** después de un cambio tuyo, el mensaje muestra qué cambió en pantalla
+  (en rojo lo que había, en verde lo nuevo).
+- Si el cambio era **a propósito** (por ejemplo, cambiaste un texto del informe),
+  actualizá lo guardado con `npx vitest run -u` y revisá en Source Control que el
+  cambio en `tests/__snapshots__/` sea el que esperabas.
+- `npm run test:watch` los deja corriendo y los repite cada vez que guardás un archivo.
+
+Conviene correrlos antes de cada commit y siempre antes de un deploy.
+
 ## 6. Guardar tus cambios en GitHub
 
 Desde el panel **Source Control** de VS Code (el ícono de ramitas a la izquierda, o `Ctrl + Shift + G`):

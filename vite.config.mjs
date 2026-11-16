@@ -1,3 +1,7 @@
+/*
+ * Configuración de Vite (compila la app y levanta el servidor de desarrollo)
+ * y de Vitest (corre los tests automáticos de la carpeta tests/).
+ */
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -13,5 +17,13 @@ export default defineConfig({
 	server: {
 		port: 3000,
 		open: true,
+	},
+	// https://vitest.dev/config/
+	test: {
+		include: ['tests/**/*.test.{js,jsx}'],
+		// Los .txt traen fechas sin zona horaria. Fijamos la de Argentina para
+		// que los tests den lo mismo en cualquier PC (y en GitHub, si algún
+		// día se corren ahí).
+		env: { TZ: 'America/Argentina/Buenos_Aires' },
 	},
 });
