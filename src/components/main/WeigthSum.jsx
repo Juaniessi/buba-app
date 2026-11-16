@@ -1,83 +1,60 @@
-import React, {useEffect} from 'react';
 /*
-This module will from now on also show the date needed for:
-"Transporte de pasajeros" 
-*/
-function WeightSum(props) {
-	const {tipo, txtRender} = props;
+ * =============================================================================
+ *  WeigthSum.jsx — Resumen rápido del .txt (no se imprime)
+ * =============================================================================
+ *
+ *  Muestra arriba de todo, apenas se carga un .txt, unas tablitas con los
+ *  datos que el operador mira primero: año de fabricación, alineación, gases,
+ *  combustible, suspensión, frenos y peso por eje.
+ *
+ *  Está dentro del formulario con id "no-print", así que no sale en el
+ *  informe impreso. Sin .txt cargado no muestra nada.
+ * =============================================================================
+ */
+import React from 'react';
 
-	/* we are not coping the wheigth to the clipboard any more.
-	function copyToClipboard(text) {
-		if (txtRender !== null) {
-			navigator.clipboard
-				.writeText(text)
-				.then(() => {
-					console.log(`Copied text to clipboard: ${text}`);
-				})
-				.catch((error) => {
-					console.error(`Could not copy text: ${error}`);
-				});
-		}
-	}
-	*/
+/** A partir de cuántos años de antigüedad el año de fabricación se pinta en rojo. */
+const AÑOS_HASTA_ANTIGUO = 10;
 
-	let frontLW =
-		txtRender !== null
-			? Math.round(Number(txtRender.suspensionEjeDelantero.pesoLadoIzquierdo))
-			: 0;
+/**
+ * Pasa un peso del .txt a kilos enteros.
+ *
+ * @param {number|''} peso
+ * @returns {number}
+ */
+function kilos(peso) {
+	return Math.round(Number(peso));
+}
 
-	let frontRW =
-		txtRender !== null
-			? Math.round(Number(txtRender.suspensionEjeDelantero.pesoLadoDerecho))
-			: 0;
+/**
+ * @param {{tipo: string, txtRender: object|null}} props
+ *   txtRender son los datos del .txt (ver fileAnalizer.js), o null.
+ */
+function WeightSum({ txtRender }) {
+	if (txtRender === null) return <main>{''}</main>;
 
-	let rearLW =
-		txtRender !== null
-			? Math.round(Number(txtRender.suspensionEjeTrasero.pesoLadoIzquierdo))
-			: 0;
+	const delantero = txtRender.suspensionEjeDelantero;
+	const trasero = txtRender.suspensionEjeTrasero;
 
-	let rearRW =
-		txtRender !== null
-			? Math.round(Number(txtRender.suspensionEjeTrasero.pesoLadoDerecho))
-			: 0;
+	// Peso por eje y total, sumando lo que pesó cada rueda en la balanza.
+	const pesoDelantero = kilos(delantero.pesoLadoIzquierdo) + kilos(delantero.pesoLadoDerecho);
+	const pesoTrasero = kilos(trasero.pesoLadoIzquierdo) + kilos(trasero.pesoLadoDerecho);
+	const pesoTotal = pesoDelantero + pesoTrasero;
 
-	let totalW = frontLW + frontRW + rearLW + rearRW;
-	let frontW = frontLW + frontRW;
-	let rearW = rearLW + rearRW;
-
-	/* we are not coping the wheigth to the clipboard any more.
-	useEffect(() => {
-		copyToClipboard(totalW);
-	}, [txtRender]); */
-
-	/* old implementation
-	<div>
-						Combustible:{' '}
-						{tipo === 'Moto'
-							? 'Nafta'
-							: txtRender.header.subModelo === 'GNC'
-							? 'GNC'
-							: txtRender.opacimetro.resultadoMedicionOpacidad === -1
-							? 'Nafta'
-							: 'Diesel'}
-					</div> */
-
-	let antiguedad =
-		txtRender != null
-			? new Date().getFullYear() - txtRender.header.añoDeFabricacion
-			: 0;
-	console.log('la antigüedad es' + antiguedad);
+	const antiguedad = new Date().getFullYear() - txtRender.header.añoDeFabricacion;
 
 	return (
 		<main>
-			{txtRender !== null ? (
-				<div className="weightsTable">
-					<table className="subgroup">
+			<div className="weightsTable">
+				{/* Año, alineación, gases y combustible */}
+				<table className="subgroup">
+					<tbody>
 						<tr>
 							<td className="report-table table-cat">Año de fab</td>
+							{/* En rojo ("peligro") si tiene más de 10 años */}
 							<td
 								className={
-									antiguedad <= 10
+									antiguedad <= AÑOS_HASTA_ANTIGUO
 										? 'report-table table-info'
 										: 'report-table peligro'
 								}>
@@ -93,13 +70,9 @@ function WeightSum(props) {
 						<tr>
 							<td className="report-table table-cat">Gases (%)</td>
 							<td className="report-table table-info">
+								{/* Opacidad -1 = no se midió (motor naftero): se muestra el CO */}
 								{txtRender.opacimetro.resultadoMedicionOpacidad === -1 ? (
-									<div>
-										{
-											txtRender.analizadorDeGases
-												.resultadoMonoxidoDeCarbonoEnAltaRPM
-										}
-									</div>
+									<div>{txtRender.analizadorDeGases.resultadoMonoxidoDeCarbonoEnAltaRPM}</div>
 								) : (
 									<div>{txtRender.opacimetro.resultadoMedicionOpacidad}</div>
 								)}
@@ -107,13 +80,14 @@ function WeightSum(props) {
 						</tr>
 						<tr>
 							<td className="report-table table-cat">Combustible</td>
-							<td className="report-table table-info">
-								{txtRender.header.combustible}
-							</td>
+							<td className="report-table table-info">{txtRender.header.combustible}</td>
 						</tr>
-					</table>
+					</tbody>
+				</table>
 
-					<table className="subgroup">
+				{/* Rendimiento de la suspensión de cada rueda */}
+				<table className="subgroup">
+					<tbody>
 						<tr>
 							<td className="report-table table-cat" rowSpan={2}>
 								Suspensión (%)
@@ -124,24 +98,17 @@ function WeightSum(props) {
 							<td className="report-table table-name">T Der</td>
 						</tr>
 						<tr>
-							<td className="report-table table-info">
-								{txtRender.suspensionEjeDelantero.rendimientoDelanteroIzquierdo}
-							</td>
-							<td className="report-table table-info">
-								{txtRender.suspensionEjeDelantero.rendimientoDelanteroDerecho}
-							</td>
-
-							<td className="report-table table-info">
-								{txtRender.suspensionEjeTrasero.rendimientoTraseroIzquierdo}
-							</td>
-
-							<td className="report-table table-info">
-								{txtRender.suspensionEjeTrasero.rendimientoTraseroDerecho}
-							</td>
+							<td className="report-table table-info">{delantero.rendimientoDelanteroIzquierdo}</td>
+							<td className="report-table table-info">{delantero.rendimientoDelanteroDerecho}</td>
+							<td className="report-table table-info">{trasero.rendimientoTraseroIzquierdo}</td>
+							<td className="report-table table-info">{trasero.rendimientoTraseroDerecho}</td>
 						</tr>
-					</table>
+					</tbody>
+				</table>
 
-					<table className="subgroup">
+				{/* Rendimiento de frenos por eje y diferencia entre lados */}
+				<table className="subgroup">
+					<tbody>
 						<tr>
 							<td className="report-table table-cat" rowSpan={2}>
 								Frenos (%)
@@ -152,12 +119,8 @@ function WeightSum(props) {
 							<td className="report-table table-name">Dif Tra</td>
 						</tr>
 						<tr>
-							<td className="report-table table-info">
-								{txtRender.frenosEje_1.rendimientoDelEje}
-							</td>
-							<td className="report-table table-info">
-								{txtRender.frenosEje_2.rendimientoDelEje}
-							</td>
+							<td className="report-table table-info">{txtRender.frenosEje_1.rendimientoDelEje}</td>
+							<td className="report-table table-info">{txtRender.frenosEje_2.rendimientoDelEje}</td>
 							<td className="report-table table-info">
 								{txtRender.frenosEje_1.diferenciaFzaFrenadoLadoALado}
 							</td>
@@ -165,9 +128,12 @@ function WeightSum(props) {
 								{txtRender.frenosEje_2.diferenciaFzaFrenadoLadoALado}
 							</td>
 						</tr>
-					</table>
+					</tbody>
+				</table>
 
-					<table className="subgroup">
+				{/* Peso total y por eje */}
+				<table className="subgroup">
+					<tbody>
 						<tr>
 							<td className="report-table table-cat" rowSpan={2}>
 								Peso (kg)
@@ -177,15 +143,13 @@ function WeightSum(props) {
 							<td className="report-table table-name">Eje tra</td>
 						</tr>
 						<tr>
-							<td className="report-table table-info">{totalW}</td>
-							<td className="report-table table-info">{frontW}</td>
-							<td className="report-table table-info">{rearW}</td>
+							<td className="report-table table-info">{pesoTotal}</td>
+							<td className="report-table table-info">{pesoDelantero}</td>
+							<td className="report-table table-info">{pesoTrasero}</td>
 						</tr>
-					</table>
-				</div>
-			) : (
-				''
-			)}
+					</tbody>
+				</table>
+			</div>
 		</main>
 	);
 }

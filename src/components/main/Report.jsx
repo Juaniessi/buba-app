@@ -89,7 +89,6 @@ function Report(props) {
 		imgUpload,
 		onImageChange,
 		loadImgRef,
-		severityOrder,
 		dateCalcBtn,
 		selectValidity,
 		txtRender,
@@ -409,12 +408,8 @@ function Report(props) {
 											</p>
 										</div>
 									))}
-									{/* {reportArray.nitrogenOxides.map((item, i) => (
-										<div key={i}>
-											<p className={item.class}>{item.ruta}</p>
-											<p className={item.classEval}>{item.ruta}</p>
-										</div>
-									))} */}
+									{/* Los óxidos de nitrógeno (NOx) no se muestran: el dato está en
+									    reportArrays.js (nitrogenOxides) por si se quiere volver a mostrar. */}
 								</div>
 							) : (
 								<div className="opacimeter">
@@ -556,12 +551,8 @@ function Report(props) {
 										</p>
 									</div>
 								))}
-								{/* {reportArray.nitrogenOxides.map((item, i) => (
-									<div key={i}>
-										<p className={item.class}>{item.ruta}</p>
-										<p className={item.classEval}>{item.ruta}</p>
-									</div>
-								))} */}
+								{/* Los óxidos de nitrógeno (NOx) no se muestran: el dato está en
+								    reportArrays.js (nitrogenOxides) por si se quiere volver a mostrar. */}
 							</div>
 							<div className="date">{dateStamper()}</div>
 						</article>
@@ -591,7 +582,6 @@ function Report(props) {
 					setUnlistedDef={setUnlistedDef}
 					lista={lista}
 					setLista={setLista}
-					severityOrder={severityOrder}
 				/>
 				{/* Referencias: qué significa cada severidad */}
 				<table className="references print">

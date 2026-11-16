@@ -1,5 +1,31 @@
-/**
- * Stores the data base for the car defect list
+/*
+ * =============================================================================
+ *  carDataBase.js — Defectos posibles para autos, camionetas, camiones y colectivos
+ * =============================================================================
+ *
+ *  Es la lista de opciones del formulario de defectos (ver DefectList.jsx).
+ *  Tiene tres partes, que se eligen en orden:
+ *
+ *    autoArray.grupo           Grupos: [{ value, label }, ...]
+ *    autoArray.seccion         Secciones de cada grupo:
+ *                                { valorDelGrupo: [{ value, label }, ...] }
+ *    autoArray.descripciones   Descripciones de cada sección:
+ *                                { valorDelGrupo: { valorDeLaSeccion: [{ value, label }] } }
+ *
+ *    - value: identificador interno (sin espacios ni acentos); tiene que ser
+ *             único, porque también se usa como id del botón en la página.
+ *    - label: el texto que se ve en pantalla y que sale en el informe.
+ *
+ *  Ejemplo: grupo 'luces' → sección 'lucesDePos' →
+ *           "Luz de posición delantera izquierda no enciende."
+ *
+ *  Para agregar un defecto: sumar { value, label } en la lista de la sección
+ *  que corresponda dentro de "descripciones". Para una sección nueva: agregarla
+ *  en "seccion" (dentro de su grupo) y crear su lista en "descripciones".
+ *  Las opciones se muestran ordenadas alfabéticamente, sin importar el orden
+ *  en que estén escritas acá.
+ *
+ * =============================================================================
  */
 const autoArray = {
 	grupo: [

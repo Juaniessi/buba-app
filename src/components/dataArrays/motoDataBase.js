@@ -1,3 +1,31 @@
+/*
+ * =============================================================================
+ *  motoDataBase.js — Defectos posibles para motos
+ * =============================================================================
+ *
+ *  Es la lista de opciones del formulario de defectos (ver DefectList.jsx).
+ *  Tiene tres partes, que se eligen en orden:
+ *
+ *    motoArray.grupo           Grupos: [{ value, label }, ...]
+ *    motoArray.seccion         Secciones de cada grupo:
+ *                                { valorDelGrupo: [{ value, label }, ...] }
+ *    motoArray.descripciones   Descripciones de cada sección:
+ *                                { valorDelGrupo: { valorDeLaSeccion: [{ value, label }] } }
+ *
+ *    - value: identificador interno (sin espacios ni acentos); tiene que ser
+ *             único, porque también se usa como id del botón en la página.
+ *    - label: el texto que se ve en pantalla y que sale en el informe.
+ *
+ *  Ejemplo: grupo 'suspension' → sus secciones → sus descripciones.
+ *
+ *  Para agregar un defecto: sumar { value, label } en la lista de la sección
+ *  que corresponda dentro de "descripciones". Para una sección nueva: agregarla
+ *  en "seccion" (dentro de su grupo) y crear su lista en "descripciones".
+ *  Las opciones se muestran ordenadas alfabéticamente, sin importar el orden
+ *  en que estén escritas acá.
+ *
+ * =============================================================================
+ */
 const motoArray = {
 	grupo: [
 		{
