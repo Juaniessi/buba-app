@@ -314,6 +314,46 @@ export function fechaDeInicio(datos) {
 }
 
 /**
+ * Si el .txt es de una segunda revisión, devuelve la fecha de la primera.
+ *
+ * Cuando un vehículo vuelve después de un Condicional, se reutiliza el .txt
+ * de la primera revisión (antes se lo copiaba como "PATENTE_2"; ahora el
+ * programa de CVA permite buscarlo y sobrescribirlo). Los puestos de la línea
+ * que se vuelven a pasar se sobrescriben con la fecha nueva, pero los que no
+ * se repiten conservan la fecha de la primera revisión. Por ejemplo, en
+ * OMC542_2.txt el puesto 1 dice 6/11/2026 y los puestos 2 y 3, 16/11/2026.
+ *
+ * Así que si alguna fecha de los puestos es de un día anterior al de la
+ * revisión (ver fechaDeInicio), es una segunda revisión, y la primera es la
+ * fecha más vieja.
+ *
+ * Limitación: si en la segunda revisión se vuelven a pasar todos los puestos,
+ * no queda ninguna fecha vieja y no hay forma de saberlo desde el .txt.
+ *
+ * @param {object|null} datos Los datos del .txt (txtRender).
+ * @returns {Date|null} La fecha de la primera revisión, o null si no es una
+ *   segunda revisión (o si no hay .txt).
+ */
+export function fechaDePrimeraRevision(datos) {
+	const revision = fechaDeInicio(datos);
+	if (!esFechaValida(revision)) return null;
+
+	const fechas = Object.entries(datos.estadísticaDePuestos)
+		.filter(([campo]) => /^fechaDe(IngresoAlPuesto|SalidaDelPuesto)\d+$/.test(campo))
+		.map(([, fecha]) => fecha)
+		.filter(esFechaValida);
+	const masVieja = fechas.reduce((a, b) => (b < a ? b : a), revision);
+
+	return diaDe(masVieja) < diaDe(revision) ? masVieja : null;
+}
+
+/** true si es un Date con una fecha real (no undefined ni Invalid Date). */
+export const esFechaValida = (fecha) => fecha instanceof Date && !Number.isNaN(fecha.getTime());
+
+/** La fecha sin la hora (para comparar días). */
+const diaDe = (fecha) => new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
+
+/**
  * Calcula la fecha de vencimiento de la revisión.
  *
  * RTO particular:
@@ -367,9 +407,13 @@ export function calcularVencimiento(inicio, rtoType, resultado, vigencia) {
 /**
  * Escribe una fecha como en el informe: día/mes/año, sin ceros adelante.
  *
- * @param {Date} fecha
- * @returns {string} Por ejemplo "8/7/2022".
+ * Si no hay fecha (por ejemplo, un .txt sin las fechas de los puestos)
+ * devuelve '' y el casillero queda en blanco, en lugar de romper el informe.
+ *
+ * @param {Date|undefined|''} fecha
+ * @returns {string} Por ejemplo "8/7/2022", o '' si no hay una fecha válida.
  */
 export function formatearFecha(fecha) {
+	if (!esFechaValida(fecha)) return '';
 	return `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
 }

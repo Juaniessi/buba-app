@@ -305,6 +305,14 @@ td {
 	&.manual {
 		background-color: lightgray;
 	}
+	// Segunda revisión (con la casilla para contar desde la primera).
+	&.segunda {
+		background-color: rgb(225, 215, 250);
+		.aviso-nota {
+			margin-top: 2px;
+			font-size: 0.8rem;
+		}
+	}
 }
 // Vigencia sin elegir cuando no se pudo calcular sola: borde naranja.
 .falta-elegir {

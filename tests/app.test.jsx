@@ -208,6 +208,14 @@ describe('botón "Imprimir informe"', () => {
 		await waitFor(() => expect(imprimir).toHaveBeenCalledTimes(1));
 	});
 
+	test('en una segunda revisión copia la patente con "_2" (para el nombre del PDF)', async () => {
+		const { copiar } = prepararImpresion();
+		const app = abrirApp();
+		await cargarTxt(app, 'OMC542_2.txt', 'OMC542');
+		fireEvent.click(app.querySelector('#print-btn'));
+		expect(copiar).toHaveBeenCalledWith('OMC542_2');
+	});
+
 	test('si no se puede copiar la patente, imprime igual', async () => {
 		// Antes, si el navegador no daba permiso para copiar, no imprimía.
 		const { imprimir } = prepararImpresion({ copiaFalla: true });
@@ -328,6 +336,63 @@ describe('resultado de la RTO automático', () => {
 		fireEvent.click(app.querySelector('#reset-btn'));
 		expect(app.querySelector('#resultado-automatico').checked).toBe(true);
 		expect(marcado(app)).toBe('Apto');
+	});
+});
+
+describe('segunda revisión', () => {
+	/** Lo que dice el hueco de INICIO (una fecha, o las dos apiladas). */
+	const inicio = (app) => [...app.querySelectorAll('.start-date')].map((p) => p.textContent);
+	const fin = (app) => app.querySelector('.end-date').textContent;
+
+	test('primera revisión: no hay aviso y la vigencia se cuenta desde hoy', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'OMC542.txt', 'OMC542');
+		expect(app.querySelector('#aviso-segunda')).toBeNull();
+		elegir(app, 'Apto');
+		expect(inicio(app)).toEqual(['6/11/2026']);
+		expect(fin(app)).toBe('6/11/2027'); // patentada en 2014 → 1 año
+	});
+
+	test('Apto: salen las dos fechas y la vigencia se cuenta desde la primera', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'OMC542_2.txt', 'OMC542');
+		// En el informe sale la patente sin el "_2".
+		expect(app.querySelector('.plate').textContent).toBe('OMC542');
+		expect(app.querySelector('#aviso-segunda').textContent).toContain('la primera fue el 6/11/2026');
+		// Se detecta solo: no hay casillas.
+		expect(app.querySelector('#aviso-segunda input')).toBeNull();
+
+		elegir(app, 'Apto');
+		expect(inicio(app)).toEqual(['1ª 6/11/2026', '2ª 16/11/2026']);
+		expect(app.querySelector('.start-date.primera').textContent).toBe('1ª 6/11/2026');
+		expect(app.querySelector('.start-date.segunda').textContent).toBe('2ª 16/11/2026');
+		expect(fin(app)).toBe('6/11/2027');
+		expect(app.querySelector('#aviso-segunda').textContent).toContain('desde la primera revisión');
+	});
+
+	test('un .txt sin las fechas de los puestos no rompe el informe', async () => {
+		const sinFechas = readFileSync(resolve('tests/fixtures', 'OMC542.txt'), 'latin1')
+			.split('\r\n')
+			.filter((linea) => !/^800\d\d=/.test(linea))
+			.join('\r\n');
+		const app = abrirApp();
+		fireEvent.change(app.querySelector('#file-input'), {
+			target: { files: [new File([sinFechas], 'sin-fechas.txt', { type: 'text/plain' })] },
+		});
+		await waitFor(() => expect(app.textContent).toContain('OMC542'));
+		expect(inicio(app)).toEqual(['']);
+		expect(fin(app)).toBe('');
+		expect(app.querySelector('#aviso-segunda')).toBeNull();
+	});
+
+	test('si no es Apto, el vencimiento se cuenta desde hoy (y lo avisa)', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'OMC542_2.txt', 'OMC542');
+		elegir(app, 'Condicional');
+		expect(app.querySelector('#aviso-segunda').textContent).toContain('desde la revisión de hoy');
+		// Las dos fechas salen igual: es una segunda revisión.
+		expect(inicio(app)).toEqual(['1ª 6/11/2026', '2ª 16/11/2026']);
+		expect(fin(app)).toBe('15/1/2027'); // 60 días
 	});
 });
 
@@ -585,5 +650,83 @@ describe('lista de defectos', () => {
 
 		await cargarTxt(app, 'VCW-112.txt', 'VCW-112');
 		expect(app.querySelectorAll(`${M} .erase-btn`)).toHaveLength(0);
+	});
+});
+
+describe('hoja 2 (observaciones que no entran en la hoja 1)', () => {
+	// jsdom no calcula alturas (todo mide 0). Para probar el reparto se simula
+	// que cada fila mide 19 px y el encabezado 16 px, como en el navegador.
+	// En la hoja 1 entran entonces (235 − 16) / 19 = 11 filas (ver hojas.js).
+	beforeEach(() => {
+		vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function () {
+			const alto = this.tagName === 'TR' ? 19 : this.tagName === 'THEAD' ? 16 : 0;
+			return { x: 0, y: 0, top: 0, left: 0, right: 0, width: 0, bottom: alto, height: alto, toJSON() {} };
+		});
+	});
+
+	const numero = (app) => app.querySelector('#hoja-numero').textContent;
+	const hojasExtra = (app) => [...app.querySelectorAll('.hoja-extra')];
+	/** Agrega n defectos leves iguales. */
+	const agregarLeves = (app, n) => {
+		for (let i = 0; i < n; i++) {
+			agregarDefecto(app, { severidad: 0, grupo: 1, seccion: 1, descripcion: 0 });
+		}
+	};
+
+	test('con pocas observaciones dice "Hoja 1 de 1" y no hay hoja 2', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653'); // 2 automáticas
+		expect(numero(app)).toBe('Hoja 1 de 1');
+		expect(hojasExtra(app)).toHaveLength(0);
+	});
+
+	test('las que no entran pasan a la hoja 2, con patente, fecha y referencias', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653'); // 2 automáticas (Moderado)
+		agregarLeves(app, 10);
+		// 12 filas: 11 en la hoja 1 y 1 en la hoja 2 (la última: una Leve).
+		await waitFor(() =>
+			expect(numero(app)).toBe('Hoja 1 de 2 (las observaciones siguen en la hoja 2)')
+		);
+		expect(app.querySelector('table.lista-final').querySelectorAll('tbody tr')).toHaveLength(11);
+		expect(hojasExtra(app)).toHaveLength(1);
+		const [hoja2] = hojasExtra(app);
+		expect(hoja2.querySelectorAll('table.lista-final tbody tr')).toHaveLength(1);
+		expect(hoja2.querySelector('.severidad-col.yellow').textContent).toBe('Leve');
+		expect(hoja2.querySelector('.hoja-patente').textContent).toBe('KMX-653');
+		expect(hoja2.querySelector('.hoja-fecha').textContent).toBe('8/7/2022');
+		expect(hoja2.querySelector('.hoja-de').textContent).toBe('Hoja 2 de 2');
+		expect(hoja2.querySelector('.references')).not.toBeNull();
+		expect(hoja2.querySelector('.marca-de-agua')).toBeNull(); // no es transporte de pasajeros
+		// Todas siguen en la lista (para editarlas, copiarlas para SIRTO, etc.).
+		expect(app.querySelectorAll('tr.item-lista')).toHaveLength(12);
+
+		// Al borrar una, vuelve a entrar todo en la hoja 1.
+		fireEvent.click(hoja2.querySelector('.erase-btn'));
+		await waitFor(() => expect(numero(app)).toBe('Hoja 1 de 1'));
+		expect(hojasExtra(app)).toHaveLength(0);
+	});
+
+	test('si son muchas, sigue en la hoja 3', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		// Hoja 2: (825 − 16) / 19 = 42 filas. 2 + 52 = 54 → 11 + 42 + 1.
+		agregarLeves(app, 52);
+		await waitFor(() => expect(hojasExtra(app)).toHaveLength(2));
+		expect(numero(app)).toContain('Hoja 1 de 3');
+		expect(hojasExtra(app).map((h) => h.querySelector('.hoja-de').textContent)).toEqual([
+			'Hoja 2 de 3',
+			'Hoja 3 de 3',
+		]);
+		expect(hojasExtra(app).map((h) => h.querySelectorAll('tr.item-lista').length)).toEqual([42, 1]);
+	});
+
+	test('en transporte de pasajeros, la hoja 2 también lleva la marca de agua', async () => {
+		const app = abrirApp();
+		elegir(app, 'traPas');
+		await cargarTxt(app, 'KMX-653.txt', 'KMX-653');
+		agregarLeves(app, 10);
+		await waitFor(() => expect(hojasExtra(app)).toHaveLength(1));
+		expect(hojasExtra(app)[0].querySelector('.marca-de-agua')).not.toBeNull();
 	});
 });

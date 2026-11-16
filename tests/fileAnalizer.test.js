@@ -34,8 +34,23 @@ function leerEjemplo(nombre) {
 
 const KMX = leerEjemplo('KMX-653.txt'); // Toyota SW4 2012, diésel
 const VCW = leerEjemplo('VCW-112.txt'); // Chevrolet C10 1974
+const OMC_2 = leerEjemplo('OMC542_2.txt'); // Agrale Marrua 2014, segunda revisión
 
 describe('procesarTextoTxt', () => {
+	test('patente sin guion y copia "_2" de una segunda revisión (OMC542_2)', () => {
+		const datos = procesarTextoTxt(OMC_2);
+		// En el informe va la patente real; la del archivo queda aparte.
+		expect(datos.header.patente).toBe('OMC542');
+		expect(datos.header.patenteDelArchivo).toBe('OMC542_2');
+		expect(datos.header.marcaDelVehiculo).toBe('AGRALE');
+	});
+
+	test('una patente sin "_2" queda igual', () => {
+		const datos = procesarTextoTxt(KMX);
+		expect(datos.header.patente).toBe('KMX-653');
+		expect(datos.header.patenteDelArchivo).toBe('KMX-653');
+	});
+
 	test('lee los datos del vehículo (KMX-653)', () => {
 		const datos = procesarTextoTxt(KMX);
 

@@ -10,7 +10,9 @@
  *  Para leerlos: en cada tabla, cada fila es [valor medido, letra esperada].
  * =============================================================================
  */
+import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
+import { procesarTextoTxt } from '../src/components/txt-navegator/fileAnalizer.js';
 import {
 	CALIFICACION,
 	evaluarMenorOIgual,
@@ -22,6 +24,8 @@ import {
 	evaluarHCMoto,
 	añoValido,
 	fechaDeInicio,
+	fechaDePrimeraRevision,
+	esFechaValida,
 	calcularVencimiento,
 	formatearFecha,
 } from '../src/components/main/evaluaciones.js';
@@ -241,6 +245,48 @@ describe('fechaDeInicio', () => {
 	test('si no hay puesto 3, usa el puesto 2', () => {
 		const datos = { estadísticaDePuestos: { fechaDeSalidaDelPuesto2: salida2 } };
 		expect(fechaDeInicio(datos)).toBe(salida2);
+	});
+});
+
+describe('fechas que faltan', () => {
+	test('formatearFecha sin fecha válida devuelve vacío (no rompe el informe)', () => {
+		expect(formatearFecha(undefined)).toBe('');
+		expect(formatearFecha('')).toBe('');
+		expect(formatearFecha(new Date(NaN))).toBe('');
+		expect(esFechaValida(new Date(2026, 10, 16))).toBe(true);
+	});
+});
+
+describe('fechaDePrimeraRevision', () => {
+	const leer = (nombre) =>
+		procesarTextoTxt(readFileSync(new URL(`./fixtures/${nombre}`, import.meta.url), 'utf8'));
+
+	test('sin .txt, null', () => {
+		expect(fechaDePrimeraRevision(null)).toBeNull();
+	});
+
+	test('primera revisión (todos los puestos el mismo día): null', () => {
+		expect(fechaDePrimeraRevision(leer('OMC542.txt'))).toBeNull();
+		expect(fechaDePrimeraRevision(leer('KMX-653.txt'))).toBeNull();
+		expect(fechaDePrimeraRevision(leer('VCW-112.txt'))).toBeNull();
+	});
+
+	test('segunda revisión: el puesto que no se repitió conserva la fecha de la primera', () => {
+		// OMC542_2: puesto 1 del 6/11/2026; puestos 2 y 3 del 16/11/2026.
+		const datos = leer('OMC542_2.txt');
+		expect(formatearFecha(fechaDeInicio(datos))).toBe('16/11/2026');
+		expect(formatearFecha(fechaDePrimeraRevision(datos))).toBe('6/11/2026');
+	});
+
+	test('fechas inválidas o que faltan no cuentan', () => {
+		const datos = {
+			estadísticaDePuestos: {
+				fechaDeIngresoAlPuesto1: new Date(NaN),
+				fechaDeSalidaDelPuesto1: undefined,
+				fechaDeSalidaDelPuesto2: new Date(2026, 10, 16, 11, 12),
+			},
+		};
+		expect(fechaDePrimeraRevision(datos)).toBeNull();
 	});
 });
 

@@ -22,7 +22,7 @@ import { leerArchivoTxt } from '../txt-navegator/fileAnalizer.js';
 import { generarObservacionesAutomaticas } from './observacionesAutomaticas';
 import { resultadoSegunDefectos } from './observaciones';
 import { calcularVigenciaParticular } from './vigencia';
-import { fechaDeInicio } from './evaluaciones';
+import { fechaDeInicio, fechaDePrimeraRevision, formatearFecha } from './evaluaciones';
 
 /** Aviso que se muestra antes de regenerar las observaciones automáticas. */
 const AVISO_REGENERAR =
@@ -188,12 +188,30 @@ function Main() {
 		: dateCalcBtn;
 
 	/**
+	 * Si el .txt es de una segunda revisión, la fecha de la primera (si no,
+	 * null). Ver fechaDePrimeraRevision en evaluaciones.js.
+	 */
+	const primeraRevision = fechaDePrimeraRevision(txtRender);
+
+	/**
+	 * Desde cuándo se cuenta la vigencia (y el vencimiento): en una segunda
+	 * revisión con resultado Apto, desde la primera revisión; si no, desde el
+	 * día de la revisión. Se decide solo, sin casillas: la segunda revisión se
+	 * detecta con las fechas del .txt.
+	 */
+	const inicioVigencia =
+		primeraRevision && resultado.value === 'Apto'
+			? primeraRevision
+			: fechaDeInicio(txtRender);
+
+	/**
 	 * Vigencia automática (solo RTO particular con un .txt cargado): qué
-	 * corresponde según la patente, o por qué no se puede calcular.
+	 * corresponde según la patente, o por qué no se puede calcular. La
+	 * antigüedad se mide al inicio de la vigencia.
 	 */
 	const infoVigencia =
 		rtoType.value === 'particular' && txtRender
-			? calcularVigenciaParticular(txtRender.header.patente, fechaDeInicio(txtRender))
+			? calcularVigenciaParticular(txtRender.header.patente, inicioVigencia)
 			: null;
 
 	/**
@@ -593,6 +611,18 @@ function Main() {
 					)}
 				</div>
 
+				{/* Segunda revisión: desde cuándo se cuenta la vigencia */}
+				{primeraRevision && (
+					<div id="aviso-segunda" className="aviso-vigencia segunda">
+						<b>Segunda revisión</b>: la primera fue el {formatearFecha(primeraRevision)}. En el
+						informe salen las dos fechas.
+						<div className="aviso-nota">
+							{resultado.value === 'Apto'
+								? 'Como es Apto, la vigencia se cuenta desde la primera revisión.'
+								: 'Como no es Apto, el vencimiento se cuenta desde la revisión de hoy.'}
+						</div>
+					</div>
+				)}
 				{/* Por qué la vigencia tiene el valor que tiene (solo si hay que elegirla) */}
 				{infoVigencia && resultado.value === 'Apto' && (
 					<p
@@ -653,6 +683,8 @@ function Main() {
 					dateCalcBtn={resultado}
 					selectValidity={vigencia}
 					rtoType={rtoType}
+					inicioVigencia={inicioVigencia}
+					primeraRevision={primeraRevision}
 				/>
 			</section>
 		</main>

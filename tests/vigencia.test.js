@@ -60,6 +60,11 @@ describe('calcularVigenciaParticular', () => {
 		expect(r.explicacion).toContain('menos de 3 años en la calle');
 	});
 
+	test('patente sin guion (como vienen ahora) → igual se calcula', () => {
+		const r = calcularVigenciaParticular('OMC542', fecha(2026, 11, 6)); // 2014
+		expect(r).toMatchObject({ estado: 'automatica', vigencia: '1a' });
+	});
+
 	test('patente que no está en la tabla → no se puede calcular', () => {
 		const r = calcularVigenciaParticular('VCW-112', fecha(2022, 9, 13));
 		expect(r).toMatchObject({ estado: 'sinDatos', vigencia: null });
