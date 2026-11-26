@@ -143,4 +143,9 @@ describe('textoAFecha', () => {
 	test('un texto que no es fecha devuelve una fecha inválida', () => {
 		expect(isNaN(textoAFecha('cualquiercosa'))).toBe(true);
 	});
+
+	test('la fecha vacía de la línea ("1/1/0001") es como si no hubiera venido', () => {
+		// Puesto por el que el vehículo no pasó (colectivo AE991VN, puesto 1).
+		expect(textoAFecha('1/1/000100:00:00')).toBeUndefined();
+	});
 });

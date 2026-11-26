@@ -338,10 +338,15 @@ export function fechaDePrimeraRevision(datos) {
 	const revision = fechaDeInicio(datos);
 	if (!esFechaValida(revision)) return null;
 
+	// Resguardo: una segunda revisión llega a los días de un Condicional, así
+	// que una fecha de más de un año antes no puede ser la de la primera (sería
+	// un dato raro del .txt, como la fecha vacía "1/1/0001"; ver textoAFecha).
+	const haceUnAño = new Date(revision.getFullYear() - 1, revision.getMonth(), revision.getDate());
 	const fechas = Object.entries(datos.estadísticaDePuestos)
 		.filter(([campo]) => /^fechaDe(IngresoAlPuesto|SalidaDelPuesto)\d+$/.test(campo))
 		.map(([, fecha]) => fecha)
-		.filter(esFechaValida);
+		.filter(esFechaValida)
+		.filter((fecha) => fecha >= haceUnAño);
 	const masVieja = fechas.reduce((a, b) => (b < a ? b : a), revision);
 
 	return diaDe(masVieja) < diaDe(revision) ? masVieja : null;

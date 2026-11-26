@@ -370,6 +370,20 @@ describe('segunda revisión', () => {
 		expect(app.querySelector('#aviso-segunda').textContent).toContain('desde la primera revisión');
 	});
 
+	test('colectivo que no pasó por el puesto 1 (fecha 1/1/0001): no es segunda revisión', async () => {
+		// Caso real del 26/11/2026: salía "1ª 1/1/1901" y FIN 1/4/1901.
+		const app = abrirApp();
+		elegir(app, 'Minibus');
+		elegir(app, 'traPas');
+		await cargarTxt(app, 'AE991VN.txt', 'AE991VN');
+		elegir(app, 'Apto');
+		expect(app.querySelector('#aviso-segunda')).toBeNull();
+		expect(inicio(app)).toEqual(['26/11/2026']);
+		// Patente AE 991 (Mercosur, 2020): menos de 10 años → 3 meses.
+		expect(fin(app)).toBe('26/2/2027');
+		expect(app.textContent).not.toContain('1901');
+	});
+
 	test('un .txt sin las fechas de los puestos no rompe el informe', async () => {
 		const sinFechas = readFileSync(resolve('tests/fixtures', 'OMC542.txt'), 'latin1')
 			.split('\r\n')
