@@ -265,6 +265,24 @@ describe('fechaDePrimeraRevision', () => {
 		expect(fechaDePrimeraRevision(null)).toBeNull();
 	});
 
+	test('un puesto con la fecha vacía (1/1/0001) no la convierte en segunda revisión', () => {
+		// AE991VN no pasó por el puesto 1: la línea puso "1/1/0001 00:00:00".
+		const datos = leer('AE991VN.txt');
+		expect(datos.estadísticaDePuestos.fechaDeIngresoAlPuesto1).toBeUndefined();
+		expect(formatearFecha(fechaDeInicio(datos))).toBe('26/11/2026');
+		expect(fechaDePrimeraRevision(datos)).toBeNull();
+	});
+
+	test('una fecha de más de un año antes no cuenta como primera revisión', () => {
+		const datos = {
+			estadísticaDePuestos: {
+				fechaDeSalidaDelPuesto1: new Date(2024, 0, 10, 9, 0),
+				fechaDeSalidaDelPuesto2: new Date(2026, 10, 26, 8, 46),
+			},
+		};
+		expect(fechaDePrimeraRevision(datos)).toBeNull();
+	});
+
 	test('primera revisión (todos los puestos el mismo día): null', () => {
 		expect(fechaDePrimeraRevision(leer('OMC542.txt'))).toBeNull();
 		expect(fechaDePrimeraRevision(leer('KMX-653.txt'))).toBeNull();

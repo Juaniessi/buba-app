@@ -223,6 +223,12 @@ const SECCIONES_CON_OVALIDAD = [
 /** Cantidad máxima de puestos de la línea que trae el .txt (ver convertirFechas). */
 const CANTIDAD_DE_PUESTOS = 10;
 
+/**
+ * Una fecha de un año anterior a este es la fecha "vacía" que pone la línea
+ * en un puesto por el que el vehículo no pasó ("1/1/0001"). Ver textoAFecha.
+ */
+const AÑO_MINIMO = 1990;
+
 // =============================================================================
 //  Puntos de entrada
 // =============================================================================
@@ -486,10 +492,16 @@ function convertirFechas(datos) {
  *
  * La fecha se interpreta en el horario de la PC (el de Argentina).
  *
+ * Un puesto por el que el vehículo no pasó puede venir con la fecha "vacía"
+ * de la línea: "1/1/0001 00:00:00" (pasó con el colectivo AE991VN, que no
+ * pasó por el puesto 1). Eso no es una fecha: se trata como si no hubiera
+ * venido (undefined). Antes, JavaScript la leía como 1/1/1901 y la app creía
+ * que era una segunda revisión con la primera en 1901.
+ *
  * @param {string|undefined} texto Por ejemplo "13/9/202212:53:35".
- * @returns {Date|undefined} La fecha, o undefined si no vino ninguna. Si el
- *   texto no tiene el formato esperado devuelve una fecha inválida
- *   (Invalid Date), como hacía el código original.
+ * @returns {Date|undefined} La fecha, o undefined si no vino ninguna (o vino
+ *   la fecha vacía de la línea). Si el texto no tiene el formato esperado
+ *   devuelve una fecha inválida (Invalid Date), como hacía el código original.
  */
 export function textoAFecha(texto) {
 	if (texto === undefined) return undefined;
@@ -499,6 +511,8 @@ export function textoAFecha(texto) {
 	if (!partes) return new Date(NaN);
 
 	const [, dia, mes, año, hora, minutos, segundos] = partes.map(Number);
+	// Fecha vacía de la línea ("1/1/0001"): el vehículo no pasó por ese puesto.
+	if (año < AÑO_MINIMO) return undefined;
 	// En JavaScript los meses van de 0 (enero) a 11 (diciembre).
 	return new Date(año, mes - 1, dia, hora, minutos, segundos);
 }
