@@ -204,6 +204,45 @@ export function evaluarRango(valor, limite, truckSize) {
 }
 
 // =============================================================================
+//  Luces baja y alta: se evalúan de a pares (izquierda y derecha)
+// =============================================================================
+
+/**
+ * ¿La luz está quemada? Lo está si el .txt trae el casillero vacío ('') o una
+ * intensidad menor a 1 (en la práctica, 0). Si el código ni siquiera viene en
+ * el .txt (undefined), no se midió y no se la considera quemada.
+ *
+ * @param {number|''|undefined} valor Intensidad de la luz.
+ * @returns {boolean}
+ */
+export function luzQuemada(valor) {
+	if (valor === undefined) return false;
+	return !(typeof valor === 'number' && valor >= 1);
+}
+
+/**
+ * Califica un par de luces (las dos bajas o las dos altas):
+ *   - Una quemada y la otra funciona → la quemada Leve (amarillo); la otra
+ *     se califica normal con sus límites.
+ *   - Las dos quemadas → las dos Moderado (naranja, Condicional).
+ *   - Ninguna quemada → cada una con sus límites, como siempre.
+ *
+ * @param {number|''|undefined} izq Intensidad de la luz izquierda.
+ * @param {number|''|undefined} der Intensidad de la luz derecha.
+ * @param {'luxLow'|'luxHigh'} limite Qué fila de límites usar.
+ * @returns {[Calificacion, Calificacion]} [izquierda, derecha]
+ */
+export function evaluarParDeLuces(izq, der, limite) {
+	const quemadaIzq = luzQuemada(izq);
+	const quemadaDer = luzQuemada(der);
+	if (quemadaIzq && quemadaDer) return [CALIFICACION.MODERADO, CALIFICACION.MODERADO];
+	return [
+		quemadaIzq ? CALIFICACION.LEVE : evaluarMayorOIgual(izq, limite),
+		quemadaDer ? CALIFICACION.LEVE : evaluarMayorOIgual(der, limite),
+	];
+}
+
+// =============================================================================
 //  Ruido y gases: los límites dependen del año de fabricación
 // =============================================================================
 

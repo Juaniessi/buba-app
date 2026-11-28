@@ -370,6 +370,27 @@ describe('segunda revisión', () => {
 		expect(app.querySelector('#aviso-segunda').textContent).toContain('desde la primera revisión');
 	});
 
+	test('OZT778 (Sprinter): todas las luces en 0 → bajas y altas en naranja (M), Condicional', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'OZT778.txt', 'OZT778');
+		const nota = (clase) => app.querySelector(`.${clase} span`);
+		for (const clase of ['left-low-eval', 'right-low-eval', 'left-high-eval', 'right-high-eval']) {
+			expect(nota(clase).textContent).toBe('M');
+			expect(nota(clase).className).toBe('moderate');
+		}
+		expect(app.textContent).toContain('Ninguna luz baja funciona.');
+		expect(app.textContent).toContain('Ninguna luz alta funciona.');
+		expect(app.querySelector('.result-rto').textContent).toBe('Resultado RTO: Condicional');
+	});
+
+	test('VFD395 (504 diésel): opacidad Grave → Rechazado', async () => {
+		const app = abrirApp();
+		await cargarTxt(app, 'VFD395.txt', 'VFD395');
+		expect(app.querySelector('.opacity-eval span').textContent).toBe('G');
+		expect(app.textContent).toContain('Alto nivel de opacidad en emisiones.');
+		expect(app.querySelector('.result-rto').textContent).toBe('Resultado RTO: Rechazado');
+	});
+
 	test('colectivo que no pasó por el puesto 1 (fecha 1/1/0001): no es segunda revisión', async () => {
 		// Caso real del 26/11/2026: salía "1ª 1/1/1901" y FIN 1/4/1901.
 		const app = abrirApp();
@@ -793,5 +814,55 @@ describe('hoja 2 (observaciones que no entran en la hoja 1)', () => {
 		agregarLeves(app, 10);
 		await waitFor(() => expect(hojasExtra(app)).toHaveLength(1));
 		expect(hojasExtra(app)[0].querySelector('.marca-de-agua')).not.toBeNull();
+	});
+});
+
+describe('condiciones de aprobación', () => {
+	test('el botón abre la hoja; se cierra con la X, tocando afuera o con Escape', () => {
+		const app = abrirApp();
+		const hoja = () => document.querySelector('.condiciones-hoja');
+		const abrir = () => fireEvent.click(app.querySelector('#condiciones-btn'));
+		expect(hoja()).toBeNull();
+
+		abrir();
+		expect(hoja().textContent).toContain('Cómo se decide el resultado');
+		// Los números salen de las tablas de evaluaciones.js
+		expect(hoja().textContent).toContain('Opacidad (diésel)≥ 0,2≥ 0,25≥ 5');
+		expect(hoja().textContent).toContain('Una sola del par quemada');
+		expect(hoja().textContent).toContain('hasta 1991: ≥ 900');
+		// Tocar la hoja no la cierra
+		fireEvent.click(hoja());
+		expect(hoja()).not.toBeNull();
+		fireEvent.click(document.querySelector('.condiciones-cerrar'));
+		expect(hoja()).toBeNull();
+
+		abrir();
+		fireEvent.click(document.querySelector('.condiciones-fondo'));
+		expect(hoja()).toBeNull();
+
+		abrir();
+		fireEvent.keyDown(window, { key: 'Escape' });
+		expect(hoja()).toBeNull();
+	});
+});
+
+describe('condiciones de aprobación: imprimir', () => {
+	test('"Imprimir / PDF" imprime solo la hoja y después deja todo como estaba', () => {
+		const app = abrirApp();
+		fireEvent.click(app.querySelector('#condiciones-btn'));
+		const durante = {};
+		const imprimir = vi.spyOn(window, 'print').mockImplementation(() => {
+			durante.clase = document.body.classList.contains('imprimiendo-condiciones');
+			durante.titulo = document.title;
+		});
+		const tituloAntes = document.title;
+
+		fireEvent.click(document.querySelector('#condiciones-imprimir'));
+
+		expect(imprimir).toHaveBeenCalledTimes(1);
+		expect(durante).toEqual({ clase: true, titulo: 'Condiciones de aprobación' });
+		expect(document.body.classList.contains('imprimiendo-condiciones')).toBe(false);
+		expect(document.title).toBe(tituloAntes);
+		imprimir.mockRestore();
 	});
 });
