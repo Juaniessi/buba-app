@@ -22,6 +22,8 @@ import {
 	evaluarHC,
 	evaluarCO,
 	evaluarHCMoto,
+	evaluarParDeLuces,
+	luzQuemada,
 	añoValido,
 	fechaDeInicio,
 	fechaDePrimeraRevision,
@@ -107,6 +109,33 @@ describe('evaluarMayorOIgual (un valor alto es malo)', () => {
 	test('un camión grande siempre es apto (resistencia a la rodadura)', () => {
 		expect(letra(evaluarMayorOIgual(10, 'brakeResist', { truckSize: 'bigTruck' }))).toBe('A');
 		expect(letra(evaluarMayorOIgual(10, 'brakeResist', { truckSize: 'smallTruck' }))).toBe('G');
+	});
+});
+
+describe('luces baja y alta, de a pares', () => {
+	const letras = (izq, der, limite = 'luxLow') => evaluarParDeLuces(izq, der, limite).map(letra);
+
+	test('quemada: vacío o menor a 1; sin código en el .txt no cuenta', () => {
+		expect(luzQuemada(0)).toBe(true);
+		expect(luzQuemada('')).toBe(true);
+		expect(luzQuemada(0.5)).toBe(true);
+		expect(luzQuemada(1)).toBe(false);
+		expect(luzQuemada(undefined)).toBe(false);
+	});
+
+	test('una quemada y la otra funciona: la quemada Leve, la otra Apto', () => {
+		expect(letras(0, 5)).toEqual(['L', 'A']);
+		expect(letras(14, '', 'luxHigh')).toEqual(['A', 'L']);
+	});
+
+	test('las dos quemadas: las dos Moderado', () => {
+		expect(letras(0, 0)).toEqual(['M', 'M']);
+		expect(letras('', 0, 'luxHigh')).toEqual(['M', 'M']);
+	});
+
+	test('las dos funcionan: cada una con sus límites, como siempre', () => {
+		expect(letras(5, 3)).toEqual(['A', 'A']);
+		expect(letras(45, 3)).toEqual(['L', 'A']);
 	});
 });
 

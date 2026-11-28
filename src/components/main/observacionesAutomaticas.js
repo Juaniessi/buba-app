@@ -23,9 +23,11 @@
  *      homologados: en ese caso, se borra a mano.
  *    - Suspensión (autos): si fallan las dos ruedas de un eje, va una sola
  *      frase "Ambos amortiguadores…" con la severidad más alta de las dos.
- *    - Luces baja y alta: una intensidad de 0 significa luz quemada, y con
- *      una sola quemada el resultado ya es Condicional, así que va como
- *      Moderado. Si están quemadas las dos, una sola frase "Ninguna luz…".
+ *    - Luces baja y alta (autos): se evalúan de a pares. Una intensidad vacía
+ *      o 0 significa luz quemada. Si se quemó una sola y la otra funciona,
+ *      va como Leve; si están quemadas las dos, una sola frase "Ninguna luz…"
+ *      como Moderado (Condicional). En las motos, una baja o alta en 0 sigue
+ *      siendo Moderado (tienen una sola).
  *      Los valores altos de intensidad no generan observación automática, y
  *      las luces auxiliares quedan manuales (muchos vehículos no tienen, y
  *      también darían 0).
@@ -43,6 +45,7 @@ import {
 	evaluarMenorOIgual,
 	evaluarRango,
 	evaluarRuido,
+	luzQuemada,
 } from './evaluaciones';
 import { nuevaObservacion } from './observaciones';
 
@@ -278,14 +281,16 @@ function reglasAuto(datos, { tipo, truckSize, transmisionType }) {
 	obs.push(...porRueda('brakeOval', 'ovalAlab', ['ovalAlabDelIzq', 'ovalAlabDelDer', 'ovalAlabTraIzq', 'ovalAlabTraDer']));
 	obs.push(...porRueda('brakeResist', 'resistRod', ['resistRodDelIzq', 'resistRodDelDer', 'resistRodTraIzq', 'resistRodTraDer'], { truckSize, transmisionType }));
 
-	// --- Luces baja y alta quemadas (intensidad 0) ---------------------------
+	// --- Luces baja y alta quemadas (vacío o 0), de a pares ------------------
+	//  Una sola quemada: Leve. Las dos: Moderado, con la frase "Ninguna…".
+	//  Misma regla que pinta el informe (evaluarParDeLuces).
 	const quemadas = (izq, der, seccion, frasIzq, frasDer, ninguna) => {
-		const quemadaIzq = izq === 0;
-		const quemadaDer = der === 0;
+		const quemadaIzq = luzQuemada(izq);
+		const quemadaDer = luzQuemada(der);
 		if (quemadaIzq && quemadaDer) return [siempre('luces', seccion, ninguna, 'Moderado')];
 		return [
-			quemadaIzq ? siempre('luces', seccion, frasIzq, 'Moderado') : null,
-			quemadaDer ? siempre('luces', seccion, frasDer, 'Moderado') : null,
+			quemadaIzq ? siempre('luces', seccion, frasIzq, 'Leve') : null,
+			quemadaDer ? siempre('luces', seccion, frasDer, 'Leve') : null,
 		];
 	};
 	obs.push(...quemadas(lux.intensidadBajaIzquierda, lux.intensidadBajaDerecha, 'luzBaja', 'luzBajIzq', 'luzBajDer', 'ningunaBaja'));

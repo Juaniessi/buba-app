@@ -127,13 +127,38 @@ describe('reglas de autos', () => {
 		expect(generar(datos, { transmisionType: '4x4' })).toEqual([]);
 	});
 
-	test('luces quemadas (intensidad 0): Moderado; las dos, "Ninguna"', () => {
-		expect(generar(auto({ luxometro: { intensidadBajaIzquierda: 0 } }))).toEqual([
-			'Moderado: Luz de baja izquierda no enciende, intensidad baja o patrón no reglamentario.',
+	test('una luz quemada (0 o vacía) y la otra funciona: Leve', () => {
+		expect(generar(auto({ luxometro: { intensidadBajaIzquierda: 0, intensidadBajaDerecha: 5 } }))).toEqual([
+			'Leve: Luz de baja izquierda no enciende, intensidad baja o patrón no reglamentario.',
 		]);
+		expect(generar(auto({ luxometro: { intensidadAltaIzquierda: 14, intensidadAltaDerecha: '' } }))).toEqual([
+			'Leve: Luz de alta derecha no enciende, intensidad baja o patrón no reglamentario.',
+		]);
+	});
+
+	test('las dos luces del par quemadas: Moderado, una sola frase "Ninguna"', () => {
 		expect(generar(auto({ luxometro: { intensidadAltaIzquierda: 0, intensidadAltaDerecha: 0 } }))).toEqual([
 			'Moderado: Ninguna luz alta funciona.',
 		]);
+		expect(generar(auto({ luxometro: { intensidadBajaIzquierda: '', intensidadBajaDerecha: 0 } }))).toEqual([
+			'Moderado: Ninguna luz baja funciona.',
+		]);
+	});
+
+	test('una luz que no viene en el .txt (sin código) no cuenta como quemada', () => {
+		expect(generar(auto({ luxometro: { intensidadBajaIzquierda: undefined } }))).toEqual([]);
+	});
+
+	test('OZT778: todas las luces en 0 → "Ninguna" baja y alta, Moderado', () => {
+		const datos = procesarTextoTxt(readFileSync(new URL('./fixtures/OZT778.txt', import.meta.url), 'utf8'));
+		expect(generar(datos)).toEqual(
+			expect.arrayContaining(['Moderado: Ninguna luz baja funciona.', 'Moderado: Ninguna luz alta funciona.'])
+		);
+	});
+
+	test('VFD395: opacidad 11,05 → Grave', () => {
+		const datos = procesarTextoTxt(readFileSync(new URL('./fixtures/VFD395.txt', import.meta.url), 'utf8'));
+		expect(generar(datos)).toContain('Grave: Alto nivel de opacidad en emisiones.');
 	});
 
 	test('luces auxiliares en 0 no generan nada (muchos vehículos no tienen)', () => {

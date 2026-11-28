@@ -723,6 +723,177 @@
 	}
 }
 
+// Botón "Condiciones de aprobación" (CondicionesAprobacion.jsx), a la derecha
+// del informe, arriba de la columna "Editar". Mismo tamaño y forma que
+// "Regenerar", en verde lima. No se imprime.
+.condiciones-btn {
+	position: absolute;
+	left: 715px;
+	top: 560px;
+	width: 150px;
+	height: 67px;
+	padding: 0.25rem;
+	border: solid 1px black;
+	border-radius: 5px;
+	background-color: rgb(170, 230, 40);
+	color: black;
+	font-weight: 500;
+	cursor: pointer;
+	box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+	&:hover {
+		background-color: rgb(190, 245, 60);
+	}
+	&:active {
+		box-shadow: none;
+		transform: translateY(4px);
+	}
+}
+
+// Hoja de condiciones de aprobación: fondo oscuro sobre toda la pantalla y,
+// encima, una hoja blanca del ancho del informe (con scroll si no entra).
+.condiciones-fondo {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 30px 0;
+	overflow-y: auto;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+.condiciones-hoja {
+	width: 700px;
+	padding-bottom: 15px;
+	border: solid black 1px;
+	background-color: white;
+	color: black;
+	box-shadow: 6px 6px 12px 0px rgba(0, 0, 0, 0.6);
+	// Misma franja azul que las hojas extra del informe.
+	.hoja-encabezado {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 15px 15px 0;
+		padding: 6px 10px;
+		background-color: rgb(34, 64, 120);
+		color: white;
+		font-size: 0.9rem;
+		font-weight: bold;
+		letter-spacing: 1px;
+	}
+	.hoja-titulo {
+		margin: 12px 15px 4px;
+		font-size: 0.8rem;
+		font-weight: bold;
+	}
+}
+.condiciones-acciones {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+// Botón "Imprimir / PDF" de la hoja, en el mismo verde lima que el que la abre.
+.condiciones-imprimir {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 8px;
+	border: solid 1px black;
+	border-radius: 4px;
+	background-color: rgb(170, 230, 40);
+	color: black;
+	font-size: 0.75rem;
+	font-weight: 500;
+	cursor: pointer;
+	img {
+		height: 14px;
+	}
+	&:hover {
+		background-color: rgb(190, 245, 60);
+	}
+}
+
+// Imprimir solo la hoja de condiciones (botón "Imprimir / PDF"): A4 con
+// márgenes estrechos (6 mm, igual que MARGEN_MM en CondicionesAprobacion.jsx)
+// y escalada con --escala-impresion para que entre justo en una sola página.
+@page condiciones {
+	size: A4 portrait;
+	margin: 6mm;
+}
+@media print {
+	html:has(body.imprimiendo-condiciones),
+	body.imprimiendo-condiciones {
+		background: white;
+	}
+	// Se oculta toda la app; queda solo la hoja (está en <body>, por el portal).
+	body.imprimiendo-condiciones > :not(.condiciones-fondo) {
+		display: none !important;
+	}
+	body.imprimiendo-condiciones .condiciones-fondo {
+		display: block;
+		position: static;
+		padding: 0;
+		overflow: visible;
+		background: none;
+	}
+	// Los botones (Imprimir y la X) no salen en el papel.
+	body.imprimiendo-condiciones .condiciones-acciones {
+		display: none;
+	}
+	body.imprimiendo-condiciones .condiciones-hoja {
+		page: condiciones;
+		zoom: var(--escala-impresion, 1);
+		margin: 0;
+		box-shadow: none;
+		break-inside: avoid;
+	}
+}
+
+.condiciones-cerrar {
+	border: none;
+	background: none;
+	color: white;
+	font-size: 1rem;
+	cursor: pointer;
+	&:hover {
+		color: rgb(170, 230, 40);
+	}
+}
+.condiciones-tabla {
+	width: 670px;
+	margin: 0 15px;
+	border-collapse: collapse;
+	font-size: 0.7rem;
+	th,
+	td {
+		padding: 2px 5px;
+		border: 1px solid black;
+		white-space: pre-line; // los límites por año van uno por renglón
+	}
+	th:first-child,
+	td:first-child {
+		width: 37%;
+	}
+	// Filas intercaladas en gris claro, para seguir el renglón con la vista.
+	tbody tr:nth-child(even) {
+		background-color: rgba(128, 128, 128, 0.2);
+	}
+}
+// En "Cómo se decide", la primera columna es el resultado con su color.
+.condiciones-resultado td:first-child {
+	width: 90px;
+	text-align: center;
+	font-weight: bold;
+}
+.condiciones-nota {
+	margin: 4px 15px 0;
+	font-size: 0.7rem;
+	li {
+		margin-left: 1rem;
+	}
+}
+
 // Filtro "Observaciones automáticas", al lado de los botones de severidad.
 .filtro-auto {
 	background-color: rgb(204, 240, 245);

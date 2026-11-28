@@ -25,6 +25,7 @@ import motoReport from '../../assets/informe-img/informe-moto.svg';
 import minibusReport from '../../assets/informe-img/informe-minibus.svg';
 import DefectList from './DefectList';
 import Referencias from './Referencias';
+import CondicionesAprobacion from './CondicionesAprobacion';
 import printSolid from '../../assets/print-solid.svg';
 import fileArrow from '../../assets/file-arrow-up-solid.svg';
 import fileImage from '../../assets/file-image-solid.svg';
@@ -32,6 +33,7 @@ import MajorMarker from './MajorMarker';
 import {
 	evaluarMenorOIgual,
 	evaluarMayorOIgual,
+	evaluarParDeLuces,
 	evaluarRango,
 	evaluarRuido,
 	evaluarHC,
@@ -62,6 +64,21 @@ const IMAGEN_DEL_INFORME = {
 function Nota({ resultado }) {
 	if (!resultado) return null;
 	return <span className={resultado.clase}>{resultado.letra}</span>;
+}
+
+/**
+ * Calificación de una luz baja o alta del informe de autos. Las dos primeras
+ * de la lista (izquierda y derecha) se evalúan de a pares para detectar las
+ * quemadas (ver evaluarParDeLuces); las auxiliares, que vienen después en la
+ * lista de bajas, se califican solas como siempre.
+ *
+ * @param {{ruta: number|''}[]} lista reportArray.luxLow o reportArray.luxHigh.
+ * @param {number} i Posición de la luz en la lista.
+ * @param {'luxLow'|'luxHigh'} limite
+ */
+function notaDeLuz(lista, i, limite) {
+	if (i > 1) return evaluarMayorOIgual(lista[i].ruta, limite);
+	return evaluarParDeLuces(lista[0].ruta, lista[1].ruta, limite)[i];
 }
 
 function Report(props) {
@@ -390,7 +407,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxLow')} />
+												<Nota resultado={notaDeLuz(reportArray.luxLow, i, 'luxLow')} />
 											</p>
 										</div>
 									))}
@@ -398,7 +415,7 @@ function Report(props) {
 										<div key={i}>
 											<p className={item.class}>{item.ruta}</p>
 											<p className={item.classEval}>
-												<Nota resultado={evaluarMayorOIgual(item.ruta, 'luxHigh')} />
+												<Nota resultado={notaDeLuz(reportArray.luxHigh, i, 'luxHigh')} />
 											</p>
 										</div>
 									))}
@@ -633,6 +650,8 @@ function Report(props) {
 				/>
 				{/* Referencias: qué significa cada severidad (ver Referencias.jsx) */}
 				<Referencias />
+				{/* Botón y hoja emergente con las condiciones de aprobación (no se imprimen) */}
+				<CondicionesAprobacion />
 			</section>
 			{/* Marca de agua "Transporte de pasajeros" sobre todo el informe */}
 			{rtoType.value === 'traPas' ? (
